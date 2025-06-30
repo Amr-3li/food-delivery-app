@@ -27,13 +27,18 @@ abstract class Styles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
     fontFamily: "Sen",
+    decoration: TextDecoration.none,
   );
   static final textStyle16 = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.w600,
     fontFamily: "Sen",
   );
-
+  static final textStyle17 = TextStyle(
+    fontSize: 17.sp,
+    fontWeight: FontWeight.w500,
+    fontFamily: "Sen",
+  );
   static final textStyle22 = TextStyle(
     fontSize: 22.sp,
     fontWeight: FontWeight.w600,
