@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
     this.textFieldPrefix = const SizedBox(width: 1),
     this.isObsecure = false,
     this.keyboardType = TextInputType.text,
+    this.maxLength,
   });
   final TextEditingController textController;
   final Widget? textFieldSuffix;
@@ -25,11 +26,13 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validatorFunction;
   final Function(String)? onChangedFunction;
   final bool isObsecure;
+  final int? maxLength;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: TextFormField(
+        maxLength: maxLength,
         controller: textController,
         obscureText: isObsecure,
         keyboardType: keyboardType,
