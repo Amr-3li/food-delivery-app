@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.1"
+  dlibphonenumber:
+    dependency: "direct main"
+    description:
+      name: dlibphonenumber
+      sha256: "892fbdc4536bf945156558becbbc2ca5f21bf50045ead47d8d5fe2d5007e8b26"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.41"
   emoji_picker_flutter:
     dependency: "direct main"
     description:
@@ -113,8 +121,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.1"
-<<<<<<< HEAD
-=======
   fixnum:
     dependency: transitive
     description:
@@ -131,7 +137,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
->>>>>>> 9381bb6169f35c1216cd26b9a10c4a08ef513153
   flutter:
     dependency: "direct main"
     description: flutter
@@ -339,6 +344,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  protobuf:
+    dependency: transitive
+    description:
+      name: protobuf
+      sha256: "579fe5557eae58e3adca2e999e38f02441d8aa908703854a9e0a0f47fa857731"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   shared_preferences:
     dependency: transitive
     description:
