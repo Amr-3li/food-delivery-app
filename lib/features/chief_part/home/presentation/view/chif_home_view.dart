@@ -9,7 +9,6 @@ import 'package:restaurant/features/chief_part/home/presentation/widget/reviews_
 
 class ChifHomeView extends StatelessWidget {
   const ChifHomeView({super.key});
-  static final String id = "chif home view";
 
   @override
   Widget build(BuildContext context) {

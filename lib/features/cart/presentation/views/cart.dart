@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
@@ -8,7 +7,6 @@ import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_ap
 import 'package:restaurant/features/cart/presentation/views/wigdets/cart_item_container.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/edit_dialog.dart';
 import 'package:sizer/sizer.dart';
-import 'package:svg_flutter/svg.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});

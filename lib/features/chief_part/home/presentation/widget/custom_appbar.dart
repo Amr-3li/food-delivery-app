@@ -25,7 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: Colors.white,
         elevation: 2,
         leading: IconButton(
-          icon: SvgPicture.asset(Assets.assetsImagesMenu),
+          icon: SvgPicture.asset(AppIcons.iMenu),
           onPressed: onLeadingPressed,
         ),
         title: Column(

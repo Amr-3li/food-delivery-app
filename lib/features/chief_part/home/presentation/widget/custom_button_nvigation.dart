@@ -20,19 +20,11 @@ class CustomBottomNavBar extends StatelessWidget {
       showUnselectedLabels: false,
       items: [
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            Assets.assetsImagesChifMenu,
-            width: 24,
-            height: 24,
-          ),
+          icon: SvgPicture.asset(AppIcons.iChifMenu, width: 24, height: 24),
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            Assets.assetsImagesfoodlist,
-            width: 24,
-            height: 24,
-          ),
+          icon: SvgPicture.asset(AppIcons.ifoodlist, width: 24, height: 24),
           label: '',
         ),
         BottomNavigationBarItem(
@@ -55,7 +47,7 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(12),
             child: SvgPicture.asset(
-              Assets.assetsImagesPlus,
+              AppIcons.iPlus,
               width: 28,
               height: 28,
               color: Colors.orange, // Black plus icon
@@ -64,19 +56,11 @@ class CustomBottomNavBar extends StatelessWidget {
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            Assets.assetsImagesBell,
-            width: 24,
-            height: 24,
-          ),
+          icon: SvgPicture.asset(AppIcons.iBell, width: 24, height: 24),
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            Assets.assetsImagesUser,
-            width: 24,
-            height: 24,
-          ),
+          icon: SvgPicture.asset(AppIcons.iUser, width: 24, height: 24),
           label: '',
         ),
       ],

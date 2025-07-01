@@ -4,6 +4,7 @@ import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/reviews/presentation/views/widgets/rating_row.dart';
 import 'package:sizer/sizer.dart';
 
+// ignore: must_be_immutable
 class ReviewContainer extends StatelessWidget {
   ReviewContainer({
     super.key,

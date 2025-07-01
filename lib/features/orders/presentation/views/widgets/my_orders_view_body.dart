@@ -23,24 +23,23 @@ class MyOrdersViewBody extends StatelessWidget {
                     CircleAvatar(
                       radius: 24,
                       backgroundColor: ColorsHelper.lightBabyBlue,
-                      child: SvgPicture.asset(Assets.assetsImagesIcon),
+                      child: SvgPicture.asset(AppIcons.iIcon),
                     ),
                     SizedBox(width: 10),
-                    Text('My Orders', style: Styles.textStyle18,),
+                    Text('My Orders', style: Styles.textStyle18),
                     Spacer(),
                     CircleAvatar(
                       radius: 24,
                       backgroundColor: ColorsHelper.lightBabyBlue,
-                      child: SvgPicture.asset(Assets.assetsMoreHorizontal),
+                      child: SvgPicture.asset(AppIcons.assetsMoreHorizontal),
                     ),
                   ],
                 ),
               ),
-              Row(
-                children: [
+              Row(children: [
 
                 ],
-              )
+              ),
             ],
           ),
         ],

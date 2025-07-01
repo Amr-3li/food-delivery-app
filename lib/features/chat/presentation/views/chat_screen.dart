@@ -13,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
+  static final String kChatView = "chat screen";
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -57,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: SvgPicture.asset(Assets.assetsImagesIcon),
+          child: SvgPicture.asset(AppIcons.iIcon),
         ),
         title: Row(
           children: [
@@ -100,7 +101,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   print('Invalid number: $e');
                 }
               },
-              child: SvgPicture.asset(Assets.assetsImagesCall),
+              child: SvgPicture.asset(AppIcons.iCall),
             ),
           ),
         ],
