@@ -6,7 +6,9 @@ import '../../../../../core/utils/styles.dart';
 import '../../../../../core/widgets/custom_elevated_button.dart';
 
 class CustomOrderItem extends StatelessWidget {
-  const CustomOrderItem({super.key});
+  const CustomOrderItem({super.key, required this.isCompleted});
+
+  final bool isCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,21 @@ class CustomOrderItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Food', style: Styles.textStyle16),
+          Row(
+            children: [
+              Text('Food', style: Styles.textStyle16),
+              if (isCompleted)
+              SizedBox(width: 18),
+              if (isCompleted)
+              Text(
+                'Completed',
+                style: Styles.textStyle16.copyWith(
+                  color: ColorsHelper.green,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
           SizedBox(height: 10),
           Divider(color: ColorsHelper.grey.withAlpha(80), thickness: 1),
           SizedBox(height: 10),
@@ -46,13 +62,11 @@ class CustomOrderItem extends StatelessWidget {
                       children: [
                         Text('\$20.00', style: Styles.textStyle14),
                         SizedBox(width: 8),
-                        Text(
-                          '|',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        ),
+                        Text('|', style: Styles.textStyle14),
+                        SizedBox(width: 8),
+                        if (isCompleted)
+                        Text('29 Jan, 12:30', style: Styles.textStyle14),
+                        if (isCompleted)
                         SizedBox(width: 8),
                         Text('03 Items', style: Styles.textStyle14),
                       ],
@@ -70,19 +84,20 @@ class CustomOrderItem extends StatelessWidget {
                 width: AppResponsive.width(context, value: 140),
                 height: AppResponsive.height(context, value: 40),
                 child: CustomElevatedButton(
-                  buttonText: 'Track Order',
+                  buttonText: isCompleted ? 'Rate' : 'Track Order',
                   onPressedFunction: () {},
-                  buttonColor: ColorsHelper.orange,
+                  buttonColor: isCompleted ? ColorsHelper.white : ColorsHelper.orange,
+                  textColor: isCompleted ?  ColorsHelper.orange : ColorsHelper.white,
                 ),
               ),
               SizedBox(
                 width: AppResponsive.width(context, value: 140),
                 height: AppResponsive.height(context, value: 40),
                 child: CustomElevatedButton(
-                  buttonText: 'Cancel',
+                  buttonText: isCompleted ? 'Re-Order' : 'Cancel',
                   onPressedFunction: () {},
-                  buttonColor: ColorsHelper.white,
-                  textColor: ColorsHelper.orange,
+                  buttonColor: isCompleted ? ColorsHelper.orange : ColorsHelper.white,
+                  textColor: isCompleted ?  ColorsHelper.white : ColorsHelper.orange ,
                 ),
               ),
             ],
