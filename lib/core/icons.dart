@@ -59,6 +59,8 @@ class Assets {
   static const String assetsImagesStar = "assets/images/Star.svg";
 
   static const String assetsImagesTag = "assets/images/Tag.svg";
+  static const String assetsImagesChifMenu = "assets/images/foodlist.svg";
+  static const String assetsImagesfoodlist = "assets/images/main_menu.svg";
 
   static const String assetsImagesUnderArrow = "assets/images/Under Arrow.svg";
 
