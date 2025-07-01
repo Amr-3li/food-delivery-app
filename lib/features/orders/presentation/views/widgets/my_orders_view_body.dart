@@ -15,7 +15,8 @@ class MyOrdersViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBarView(
       children: [
-        ListView.builder(itemBuilder: (context, index) => CustomOrderItem(), itemCount: 5,),
+        ListView.builder(itemBuilder: (context, index) => CustomOrderItem(isCompleted: false,), itemCount: 5,),
+        ListView.builder(itemBuilder: (context, index) => CustomOrderItem(isCompleted: true,), itemCount: 5,),
       ],
     );
   }
