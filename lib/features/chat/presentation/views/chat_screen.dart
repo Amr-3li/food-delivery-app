@@ -1,6 +1,5 @@
 import 'package:bubble/bubble.dart';
-import 'package:dlibphonenumber/enums/phone_number_format.dart';
-import 'package:dlibphonenumber/phone_number_util.dart';
+
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/icons.dart';
@@ -9,12 +8,12 @@ import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/chat/data/models/chat_model.dart';
 import 'package:svg_flutter/svg.dart';
 import 'package:flutter/foundation.dart' as foundation;
+
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
-  static final String kChatView = "chat screen";
-
+  const ChatScreen({super.key, required this.userId});
+  final String userId;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -80,25 +79,11 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () async {
-                final phoneUtil = PhoneNumberUtil.instance;
-                try {
-                  final parsedNumber = phoneUtil.parse('01009247747', 'EG');
-
-                  // Format the number to international format (e.g., +233241234567)
-                  final formattedNumber = phoneUtil.format(
-                    parsedNumber,
-                    PhoneNumberFormat.international,
-                  );
-
-                  final uri = Uri.parse('tel:$formattedNumber');
-
-                  if (await canLaunchUrl(uri)) {
-                    await launchUrl(uri);
-                  } else {
-                    print('Could not launch dialer');
-                  }
-                } catch (e) {
-                  print('Invalid number: $e');
+                final Uri launchUri = Uri(scheme: 'tel', path: '+201009247747');
+                if (await canLaunchUrl(launchUri)) {
+                  await launchUrl(launchUri);
+                } else {
+                  throw 'Could not launch $launchUri';
                 }
               },
               child: SvgPicture.asset(AppIcons.iCall),
