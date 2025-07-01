@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
+import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
+import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const CartView(),
+          home: ChatListScreen(),
         );
       },
     );
