@@ -79,4 +79,6 @@ class Assets {
   /// Assets for assetsImagesWatch
   /// assets/images/Watch.svg
   static const String assetsImagesWatch = "assets/images/Watch.svg";
+
+  static const String assetsMoreHorizontal = "assets/images/More_2.svg";
 }
