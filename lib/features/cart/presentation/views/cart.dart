@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
@@ -7,6 +8,8 @@ import 'package:restaurant/features/cart/data/models/cart_model.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/cart_item_container.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/edit_dialog.dart';
+import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
+import 'package:restaurant/features/payment/presentaion/cubit/payment_state.dart';
 import 'package:sizer/sizer.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -172,12 +175,28 @@ class _CartViewState extends State<CartView> {
                 ],
               ),
               SizedBox(height: 6.h),
-              CustomElevatedButton(
-                buttonText: 'Place Order',
-                onPressedFunction: () {},
-                buttonColor: ColorsHelper.orangeDark,
-                widthButton: double.infinity,
-                textColor: ColorsHelper.white,
+              BlocConsumer<PaymentCubit, PaymentState>(
+                listener: (context, state) {
+                  if (state is PaymentSucess) {
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => SucessPayment()),
+                    // );
+                  } else if (state is PaymentFailure) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(state.error)));
+                  }
+                },
+                builder: (context, state) {
+                  return CustomElevatedButton(
+                    buttonText: 'Place Order',
+                    onPressedFunction: () {},
+                    buttonColor: ColorsHelper.orangeDark,
+                    widthButton: double.infinity,
+                    textColor: ColorsHelper.white,
+                  );
+                },
               ),
             ],
           ),
