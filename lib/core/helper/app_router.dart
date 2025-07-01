@@ -1,21 +1,56 @@
 import 'package:go_router/go_router.dart';
+import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
+import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
-
-import '../../features/orders/presentation/views/my_orders_view.dart';
+import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
+import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
 
 abstract class AppRouter {
-  static const kSplashView = '/';
+  static const kSplashView = '/SplashView';
+  static const kChatView = '/chat';
+  static const kMessageListView = '/messageList';
+  static const kReviewView = '/review';
+  static const kAddReviewView = '/';
+  static const kWelcomeView = '/welcome';
+  static const kHomeView = '/home';
+  static const kProfileView = '/profile';
 
   static final router = GoRouter(
     routes: [
       GoRoute(
         path: kSplashView,
-        builder: (context, state) => const MyOrdersView(),
+        builder: (context, state) => const ChifHomeView(),
       ),
       GoRoute(
         path: ChifHomeView.id,
         name: "welcome",
         builder: (context, state) => const ChifHomeView(),
+      ),
+      GoRoute(
+        path: ChifHomeView.id,
+        name: "Home",
+        builder: (context, state) => const ChifHomeView(),
+      ),
+      GoRoute(
+        path: kChatView,
+        name: "chat",
+        builder: (context, state) => const ChatScreen(userId: "1"),
+      ),
+
+      GoRoute(
+        path: kMessageListView,
+        name: "messageList",
+        builder: (context, state) => ChatListScreen(),
+      ),
+      GoRoute(
+        path: kReviewView,
+        name: "review",
+        builder: (context, state) => ReviewScreen(),
+      ),
+      GoRoute(
+        path: kAddReviewView,
+        name: "addReview",
+        builder: (context, state) => AddReview(),
       ),
     ],
   );
