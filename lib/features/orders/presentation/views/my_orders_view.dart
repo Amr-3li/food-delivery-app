@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:restaurant/core/utils/styles.dart';
+import 'package:restaurant/features/orders/presentation/views/widgets/my_orders_view_body.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/icons.dart';
@@ -58,6 +59,7 @@ class MyOrdersView extends StatelessWidget {
             ],
           ),
         ),
+        body: MyOrdersViewBody(),
       ),
     );
   }
