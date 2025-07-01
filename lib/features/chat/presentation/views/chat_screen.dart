@@ -12,8 +12,8 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
-
+  const ChatScreen({super.key, required this.userId});
+  final String userId;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
