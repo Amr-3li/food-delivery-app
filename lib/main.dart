@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
+import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const CartView(),
+          home: const MyOrdersView(),
         );
       },
     );
