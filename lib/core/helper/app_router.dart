@@ -18,7 +18,7 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRouteKeys.chat,
-        builder: (context, state) => const ChatScreen(),
+        builder: (context, state) => const ChatScreen(userId: '1'),
       ),
       GoRoute(
         path: AppRouteKeys.order,

@@ -25,19 +25,25 @@ class ChifHomeView extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: ListView(
           children: [
-            Row(
-              children: [
-                OrdersWidget(
-                  count: 20,
-                  subtext: 'running order',
-                  onTap: () => OrderFormSheet.show(context),
-                ),
-                OrdersWidget(
-                  count: 5,
-                  subtext: 'order quest',
-                  onTap: () => OrderFormSheet.show(context),
-                ),
-              ],
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: OrdersWidget(
+                      count: 20,
+                      subtext: 'running order',
+                      onTap: () => OrderFormSheet.show(context),
+                    ),
+                  ),
+                  Expanded(
+                    child: OrdersWidget(
+                      count: 5,
+                      subtext: 'order quest',
+                      onTap: () => OrderFormSheet.show(context),
+                    ),
+                  ),
+                ],
+              ),
             ),
             RevenueDashboard(),
             const ReviewsSummary(rating: 4.1, reviewCount: 20),

@@ -21,7 +21,7 @@ class OrdersWidget extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Container(
           height: 120,
-          width: AppResponsive.width(context, value: 812 * 0.4),
+          width: AppResponsive.width(context, value: 160),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20), // Rounded edges
