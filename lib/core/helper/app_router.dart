@@ -3,6 +3,7 @@ import 'package:restaurant/features/cart/presentation/views/cart.dart';
 import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
+import 'package:restaurant/features/notification/presentation/view/notification.dart';
 
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
 
@@ -12,7 +13,7 @@ import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
 
 abstract class AppRouter {
-  static const kSplashView = '/';
+  static const kSplashView = '/chat';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -22,6 +23,7 @@ abstract class AppRouter {
   static const kProfileView = '/profile';
   static const kCartView = '/cart';
   static const kSucessPaymentView = '/sucessPayment';
+  static const kNotificationView = '/';
 
   static final router = GoRouter(
     routes: [
@@ -67,6 +69,12 @@ abstract class AppRouter {
         path: kSucessPaymentView,
         name: "sucessPayment",
         builder: (context, state) => SucessPayment(),
+      ),
+
+      GoRoute(
+        path: kNotificationView,
+        name: "notification",
+        builder: (context, state) => NotificationScreen(),
       ),
     ],
   );
