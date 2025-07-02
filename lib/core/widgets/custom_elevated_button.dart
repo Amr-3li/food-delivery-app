@@ -8,7 +8,7 @@ class CustomElevatedButton extends StatelessWidget {
     required this.buttonText,
     this.buttonIcon = const SizedBox(width: .5),
     required this.onPressedFunction,
-
+    this.sideColor,
     this.alignButton = MainAxisAlignment.center,
     this.widthButton = double.infinity,
     this.textColor = Colors.white,
@@ -22,11 +22,13 @@ class CustomElevatedButton extends StatelessWidget {
   final Function()? onPressedFunction;
   final MainAxisAlignment alignButton;
   final Widget buttonIcon;
+  final Color? sideColor;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressedFunction,
       style: ElevatedButton.styleFrom(
+        side: BorderSide(color: sideColor ?? Colors.transparent, width: 0.5),
         minimumSize: Size(widthButton, 55),
         backgroundColor: buttonColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
