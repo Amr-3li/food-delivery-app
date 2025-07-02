@@ -1,13 +1,12 @@
 import 'package:bubble/bubble.dart';
 
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/chat/data/models/chat_model.dart';
+import 'package:restaurant/features/chat/presentation/views/widgets/area_input.dart';
 import 'package:svg_flutter/svg.dart';
-import 'package:flutter/foundation.dart' as foundation;
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -94,7 +93,13 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Expanded(child: buildMessageList(messages, currentUserId)),
-          buildInputArea(),
+          AreaInput(
+            currentUserId: currentUserId,
+            focusNode: focusNode,
+            messages: messages,
+            showEmojiPicker: showEmojiPicker,
+            textController: textController,
+          ),
         ],
       ),
     );
@@ -126,130 +131,6 @@ class _ChatScreenState extends State<ChatScreen> {
           return buildMessageItem(message, isSender);
         },
       ),
-    );
-  }
-
-  Widget buildInputArea() {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  print(
-                    'Emoji button pressed. Current state: $showEmojiPicker',
-                  ); // Debug print
-
-                  if (showEmojiPicker) {
-                    // Hide emoji picker, show keyboard
-                    setState(() {
-                      showEmojiPicker = false;
-                    });
-                    Future.delayed(const Duration(milliseconds: 100), () {
-                      focusNode.requestFocus();
-                    });
-                  } else {
-                    // Show emoji picker, hide keyboard
-                    FocusScope.of(context).unfocus();
-                    Future.delayed(const Duration(milliseconds: 100), () {
-                      setState(() {
-                        showEmojiPicker = true;
-                      });
-                    });
-                  }
-                },
-                icon: SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: SvgPicture.asset(
-                    'assets/icons/smile.svg',
-                    width: 24,
-                    height: 24,
-                    color: Colors.grey,
-                    fit: BoxFit.contain,
-                    placeholderBuilder: (context) =>
-                        Icon(Icons.emoji_emotions, color: Colors.grey),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: TextField(
-                  focusNode: focusNode,
-                  controller: textController,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your message...',
-                    border: InputBorder.none,
-                  ),
-                  onTap: () {
-                    if (showEmojiPicker) {
-                      setState(() {
-                        showEmojiPicker =
-                            false; // hide emoji picker when keyboard opens
-                      });
-                    }
-                  },
-                ),
-              ),
-              IconButton(
-                icon: Icon(Icons.send, color: ColorsHelper.orange),
-                onPressed: () {
-                  final newMessage = textController.text.trim();
-                  if (newMessage.isNotEmpty) {
-                    final chat = ChatMessages(
-                      idFrom: currentUserId,
-                      idTo: 'user2',
-                      timestamp: DateTime.now().toIso8601String(),
-                      content: newMessage,
-                      type: 0,
-                    );
-
-                    setState(() {
-                      messages.add(chat);
-                      showEmojiPicker = false;
-                    });
-
-                    textController.clear();
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
-        if (showEmojiPicker)
-          SizedBox(
-            height: 250,
-            child: EmojiPicker(
-              textEditingController: textController,
-              config: Config(
-                height: 250,
-                checkPlatformCompatibility: true,
-                emojiViewConfig: EmojiViewConfig(
-                  emojiSizeMax:
-                      28 *
-                      (foundation.defaultTargetPlatform == TargetPlatform.iOS
-                          ? 1.20
-                          : 1.0),
-                  columns: 7,
-                  verticalSpacing: 0,
-                  horizontalSpacing: 0,
-                  gridPadding: EdgeInsets.zero,
-                  // initCategory: Category.RECENT,
-                ),
-                viewOrderConfig: const ViewOrderConfig(
-                  top: EmojiPickerItem.categoryBar,
-                  middle: EmojiPickerItem.emojiView,
-                  bottom: EmojiPickerItem.searchBar,
-                ),
-                skinToneConfig: const SkinToneConfig(),
-                categoryViewConfig: const CategoryViewConfig(),
-                bottomActionBarConfig: const BottomActionBarConfig(),
-                searchViewConfig: const SearchViewConfig(),
-              ),
-            ),
-          ),
-      ],
     );
   }
 }
