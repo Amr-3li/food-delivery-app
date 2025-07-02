@@ -3,7 +3,11 @@ import 'package:restaurant/features/cart/presentation/views/cart.dart';
 import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
+
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
+
+import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
+
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
 
@@ -21,11 +25,7 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-      GoRoute(
-        path: kSplashView,
-
-        builder: (context, state) => const ChifHomeView(),
-      ),
+      GoRoute(path: kSplashView, builder: (context, state) => const MenuView()),
       GoRoute(
         path: ChifHomeView.id,
         name: "welcome",
