@@ -4,6 +4,7 @@ import 'package:restaurant/core/utils/styles.dart';
 import '../../../../../core/utils/color_helper.dart';
 import '../../../data/models/menu_group_list.dart';
 import 'custom_menu_list.dart';
+import 'custom_user_info.dart';
 
 class MenuViewBody extends StatelessWidget {
   const MenuViewBody({super.key});
@@ -15,25 +16,7 @@ class MenuViewBody extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              children: [
-                CircleAvatar(radius: 50, backgroundColor: ColorsHelper.grey),
-                const SizedBox(width: 24),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Vishal Khadok', style: Styles.textStyle20),
-                    const SizedBox(height: 4),
-                    Text(
-                      'I love fast food',
-                      style: Styles.textStyle14.copyWith(
-                        color: ColorsHelper.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            CustomUserInfo(),
             const SizedBox(height: 28),
             ListView.separated(
               shrinkWrap: true,

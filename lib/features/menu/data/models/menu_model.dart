@@ -9,12 +9,14 @@ class MenuItem {
   final String icon;
   final String title;
   final String? route;
+  final String? data;
   final bool isLogout;
 
   MenuItem({
     required this.icon,
     required this.title,
     this.route,
+    this.data,
     this.isLogout = false,
   });
 }
