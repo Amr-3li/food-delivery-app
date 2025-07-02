@@ -11,6 +11,8 @@ import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
 
+import '../../features/menu/presentation/views/personal_info_view.dart';
+
 abstract class AppRouter {
   static const kSplashView = '/';
   static const kChatView = '/chat';
@@ -25,7 +27,7 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-      GoRoute(path: kSplashView, builder: (context, state) => const MenuView()),
+      GoRoute(path: kSplashView, builder: (context, state) => const PersonalInfoView()),
       GoRoute(
         path: ChifHomeView.id,
         name: "welcome",

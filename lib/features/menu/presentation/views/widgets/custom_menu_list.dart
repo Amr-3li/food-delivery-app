@@ -20,7 +20,7 @@ class CustomMenuList extends StatelessWidget {
       ),
       child: Column(
         children: menuGroup.items
-            .map((item) => CustomMenuItem(name: item.title, icon: item.icon))
+            .map((item) => CustomMenuItem(name: item.title, icon: item.icon, data: item.data))
             .toList(),
       ),
     );
