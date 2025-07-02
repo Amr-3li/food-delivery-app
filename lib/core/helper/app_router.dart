@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
 import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
+import 'package:restaurant/features/chief_part/chief_menu/presentation/view/chief_menu.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
 import 'package:restaurant/features/notification/presentation/view/notification.dart';
 
@@ -13,7 +14,7 @@ import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
 
 abstract class AppRouter {
-  static const kSplashView = '/chat';
+  static const kSplashView = '/';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -23,7 +24,8 @@ abstract class AppRouter {
   static const kProfileView = '/profile';
   static const kCartView = '/cart';
   static const kSucessPaymentView = '/sucessPayment';
-  static const kNotificationView = '/';
+  static const kNotificationView = '/notification';
+  static const kMenuChiefView = '/MenuChief';
 
   static final router = GoRouter(
     routes: [
@@ -75,6 +77,11 @@ abstract class AppRouter {
         path: kNotificationView,
         name: "notification",
         builder: (context, state) => NotificationScreen(),
+      ),
+      GoRoute(
+        path: kMenuChiefView,
+        name: "MenuChief",
+        builder: (context, state) => ChiefMenuScreen(),
       ),
     ],
   );
