@@ -17,7 +17,7 @@ import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
 
 import '../../features/menu/presentation/views/personal_info_view.dart';
 abstract class AppRouter {
-  static const kSplashView = '/chat';
+  static const kSplashView = '/';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -27,14 +27,14 @@ abstract class AppRouter {
   static const kProfileView = '/profile';
   static const kCartView = '/cart';
   static const kSucessPaymentView = '/sucessPayment';
-  static const kNotificationView = '/';
+  static const kNotificationView = '/notification';
 
   static final router = GoRouter(
     routes: [
 
       GoRoute(
         path: kSplashView,
-        builder: (context, state) => const SplashView(),
+        builder: (context, state) => const LoginView(),
       ),
       GoRoute(path: kSplashView, builder: (context, state) => const PersonalInfoView()),
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 
+import '../helper/app_validator.dart';
+
 @immutable
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -9,7 +11,7 @@ class CustomTextField extends StatelessWidget {
     required this.textLabel,
     required this.textController,
     required this.textFieldSuffix,
-    required this.validatorFunction,
+    this.appValidator,
     this.readOnly = false,
     this.onChangedFunction,
     this.textFieldPrefix = const SizedBox(width: 1),
@@ -23,7 +25,7 @@ class CustomTextField extends StatelessWidget {
   final String textLabel;
   final bool readOnly;
   final TextInputType keyboardType;
-  final String? Function(String?)? validatorFunction;
+  final AppValidator? appValidator;
   final Function(String)? onChangedFunction;
   final bool isObsecure;
   final int? maxLength;
@@ -40,9 +42,7 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           prefixIcon: textFieldPrefix,
           hintText: textLabel,
-
           hintStyle: Styles.textStyle16,
-
           filled: true,
           // fillColor: ColorsHelper.white1,
           suffixIcon: textFieldSuffix,
@@ -52,7 +52,7 @@ class CustomTextField extends StatelessWidget {
           ),
           enabledBorder: InputBorder.none,
         ),
-        validator: validatorFunction,
+        validator: appValidator?.validate,
         onChanged: onChangedFunction,
       ),
     );

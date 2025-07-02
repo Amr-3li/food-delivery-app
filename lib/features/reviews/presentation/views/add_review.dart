@@ -70,9 +70,6 @@ class _AddReviewState extends State<AddReview> {
                 textController: _nameController,
                 textLabel: "Enter your name",
                 textFieldSuffix: null,
-                validatorFunction: (value) {
-                  return null;
-                },
               ),
               SizedBox(height: 2.h),
               Text("Review Title", style: Styles.textStyle14),
@@ -81,9 +78,6 @@ class _AddReviewState extends State<AddReview> {
                 textController: _titleController,
                 textLabel: "Enter Review Title",
                 textFieldSuffix: null,
-                validatorFunction: (value) {
-                  return null;
-                },
               ),
               SizedBox(height: 2.h),
               Text("Write a Review", style: Styles.textStyle14),
@@ -93,9 +87,6 @@ class _AddReviewState extends State<AddReview> {
                 maxLength: 4,
                 textLabel: "Share your experience...",
                 textFieldSuffix: null,
-                validatorFunction: (value) {
-                  return null;
-                },
               ),
 
               SizedBox(height: 2.h),
