@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/core/icons.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/dependency_injection/service_locator.dart';
+
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
@@ -8,10 +10,11 @@ import 'package:restaurant/features/cart/data/models/cart_model.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/cart_item_container.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/edit_dialog.dart';
+import 'package:restaurant/features/payment/data/repository/payment_repository.dart';
 import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
 import 'package:restaurant/features/payment/presentaion/cubit/payment_state.dart';
+
 import 'package:sizer/sizer.dart';
-import 'package:svg_flutter/svg.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -40,165 +43,177 @@ class _CartViewState extends State<CartView> {
   String addressTitle = "2118 Thornridge Cir. Syracuse";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorsHelper.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black54,
-        leading: BackIconAppBar(onTap: () {}),
-        title: Text(
-          "Cart",
-          style: Styles.textStyle17.copyWith(color: ColorsHelper.white),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: Text(
-              "Edit Items",
-              style: Styles.textStyle14.copyWith(
-                color: ColorsHelper.orange,
-                decoration: TextDecoration.underline,
+    return BlocProvider(
+      create: (context) => PaymentCubit(sl<PaymentRepository>()),
+      child: Scaffold(
+        backgroundColor: ColorsHelper.black,
+        appBar: AppBar(
+          backgroundColor: Colors.black54,
+          leading: BackIconAppBar(onTap: () {}),
+          title: Text(
+            "Cart",
+            style: Styles.textStyle17.copyWith(color: ColorsHelper.white),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                "Edit Items",
+                style: Styles.textStyle14.copyWith(
+                  color: ColorsHelper.orange,
+                  decoration: TextDecoration.underline,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        padding: EdgeInsets.only(bottom: 80), // Prevent overlap with bottom bar
-        itemCount: cartItem.length,
-        itemBuilder: (context, index) {
-          return CartItemContainer(
-            imageName: cartItem[index].imageUrl, //update image
-            title: cartItem[index].title,
-            price: '\$${cartItem[index].price}',
-            portion: cartItem[index].quantity,
-            removeItemCart: () {
-              setState(() {
-                cartItem.removeAt(index);
-              });
-            },
-            onTapAdd: () {
-              setState(() {
-                cartItem[index].quantity++;
-              });
-            },
-            onTapRemove: () {
-              setState(() {
-                if (cartItem[index].quantity > 0) cartItem[index].quantity--;
-              });
-            },
-          );
-        },
-
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-      ),
-
-      // Bottom area using bottomNavigationBar
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-          color: Colors.white,
-          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6)],
+          ],
         ),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Delivery Address",
-                    style: Styles.textStyle16.copyWith(
-                      color: ColorsHelper.lightPurple,
-                    ),
-                  ),
-                  SizedBox(height: 2.h),
-                  TextButton(
-                    onPressed: () {
-                      EditAddressDialog.showEditAddressDialog(
-                        context,
-                        title: addressTitle,
-                        onSave: (addressTitle) {},
-                        // final updatedAddress = address.copyWith(
-                        //   title: title,
+        body: ListView.builder(
+          padding: EdgeInsets.only(
+            bottom: 80,
+          ), // Prevent overlap with bottom bar
+          itemCount: cartItem.length,
+          itemBuilder: (context, index) {
+            return CartItemContainer(
+              imageName: cartItem[index].imageUrl, //update image
+              title: cartItem[index].title,
+              price: '\$${cartItem[index].price}',
+              portion: cartItem[index].quantity,
+              removeItemCart: () {
+                setState(() {
+                  cartItem.removeAt(index);
+                });
+              },
+              onTapAdd: () {
+                setState(() {
+                  cartItem[index].quantity++;
+                });
+              },
+              onTapRemove: () {
+                setState(() {
+                  if (cartItem[index].quantity > 0) cartItem[index].quantity--;
+                });
+              },
+            );
+          },
 
-                        // );
-                      );
-                    },
-                    child: Text(
-                      "Edit",
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+        ),
+
+        // Bottom area using bottomNavigationBar
+        bottomNavigationBar: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+            color: Colors.white,
+            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6)],
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Delivery Address",
                       style: Styles.textStyle16.copyWith(
-                        color: ColorsHelper.orangeDark,
-                        decoration: TextDecoration.underline,
+                        color: ColorsHelper.lightPurple,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Container(
-                padding: EdgeInsets.all(3.h),
-                height: 8.h,
-                width: 90.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: ColorsHelper.lightBlue,
-                ),
+                    SizedBox(height: 2.h),
+                    TextButton(
+                      onPressed: () {
+                        EditAddressDialog.showEditAddressDialog(
+                          context,
+                          title: addressTitle,
+                          onSave: (addressTitle) {},
+                          // final updatedAddress = address.copyWith(
+                          //   title: title,
 
-                child: Text("2118 Thornridge Cir. Syracuse"),
-              ),
-              SizedBox(height: 4.h),
-              Row(
-                children: [
-                  Text(
-                    'Total: \$120.00',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      Text(
-                        "breakdown",
-                        style: Styles.textStyle14.copyWith(
-                          color: ColorsHelper.orange,
+                          // );
+                        );
+                      },
+                      child: Text(
+                        "Edit",
+                        style: Styles.textStyle16.copyWith(
+                          color: ColorsHelper.orangeDark,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          // Navigator.push(context, MaterialPageRoute(builder: (_)=>),);
-                        },
-                        icon: Icon(Icons.arrow_forward_ios_rounded),
-                      ),
-                    ],
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.all(3.h),
+                  height: 8.h,
+                  width: 90.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ColorsHelper.lightBlue,
                   ),
-                ],
-              ),
-              SizedBox(height: 6.h),
-              BlocConsumer<PaymentCubit, PaymentState>(
-                listener: (context, state) {
-                  if (state is PaymentSucess) {
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => SucessPayment()),
-                    // );
-                  } else if (state is PaymentFailure) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.error)));
-                  }
-                },
-                builder: (context, state) {
-                  return CustomElevatedButton(
-                    buttonText: 'Place Order',
-                    onPressedFunction: () {},
-                    buttonColor: ColorsHelper.orangeDark,
-                    widthButton: double.infinity,
-                    textColor: ColorsHelper.white,
-                  );
-                },
-              ),
-            ],
+
+                  child: Text("2118 Thornridge Cir. Syracuse"),
+                ),
+                SizedBox(height: 4.h),
+                Row(
+                  children: [
+                    Text(
+                      'Total: \$120.00',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Spacer(),
+                    Row(
+                      children: [
+                        Text(
+                          "breakdown",
+                          style: Styles.textStyle14.copyWith(
+                            color: ColorsHelper.orange,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            //  context.pushNamed('');
+                          },
+                          icon: Icon(Icons.arrow_forward_ios_rounded),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 6.h),
+                BlocConsumer<PaymentCubit, PaymentState>(
+                  listener: (context, state) {
+                    if (state is PaymentSucess) {
+                      context.pushNamed('sucessPayment');
+                      debugPrint('✅ Payment succeeded');
+                    } else if (state is PaymentFailure) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(state.error)));
+                    }
+                  },
+                  builder: (context, state) {
+                    return CustomElevatedButton(
+                      buttonText: 'Place Order',
+                      onPressedFunction: () {
+                        context.read<PaymentCubit>().makePayment(
+                          courseId: "course123",
+                          amount: 5000,
+                          currency: "usd",
+                        );
+                      },
+                      buttonColor: ColorsHelper.orangeDark,
+                      widthButton: double.infinity,
+                      textColor: ColorsHelper.white,
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
