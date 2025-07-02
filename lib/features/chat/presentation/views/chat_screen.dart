@@ -1,11 +1,10 @@
-import 'package:bubble/bubble.dart';
-
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/icons.dart';
-import 'package:restaurant/core/utils/color_helper.dart';
+
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/chat/data/models/chat_model.dart';
 import 'package:restaurant/features/chat/presentation/views/widgets/area_input.dart';
+import 'package:restaurant/features/chat/presentation/views/widgets/message_list.dart';
 import 'package:svg_flutter/svg.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -92,7 +91,12 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
-          Expanded(child: buildMessageList(messages, currentUserId)),
+          Expanded(
+            child: MessageList(
+              messages: messages,
+              currentUserId: currentUserId,
+            ),
+          ),
           AreaInput(
             currentUserId: currentUserId,
             focusNode: focusNode,
@@ -101,35 +105,6 @@ class _ChatScreenState extends State<ChatScreen> {
             textController: textController,
           ),
         ],
-      ),
-    );
-  }
-
-  Widget buildMessageItem(ChatMessages chatMessage, bool isSender) {
-    return Bubble(
-      margin: const BubbleEdges.only(top: 10),
-      alignment: isSender ? Alignment.topRight : Alignment.topLeft,
-      nip: isSender ? BubbleNip.rightTop : BubbleNip.leftTop,
-      color: isSender ? ColorsHelper.orange : ColorsHelper.lightBabyBlue,
-      child: Text(
-        chatMessage.content,
-        style: TextStyle(color: isSender ? Colors.white : Colors.black),
-      ),
-    );
-  }
-
-  Widget buildMessageList(List<ChatMessages> messages, String currentUserId) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-        reverse: true,
-        itemCount: messages.length,
-        itemBuilder: (context, index) {
-          final message =
-              messages[messages.length - 1 - index]; // Reverse manually
-          final isSender = message.idFrom == currentUserId;
-          return buildMessageItem(message, isSender);
-        },
       ),
     );
   }
