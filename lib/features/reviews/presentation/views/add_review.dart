@@ -55,7 +55,12 @@ class _AddReviewState extends State<AddReview> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackIconAppBar(onTap: () => Navigator.pop(context)),
+        leading: Row(
+          children: [
+            SizedBox(width: 2.w),
+            BackIconAppBar(onTap: () {}, iconColor: ColorsHelper.lightBabyBlue),
+          ],
+        ),
         title: Text("Add Review", style: Styles.textStyle17),
       ),
       body: Padding(
