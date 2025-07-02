@@ -6,16 +6,38 @@ import 'package:restaurant/features/forget_password.dart/presentation/views/forg
 import 'package:restaurant/features/forget_password.dart/presentation/views/vertification_view.dart';
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
+import 'package:restaurant/features/cart/presentation/views/cart.dart';
+import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
+import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
+import 'package:restaurant/features/notification/presentation/view/notification.dart';
+import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
 
+import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
+import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
+
+import '../../features/menu/presentation/views/personal_info_view.dart';
 abstract class AppRouter {
-  static const kSplashView = '/';
+  static const kSplashView = '/chat';
+  static const kChatView = '/chat';
+  static const kMessageListView = '/messageList';
+  static const kReviewView = '/review';
+  static const kAddReviewView = '/addReview';
+  static const kWelcomeView = '/welcome';
+  static const kHomeView = '/home';
+  static const kProfileView = '/profile';
+  static const kCartView = '/cart';
+  static const kSucessPaymentView = '/sucessPayment';
+  static const kNotificationView = '/';
 
   static final router = GoRouter(
     routes: [
+
       GoRoute(
         path: kSplashView,
         builder: (context, state) => const SplashView(),
       ),
+      GoRoute(path: kSplashView, builder: (context, state) => const PersonalInfoView()),
+
       GoRoute(
         path: ChifHomeView.id,
         name: "welcome",
@@ -42,7 +64,50 @@ abstract class AppRouter {
       ),
         GoRoute(path: "/vertificationView" , 
       builder: (context, state) => VertificationView(),
-      )
+      ),
+      GoRoute(
+        path: ChifHomeView.id,
+        name: "Home",
+        builder: (context, state) => const ChifHomeView(),
+      ),
+      GoRoute(
+        path: kChatView,
+        name: "chat",
+        builder: (context, state) => const ChatScreen(userId: "1"),
+      ),
+
+      GoRoute(
+        path: kMessageListView,
+        name: "messageList",
+        builder: (context, state) => ChatListScreen(),
+      ),
+      GoRoute(
+        path: kReviewView,
+        name: "review",
+        builder: (context, state) => ReviewScreen(),
+      ),
+      GoRoute(
+        path: kAddReviewView,
+        name: "addReview",
+        builder: (context, state) => AddReview(),
+      ),
+      GoRoute(
+        path: kCartView,
+        name: "cart",
+        builder: (context, state) => CartView(),
+      ),
+
+      GoRoute(
+        path: kSucessPaymentView,
+        name: "sucessPayment",
+        builder: (context, state) => SucessPayment(),
+      ),
+
+      GoRoute(
+        path: kNotificationView,
+        name: "notification",
+        builder: (context, state) => NotificationScreen(),
+      ),
     ],
   );
 }

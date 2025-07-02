@@ -15,7 +15,6 @@ class CustomElevatedButton extends StatelessWidget {
     required this.buttonColor,
   });
   final String buttonText;
-
   final Color? buttonColor;
   final Color textColor;
 
