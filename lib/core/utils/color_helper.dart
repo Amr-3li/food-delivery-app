@@ -15,4 +15,5 @@ class ColorsHelper {
   static Color black = HexColor("000000");
   static Color lightPurple = HexColor("A0A5BA");
   static Color grey = HexColor("A5A7B9");
+  static Color lightWhite = HexColor("F6F8FA");
 }

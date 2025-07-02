@@ -25,7 +25,7 @@ class MyOrdersView extends StatelessWidget {
             ),
           ),
           toolbarHeight: AppResponsive.height(context, value: 80),
-          title: Text('My Orders'),
+          title: Text('My Orders', style: Styles.textStyle18),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 16),
