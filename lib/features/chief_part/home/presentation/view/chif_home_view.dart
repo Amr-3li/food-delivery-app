@@ -17,7 +17,7 @@ class ChifHomeView extends StatelessWidget {
       appBar: CustomAppBar(
         dynamicText: "Hotel Lab",
         onLeadingPressed: () {
-          print("Leading button pressed");
+          debugPrint("Leading button pressed");
         },
         userImageUrl:
             "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",

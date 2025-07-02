@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/assets_data.dart';
@@ -36,10 +37,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset(
-            AssetsData.logo,
-            height: 100.h,
-          ),
+          Image.asset(AssetsData.logo, height: 100.h),
           TextSlidingAnimation(slidingAnimation: slidingAnimation),
         ],
       ),
@@ -51,15 +49,20 @@ class _SplashViewBodyState extends State<SplashViewBody>
       vsync: this,
       duration: const Duration(seconds: 1),
     );
-    slidingAnimation =
-        Tween<Offset>(begin: const Offset(0, 5), end: Offset.zero)
-            .animate(animationController);
+    slidingAnimation = Tween<Offset>(
+      begin: const Offset(0, 5),
+      end: Offset.zero,
+    ).animate(animationController);
     animationController.forward();
   }
 
   void delayedMethod() {
-    Future.delayed(const Duration(seconds: 2), () =>Navigator.pushReplacement(context, 
-        MaterialPageRoute(builder: (context) => const LoginView()))
+    Future.delayed(
+      const Duration(seconds: 2),
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginView()),
+      ),
     );
   }
 }
