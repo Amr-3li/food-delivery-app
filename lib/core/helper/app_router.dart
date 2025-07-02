@@ -3,6 +3,7 @@ import 'package:restaurant/features/auth/views/login_view.dart';
 import 'package:restaurant/features/auth/views/register_view.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
+import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
@@ -22,7 +23,7 @@ import '../../features/menu/presentation/views/personal_info_view.dart';
 
 abstract class AppRouter {
   static const kSplashView = '/';
-  static const kSplashView = '/';
+
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
