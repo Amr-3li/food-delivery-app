@@ -4,7 +4,7 @@ import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_arrow_back.dart';
 import 'package:restaurant/core/widgets/custom_onboarding_button.dart';
 import 'package:restaurant/features/auth/views/widgets/title_authentication_pages.dart';
-import 'package:restaurant/features/forget_password.dart/presentation/views/widgets/pin_text_filed.dart';
+import 'package:restaurant/features/forget_password/presentation/views/widgets/pin_text_filed.dart';
 import 'package:sizer/sizer.dart';
 
 class VertificationView extends StatefulWidget {

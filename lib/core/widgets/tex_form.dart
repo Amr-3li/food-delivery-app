@@ -10,7 +10,7 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.textLabel,
     required this.textController,
-    required this.textFieldSuffix,
+    this.textFieldSuffix,
     this.appValidator,
     this.readOnly = false,
     this.onChangedFunction,
@@ -31,30 +31,31 @@ class CustomTextField extends StatelessWidget {
   final int? maxLength;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: TextFormField(
-        maxLength: maxLength,
-        controller: textController,
-        obscureText: isObsecure,
-        keyboardType: keyboardType,
-        readOnly: readOnly,
-        decoration: InputDecoration(
-          prefixIcon: textFieldPrefix,
-          hintText: textLabel,
-          hintStyle: Styles.textStyle16,
-          filled: true,
-          // fillColor: ColorsHelper.white1,
-          suffixIcon: textFieldSuffix,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(color: ColorsHelper.black, width: 1),
-          ),
-          enabledBorder: InputBorder.none,
+    return TextFormField(
+      maxLength: maxLength,
+      controller: textController,
+      obscureText: isObsecure,
+      keyboardType: keyboardType,
+      readOnly: readOnly,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.all(18),
+        prefixIcon: textFieldPrefix,
+        hintText: textLabel,
+        hintStyle: Styles.textStyle16,
+        filled: true,
+        suffixIcon: textFieldSuffix,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: ColorsHelper.white, width: 1),
         ),
-        validator: appValidator?.validate,
-        onChanged: onChangedFunction,
+        fillColor: ColorsHelper.grey.withAlpha(50),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: ColorsHelper.white, width: 1),
+        ),
       ),
+      validator: appValidator?.validate,
+      onChanged: onChangedFunction,
     );
   }
 }
