@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/utils/styles.dart';
-import 'package:svg_flutter/svg.dart';
 
-import '../../../../../core/icons.dart';
 import '../../../../../core/utils/color_helper.dart';
 import '../../../data/models/menu_group_list.dart';
 import 'custom_menu_list.dart';
@@ -45,7 +43,7 @@ class MenuViewBody extends StatelessWidget {
               separatorBuilder: (context, index) => SizedBox(height: 16),
               itemCount: menuGroups.length,
             ),
-            SizedBox(height: 16)
+            SizedBox(height: 16),
           ],
         ),
       ),
