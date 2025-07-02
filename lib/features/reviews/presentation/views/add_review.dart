@@ -97,21 +97,7 @@ class _AddReviewState extends State<AddReview> {
                   return null;
                 },
               ),
-              // TextField(
-              //   controller: _titleController,
-              //   decoration: InputDecoration(border: OutlineInputBorder()),
-              // ),
-              // SizedBox(height: 2.h),
 
-              // SizedBox(height: 1.h),
-              // TextField(
-              //   controller: _textController,
-              //   maxLines: 4,
-              //   decoration: InputDecoration(
-              //     border: OutlineInputBorder(),
-              //     hintText: "Share your experience...",
-              //   ),
-              // ),
               SizedBox(height: 2.h),
               Text("Your Rating", style: Styles.textStyle14),
               Row(

@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/core/helper/app_responsive.dart';
-import 'package:restaurant/core/utils/color_helper.dart';
-import 'package:restaurant/core/widgets/custom_elevated_button.dart';
-import 'package:svg_flutter/svg.dart';
 
-import '../../../../../core/icons.dart';
-import '../../../../../core/utils/styles.dart';
 import 'custom_order_item.dart';
 
 class MyOrdersViewBody extends StatelessWidget {
@@ -15,8 +9,14 @@ class MyOrdersViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBarView(
       children: [
-        ListView.builder(itemBuilder: (context, index) => CustomOrderItem(isCompleted: false,), itemCount: 5,),
-        ListView.builder(itemBuilder: (context, index) => CustomOrderItem(isCompleted: true,), itemCount: 5,),
+        ListView.builder(
+          itemBuilder: (context, index) => CustomOrderItem(isCompleted: false),
+          itemCount: 5,
+        ),
+        ListView.builder(
+          itemBuilder: (context, index) => CustomOrderItem(isCompleted: true),
+          itemCount: 5,
+        ),
       ],
     );
   }

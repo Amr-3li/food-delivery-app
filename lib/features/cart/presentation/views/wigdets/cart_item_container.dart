@@ -31,7 +31,7 @@ class CartItemContainer extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(3.w),
         decoration: BoxDecoration(
-          color: Colors.black54.withOpacity(0.7),
+          color: Colors.black54.withValues(alpha: .7),
           borderRadius: BorderRadius.circular(12),
           // boxShadow: [
           //   BoxShadow(
@@ -129,7 +129,7 @@ class CartItemContainer extends StatelessWidget {
                           AddRemoveContainer(
                             onTap: onTapRemove,
                             text: "-",
-                            containerColor: Colors.white.withOpacity(.3),
+                            containerColor: Colors.white.withValues(alpha: .3),
                           ),
 
                           Padding(
@@ -146,7 +146,7 @@ class CartItemContainer extends StatelessWidget {
                           AddRemoveContainer(
                             onTap: onTapAdd,
                             text: "+",
-                            containerColor: Colors.white.withOpacity(.3),
+                            containerColor: Colors.white.withValues(alpha: .3),
                           ),
                         ],
                       ),

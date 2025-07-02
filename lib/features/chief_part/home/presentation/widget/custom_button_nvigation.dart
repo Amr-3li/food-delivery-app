@@ -58,6 +58,7 @@ class CustomBottomNavBar extends StatelessWidget {
               Assets.assetsImagesPlus,
               width: 28,
               height: 28,
+
               color: Colors.orange, // Black plus icon
             ),
           ),
