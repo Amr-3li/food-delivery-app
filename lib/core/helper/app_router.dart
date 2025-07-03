@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:restaurant/features/auth/views/login_view.dart';
 import 'package:restaurant/features/auth/views/register_view.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
+import 'package:restaurant/features/chief_part/notification/presentation/view/notification.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
@@ -35,6 +36,7 @@ abstract class AppRouter {
   static const kSucessPaymentView = '/sucessPayment';
   static const kNotificationView = '/notification';
   static const kMenuChiefView = '/MenuChief';
+  static const kNotificationChiefView = '/notificationChief';
 
   static final router = GoRouter(
     routes: [
@@ -91,6 +93,11 @@ abstract class AppRouter {
         path: kMenuChiefView,
         name: "MenuChief",
         builder: (context, state) => ChiefMenuScreen(),
+      ),
+      GoRoute(
+        path: kNotificationChiefView,
+        name: "notificationChief",
+        builder: (context, state) => NotificationChiefScreen(),
       ),
     ],
   );
