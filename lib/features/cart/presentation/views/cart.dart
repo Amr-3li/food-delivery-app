@@ -47,7 +47,10 @@ class _CartViewState extends State<CartView> {
         backgroundColor: ColorsHelper.black,
         appBar: AppBar(
           backgroundColor: Colors.black54,
-          leading: BackIconAppBar(onTap: () {}),
+          leading: BackIconAppBar(
+            iconColor: Colors.white.withValues(alpha: .3),
+            onTap: () {},
+          ),
           title: Text(
             "Cart",
             style: Styles.textStyle17.copyWith(color: ColorsHelper.white),
