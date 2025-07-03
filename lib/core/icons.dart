@@ -31,6 +31,8 @@ class AppIcons {
   static const String iInfo = "assets/images/info.svg";
 
   static const String iLogout = "assets/images/Logout.svg";
+  static const String assetsImagesLogout = "assets/images/Logout.svg";
+  static const String assetsImagesLogoutl = "assets/images/Logoutleft.svg";
 
   static const String iMenu = "assets/images/menu.svg";
 
@@ -73,6 +75,8 @@ class AppIcons {
   /// Assets for iVector
   /// assets/images/Vector.svg
   static const String iVector = "assets/images/Vector.svg";
+  static const String assetsImagesVector = "assets/images/Vector.svg";
+  static const String assetsImagesnoOrder = "assets/images/Number of order.svg";
 
   /// Assets for iVolume1
   /// assets/images/volume-1.svg
@@ -84,4 +88,48 @@ class AppIcons {
   static const String iUpload = "assets/images/upload.svg";
 
   static const String assetsMoreHorizontal = "assets/images/More_2.svg";
+
+  static const String assetsPersonalInfo = "assets/images/personal_info.svg";
+
+  static const String assetsAddresses = "assets/images/addresses.svg";
+
+  static const String assetsCart = "assets/images/cart.svg";
+
+  static const String assetsFavourite = "assets/images/favourite.svg";
+
+  static const String assetsNotifications = "assets/images/notifications.svg";
+
+  static const String assetsPaymentMethod = "assets/images/payment method.svg";
+
+  static const String assetsFAQs = "assets/images/faqs.svg";
+
+  static const String assetsReviews = "assets/images/user reviews.svg";
+
+  static const String assetsSettings = "assets/images/settings.svg";
+
+  static const String assetsLogout = "assets/images/Logout.svg";
+
+  static const String assetsArrowRight = "assets/images/arrow_right.svg";
+
+  static const String assetsEmail = "assets/images/email.svg";
+
+  static const String assetsPhoneNumber = "assets/images/phone.svg";
+
+  static const String assetsWithdrew = "assets/images/withdrew.svg";
+
+  static const String assetsHome = "assets/images/home_2.svg";
+
+  static const String assetsBag = "assets/images/bag.svg";
+
+  static const String assetsDelete = "assets/images/Delete icon.svg";
+
+  static const String assetsEdit = "assets/images/edit.svg";
+
+  static const String assetsStar = "assets/images/Star 1.svg";
+
+  static const String assetsClock = "assets/images/Clock.svg";
+
+  static const String assetsCar = "assets/images/Vector.svg";
+
+  static const String assetsFavoritesWhite = "assets/images/favorites.svg";
 }

@@ -39,6 +39,11 @@ abstract class Styles {
     fontWeight: FontWeight.w500,
     fontFamily: "Sen",
   );
+  static final textStyle20 = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.bold,
+    fontFamily: "Sen",
+  );
   static final textStyle22 = TextStyle(
     fontSize: 22.sp,
     fontWeight: FontWeight.w600,
@@ -49,8 +54,24 @@ abstract class Styles {
     fontWeight: FontWeight.w600,
     fontFamily: "Sen",
   );
+  static final textStyle30 = TextStyle(
+    fontSize: 30.sp,
+    fontWeight: FontWeight.w600,
+    fontFamily: "Sen",
+  );
   static final textStyle33 = TextStyle(
     fontSize: 33.sp,
+    fontWeight: FontWeight.w600,
+    fontFamily: "Sen",
+  );
+   static final textStyle26 = TextStyle(
+    fontSize: 26.sp,
+    fontWeight: FontWeight.w600,
+    fontFamily: "Sen",
+    color: Colors.white
+  );
+  static final textStyle40 = TextStyle(
+    fontSize: 40.sp,
     fontWeight: FontWeight.w600,
     fontFamily: "Sen",
   );

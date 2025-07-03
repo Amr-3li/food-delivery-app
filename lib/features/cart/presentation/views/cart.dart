@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:restaurant/core/dependency_injection/service_locator.dart';
+
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
-import 'package:restaurant/core/widgets/custom_elevated_button.dart';
+
 import 'package:restaurant/features/cart/data/models/cart_model.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/cart_item_container.dart';
-import 'package:restaurant/features/cart/presentation/views/wigdets/edit_dialog.dart';
-import 'package:sizer/sizer.dart';
+import 'package:restaurant/features/cart/presentation/views/wigdets/container_bottom_navigator_bar.dart';
+
+import 'package:restaurant/features/payment/data/repository/payment_repository.dart';
+import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -35,150 +41,69 @@ class _CartViewState extends State<CartView> {
   String addressTitle = "2118 Thornridge Cir. Syracuse";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorsHelper.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black54,
-        leading: BackIconAppBar(onTap: () {}),
-        title: Text(
-          "Cart",
-          style: Styles.textStyle17.copyWith(color: ColorsHelper.white),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: Text(
-              "Edit Items",
-              style: Styles.textStyle14.copyWith(
-                color: ColorsHelper.orange,
-                decoration: TextDecoration.underline,
+    return BlocProvider(
+      create: (context) => PaymentCubit(sl<PaymentRepository>()),
+      child: Scaffold(
+        backgroundColor: ColorsHelper.black,
+        appBar: AppBar(
+          backgroundColor: Colors.black54,
+          leading: BackIconAppBar(
+            iconColor: Colors.white.withValues(alpha: .3),
+            onTap: () {},
+          ),
+          title: Text(
+            "Cart",
+            style: Styles.textStyle17.copyWith(color: ColorsHelper.white),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                "Edit Items",
+                style: Styles.textStyle14.copyWith(
+                  color: ColorsHelper.orange,
+                  decoration: TextDecoration.underline,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        padding: EdgeInsets.only(bottom: 80), // Prevent overlap with bottom bar
-        itemCount: cartItem.length,
-        itemBuilder: (context, index) {
-          return CartItemContainer(
-            imageName: cartItem[index].imageUrl, //update image
-            title: cartItem[index].title,
-            price: '\$${cartItem[index].price}',
-            portion: cartItem[index].quantity,
-            removeItemCart: () {
-              setState(() {
-                cartItem.removeAt(index);
-              });
-            },
-            onTapAdd: () {
-              setState(() {
-                cartItem[index].quantity++;
-              });
-            },
-            onTapRemove: () {
-              setState(() {
-                if (cartItem[index].quantity > 0) cartItem[index].quantity--;
-              });
-            },
-          );
-        },
-
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-      ),
-
-      // Bottom area using bottomNavigationBar
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-          color: Colors.white,
-          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6)],
+          ],
         ),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Delivery Address",
-                    style: Styles.textStyle16.copyWith(
-                      color: ColorsHelper.lightPurple,
-                    ),
-                  ),
-                  SizedBox(height: 2.h),
-                  TextButton(
-                    onPressed: () {
-                      EditAddressDialog.showEditAddressDialog(
-                        context,
-                        title: addressTitle,
-                        onSave: (addressTitle) {},
-                        // final updatedAddress = address.copyWith(
-                        //   title: title,
+        body: ListView.builder(
+          padding: EdgeInsets.only(
+            bottom: 80,
+          ), // Prevent overlap with bottom bar
+          itemCount: cartItem.length,
+          itemBuilder: (context, index) {
+            return CartItemContainer(
+              imageName: cartItem[index].imageUrl, //update image
+              title: cartItem[index].title,
+              price: '\$${cartItem[index].price}',
+              portion: cartItem[index].quantity,
+              removeItemCart: () {
+                setState(() {
+                  cartItem.removeAt(index);
+                });
+              },
+              onTapAdd: () {
+                setState(() {
+                  cartItem[index].quantity++;
+                });
+              },
+              onTapRemove: () {
+                setState(() {
+                  if (cartItem[index].quantity > 0) cartItem[index].quantity--;
+                });
+              },
+            );
+          },
 
-                        // );
-                      );
-                    },
-                    child: Text(
-                      "Edit",
-                      style: Styles.textStyle16.copyWith(
-                        color: ColorsHelper.orangeDark,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                padding: EdgeInsets.all(3.h),
-                height: 8.h,
-                width: 90.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: ColorsHelper.lightBlue,
-                ),
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+        ),
 
-                child: Text("2118 Thornridge Cir. Syracuse"),
-              ),
-              SizedBox(height: 4.h),
-              Row(
-                children: [
-                  Text(
-                    'Total: \$120.00',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      Text(
-                        "breakdown",
-                        style: Styles.textStyle14.copyWith(
-                          color: ColorsHelper.orange,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          // Navigator.push(context, MaterialPageRoute(builder: (_)=>),);
-                        },
-                        icon: Icon(Icons.arrow_forward_ios_rounded),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 6.h),
-              CustomElevatedButton(
-                buttonText: 'Place Order',
-                onPressedFunction: () {},
-                buttonColor: ColorsHelper.orangeDark,
-                widthButton: double.infinity,
-                textColor: ColorsHelper.white,
-              ),
-            ],
-          ),
+        // Bottom area using bottomNavigationBar
+        bottomNavigationBar: ContainerBottomNavigator(
+          addressTitle: addressTitle,
         ),
       ),
     );

@@ -4,8 +4,13 @@ import 'package:svg_flutter/svg.dart';
 
 // ignore: must_be_immutable
 class BackIconAppBar extends StatelessWidget {
-  BackIconAppBar({super.key, required this.onTap});
-  void Function()? onTap;
+  const BackIconAppBar({
+    super.key,
+    required this.onTap,
+    this.iconColor = Colors.white,
+  });
+  final void Function()? onTap;
+  final Color iconColor;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

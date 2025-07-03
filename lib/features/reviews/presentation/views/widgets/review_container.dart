@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 
 // ignore: must_be_immutable
 class ReviewContainer extends StatelessWidget {
-  ReviewContainer({
+  const ReviewContainer({
     super.key,
     required this.date,
     required this.imageUrl,
@@ -15,12 +15,12 @@ class ReviewContainer extends StatelessWidget {
     required this.reviewTitle,
     required this.userName,
   });
-  String imageUrl;
-  String userName;
-  String reviewText;
-  String reviewTitle;
-  String date;
-  int rating;
+  final String imageUrl;
+  final String userName;
+  final String reviewText;
+  final String reviewTitle;
+  final String date;
+  final int rating;
   @override
   Widget build(BuildContext context) {
     return Padding(
