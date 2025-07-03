@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/custom_appbar.dart';
-import 'package:restaurant/features/chief_part/home/presentation/widget/custom_button_nvigation.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/order_form_sheet.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/order_widget.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/populer_food_builder.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/revenue_dashboard.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/reviews_summary.dart';
+import 'package:restaurant/features/chief_part/widgets/custom_button_nvigation%20copy.dart';
 
 class ChifHomeView extends StatelessWidget {
   const ChifHomeView({super.key});
@@ -25,25 +25,23 @@ class ChifHomeView extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: ListView(
           children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: OrdersWidget(
-                      count: 20,
-                      subtext: 'running order',
-                      onTap: () => OrderFormSheet.show(context),
-                    ),
+            Row(
+              children: [
+                Expanded(
+                  child: OrdersWidget(
+                    count: 20,
+                    subtext: 'running order',
+                    onTap: () => OrderFormSheet.show(context),
                   ),
-                  Expanded(
-                    child: OrdersWidget(
-                      count: 5,
-                      subtext: 'order quest',
-                      onTap: () => OrderFormSheet.show(context),
-                    ),
+                ),
+                Expanded(
+                  child: OrdersWidget(
+                    count: 5,
+                    subtext: 'order quest',
+                    onTap: () => OrderFormSheet.show(context),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             RevenueDashboard(),
             const ReviewsSummary(rating: 4.1, reviewCount: 20),
@@ -51,7 +49,10 @@ class ChifHomeView extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: CustomBottomNavBar(),
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: 0, // Food List is second item
+        context: context,
+      ),
     );
   }
 }

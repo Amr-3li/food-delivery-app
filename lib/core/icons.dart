@@ -81,6 +81,7 @@ class AppIcons {
   /// Assets for iWatch
   /// assets/images/Watch.svg
   static const String iWatch = "assets/images/Watch.svg";
+  static const String iUpload = "assets/images/upload.svg";
 
   static const String assetsMoreHorizontal = "assets/images/More_2.svg";
 }
