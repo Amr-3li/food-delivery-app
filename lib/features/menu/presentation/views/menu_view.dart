@@ -19,7 +19,7 @@ class MenuView extends StatelessWidget {
           child: CircleAvatar(
             radius: 22,
             backgroundColor: ColorsHelper.lightBabyBlue,
-            child: SvgPicture.asset(Assets.assetsImagesIcon),
+            child: SvgPicture.asset(AppIcons.iIcon),
           ),
         ),
         toolbarHeight: AppResponsive.height(context, value: 80),
@@ -30,7 +30,7 @@ class MenuView extends StatelessWidget {
             child: CircleAvatar(
               radius: 20,
               backgroundColor: ColorsHelper.lightBabyBlue,
-              child: SvgPicture.asset(Assets.assetsMoreHorizontal),
+              child: SvgPicture.asset(AppIcons.assetsMoreHorizontal),
             ),
           ),
         ],

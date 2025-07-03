@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
 import 'package:restaurant/features/notification/data/models/notification_model.dart';
 import 'package:restaurant/features/notification/presentation/view/widgets/notification_listtile.dart';
 import 'package:sizer/sizer.dart';
-import 'package:svg_flutter/svg.dart';
 
 class NotificationScreen extends StatelessWidget {
   NotificationScreen({super.key});

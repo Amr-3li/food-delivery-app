@@ -17,12 +17,26 @@ class PersonalInfoViewBody extends StatelessWidget {
           CustomUserInfo(),
           const SizedBox(height: 28),
           CustomMenuList(
-            menuGroup: MenuGroup(items: [
-              MenuItem(title: 'Full Name', icon: Assets.assetsPersonalInfo, data: 'Vishal Khadok'),
-              MenuItem(title: 'Email', icon: Assets.assetsEmail, data: 'hello@halallab.co'),
-              MenuItem(title: 'Phone Number', icon: Assets.assetsPhoneNumber, data: '+91 1234567890'),
-            ]),
-          )
+            menuGroup: MenuGroup(
+              items: [
+                MenuItem(
+                  title: 'Full Name',
+                  icon: AppIcons.assetsPersonalInfo,
+                  data: 'Vishal Khadok',
+                ),
+                MenuItem(
+                  title: 'Email',
+                  icon: AppIcons.assetsEmail,
+                  data: 'hello@halallab.co',
+                ),
+                MenuItem(
+                  title: 'Phone Number',
+                  icon: AppIcons.assetsPhoneNumber,
+                  data: '+91 1234567890',
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

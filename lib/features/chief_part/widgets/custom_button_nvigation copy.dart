@@ -17,13 +17,13 @@ class CustomBottomNavBar extends StatelessWidget {
   void _onItemTapped(int index) {
     switch (index) {
       case 0:
-        GoRouter.of(context).go(AppRouteKeys.chifHome);
+        GoRouter.of(context).go(AppRouter.kChifHome);
         break;
       case 1:
-        GoRouter.of(context).go(AppRouteKeys.chifFoodList);
+        GoRouter.of(context).go(AppRouter.kChifFoodList);
         break;
       case 2:
-        GoRouter.of(context).push(AppRouteKeys.addNewItem);
+        GoRouter.of(context).push(AppRouter.kAddNewItem);
         break;
       case 3:
         break;

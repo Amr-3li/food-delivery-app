@@ -1,7 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
 import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
+import 'package:restaurant/features/chief_part/add_new_item/presentation/views/add_new_items.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
+import 'package:restaurant/features/chief_part/my_food_list/presentation/views/my_food_list_view.dart';
 import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
 import 'package:restaurant/features/auth/views/login_view.dart';
 import 'package:restaurant/features/auth/views/register_view.dart';
@@ -33,8 +35,11 @@ abstract class AppRouter {
   static const kNotificationView = '/notification';
   static const kHomeUserView = "/homeUserView";
   static const krestaurantView = "/restaurantView";
+  static const kChifFoodList = '/chif_food_list';
+  static const kAddNewItem = '/add_new_item';
+  static const kChifHome = '/chif_home';
 
-  final router = GoRouter(
+  static final router = GoRouter(
     routes: [
       GoRoute(
         path: kSplashView,
@@ -46,14 +51,14 @@ abstract class AppRouter {
       ),
 
       GoRoute(
+        path: kChifHome,
+        builder: (context, state) => const ChifHomeView(),
+      ),
+      GoRoute(
         path: '/onBoardingView',
         builder: (context, state) => OnboardingPage(),
       ),
       GoRoute(path: '/login', builder: (context, state) => LoginView()),
-      //  GoRoute(path:'/homeView' ,
-      // builder: (context, state) => LoginView(),
-
-      // ),
       GoRoute(
         path: '/forgetPassword',
         builder: (context, state) => ForgetPasswordView(),
@@ -69,6 +74,16 @@ abstract class AppRouter {
         builder: (context, state) => const ChatScreen(userId: "1"),
       ),
 
+      GoRoute(
+        path: kAddNewItem,
+        name: "addNewItem",
+        builder: (context, state) => AddNewItems(),
+      ),
+      GoRoute(
+        path: kChifFoodList,
+        name: "chifFoodList",
+        builder: (context, state) => MyFoodList(),
+      ),
       GoRoute(
         path: kMessageListView,
         name: "messageList",

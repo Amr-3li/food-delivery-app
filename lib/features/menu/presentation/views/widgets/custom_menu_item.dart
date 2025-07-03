@@ -6,7 +6,12 @@ import '../../../../../core/utils/color_helper.dart';
 import '../../../../../core/utils/styles.dart';
 
 class CustomMenuItem extends StatelessWidget {
-  const CustomMenuItem({super.key, required this.name, required this.icon, this.data});
+  const CustomMenuItem({
+    super.key,
+    required this.name,
+    required this.icon,
+    this.data,
+  });
 
   final String name;
   final String icon;
@@ -29,27 +34,20 @@ class CustomMenuItem extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: Styles.textStyle16.copyWith(
-                  color: ColorsHelper.black,
-                ),
+                style: Styles.textStyle16.copyWith(color: ColorsHelper.black),
               ),
               if (data != null)
-
-              if (data != null)
-              Text(
-                data!,
-                style: Styles.textStyle16.copyWith(
-                  color: ColorsHelper.grey,
-                ),
-              ),
+                if (data != null)
+                  Text(
+                    data!,
+                    style: Styles.textStyle16.copyWith(
+                      color: ColorsHelper.grey,
+                    ),
+                  ),
             ],
           ),
-          if (data == null)
-          Spacer(),
-          if (data == null)
-          SvgPicture.asset(
-            Assets.assetsArrowRight,
-          ),
+          if (data == null) Spacer(),
+          if (data == null) SvgPicture.asset(AppIcons.assetsArrowRight),
         ],
       ),
     );

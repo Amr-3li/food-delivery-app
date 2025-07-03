@@ -62,7 +62,7 @@ class _AreaInputState extends State<AreaInput> {
                   width: 24,
                   height: 24,
                   child: SvgPicture.asset(
-                    Assets.assetsImagesSmile,
+                    AppIcons.iSmile,
                     width: 24,
                     height: 24,
                     color: Colors.grey,

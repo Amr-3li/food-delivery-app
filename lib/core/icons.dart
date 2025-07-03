@@ -132,4 +132,6 @@ class AppIcons {
   static const String assetsCar = "assets/images/Vector.svg";
 
   static const String assetsFavoritesWhite = "assets/images/favorites.svg";
+
+  static var assetsImagesMenu;
 }

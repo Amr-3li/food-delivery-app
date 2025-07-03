@@ -26,14 +26,14 @@ class ChiefMenuScreen extends StatelessWidget {
                 children: [
                   ProfileInfoRow(
                     iconColor: ColorsHelper.orange,
-                    imageUrl: Assets.assetsPersonalInfo,
+                    imageUrl: AppIcons.assetsPersonalInfo,
                     text: "Personal Info",
                     onPressed: () {},
                   ),
                   ProfileInfoRow(
                     iconColor: ColorsHelper.orangeDark,
                     text: "Chat",
-                    imageUrl: Assets.assetsImagesMessage,
+                    imageUrl: AppIcons.iMessage,
                     onPressed: () {
                       context.go("/messageList");
                     },
@@ -41,7 +41,7 @@ class ChiefMenuScreen extends StatelessWidget {
                   SizedBox(height: 3.h),
                   ProfileInfoRow(
                     iconColor: ColorsHelper.orange,
-                    imageUrl: Assets.assetsWithdrew,
+                    imageUrl: AppIcons.assetsWithdrew,
                     text: "Withdrawal History",
                     onPressed: () {},
                   ),
@@ -49,7 +49,7 @@ class ChiefMenuScreen extends StatelessWidget {
                   ProfileInfoRow(
                     iconColor: ColorsHelper.green,
                     text: "Number of Orders",
-                    imageUrl: Assets.assetsImagesnoOrder,
+                    imageUrl: AppIcons.assetsImagesnoOrder,
                     onPressed: () {},
                     isOrder: true,
                   ),
@@ -57,7 +57,7 @@ class ChiefMenuScreen extends StatelessWidget {
                   ProfileInfoRow(
                     iconColor: ColorsHelper.green,
                     text: "User Reviews",
-                    imageUrl: Assets.assetsReviews,
+                    imageUrl: AppIcons.assetsReviews,
                     onPressed: () {
                       context.go("/reviews");
                     }, // Navigate to reviews page,
@@ -66,7 +66,7 @@ class ChiefMenuScreen extends StatelessWidget {
                   ProfileInfoRow(
                     iconColor: Colors.red,
                     text: "Log Out",
-                    imageUrl: Assets.assetsImagesLogoutl,
+                    imageUrl: AppIcons.assetsImagesLogoutl,
                     onPressed: () {},
                   ),
                 ],

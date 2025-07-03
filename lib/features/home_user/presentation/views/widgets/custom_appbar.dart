@@ -22,7 +22,7 @@ class CustomHomeAppBar extends StatelessWidget {
               onTap: () {
                 context.push(AppRouter.kReviewView);
               },
-              icon: Assets.assetsImagesMenu,
+              icon: AppIcons.assetsImagesMenu,
               backgroundColor: ColorsHelper.buttongrey,
             ),
             SizedBox(width: AppResponsive.width(context, value: 10)),
@@ -49,7 +49,7 @@ class CustomHomeAppBar extends StatelessWidget {
           onTap: () {
             context.push(AppRouter.kCartView);
           },
-          icon: Assets.assetsCart,
+          icon: AppIcons.assetsCart,
           backgroundColor: Colors.black,
           iconColor: Colors.white,
         ),

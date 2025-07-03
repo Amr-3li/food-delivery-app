@@ -19,7 +19,7 @@ class EditProfileView extends StatelessWidget {
           child: CircleAvatar(
             radius: 22,
             backgroundColor: ColorsHelper.lightBabyBlue,
-            child: SvgPicture.asset(Assets.assetsImagesIcon),
+            child: SvgPicture.asset(AppIcons.iIcon),
           ),
         ),
         toolbarHeight: AppResponsive.height(context, value: 80),

@@ -8,7 +8,7 @@ import '../../../../core/utils/color_helper.dart';
 import '../../../../core/utils/styles.dart';
 
 class FavoritesView extends StatelessWidget {
-  const FavoritesView ({super.key});
+  const FavoritesView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class FavoritesView extends StatelessWidget {
           child: CircleAvatar(
             radius: 22,
             backgroundColor: ColorsHelper.lightBabyBlue,
-            child: SvgPicture.asset(Assets.assetsImagesIcon),
+            child: SvgPicture.asset(AppIcons.iIcon),
           ),
         ),
         toolbarHeight: AppResponsive.height(context, value: 80),
