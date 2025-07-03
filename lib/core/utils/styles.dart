@@ -59,9 +59,8 @@ abstract class Styles {
     fontWeight: FontWeight.w600,
     fontFamily: "Sen",
   );
-  static final textStyle30 = TextStyle(
-    color: Colors.white,
-    fontSize: 24.sp,
+  static final textStyle40 = TextStyle(
+    fontSize: 40.sp,
     fontWeight: FontWeight.w600,
     fontFamily: "Sen",
   );

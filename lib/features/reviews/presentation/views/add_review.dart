@@ -55,7 +55,12 @@ class _AddReviewState extends State<AddReview> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackIconAppBar(onTap: () => Navigator.pop(context)),
+        leading: Row(
+          children: [
+            SizedBox(width: 2.w),
+            BackIconAppBar(onTap: () {}, iconColor: ColorsHelper.lightBabyBlue),
+          ],
+        ),
         title: Text("Add Review", style: Styles.textStyle17),
       ),
       body: Padding(
@@ -70,9 +75,6 @@ class _AddReviewState extends State<AddReview> {
                 textController: _nameController,
                 textLabel: "Enter your name",
                 textFieldSuffix: null,
-                validatorFunction: (value) {
-                  return null;
-                },
               ),
               SizedBox(height: 2.h),
               Text("Review Title", style: Styles.textStyle14),
@@ -81,9 +83,6 @@ class _AddReviewState extends State<AddReview> {
                 textController: _titleController,
                 textLabel: "Enter Review Title",
                 textFieldSuffix: null,
-                validatorFunction: (value) {
-                  return null;
-                },
               ),
               SizedBox(height: 2.h),
               Text("Write a Review", style: Styles.textStyle14),
@@ -93,9 +92,6 @@ class _AddReviewState extends State<AddReview> {
                 maxLength: 4,
                 textLabel: "Share your experience...",
                 textFieldSuffix: null,
-                validatorFunction: (value) {
-                  return null;
-                },
               ),
 
               SizedBox(height: 2.h),

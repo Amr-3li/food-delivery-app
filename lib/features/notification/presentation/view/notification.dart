@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/icons.dart';
+import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
+import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
 import 'package:restaurant/features/notification/data/models/notification_model.dart';
 import 'package:restaurant/features/notification/presentation/view/widgets/notification_listtile.dart';
+import 'package:sizer/sizer.dart';
 import 'package:svg_flutter/svg.dart';
 
 class NotificationScreen extends StatelessWidget {
@@ -28,15 +31,13 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: CircleAvatar(
-            radius: 10,
-            child: SvgPicture.asset(Assets.assetsImagesIcon),
-          ),
+        leading: Row(
+          children: [
+            SizedBox(width: 4.w),
+            BackIconAppBar(onTap: () {}, iconColor: ColorsHelper.lightBabyBlue),
+          ],
         ),
+
         title: Text(
           'Notifications',
           style: Styles.textStyle18.copyWith(fontWeight: FontWeight.bold),
