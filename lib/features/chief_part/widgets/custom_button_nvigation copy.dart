@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
-  final BuildContext context; // Add context parameter
+  final BuildContext context;
 
   const CustomBottomNavBar({
     super.key,
@@ -44,11 +44,21 @@ class CustomBottomNavBar extends StatelessWidget {
       showUnselectedLabels: false,
       items: [
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(AppIcons.ifoodlist, width: 24, height: 24),
+          icon: SvgPicture.asset(
+            AppIcons.ifoodlist,
+            width: 24,
+            height: 24,
+            color: currentIndex == 0 ? Colors.orange : Colors.grey,
+          ),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(AppIcons.iChifMenu, width: 24, height: 24),
+          icon: SvgPicture.asset(
+            AppIcons.iChifMenu,
+            width: 24,
+            height: 24,
+            color: currentIndex == 1 ? Colors.orange : Colors.grey,
+          ),
           label: 'Food List',
         ),
         BottomNavigationBarItem(
@@ -57,7 +67,10 @@ class CustomBottomNavBar extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.orange, width: 2),
+              border: Border.all(
+                color: currentIndex == 2 ? Colors.orange : Colors.grey,
+                width: 2,
+              ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withAlpha(10),
@@ -71,17 +84,27 @@ class CustomBottomNavBar extends StatelessWidget {
               AppIcons.iPlus,
               width: 28,
               height: 28,
-              color: Colors.orange,
+              color: currentIndex == 2 ? Colors.orange : Colors.grey,
             ),
           ),
           label: 'Add',
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(AppIcons.iBell, width: 24, height: 24),
+          icon: SvgPicture.asset(
+            AppIcons.iBell,
+            width: 24,
+            height: 24,
+            color: Colors.orange,
+          ),
           label: 'Notifications',
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset(AppIcons.iUser, width: 24, height: 24),
+          icon: SvgPicture.asset(
+            AppIcons.iMessage,
+            width: 24,
+            height: 24,
+            color: currentIndex == 4 ? Colors.orange : Colors.grey,
+          ),
           label: 'Profile',
         ),
       ],
