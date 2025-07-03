@@ -84,7 +84,7 @@ class CustomOrderItem extends StatelessWidget {
                 width: AppResponsive.width(context, value: 140),
                 height: AppResponsive.height(context, value: 40),
                 child: CustomElevatedButton(
-                  buttonText: isCompleted ? 'Rate' : 'Track Order',
+                  buttonText: isCompleted ? 'Rate' : 'Done',
                   onPressedFunction: () {},
                   buttonColor: isCompleted ? ColorsHelper.white : ColorsHelper.orange,
                   textColor: isCompleted ?  ColorsHelper.orange : ColorsHelper.white,

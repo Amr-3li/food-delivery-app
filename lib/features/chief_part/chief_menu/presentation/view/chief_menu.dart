@@ -13,55 +13,64 @@ class ChiefMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      // backgroundColor: const Color(0xFFF5F5F5),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(clipBehavior: Clip.none, children: [MyProfileContainer()]),
             SizedBox(height: 2.h),
-            ProfileInfoRow(
-              iconColor: ColorsHelper.orange,
-              imageUrl: Assets.assetsPersonalInfo,
-              text: "Personal Info",
-              onPressed: () {},
-            ),
-            ProfileInfoRow(
-              iconColor: const Color.fromRGBO(65, 25, 102, 1),
-              imageUrl: Assets.assetsSettings,
-              text: "Settings",
-              onPressed: () {},
-            ),
-            SizedBox(height: 1.h),
-            ProfileInfoRow(
-              iconColor: ColorsHelper.orangeDark,
-              text: "Chat",
-              imageUrl: Assets.assetsImagesMessage,
-              onPressed: () {
-                context.go("/messageList");
-              },
-            ),
-            ProfileInfoRow(
-              iconColor: ColorsHelper.green,
-              text: "Number of Orders",
-              imageUrl: Assets.assetsImagesnoOrder,
-              onPressed: () {},
-            ),
-            SizedBox(height: 1.h),
-            ProfileInfoRow(
-              iconColor: ColorsHelper.green,
-              text: "User Reviews",
-              imageUrl: Assets.assetsReviews,
-              onPressed: () {
-                context.go("/reviews");
-              }, // Navigate to reviews page,
-            ),
-            SizedBox(height: 2.h),
-            ProfileInfoRow(
-              iconColor: Colors.red,
-              text: "Log Out",
-              imageUrl: Assets.assetsImagesLogoutl,
-              onPressed: () {},
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 3.w),
+              child: Column(
+                children: [
+                  ProfileInfoRow(
+                    iconColor: ColorsHelper.orange,
+                    imageUrl: Assets.assetsPersonalInfo,
+                    text: "Personal Info",
+                    onPressed: () {},
+                  ),
+                  ProfileInfoRow(
+                    iconColor: ColorsHelper.orangeDark,
+                    text: "Chat",
+                    imageUrl: Assets.assetsImagesMessage,
+                    onPressed: () {
+                      context.go("/messageList");
+                    },
+                  ),
+                  SizedBox(height: 3.h),
+                  ProfileInfoRow(
+                    iconColor: ColorsHelper.orange,
+                    imageUrl: Assets.assetsWithdrew,
+                    text: "Withdrawal History",
+                    onPressed: () {},
+                  ),
+
+                  ProfileInfoRow(
+                    iconColor: ColorsHelper.green,
+                    text: "Number of Orders",
+                    imageUrl: Assets.assetsImagesnoOrder,
+                    onPressed: () {},
+                    isOrder: true,
+                  ),
+                  SizedBox(height: 3.h),
+                  ProfileInfoRow(
+                    iconColor: ColorsHelper.green,
+                    text: "User Reviews",
+                    imageUrl: Assets.assetsReviews,
+                    onPressed: () {
+                      context.go("/reviews");
+                    }, // Navigate to reviews page,
+                  ),
+                  SizedBox(height: 3.h),
+                  ProfileInfoRow(
+                    iconColor: Colors.red,
+                    text: "Log Out",
+                    imageUrl: Assets.assetsImagesLogoutl,
+                    onPressed: () {},
+                  ),
+                ],
+              ),
             ),
           ],
         ),
