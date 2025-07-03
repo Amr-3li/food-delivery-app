@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_onboarding_button.dart';
@@ -16,12 +17,10 @@ class LoginView extends StatefulWidget {
   @override
   State<LoginView> createState() => _LoginViewState();
 }
-
-final key = GlobalKey<FormState>();
+class _LoginViewState extends State<LoginView> {
+  final _formKey = GlobalKey<FormState>();
 TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
-
-class _LoginViewState extends State<LoginView> {
   @override
   void dispose() {
     super.dispose();
@@ -61,9 +60,9 @@ class _LoginViewState extends State<LoginView> {
 
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
-                  child: Form(
-                    key: key,
-                    child: SingleChildScrollView(
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -111,8 +110,8 @@ class _LoginViewState extends State<LoginView> {
                           CustomMaterialButton(
                             buttonName: "Login",
                             onPressed: () {
-                              if (key.currentState!.validate()) {}
-                              context.go("/homeView");
+                              if (_formKey.currentState!.validate()) {}
+                              context.go(AppRouter.kHomeUserView);
                             },
                           ),
                           SizedBox(height: 3.h),

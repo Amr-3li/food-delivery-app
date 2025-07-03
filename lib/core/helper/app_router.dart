@@ -4,6 +4,7 @@ import 'package:restaurant/features/auth/views/register_view.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
 import 'package:restaurant/features/forget_password.dart/presentation/views/forget_password_view.dart';
 import 'package:restaurant/features/forget_password.dart/presentation/views/vertification_view.dart';
+import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
@@ -17,7 +18,7 @@ import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
 
 import '../../features/menu/presentation/views/personal_info_view.dart';
 abstract class AppRouter {
-  static const kSplashView = '/chat';
+  static const kSplashView = '/';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -27,7 +28,9 @@ abstract class AppRouter {
   static const kProfileView = '/profile';
   static const kCartView = '/cart';
   static const kSucessPaymentView = '/sucessPayment';
-  static const kNotificationView = '/';
+  static const kNotificationView = '/notification';
+  static const kHomeUserView = "/homeUserView";
+
 
   static final router = GoRouter(
     routes: [
@@ -107,6 +110,10 @@ abstract class AppRouter {
         path: kNotificationView,
         name: "notification",
         builder: (context, state) => NotificationScreen(),
+      ),
+      GoRoute(
+        path: kHomeUserView,
+        builder: (context, state) => HomeUserView(),
       ),
     ],
   );

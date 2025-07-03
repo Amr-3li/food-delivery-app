@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/assets_data.dart';
 import 'package:restaurant/features/auth/views/login_view.dart';
 
@@ -42,10 +43,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
   void delayedMethod() {
     Future.delayed(
       const Duration(seconds: 2),
-      () => Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginView()),
-      ),
+      () =>context.go('/onBoardingView')
     );
   }
 }
