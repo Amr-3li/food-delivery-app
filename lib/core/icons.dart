@@ -109,4 +109,5 @@ class Assets {
   static const String assetsEmail = "assets/images/email.svg";
 
   static const String assetsPhoneNumber = "assets/images/phone.svg";
+  static const String assetsWithdrew = "assets/images/withdrew.svg";
 }
