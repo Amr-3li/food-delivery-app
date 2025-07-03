@@ -12,7 +12,7 @@ final String subTitle;
   Widget build(BuildContext context) {
     return Column(
      crossAxisAlignment: CrossAxisAlignment.center,
-     children: [ Text(title , style: Styles.textStyle30),
+     children: [ Text(title , style: Styles.textStyle26),
         Text(subTitle , style: Styles.textStyle16.copyWith(color: ColorsHelper.grey),),],
     );
   }

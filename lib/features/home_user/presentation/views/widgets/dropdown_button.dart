@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomDropdownButton extends StatefulWidget {
   const CustomDropdownButton({super.key});
@@ -16,13 +16,13 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       value: selectedPlace,
-      elevation: 0,
+      elevation: 2,
       icon: Icon(Icons.arrow_drop_down),
       isExpanded: true,
       items: places.map((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value, style: Styles.textStyle14.copyWith(color: Colors.grey),),
+          child: Text(value, style: Styles.textStyle14.copyWith(fontSize: 15.sp),),
         );
       }).toList(),
       onChanged: (newValue) {

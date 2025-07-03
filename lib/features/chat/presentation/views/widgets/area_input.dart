@@ -1,6 +1,7 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
+import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/features/chat/data/models/chat_model.dart';
 import 'package:svg_flutter/svg.dart';
@@ -61,7 +62,7 @@ class _AreaInputState extends State<AreaInput> {
                   width: 24,
                   height: 24,
                   child: SvgPicture.asset(
-                    'assets/icons/smile.svg',
+                    Assets.assetsImagesSmile,
                     width: 24,
                     height: 24,
                     color: Colors.grey,

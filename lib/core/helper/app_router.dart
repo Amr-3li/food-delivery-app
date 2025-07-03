@@ -5,6 +5,7 @@ import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_
 import 'package:restaurant/features/forget_password/presentation/views/forget_password_view.dart';
 import 'package:restaurant/features/forget_password/presentation/views/vertification_view.dart';
 import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
+import 'package:restaurant/features/home_user/presentation/views/restaurant_view.dart';
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
@@ -30,6 +31,7 @@ abstract class AppRouter {
   static const kSucessPaymentView = '/sucessPayment';
   static const kNotificationView = '/notification';
   static const kHomeUserView = "/homeUserView";
+  static const krestaurantView = "/restaurantView";
 
 
   static final router = GoRouter(
@@ -54,10 +56,10 @@ abstract class AppRouter {
       builder: (context, state) => LoginView(),
       
       ),
-       GoRoute(path:'/homeView' ,
-      builder: (context, state) => LoginView(),
+      //  GoRoute(path:'/homeView' ,
+      // builder: (context, state) => LoginView(),
       
-      ),
+      // ),
         GoRoute(path:'/forgetPassword' ,
       builder: (context, state) => ForgetPasswordView(),
       
@@ -114,6 +116,10 @@ abstract class AppRouter {
       GoRoute(
         path: kHomeUserView,
         builder: (context, state) => HomeUserView(),
+      ),
+       GoRoute(
+        path: krestaurantView,
+        builder: (context, state) => RestaurantView(),
       ),
     ],
   );
