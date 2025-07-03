@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/core/utils/styles.dart';
-
-import '../../../../../core/utils/color_helper.dart';
 import '../../../data/models/menu_group_list.dart';
 import 'custom_menu_list.dart';
 import 'custom_user_info.dart';

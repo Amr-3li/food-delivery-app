@@ -3,16 +3,9 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 
-import 'package:restaurant/features/cart/presentation/views/cart.dart';
-import 'package:restaurant/features/food_categories/presentation/views/food_categories_screen.dart';
-import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
-import 'package:restaurant/features/restaurant_view/widgets/filter_sheet.dart';
-
 import 'package:restaurant/core/helper/app_router.dart';
 
 import 'package:sizer/sizer.dart';
-import 'package:restaurant/features/search/presentation/views/search_screen.dart';
-import 'package:restaurant/features/food_details/presentation/views/food_details_screen.dart';
 
 void main() {
   setupLocator();
