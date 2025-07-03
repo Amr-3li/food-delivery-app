@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
+<<<<<<< HEAD
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
 import 'package:restaurant/features/food_categories/presentation/views/food_categories_screen.dart';
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 import 'package:restaurant/features/restaurant_view/widgets/filter_sheet.dart';
+=======
+
+import 'package:restaurant/core/helper/app_router.dart';
+
+>>>>>>> 0621c0c4a2c79fe452cff1dec6da885e09a391f9
 import 'package:sizer/sizer.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
 import 'package:restaurant/features/food_details/presentation/views/food_details_screen.dart';
@@ -11,6 +19,8 @@ import 'package:restaurant/features/food_details/presentation/views/food_details
 void main() {
   setupLocator();
   runApp(const MyApp());
+
+  Stripe.publishableKey = APIKey.stripePublishableKey;
 }
 
 class MyApp extends StatelessWidget {
@@ -20,14 +30,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return MaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
           home: Scaffold(
             backgroundColor: Colors.grey[200],
             body: const SafeArea(
               child: FilterSheet(),
             ),
           ),
+=======
+
+          routerConfig: AppRouter.router,
+>>>>>>> 0621c0c4a2c79fe452cff1dec6da885e09a391f9
         );
       },
     );

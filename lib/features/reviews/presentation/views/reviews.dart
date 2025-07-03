@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/core/utils/color_helper.dart';
 
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
@@ -53,7 +54,12 @@ class _ReviewScreenState extends State<ReviewScreen> {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Colors.black54,
-        leading: BackIconAppBar(onTap: () {}),
+        leading: Row(
+          children: [
+            SizedBox(width: 2.w),
+            BackIconAppBar(onTap: () {}, iconColor: ColorsHelper.lightBabyBlue),
+          ],
+        ),
         title: Text("Reviews", style: Styles.textStyle17),
       ),
       body: Padding(
