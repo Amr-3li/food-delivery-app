@@ -1,21 +1,12 @@
 import 'package:go_router/go_router.dart';
-<<<<<<< HEAD
 
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
-import 'package:restaurant/features/chief_part/notification/presentation/view/notification.dart';
-
-import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
 import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
-import 'package:restaurant/features/chief_part/chief_menu/presentation/view/chief_menu.dart';
 
-=======
-import 'package:restaurant/features/cart/presentation/views/cart.dart';
-import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chief_part/add_new_item/presentation/views/add_new_items.dart';
-import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
 import 'package:restaurant/features/chief_part/my_food_list/presentation/views/my_food_list_view.dart';
 import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
 import 'package:restaurant/features/auth/views/login_view.dart';
@@ -27,17 +18,13 @@ import 'package:restaurant/features/home_user/presentation/views/restaurant_view
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
->>>>>>> eb36f4fc33ad18b1c08039b388d61dacdfa595ea
 import 'package:restaurant/features/notification/presentation/view/notification.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
 
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 
-<<<<<<< HEAD
-=======
 import '../../features/menu/presentation/views/personal_info_view.dart';
 
->>>>>>> eb36f4fc33ad18b1c08039b388d61dacdfa595ea
 abstract class AppRouter {
   static const kSplashView = '/';
   static const kChatView = '/chat';
