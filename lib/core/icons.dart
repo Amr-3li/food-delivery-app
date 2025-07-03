@@ -109,5 +109,23 @@ class Assets {
   static const String assetsEmail = "assets/images/email.svg";
 
   static const String assetsPhoneNumber = "assets/images/phone.svg";
+
   static const String assetsWithdrew = "assets/images/withdrew.svg";
+
+  static const String assetsHome = "assets/images/home_2.svg";
+
+  static const String assetsBag = "assets/images/bag.svg";
+
+  static const String assetsDelete = "assets/images/Delete icon.svg";
+
+  static const String assetsEdit = "assets/images/edit.svg";
+
+  static const String assetsStar = "assets/images/Star 1.svg";
+
+  static const String assetsClock = "assets/images/Clock.svg";
+
+  static const String assetsCar = "assets/images/Vector.svg";
+
+  static const String assetsFavoritesWhite = "assets/images/favorites.svg";
+
 }
