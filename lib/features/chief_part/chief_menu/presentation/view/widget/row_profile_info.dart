@@ -10,28 +10,40 @@ class ProfileInfoRow extends StatelessWidget {
     required this.text,
     required this.onPressed,
     required this.imageUrl,
+    this.isOrder = false,
   });
 
   final Color iconColor;
   final String text;
   final void Function()? onPressed;
   final String imageUrl;
-
+  final bool isOrder;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-      child: Row(
-        children: [
-          SvgPicture.asset(imageUrl, height: 8.w, width: 8.w, color: iconColor),
-          SizedBox(width: 2.w),
-          Text(text, style: Styles.textStyle16),
-          Spacer(),
-          IconButton(
-            icon: Icon(Icons.arrow_forward_ios_rounded),
-            onPressed: onPressed,
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+
+      // margin: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.w),
+      child: ListTile(
+        leading: CircleAvatar(
+          child: SvgPicture.asset(
+            imageUrl,
+            height: 8.w,
+            width: 8.w,
+            color: iconColor,
           ),
-        ],
+        ),
+        title: Text(text, style: Styles.textStyle16),
+        trailing: isOrder
+            ? Text("29K", style: Styles.textStyle18)
+            : IconButton(
+                icon: Icon(Icons.arrow_forward_ios_rounded),
+                onPressed: onPressed,
+              ),
       ),
     );
   }
