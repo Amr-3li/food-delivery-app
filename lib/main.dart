@@ -23,13 +23,6 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-
-          // home: Scaffold(
-          //   backgroundColor: Colors.grey[200],
-          //   body: const SafeArea(
-          //     child: FilterSheet(),
-          //   ),
-          // ),
           routerConfig: AppRouter.router,
         );
       },

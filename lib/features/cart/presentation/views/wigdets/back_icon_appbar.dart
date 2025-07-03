@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restaurant/core/icons.dart';
 import 'package:svg_flutter/svg.dart';
 
+// ignore: must_be_immutable
 class BackIconAppBar extends StatelessWidget {
   const BackIconAppBar({
     super.key,
@@ -15,9 +16,8 @@ class BackIconAppBar extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: CircleAvatar(
-        backgroundColor: iconColor,
-
-        child: SvgPicture.asset(Assets.assetsImagesIcon),
+        backgroundColor: Colors.white.withOpacity(.3),
+        child: SvgPicture.asset(AppIcons.iIcon),
       ),
     );
   }

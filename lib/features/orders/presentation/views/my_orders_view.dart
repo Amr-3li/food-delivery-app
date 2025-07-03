@@ -21,7 +21,7 @@ class MyOrdersView extends StatelessWidget {
             child: CircleAvatar(
               radius: 22,
               backgroundColor: ColorsHelper.lightBabyBlue,
-              child: SvgPicture.asset(Assets.assetsImagesIcon),
+              child: SvgPicture.asset(AppIcons.iIcon),
             ),
           ),
           toolbarHeight: AppResponsive.height(context, value: 80),
@@ -32,17 +32,14 @@ class MyOrdersView extends StatelessWidget {
               child: CircleAvatar(
                 radius: 20,
                 backgroundColor: ColorsHelper.lightBabyBlue,
-                child: SvgPicture.asset(Assets.assetsMoreHorizontal),
+                child: SvgPicture.asset(AppIcons.assetsMoreHorizontal),
               ),
             ),
           ],
           bottom: TabBar(
             indicatorColor: ColorsHelper.orange,
             indicator: UnderlineTabIndicator(
-              borderSide: BorderSide(
-                color: ColorsHelper.orange,
-                width: 2.0,
-              ),
+              borderSide: BorderSide(color: ColorsHelper.orange, width: 2.0),
               insets: EdgeInsets.symmetric(horizontal: 100),
             ),
             labelStyle: Styles.textStyle18.copyWith(
@@ -51,7 +48,7 @@ class MyOrdersView extends StatelessWidget {
             ),
             unselectedLabelStyle: Styles.textStyle16.copyWith(
               fontWeight: FontWeight.normal,
-              color: ColorsHelper.grey
+              color: ColorsHelper.grey,
             ),
             tabs: [
               Tab(text: 'Ongoing'),

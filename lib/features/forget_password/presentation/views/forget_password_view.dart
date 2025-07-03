@@ -14,8 +14,9 @@ class ForgetPasswordView extends StatefulWidget {
   @override
   State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
 }
-final key = GlobalKey<FormState>();
+
 class _ForgetPasswordViewState extends State<ForgetPasswordView> {
+  final _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +55,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Form(
-                  key: key,
+                  key: _key,
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +67,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                            SizedBox(height: 2.5.h,),
                             CustomMaterialButton( buttonName: "SEND CODE",
                               onPressed: () {
-                                if (key.currentState!.validate()){
+                                if (_key.currentState!.validate()){
 
                                 }
                                  context.push("/vertificationView");

@@ -15,12 +15,13 @@ class SinUpView extends StatefulWidget {
   State<SinUpView> createState() => _SinUpViewState();
 }
 
-final key = GlobalKey<FormState>();
+
+class _SinUpViewState extends State<SinUpView> {
+  final _fkey = GlobalKey<FormState>();
 TextEditingController passwordController = TextEditingController();
 TextEditingController reTypePassword = TextEditingController();
 TextEditingController emailController = TextEditingController();
 TextEditingController nameController = TextEditingController();
-class _SinUpViewState extends State<SinUpView> {
   @override
   void dispose() {
     super.dispose();
@@ -67,7 +68,7 @@ class _SinUpViewState extends State<SinUpView> {
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Form(
-                  key:key ,
+                  key:_fkey ,
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +90,7 @@ class _SinUpViewState extends State<SinUpView> {
                            SizedBox(height: 5.h,),
                             CustomMaterialButton( buttonName: "Sign Up",
                               onPressed: () {
-                                if (key.currentState!.validate()){
+                                if (_fkey.currentState!.validate()){
  context.go("/homeView");
                                 }
                                

@@ -19,7 +19,7 @@ class PersonalInfoView extends StatelessWidget {
           child: CircleAvatar(
             radius: 22,
             backgroundColor: ColorsHelper.lightBabyBlue,
-            child: SvgPicture.asset(Assets.assetsImagesIcon),
+            child: SvgPicture.asset(AppIcons.iIcon),
           ),
         ),
         toolbarHeight: AppResponsive.height(context, value: 80),
@@ -27,9 +27,13 @@ class PersonalInfoView extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
-            child: TextButton(onPressed: () {}, child: Text('EDIT', style: Styles.textStyle16.copyWith(
-              color: ColorsHelper.orange,
-            ))),
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                'EDIT',
+                style: Styles.textStyle16.copyWith(color: ColorsHelper.orange),
+              ),
+            ),
           ),
         ],
       ),

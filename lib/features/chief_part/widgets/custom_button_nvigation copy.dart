@@ -1,18 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/icons.dart';
 import 'package:svg_flutter/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
-  final int? currentIndex;
-  final Function(int)? onTap;
+  final int currentIndex;
+  final BuildContext context;
 
-  const CustomBottomNavBar({super.key, this.currentIndex, this.onTap});
+  const CustomBottomNavBar({
+    super.key,
+    required this.currentIndex,
+    required this.context,
+  });
+
+  void _onItemTapped(int index) {
+    switch (index) {
+      case 0:
+        GoRouter.of(context).go(AppRouter.kChifHome);
+        break;
+      case 1:
+        GoRouter.of(context).go(AppRouter.kChifFoodList);
+        break;
+      case 2:
+        GoRouter.of(context).push(AppRouter.kAddNewItem);
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: currentIndex ?? 0,
-      onTap: onTap,
+      currentIndex: currentIndex,
+      onTap: _onItemTapped,
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.orange,
       unselectedItemColor: Colors.grey,
@@ -21,28 +45,30 @@ class CustomBottomNavBar extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
-            Assets.assetsImagesChifMenu,
+            AppIcons.ifoodlist,
             width: 24,
             height: 24,
+            color: currentIndex == 0 ? Colors.orange : Colors.grey,
           ),
-          label: '',
+          label: 'Home',
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
-            Assets.assetsImagesfoodlist,
+            AppIcons.iChifMenu,
             width: 24,
             height: 24,
+            color: currentIndex == 1 ? Colors.orange : Colors.grey,
           ),
-          label: '',
+          label: 'Food List',
         ),
         BottomNavigationBarItem(
           icon: Container(
             margin: const EdgeInsets.only(bottom: 5),
             decoration: BoxDecoration(
-              color: Colors.white, // White background
+              color: Colors.white,
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.orange, // Orange outline
+                color: currentIndex == 2 ? Colors.orange : Colors.grey,
                 width: 2,
               ),
               boxShadow: [
@@ -55,30 +81,31 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(12),
             child: SvgPicture.asset(
-              Assets.assetsImagesPlus,
+              AppIcons.iPlus,
               width: 28,
               height: 28,
-
-              color: Colors.orange, // Black plus icon
+              color: currentIndex == 2 ? Colors.orange : Colors.grey,
             ),
           ),
-          label: '',
+          label: 'Add',
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
-            Assets.assetsImagesBell,
+            AppIcons.iBell,
             width: 24,
             height: 24,
+            color: Colors.orange,
           ),
-          label: '',
+          label: 'Notifications',
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
-            Assets.assetsImagesUser,
+            AppIcons.iMessage,
             width: 24,
             height: 24,
+            color: currentIndex == 4 ? Colors.orange : Colors.grey,
           ),
-          label: '',
+          label: 'Profile',
         ),
       ],
     );
