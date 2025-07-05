@@ -7,12 +7,12 @@ class CircleIcone extends StatelessWidget {
     super.key,
     required this.icon,
     required this.backgroundColor,
-    this.iconColor,
+    this.iconColor = const Color.fromARGB(255, 218, 214, 214),
     this.onTap,
   });
   final String icon;
   final Color backgroundColor;
-  final Color? iconColor;
+  final Color iconColor;
   final Function()? onTap;
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CircleIcone extends StatelessWidget {
         backgroundColor: backgroundColor,
         child: SvgPicture.asset(
           icon,
-          colorFilter: ColorFilter.mode(iconColor!, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
         ),
       ),
     );

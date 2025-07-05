@@ -17,6 +17,7 @@ class PersonalInfoViewBody extends StatelessWidget {
           CustomUserInfo(),
           const SizedBox(height: 28),
           CustomMenuList(
+            onTap: () {},
             menuGroup: MenuGroup(
               items: [
                 MenuItem(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
@@ -17,7 +19,11 @@ class MyProfileColumn extends StatelessWidget {
           padding: EdgeInsets.only(top: 2.h),
           child: Row(
             children: [
-              BackIconAppBar(onTap: () {}),
+              BackIconAppBar(
+                onTap: () {
+                  GoRouter.of(context).push(AppRouter.kChifHome);
+                },
+              ),
               SizedBox(width: 5.w),
               Text(
                 "My profile",
@@ -43,7 +49,9 @@ class MyProfileColumn extends StatelessWidget {
         Center(
           child: CustomElevatedButton(
             buttonText: "Withdrow",
-            onPressedFunction: () {},
+            onPressedFunction: () {
+              GoRouter.of(context).push(AppRouter.kWithdrawView);
+            },
             buttonColor: Colors.transparent,
             sideColor: ColorsHelper.white,
             widthButton: 20.w,

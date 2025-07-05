@@ -9,51 +9,53 @@ import 'package:restaurant/features/home_user/presentation/views/widgets/circle_
 import 'package:restaurant/features/home_user/presentation/views/widgets/dropdown_button.dart';
 
 class CustomHomeAppBar extends StatelessWidget {
-  const CustomHomeAppBar({super.key});
-
+  CustomHomeAppBar({super.key, required this.onTap});
+  dynamic Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            CircleIcone(
-              onTap: () {
-                context.push(AppRouter.kReviewView);
-              },
-              icon: AppIcons.assetsImagesMenu,
-              backgroundColor: ColorsHelper.buttongrey,
-            ),
-            SizedBox(width: AppResponsive.width(context, value: 10)),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "DELIVERY TO",
-                  style: Styles.textStyle12.copyWith(
-                    color: ColorsHelper.orange,
+    return SizedBox(
+      // ✅ Constrain width to avoid unbounded Row error
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              CircleIcone(
+                onTap: onTap,
+                icon: AppIcons.assetsImagesMenu,
+                backgroundColor: ColorsHelper.buttongrey,
+              ),
+              SizedBox(width: AppResponsive.width(context, value: 10)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "DELIVERY TO",
+                    style: Styles.textStyle12.copyWith(
+                      color: ColorsHelper.orange,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: AppResponsive.height(context, value: 17),
-                  width: AppResponsive.width(context, value: 107),
-                  child: CustomDropdownButton(),
-                ),
-              ],
-            ),
-          ],
-        ),
+                  SizedBox(
+                    height: AppResponsive.height(context, value: 17),
+                    width: AppResponsive.width(context, value: 107),
+                    child: CustomDropdownButton(),
+                  ),
+                ],
+              ),
+            ],
+          ),
 
-        CircleIcone(
-          onTap: () {
-            context.push(AppRouter.kCartView);
-          },
-          icon: AppIcons.assetsCart,
-          backgroundColor: Colors.black,
-          iconColor: Colors.white,
-        ),
-      ],
+          CircleIcone(
+            onTap: () {
+              context.push(AppRouter.kCartView);
+            },
+            icon: AppIcons.assetsCart,
+            backgroundColor: Colors.black,
+            iconColor: Colors.white,
+          ),
+        ],
+      ),
     );
   }
 }

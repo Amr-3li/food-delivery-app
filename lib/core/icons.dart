@@ -134,4 +134,5 @@ class AppIcons {
   static const String assetsFavoritesWhite = "assets/images/favorites.svg";
 
   static var assetsImagesMenu = "";
+  static const String withdrawSuccess = "assets/images/withdrawSSuccess.svg";
 }

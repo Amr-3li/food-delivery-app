@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
 import 'package:restaurant/features/menu/presentation/views/widgets/custom_address_item.dart';
@@ -30,7 +32,7 @@ class AddressViewBody extends StatelessWidget {
             child: CustomElevatedButton(
               buttonText: 'Add New Address',
               onPressedFunction: () {
-
+                context.push(AppRouter.kAddAddressView);
               },
               buttonColor: ColorsHelper.orange,
             ),

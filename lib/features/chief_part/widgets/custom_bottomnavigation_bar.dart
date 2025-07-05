@@ -27,8 +27,10 @@ class CustomBottomNavBar extends StatelessWidget {
         GoRouter.of(context).push(AppRouter.kAddNewItem);
         break;
       case 3:
+        GoRouter.of(context).push(AppRouter.kNotificationChiefView);
         break;
       case 4:
+        GoRouter.of(context).push(AppRouter.kChatListView);
         break;
     }
   }

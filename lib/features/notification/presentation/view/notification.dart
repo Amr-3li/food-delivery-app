@@ -33,7 +33,12 @@ class NotificationScreen extends StatelessWidget {
         leading: Row(
           children: [
             SizedBox(width: 4.w),
-            BackIconAppBar(onTap: () {}, iconColor: ColorsHelper.lightBabyBlue),
+            BackIconAppBar(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              iconColor: ColorsHelper.lightBabyBlue,
+            ),
           ],
         ),
 

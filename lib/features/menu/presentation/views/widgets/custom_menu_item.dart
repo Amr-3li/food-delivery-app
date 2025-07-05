@@ -11,44 +11,55 @@ class CustomMenuItem extends StatelessWidget {
     required this.name,
     required this.icon,
     this.data,
+    required this.onTap,
   });
 
   final String name;
   final String icon;
   final String? data;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: ColorsHelper.white,
-            child: SvgPicture.asset(icon),
-          ),
-          const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: Styles.textStyle16.copyWith(color: ColorsHelper.black),
-              ),
-              if (data != null)
-                if (data != null)
+      child: InkWell(
+        onTap: onTap,
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: ColorsHelper.white,
+              child: SvgPicture.asset(icon),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    data!,
+                    name,
                     style: Styles.textStyle16.copyWith(
-                      color: ColorsHelper.grey,
+                      color: ColorsHelper.black,
                     ),
                   ),
-            ],
-          ),
-          if (data == null) Spacer(),
-          if (data == null) SvgPicture.asset(AppIcons.assetsArrowRight),
-        ],
+                  if (data != null)
+                    Text(
+                      data!,
+                      style: Styles.textStyle16.copyWith(
+                        color: ColorsHelper.grey,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            if (onTap != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: SvgPicture.asset(AppIcons.assetsArrowRight),
+              ),
+          ],
+        ),
       ),
     );
   }

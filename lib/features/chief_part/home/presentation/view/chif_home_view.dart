@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/custom_appbar.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/order_form_sheet.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/order_widget.dart';
@@ -16,6 +18,7 @@ class ChifHomeView extends StatelessWidget {
       appBar: CustomAppBar(
         dynamicText: "Hotel Lab",
         onLeadingPressed: () {
+          GoRouter.of(context).push(AppRouter.kMenuChiefView);
           debugPrint("Leading button pressed");
         },
         userImageUrl:

@@ -10,7 +10,7 @@ class CustomCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: AppResponsive.height(context, value: 12),
+      // spacing: AppResponsive.height(context, value: 12),
       children: [
         Container(
           width: AppResponsive.width(context, value: 122),
@@ -35,7 +35,7 @@ class CustomCategory extends StatelessWidget {
             height: 81,
           ),
         ),
-
+        SizedBox(height: AppResponsive.height(context, value: 12)),
         Text(
           "Pizaa",
           style: Styles.textStyle17.copyWith(fontWeight: FontWeight.bold),

@@ -13,18 +13,27 @@ class ImageHeader extends StatelessWidget {
       color: Colors.grey[300],
       child: Stack(
         children: [
-          const Center(child: Icon(Icons.image, size: 100, color: Colors.white)),
+          const Center(
+            child: Icon(Icons.image, size: 100, color: Colors.white),
+          ),
           Positioned(
             top: 16,
             left: 16,
-            child: const Icon(Icons.arrow_back),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
           Positioned(
             top: 16,
             right: 16,
             child: Icon(
               Icons.favorite,
-              color: version == FoodDetailsVersion.version2 ? Colors.orange : Colors.grey,
+              color: version == FoodDetailsVersion.version2
+                  ? Colors.orange
+                  : Colors.grey,
             ),
           ),
         ],
@@ -32,4 +41,3 @@ class ImageHeader extends StatelessWidget {
     );
   }
 }
-

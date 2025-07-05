@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import '../../../data/models/menu_group_list.dart';
 import 'custom_menu_list.dart';
 import 'custom_user_info.dart';
@@ -18,8 +20,15 @@ class MenuViewBody extends StatelessWidget {
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) =>
-                  CustomMenuList(menuGroup: menuGroups[index]),
+              itemBuilder: (context, index) => CustomMenuList(
+                menuGroup: menuGroups[index],
+                onTap: () {
+                  context.push(
+                    menuGroups[index].items[index].route ??
+                        AppRouter.kAddresses,
+                  );
+                },
+              ),
               separatorBuilder: (context, index) => SizedBox(height: 16),
               itemCount: menuGroups.length,
             ),

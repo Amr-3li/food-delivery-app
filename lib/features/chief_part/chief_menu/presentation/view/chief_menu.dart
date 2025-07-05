@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:go_router/go_router.dart';
@@ -25,17 +26,11 @@ class ChiefMenuScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ProfileInfoRow(
-                    iconColor: ColorsHelper.orange,
-                    imageUrl: AppIcons.assetsPersonalInfo,
-                    text: "Personal Info",
-                    onPressed: () {},
-                  ),
-                  ProfileInfoRow(
                     iconColor: ColorsHelper.orangeDark,
                     text: "Chat",
                     imageUrl: AppIcons.iMessage,
                     onPressed: () {
-                      context.go("/messageList");
+                      GoRouter.of(context).push(AppRouter.kChatChiefView);
                     },
                   ),
                   SizedBox(height: 3.h),
@@ -43,7 +38,9 @@ class ChiefMenuScreen extends StatelessWidget {
                     iconColor: ColorsHelper.orange,
                     imageUrl: AppIcons.assetsWithdrew,
                     text: "Withdrawal History",
-                    onPressed: () {},
+                    onPressed: () {
+                      GoRouter.of(context).push(AppRouter.kWithdrawView);
+                    },
                   ),
 
                   ProfileInfoRow(
@@ -59,7 +56,7 @@ class ChiefMenuScreen extends StatelessWidget {
                     text: "User Reviews",
                     imageUrl: AppIcons.assetsReviews,
                     onPressed: () {
-                      context.go("/reviews");
+                      GoRouter.of(context).push(AppRouter.kReviewView);
                     }, // Navigate to reviews page,
                   ),
                   SizedBox(height: 3.h),
@@ -67,7 +64,9 @@ class ChiefMenuScreen extends StatelessWidget {
                     iconColor: Colors.red,
                     text: "Log Out",
                     imageUrl: AppIcons.assetsImagesLogoutl,
-                    onPressed: () {},
+                    onPressed: () {
+                      GoRouter.of(context).push(AppRouter.kOnboardingView);
+                    },
                   ),
                 ],
               ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
+import 'package:restaurant/features/restaurant_view/widgets/filter_sheet.dart';
 import '../widgets/food_item_card.dart';
 import '../widgets/category_selector.dart';
 import '../widgets/open_restaurants_section.dart';
@@ -16,15 +19,31 @@ class FoodScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   children: [
-                    Icon(Icons.arrow_back),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back),
+                    ),
+
                     SizedBox(width: 10),
                     CategorySelector(),
                     Spacer(),
                     Icon(Icons.search),
                     SizedBox(width: 10),
-                    Icon(Icons.tune), // filter icon
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (_) => const FilterSheet(),
+                        );
+                      },
+                      icon: Icon(Icons.tune),
+                    ), // filter icon
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -40,23 +59,35 @@ class FoodScreen extends StatelessWidget {
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                   childAspectRatio: 0.75,
-                  children: const [
+                  children: [
                     FoodItemCard(
+                      onTap: () {
+                        context.push(AppRouter.kFoodDetailsScreenView);
+                      },
                       title: "Burger Bistro",
                       subtitle: "Rose Garden",
                       price: "\$40",
                     ),
                     FoodItemCard(
+                      onTap: () {
+                        context.push(AppRouter.kFoodDetailsScreenView);
+                      },
                       title: "Smokin' Burger",
                       subtitle: "Cafenio Restaurant",
                       price: "\$60",
                     ),
                     FoodItemCard(
+                      onTap: () {
+                        context.push(AppRouter.kFoodDetailsScreenView);
+                      },
                       title: "Buffalo Burgers",
                       subtitle: "Kaji Firm Kitchen",
                       price: "\$75",
                     ),
                     FoodItemCard(
+                      onTap: () {
+                        context.push(AppRouter.kFoodDetailsScreenView);
+                      },
                       title: "Bullseye Burgers",
                       subtitle: "Kabab Restaurant",
                       price: "\$94",
@@ -69,7 +100,12 @@ class FoodScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 const SizedBox(height: 10),
-                const OpenRestaurantsSection(),
+                InkWell(
+                  onTap: () {
+                    context.push(AppRouter.kRestaurantViewVersion);
+                  },
+                  child: const OpenRestaurantsSection(),
+                ),
               ],
             ),
           ),

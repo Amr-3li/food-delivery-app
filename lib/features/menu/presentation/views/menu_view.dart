@@ -16,10 +16,15 @@ class MenuView extends StatelessWidget {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.only(left: 16),
-          child: CircleAvatar(
-            radius: 22,
-            backgroundColor: ColorsHelper.lightBabyBlue,
-            child: SvgPicture.asset(AppIcons.iIcon),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: CircleAvatar(
+              radius: 22,
+              backgroundColor: ColorsHelper.lightBabyBlue,
+              child: SvgPicture.asset(AppIcons.iIcon),
+            ),
           ),
         ),
         toolbarHeight: AppResponsive.height(context, value: 80),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 
 class RestaurantHeader extends StatelessWidget {
@@ -14,24 +16,79 @@ class RestaurantHeader extends StatelessWidget {
           height: version == RestaurantViewVersion.version1 ? 180 : 200,
           decoration: BoxDecoration(
             color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(version == RestaurantViewVersion.version1 ? 16 : 0),
+            borderRadius: BorderRadius.circular(
+              version == RestaurantViewVersion.version1 ? 16 : 0,
+            ),
           ),
           width: double.infinity,
         ),
-        const Positioned(
+        Positioned(
           top: 12,
           left: 12,
           child: CircleAvatar(
             backgroundColor: Colors.white,
-            child: Icon(Icons.arrow_back, color: Colors.black),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
         ),
-        const Positioned(
+        Positioned(
           top: 12,
           right: 12,
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            child: Icon(Icons.more_horiz, color: Colors.black),
+          child: PopupMenuButton<String>(
+            icon: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(Icons.more_horiz, color: Colors.black),
+            ),
+            onSelected: (value) {
+              if (value == 'review') {
+                context.push(AppRouter.kReviewView);
+              } else if (value == 'chat') {
+                context.push(AppRouter.kChatView);
+              } else if (value == 'order') {
+                context.push(AppRouter.kOrder);
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem<String>(
+                value: 'review',
+                child: Row(
+                  children: [
+                    Icon(Icons.star, color: Colors.black),
+                    SizedBox(width: 8),
+                    Text('Review'),
+                  ],
+                ),
+              ),
+              PopupMenuItem<String>(
+                value: 'chat',
+                child: Row(
+                  children: [
+                    Icon(Icons.chat, color: Colors.black),
+                    SizedBox(width: 8),
+                    Text('Chat'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'order',
+                child: Row(
+                  children: [
+                    Icon(Icons.shopping_bag, color: Colors.black),
+                    SizedBox(width: 8),
+                    Text('Order'),
+                  ],
+                ),
+              ),
+            ],
+            offset: Offset(0, 40), // Adjust position of the popup
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 4,
           ),
         ),
         if (version == RestaurantViewVersion.version2)
@@ -49,7 +106,7 @@ class RestaurantHeader extends StatelessWidget {
                 Icon(Icons.circle, size: 8, color: Colors.grey),
               ],
             ),
-          )
+          ),
       ],
     );
   }
