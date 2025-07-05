@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:restaurant/features/chief_part/food_details/presentation/views/chief_food_details_views.dart';
 
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
 
@@ -40,6 +41,7 @@ abstract class AppRouter {
   static const kChifFoodList = '/chif_food_list';
   static const kAddNewItem = '/add_new_item';
   static const kChifHome = '/chif_home';
+  static const kChifFoodDetails = '/chif_food_details';
 
   static final router = GoRouter(
     routes: [
@@ -69,6 +71,12 @@ abstract class AppRouter {
         path: kChatView,
         name: "chat",
         builder: (context, state) => const ChatScreen(userId: "1"),
+      ),
+
+      GoRoute(
+        path: kChifFoodDetails,
+        name: "chifFoodDetails",
+        builder: (context, state) => const FoodDetailsPage(),
       ),
 
       GoRoute(
