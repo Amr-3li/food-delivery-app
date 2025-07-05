@@ -94,7 +94,7 @@ class CustomBottomNavBar extends StatelessWidget {
               width: 28,
               height: 28,
               colorFilter: ColorFilter.mode(
-                currentIndex == 2 ? Colors.orange : Colors.grey,
+                ColorsHelper.orange,
                 BlendMode.srcIn,
               ),
             ),
@@ -105,8 +105,10 @@ class CustomBottomNavBar extends StatelessWidget {
           icon: SvgPicture.asset(
             AppIcons.iBell,
             width: 24,
-            height: 24,
-            colorFilter: ColorFilter.mode(ColorsHelper.orange, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(
+              currentIndex == 2 ? Colors.orange : Colors.grey,
+              BlendMode.srcIn,
+            ),
           ),
           label: 'Notifications',
         ),

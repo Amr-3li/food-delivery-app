@@ -3,6 +3,7 @@ import 'package:restaurant/features/chief_part/chat/presentation/views/chat_scre
 import 'package:restaurant/features/chief_part/chat/presentation/views/list_chat_screen.dart';
 import 'package:restaurant/features/chief_part/chief_menu/presentation/view/chief_menu.dart';
 import 'package:restaurant/features/chief_part/chief_menu/presentation/view/withdraw.dart';
+import 'package:restaurant/features/chief_part/food_details/presentation/views/chief_food_details_views.dart';
 
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
 
@@ -77,6 +78,7 @@ abstract class AppRouter {
   static const kFQS = '/fqs';
   static const kFavorite = "/favorite";
   static const kAddAddressView = "/addAddress";
+  static const kChifFoodDetails = '/chif_food_details';
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -105,6 +107,12 @@ abstract class AppRouter {
         path: kChatView,
         name: "chat",
         builder: (context, state) => const ChatScreen(userId: "1"),
+      ),
+
+      GoRoute(
+        path: kChifFoodDetails,
+        name: "chifFoodDetails",
+        builder: (context, state) => const FoodDetailsPage(),
       ),
 
       GoRoute(
