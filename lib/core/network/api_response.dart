@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class ApiResponse {
   final bool status;
@@ -32,8 +33,9 @@ class ApiResponse {
       return ApiResponse(
         status: false,
         data: error.response?.data,
-        statusCode:
-        error.response != null ? error.response!.statusCode ?? 500 : 500,
+        statusCode: error.response != null
+            ? error.response!.statusCode ?? 500
+            : 500,
         message: _handleDioError(error),
       );
     } else {
@@ -68,10 +70,9 @@ class ApiResponse {
   static String _handleServerError(Response? response) {
     if (response == null) return "No response from server.";
     if (response.data is Map<String, dynamic>) {
-      if (response.data["message"] != null)
-      {
-        print("----- Handle Server Error ${response.data["message"]}");
-        return response.data["message"] ;
+      if (response.data["message"] != null) {
+        debugPrint("----- Handle Server Error ${response.data["message"]}");
+        return response.data["message"];
       }
       return "An error occurred.";
     }

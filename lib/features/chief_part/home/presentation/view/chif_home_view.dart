@@ -5,7 +5,7 @@ import 'package:restaurant/features/chief_part/home/presentation/widget/order_wi
 import 'package:restaurant/features/chief_part/home/presentation/widget/populer_food_builder.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/revenue_dashboard.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/reviews_summary.dart';
-import 'package:restaurant/features/chief_part/widgets/custom_button_nvigation%20copy.dart';
+import 'package:restaurant/features/chief_part/widgets/custom_bottomnavigation_bar.dart';
 
 class ChifHomeView extends StatelessWidget {
   const ChifHomeView({super.key});

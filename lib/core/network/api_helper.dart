@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 import '../cache/cache_data.dart';
 import 'api_response.dart';
@@ -29,16 +30,16 @@ class ApiHelper {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          print("--- Headers : ${options.headers.toString()}");
-          print("--- endpoint : ${options.path.toString()}");
+          debugPrint("--- Headers : ${options.headers.toString()}");
+          debugPrint("--- endpoint : ${options.path.toString()}");
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          print("--- Response : ${response.data.toString()}");
+          debugPrint("--- Response : ${response.data.toString()}");
           return handler.next(response);
         },
         onError: (DioException error, handler) async {
-          print("--- Error : ${error.response?.data.toString()}");
+          debugPrint("--- Error : ${error.response?.data.toString()}");
 
           // Handle HTML responses
           if (error.response?.data is String &&
@@ -76,8 +77,9 @@ class ApiHelper {
         options: Options(
           headers: {
             if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',
-            'Content-Type':
-                isFormData ? 'multipart/form-data' : 'application/json',
+            'Content-Type': isFormData
+                ? 'multipart/form-data'
+                : 'application/json',
           },
         ),
       );

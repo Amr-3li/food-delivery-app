@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +12,7 @@ import 'package:restaurant/features/chief_part/add_new_item/presentation/widgets
 
 class ImageUploadSection extends StatelessWidget {
   final ValueChanged<List<ItemImage>>? onImagesChanged;
+  @override
   final Key? key;
 
   const ImageUploadSection({this.key, this.onImagesChanged}) : super(key: key);
@@ -28,6 +31,7 @@ class ImageUploadSection extends StatelessWidget {
 
 class _ImageUploadContent extends StatelessWidget {
   final ValueChanged<List<ItemImage>>? onImagesChanged;
+  // ignore: annotate_overrides
   final Key? key;
 
   const _ImageUploadContent({this.key, this.onImagesChanged}) : super(key: key);

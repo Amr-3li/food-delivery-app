@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/features/chief_part/my_food_list/presentation/widgets/category_nav_bar.dart';
 import 'package:restaurant/features/chief_part/my_food_list/presentation/widgets/food_list_builder.dart';
-import 'package:restaurant/features/chief_part/widgets/custom_button_nvigation%20copy.dart';
+import 'package:restaurant/features/chief_part/widgets/custom_bottomnavigation_bar.dart';
 import 'package:svg_flutter/svg.dart';
 
 class MyFoodList extends StatefulWidget {

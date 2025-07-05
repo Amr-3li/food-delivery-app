@@ -22,8 +22,6 @@ import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 
 import '../../features/menu/presentation/views/add_new_address_view.dart';
-import '../../features/menu/presentation/views/address_view.dart';
-
 
 abstract class AppRouter {
   static const kSplashView = '/';

@@ -1,16 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:restaurant/core/network/api_helper.dart';
+
 import 'package:restaurant/features/menu/data/models/address_details_model.dart';
 import 'package:restaurant/features/menu/data/repo/add_address/add_address_repo.dart';
 
 import '../../../../../core/network/api_response.dart';
 
-class AddAddressRepoImplementation implements AddAddressRepo{
-
+class AddAddressRepoImplementation implements AddAddressRepo {
   AddAddressRepoImplementation._internal();
-  static final AddAddressRepoImplementation _instance = AddAddressRepoImplementation._internal();
+  static final AddAddressRepoImplementation _instance =
+      AddAddressRepoImplementation._internal();
 
   factory AddAddressRepoImplementation() {
     return _instance;
@@ -18,34 +18,36 @@ class AddAddressRepoImplementation implements AddAddressRepo{
 
   @override
   Future<Either<String, Position>> determinePosition() async {
-      bool serviceEnabled;
-      LocationPermission permission;
+    bool serviceEnabled;
+    LocationPermission permission;
 
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        return left('Location services are disabled.');
-      }
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return left('Location services are disabled.');
+    }
 
-      permission = await Geolocator.checkPermission();
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          return left('Location permissions are denied');
-        }
+        return left('Location permissions are denied');
       }
+    }
 
-      if (permission == LocationPermission.deniedForever) {
-        return left('Location permissions are permanently denied, we cannot request permissions.');
-      }
+    if (permission == LocationPermission.deniedForever) {
+      return left(
+        'Location permissions are permanently denied, we cannot request permissions.',
+      );
+    }
 
-      return right(await Geolocator.getCurrentPosition());
+    return right(await Geolocator.getCurrentPosition());
   }
 
   @override
   Future<Either<String, AddressDetailsModel>> getAddressDetails({
     required double latitude,
     required double longitude,
-}) async {
+  }) async {
     try {
       Dio dio = Dio(
         BaseOptions(
@@ -56,14 +58,16 @@ class AddAddressRepoImplementation implements AddAddressRepo{
             'lat': latitude.toString(),
             'lon': longitude.toString(),
             'format': 'json',
-          }
+          },
         ),
       );
 
       Response response = await dio.get('reverse');
 
       if (response.data != null) {
-        AddressDetailsModel addressDetails = AddressDetailsModel.fromJson(response.data);
+        AddressDetailsModel addressDetails = AddressDetailsModel.fromJson(
+          response.data,
+        );
 
         return Right(addressDetails);
       } else {
@@ -74,6 +78,4 @@ class AddAddressRepoImplementation implements AddAddressRepo{
       return Left(errorResponse.message);
     }
   }
-
-
 }

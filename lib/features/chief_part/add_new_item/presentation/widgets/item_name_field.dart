@@ -4,6 +4,7 @@ import 'package:restaurant/features/chief_part/add_new_item/presentation/widgets
 
 class ItemNameField extends StatelessWidget {
   final ValueChanged<String> onChanged;
+  // ignore: annotate_overrides, overridden_fields
   final Key? key;
 
   const ItemNameField({this.key, required this.onChanged}) : super(key: key);

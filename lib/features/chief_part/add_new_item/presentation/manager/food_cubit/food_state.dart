@@ -5,12 +5,14 @@ abstract class FoodState {
 }
 
 class FoodInitial extends FoodState {
+  @override
   final FoodDetails foodDetails;
 
   FoodInitial(this.foodDetails);
 }
 
 class FoodLoaded extends FoodState {
+  @override
   final FoodDetails foodDetails;
 
   FoodLoaded(this.foodDetails);
@@ -18,6 +20,7 @@ class FoodLoaded extends FoodState {
 
 class FoodError extends FoodState {
   final String message;
+  @override
   final FoodDetails foodDetails;
 
   FoodError(this.message, this.foodDetails);
