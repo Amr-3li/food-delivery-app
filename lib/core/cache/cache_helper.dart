@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
@@ -18,7 +19,7 @@ class CacheHelper {
   static Future<void> init() async {
     if (_sharedPreferences == null) {
       _sharedPreferences = await SharedPreferences.getInstance();
-      print('SharedPreferences initialized successfully');
+      debugPrint('SharedPreferences initialized successfully');
     }
   }
 
@@ -38,7 +39,7 @@ class CacheHelper {
       }
       throw ArgumentError('Unsupported value type');
     } catch (e) {
-      print('Error saving data for key $key: $e');
+      debugPrint('Error saving data for key $key: $e');
       return false;
     }
   }
@@ -47,7 +48,7 @@ class CacheHelper {
     try {
       return sharedPreferences.get(key);
     } catch (e) {
-      print('Error getting data for key $key: $e');
+      debugPrint('Error getting data for key $key: $e');
       return null;
     }
   }
@@ -56,7 +57,7 @@ class CacheHelper {
     try {
       return await sharedPreferences.remove(key);
     } catch (e) {
-      print('Error removing data for key $key: $e');
+      debugPrint('Error removing data for key $key: $e');
       return false;
     }
   }
@@ -66,7 +67,7 @@ class CacheHelper {
     try {
       return await sharedPreferences.clear();
     } catch (e) {
-      print('Error clearing all data: $e');
+      debugPrint('Error clearing all data: $e');
       return false;
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/icons.dart';
+import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:svg_flutter/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -48,7 +49,10 @@ class CustomBottomNavBar extends StatelessWidget {
             AppIcons.ifoodlist,
             width: 24,
             height: 24,
-            color: currentIndex == 0 ? Colors.orange : Colors.grey,
+            colorFilter: ColorFilter.mode(
+              currentIndex == 0 ? Colors.orange : Colors.grey,
+              BlendMode.srcIn,
+            ),
           ),
           label: 'Home',
         ),
@@ -57,7 +61,10 @@ class CustomBottomNavBar extends StatelessWidget {
             AppIcons.iChifMenu,
             width: 24,
             height: 24,
-            color: currentIndex == 1 ? Colors.orange : Colors.grey,
+            colorFilter: ColorFilter.mode(
+              currentIndex == 1 ? Colors.orange : Colors.grey,
+              BlendMode.srcIn,
+            ),
           ),
           label: 'Food List',
         ),
@@ -84,7 +91,10 @@ class CustomBottomNavBar extends StatelessWidget {
               AppIcons.iPlus,
               width: 28,
               height: 28,
-              color: currentIndex == 2 ? Colors.orange : Colors.grey,
+              colorFilter: ColorFilter.mode(
+                currentIndex == 2 ? Colors.orange : Colors.grey,
+                BlendMode.srcIn,
+              ),
             ),
           ),
           label: 'Add',
@@ -94,7 +104,7 @@ class CustomBottomNavBar extends StatelessWidget {
             AppIcons.iBell,
             width: 24,
             height: 24,
-            color: Colors.orange,
+            colorFilter: ColorFilter.mode(ColorsHelper.orange, BlendMode.srcIn),
           ),
           label: 'Notifications',
         ),
@@ -103,7 +113,10 @@ class CustomBottomNavBar extends StatelessWidget {
             AppIcons.iMessage,
             width: 24,
             height: 24,
-            color: currentIndex == 4 ? Colors.orange : Colors.grey,
+            colorFilter: ColorFilter.mode(
+              currentIndex == 4 ? Colors.orange : Colors.grey,
+              BlendMode.srcIn,
+            ),
           ),
           label: 'Profile',
         ),

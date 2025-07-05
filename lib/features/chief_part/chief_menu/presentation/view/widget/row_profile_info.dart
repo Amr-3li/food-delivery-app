@@ -34,7 +34,7 @@ class ProfileInfoRow extends StatelessWidget {
             imageUrl,
             height: 8.w,
             width: 8.w,
-            color: iconColor,
+            colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
           ),
         ),
         title: Text(text, style: Styles.textStyle16),

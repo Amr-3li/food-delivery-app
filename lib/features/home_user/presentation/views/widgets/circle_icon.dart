@@ -4,12 +4,16 @@ import 'package:svg_flutter/svg.dart';
 
 class CircleIcone extends StatelessWidget {
   const CircleIcone({
-    super.key, required this.icon, required this.backgroundColor, this.iconColor, this.onTap,
+    super.key,
+    required this.icon,
+    required this.backgroundColor,
+    this.iconColor,
+    this.onTap,
   });
-final String icon;
-final Color backgroundColor ;
-final Color ?iconColor;
-final Function()? onTap;
+  final String icon;
+  final Color backgroundColor;
+  final Color? iconColor;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -17,9 +21,9 @@ final Function()? onTap;
       child: CircleAvatar(
         radius: AppResponsive.height(context, value: 22),
         backgroundColor: backgroundColor,
-        child: SvgPicture.asset( 
+        child: SvgPicture.asset(
           icon,
-        color: iconColor,
+          colorFilter: ColorFilter.mode(iconColor!, BlendMode.srcIn),
         ),
       ),
     );

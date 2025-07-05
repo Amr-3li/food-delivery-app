@@ -12,7 +12,7 @@ class FoodItemCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   const FoodItemCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.name,
     required this.category,
@@ -20,7 +20,7 @@ class FoodItemCard extends StatelessWidget {
     required this.rating,
     required this.reviews,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class FoodItemCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey..withValues(alpha: 0.2),
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(0, 3),

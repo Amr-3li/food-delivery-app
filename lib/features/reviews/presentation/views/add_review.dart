@@ -37,6 +37,7 @@ class _AddReviewState extends State<AddReview> {
       return;
     }
 
+    // ignore: unused_local_variable
     final newReview = ReviewModel(
       userName: _nameController.text,
       userImage:

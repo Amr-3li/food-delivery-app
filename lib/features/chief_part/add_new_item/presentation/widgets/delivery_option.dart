@@ -7,6 +7,8 @@ import 'package:sizer/sizer.dart';
 class DeliveryOptionsWidget extends StatefulWidget {
   final TextEditingController priceController;
   final ValueChanged<String> onOptionSelected;
+  @override
+  // ignore: overridden_fields
   final Key? key;
 
   const DeliveryOptionsWidget({

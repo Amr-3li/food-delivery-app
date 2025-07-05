@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final double? height;
   final TextAlign textAlignVertical;
+  // ignore: annotate_overrides, overridden_fields
   final Key? key;
 
   const CustomTextField({

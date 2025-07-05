@@ -5,18 +5,22 @@ import 'package:svg_flutter/svg.dart';
 
 class CustomIconsTitl extends StatelessWidget {
   const CustomIconsTitl({
-    super.key, required this.title, required this.iconUrl,
+    super.key,
+    required this.title,
+    required this.iconUrl,
   });
-final String title;
-final String iconUrl;
+  final String title;
+  final String iconUrl;
   @override
   Widget build(BuildContext context) {
     return Row(
-          children: [
-            SvgPicture.asset(iconUrl , color: ColorsHelper.orange,),
-            Text(title , style: Styles.textStyle16,),
-    
-          ],
-         );
+      children: [
+        SvgPicture.asset(
+          iconUrl,
+          colorFilter: ColorFilter.mode(ColorsHelper.orange, BlendMode.srcIn),
+        ),
+        Text(title, style: Styles.textStyle16),
+      ],
+    );
   }
 }

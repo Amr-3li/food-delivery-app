@@ -65,7 +65,7 @@ class _AreaInputState extends State<AreaInput> {
                     AppIcons.iSmile,
                     width: 24,
                     height: 24,
-                    color: Colors.grey,
+                    colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
                     fit: BoxFit.contain,
                     placeholderBuilder: (context) =>
                         Icon(Icons.emoji_emotions, color: Colors.grey),
