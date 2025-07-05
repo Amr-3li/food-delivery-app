@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:restaurant/core/utils/app_toast.dart';
-import 'package:restaurant/core/utils/styles.dart';
-import 'package:restaurant/core/widgets/custom_elevated_button.dart';
-import 'package:restaurant/features/chief_part/add_new_item/presentation/widgets/custom_text_field.dart';
-import 'package:restaurant/features/menu/data/models/address_details_model.dart';
+
 import 'package:restaurant/features/menu/presentation/views/widgets/add_new_address_view_body.dart';
-import 'package:restaurant/features/menu/presentation/views/widgets/custom_add_address_filed.dart';
-import 'package:restaurant/features/menu/presentation/views/widgets/custom_label_selection.dart';
+
 import 'package:svg_flutter/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../../core/icons.dart';
