@@ -16,14 +16,14 @@ import 'package:restaurant/features/forget_password/presentation/views/vertifica
 import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
 import 'package:restaurant/features/home_user/presentation/views/restaurant_view.dart';
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
-import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
-import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
 import 'package:restaurant/features/notification/presentation/view/notification.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
 
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 
-import '../../features/menu/presentation/views/personal_info_view.dart';
+import '../../features/menu/presentation/views/add_new_address_view.dart';
+import '../../features/menu/presentation/views/address_view.dart';
+
 
 abstract class AppRouter {
   static const kSplashView = '/';
@@ -47,13 +47,8 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: kSplashView,
-        builder: (context, state) => const SplashView(),
+        builder: (context, state) => const AddNewAddressView(),
       ),
-      GoRoute(
-        path: kSplashView,
-        builder: (context, state) => const PersonalInfoView(),
-      ),
-
       GoRoute(
         path: kChifHome,
         builder: (context, state) => const ChifHomeView(),
