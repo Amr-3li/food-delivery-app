@@ -28,6 +28,7 @@ class AddNewAddressView extends StatefulWidget {
 
 class _AddNewAddressViewState extends State<AddNewAddressView> {
   Set<Marker> markers = {};
+  Position? currentPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +45,7 @@ class _AddNewAddressViewState extends State<AddNewAddressView> {
 
         builder: (context, state) {
           if (AddAddressCubit.get(context).currentPosition != null)  {
-            Position currentPosition = AddAddressCubit.get(context).currentPosition!;
-            AddAddressCubit.get(context).getAddressDetails(latitude: currentPosition.latitude, longitude: currentPosition.longitude);
+            currentPosition = AddAddressCubit.get(context).currentPosition!;
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(
@@ -54,10 +54,12 @@ class _AddNewAddressViewState extends State<AddNewAddressView> {
                 child: Stack(
                   children: [
                     GoogleMap(
+                      zoomControlsEnabled: true,
+                      myLocationEnabled: true,
                       initialCameraPosition: CameraPosition(
                         target: LatLng(
-                          currentPosition.latitude,
-                          currentPosition.longitude,
+                          currentPosition!.latitude,
+                          currentPosition!.longitude,
                         ),
                         zoom: 15,
                       ),
