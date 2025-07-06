@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
-import 'package:restaurant/features/menu/data/models/address_details_model.dart';
+import 'package:restaurant/features/address/data/model/address_details_model.dart';
 import 'package:restaurant/features/menu/data/repo/add_address/add_address_repo.dart';
 
 part 'add_address_state.dart';
