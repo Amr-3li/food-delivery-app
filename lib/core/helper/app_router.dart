@@ -27,7 +27,7 @@ import 'package:restaurant/features/fqs/presentation/view/fqs.dart';
 
 import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
 import 'package:restaurant/features/home_user/presentation/views/restaurant_view.dart';
-import 'package:restaurant/features/menu/presentation/views/address_view.dart';
+import 'package:restaurant/features/address/presentaion/view/address_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
@@ -40,7 +40,7 @@ import 'package:restaurant/features/restaurant_view/presentation/views/restauran
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
 
-import '../../features/menu/presentation/views/add_new_address_view.dart';
+import '../../features/address/presentaion/view/add_new_address_view.dart';
 
 abstract class AppRouter {
   static const kOnboardingView = '/';
@@ -66,6 +66,7 @@ abstract class AppRouter {
   static const kMenuChiefView = "/menuChiefView";
   static const kWithdrawView = "/withdrawChiefView";
   static const kPopularFoodView = "/popularFoodView";
+  static const kPersonalInfoProfileView = "/personalInfoProfile";
   static const kEditProfileView = "/editProfile";
   static const kMenuProfileView = "/menuProfileView";
   static const kAllCategoryView = "/allCategoryView";
@@ -79,6 +80,7 @@ abstract class AppRouter {
   static const kFavorite = "/favorite";
   static const kAddAddressView = "/addAddress";
   static const kChifFoodDetails = '/chif_food_details';
+
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -185,12 +187,12 @@ abstract class AppRouter {
         builder: (context, state) => PopularFoodScreen(),
       ),
       GoRoute(
-        path: kProfileView,
+        path: kPersonalInfoProfileView,
         builder: (context, state) => PersonalInfoView(),
       ),
       GoRoute(
         path: kEditProfileView,
-        builder: (context, state) => PersonalInfoView(),
+        builder: (context, state) => EditProfileView(),
       ),
       GoRoute(path: kMenuProfileView, builder: (context, state) => MenuView()),
 
