@@ -6,8 +6,8 @@ import 'package:restaurant/core/utils/styles.dart';
 import 'package:svg_flutter/svg.dart';
 
 class FoodDetailsAppbar extends StatelessWidget {
-  const FoodDetailsAppbar({super.key});
-
+  const FoodDetailsAppbar({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,13 +16,14 @@ class FoodDetailsAppbar extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              // Navigator.pop(context);
+              GoRouter.of(context).push(AppRouter.kChifFoodList);
             },
             icon: SvgPicture.asset(AppIcons.iIcon),
           ),
           const SizedBox(width: 8),
           Text(
-            'Add New Item',
+            title,
             style: Styles.textStyle18.copyWith(fontWeight: FontWeight.bold),
           ),
           Spacer(flex: 1),

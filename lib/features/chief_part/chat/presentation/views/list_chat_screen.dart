@@ -6,7 +6,7 @@ import 'package:restaurant/core/icons.dart';
 
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/chat/data/models/chat_user_model.dart';
-import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
+
 import 'package:restaurant/features/chat/presentation/views/widgets/chat_list_item.dart';
 import 'package:svg_flutter/svg.dart';
 

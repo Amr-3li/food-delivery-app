@@ -9,7 +9,7 @@ final List<MenuGroup> menuGroups = [
       MenuItem(
         icon: AppIcons.assetsPersonalInfo,
         title: 'Personal Profile',
-        route: AppRouter.kEditProfileView,
+        route: AppRouter.kPersonalInfoProfileView,
       ),
       MenuItem(
         icon: AppIcons.assetsAddresses,

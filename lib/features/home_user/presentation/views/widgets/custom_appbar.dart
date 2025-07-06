@@ -9,8 +9,8 @@ import 'package:restaurant/features/home_user/presentation/views/widgets/circle_
 import 'package:restaurant/features/home_user/presentation/views/widgets/dropdown_button.dart';
 
 class CustomHomeAppBar extends StatelessWidget {
-  CustomHomeAppBar({super.key, required this.onTap});
-  dynamic Function()? onTap;
+  const CustomHomeAppBar({super.key, required this.onTap});
+  final dynamic Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return SizedBox(

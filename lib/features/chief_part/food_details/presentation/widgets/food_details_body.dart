@@ -19,7 +19,7 @@ class _FoodDetailsBodyState extends State<FoodDetailsBody> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            FoodDetailsAppbar(),
+            FoodDetailsAppbar(title: "Food details"),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
