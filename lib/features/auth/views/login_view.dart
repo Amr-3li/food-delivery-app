@@ -113,8 +113,9 @@ class _LoginViewState extends State<LoginView> {
                             CustomMaterialButton(
                               buttonName: "Login",
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {}
-                                context.go(AppRouter.kHomeUserView);
+                                if (_formKey.currentState!.validate()) {
+                                  context.go(AppRouter.kHomeUserView);
+                                }
                               },
                             ),
                             SizedBox(height: 2.h),
