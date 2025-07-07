@@ -36,13 +36,10 @@ import 'package:restaurant/features/notification/presentation/view/notification.
 import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
-
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
-
 import '../../features/address/presentaion/view/add_new_address_view.dart';
 import '../../features/auth/views/location_access_view.dart';
-import '../../features/auth/views/widgets/location_access_view_body.dart';
 
 abstract class AppRouter {
   static const kOnboardingView = '/onBoardingView';
