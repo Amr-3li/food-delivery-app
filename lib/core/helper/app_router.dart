@@ -42,8 +42,8 @@ import '../../features/address/presentaion/view/add_new_address_view.dart';
 import '../../features/auth/views/location_access_view.dart';
 
 abstract class AppRouter {
-  static const kOnboardingView = '/onBoardingView';
   static const kSplashView = '/';
+  static const kOnboardingView = '/onBoardingView';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -79,6 +79,7 @@ abstract class AppRouter {
   static const kFavorite = "/favorite";
   static const kAddAddressView = "/addAddress";
   static const kChifFoodDetails = '/chif_food_details';
+  static const kLocationAccess = '/locationAccess';
 
   static final router = GoRouter(
     routes: [
@@ -95,6 +96,9 @@ abstract class AppRouter {
         builder: (context, state) => OnboardingPage(),
       ),
       GoRoute(path: '/login', builder: (context, state) => LoginView()),
+
+      GoRoute(path: kLocationAccess, builder: (context, state) => LocationAccessView()),
+
       GoRoute(
         path: '/forgetPassword',
         builder: (context, state) => ForgetPasswordView(),
