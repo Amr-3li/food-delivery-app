@@ -41,10 +41,12 @@ import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
+import '../../features/auth/views/location_access_view.dart';
+import '../../features/auth/views/widgets/location_access_view_body.dart';
 
 abstract class AppRouter {
-  static const kOnboardingView = '/';
-  static const kSplashView = '/splash';
+  static const kOnboardingView = '/onBoardingView';
+  static const kSplashView = '/';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -74,8 +76,8 @@ abstract class AppRouter {
   static const kFoodScreenView = "/foodScreenView";
   static const kFoodDetailsScreenView = "/foodDetailsScreenView";
   static const kRestaurantViewVersion = "/restaurantViewVersion";
-  static const String kOrder = '/order';
-  static const String kAddresses = '/addresses';
+  static const kOrder = '/order';
+  static const kAddresses = '/addresses';
   static const kFQS = '/fqs';
   static const kFavorite = "/favorite";
   static const kAddAddressView = "/addAddress";
@@ -85,7 +87,7 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: kSplashView,
-        builder: (context, state) => const AddNewAddressView(),
+        builder: (context, state) => const LocationAccessView(),
       ),
       GoRoute(
         path: kChifHome,
