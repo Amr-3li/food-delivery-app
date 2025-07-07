@@ -10,7 +10,7 @@ class LocationAccessView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => LocationAccessCubit(),
+        create: (context) => LocationAccessCubit()..requestLocationAccessPermission(),
         child: LocationAccessViewBody(),
       ),
     );

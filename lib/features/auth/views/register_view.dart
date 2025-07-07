@@ -105,7 +105,7 @@ class _SinUpViewState extends State<SinUpView> {
                               if (_fkey.currentState!.validate()) {
                                 GoRouter.of(
                                   context,
-                                ).push(AppRouter.kLocationAccess);
+                                ).pushReplacement(AppRouter.kLocationAccess);
                               }
                             },
                           ),

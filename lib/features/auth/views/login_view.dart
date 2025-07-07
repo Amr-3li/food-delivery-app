@@ -5,6 +5,7 @@ import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_onboarding_button.dart';
+import 'package:restaurant/features/auth/views/location_access_view.dart';
 import 'package:restaurant/features/auth/views/widgets/custom_password_textfiled.dart';
 import 'package:restaurant/features/auth/views/widgets/custom_text_button.dart';
 import 'package:restaurant/features/auth/views/widgets/custom_text_form_field.dart';
@@ -114,7 +115,7 @@ class _LoginViewState extends State<LoginView> {
                               buttonName: "Login",
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  context.go(AppRouter.kHomeUserView);
+                                  GoRouter.of(context).pushReplacement(AppRouter.kLocationAccess);
                                 }
                               },
                             ),
