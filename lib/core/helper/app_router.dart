@@ -38,6 +38,7 @@ import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
+import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 import '../../features/address/presentaion/view/add_new_address_view.dart';
 import '../../features/auth/views/location_access_view.dart';
 
@@ -85,7 +86,7 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: kSplashView,
-        builder: (context, state) => const LocationAccessView(),
+        builder: (context, state) => const SplashView(),
       ),
       GoRoute(
         path: kChifHome,
