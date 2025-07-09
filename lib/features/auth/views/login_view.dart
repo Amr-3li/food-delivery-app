@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart' as ChifHomeView;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/assets_data.dart';
@@ -18,10 +17,11 @@ class LoginView extends StatefulWidget {
   @override
   State<LoginView> createState() => _LoginViewState();
 }
+
 class _LoginViewState extends State<LoginView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -113,16 +113,18 @@ class _LoginViewState extends State<LoginView> {
                             CustomMaterialButton(
                               buttonName: "Login",
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {}
-                                context.go(AppRouter.kHomeUserView);
+                                if (_formKey.currentState!.validate()) {
+                                  context.go(AppRouter.kHomeUserView);
+                                }
                               },
                             ),
                             SizedBox(height: 2.h),
-                             CustomMaterialButton(
+                            CustomMaterialButton(
                               buttonName: "Login Chif",
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {}
-                                // context.go();
+                                if (_formKey.currentState!.validate()) {
+                                  GoRouter.of(context).go(AppRouter.kChifHome);
+                                }
                               },
                             ),
                             SizedBox(height: 3.h),
@@ -145,9 +147,10 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                     ),
+                  ),
+                ),
               ),
-                ))),
-              
+            ),
           ],
         ),
       ),

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/food_details/presentation/widgets/image_header.dart';
 import 'package:restaurant/features/food_details/presentation/widgets/ingredient_icons.dart';
 import 'package:restaurant/features/food_details/presentation/widgets/size_selector.dart';
 import 'package:restaurant/features/food_details/presentation/widgets/quantity_selector.dart';
 
-enum FoodDetailsVersion {
-  version1,
-  version2,
-}
+enum FoodDetailsVersion { version1, version2 }
 
 class FoodDetailsScreen extends StatelessWidget {
   final FoodDetailsVersion version;
@@ -17,7 +16,8 @@ class FoodDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea( // ← حل مشكلة الصورة
+      body: SafeArea(
+        // ← حل مشكلة الصورة
         child: version == FoodDetailsVersion.version1
             ? _buildVersion1(context)
             : _buildVersion2(context),
@@ -71,13 +71,19 @@ class FoodDetailsScreen extends StatelessWidget {
           const SizedBox(height: 8),
           const SizeSelector(version: FoodDetailsVersion.version1),
           const SizedBox(height: 24),
-          const Text("INGREDIENTS:", style: TextStyle(fontWeight: FontWeight.bold)),
+          const Text(
+            "INGREDIENTS:",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 8),
           const IngredientIcons(version: FoodDetailsVersion.version1),
           const SizedBox(height: 32),
           Row(
             children: const [
-              Text("\$32", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text(
+                "\$32",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               Spacer(),
               QuantitySelector(version: FoodDetailsVersion.version1),
             ],
@@ -89,10 +95,17 @@ class FoodDetailsScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
               ),
-              onPressed: () {},
-              child: const Text("ADD TO CART", style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                context.push(AppRouter.kCartView);
+              },
+              child: const Text(
+                "ADD TO CART",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
           const SizedBox(height: 32), // ← علشان الزر يبان في الآخر
@@ -147,13 +160,19 @@ class FoodDetailsScreen extends StatelessWidget {
           const SizedBox(height: 8),
           const SizeSelector(version: FoodDetailsVersion.version2),
           const SizedBox(height: 24),
-          const Text("INGREDIENTS:", style: TextStyle(fontWeight: FontWeight.bold)),
+          const Text(
+            "INGREDIENTS:",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 8),
           const IngredientIcons(version: FoodDetailsVersion.version2),
           const SizedBox(height: 32),
           Row(
             children: const [
-              Text("\$32", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text(
+                "\$32",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               Spacer(),
               QuantitySelector(version: FoodDetailsVersion.version2),
             ],
@@ -165,10 +184,17 @@ class FoodDetailsScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
               ),
-              onPressed: () {},
-              child: const Text("ADD TO CART", style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                context.push(AppRouter.kCartView);
+              },
+              child: const Text(
+                "ADD TO CART",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
           const SizedBox(height: 32), // ← علشان الزر يبان في الآخر

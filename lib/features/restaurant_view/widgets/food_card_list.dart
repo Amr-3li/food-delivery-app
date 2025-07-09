@@ -36,7 +36,7 @@ class FoodCardList extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
+                color: Colors.grey.withValues(alpha: .1),
                 blurRadius: 6,
                 spreadRadius: 1,
               ),
@@ -80,10 +80,14 @@ class FoodCardList extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: Colors.orange,
                       ),
-                      child: const Icon(Icons.add, size: 16, color: Colors.white),
+                      child: const Icon(
+                        Icons.add,
+                        size: 16,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/features/menu/presentation/views/widgets/address_view_body.dart';
+
+import 'package:restaurant/features/address/presentaion/widget/address_view_body.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/helper/app_responsive.dart';
@@ -16,10 +17,15 @@ class AddressView extends StatelessWidget {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.only(left: 16),
-          child: CircleAvatar(
-            radius: 22,
-            backgroundColor: ColorsHelper.lightBabyBlue,
-            child: SvgPicture.asset(Assets.assetsImagesIcon),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: CircleAvatar(
+              radius: 22,
+              backgroundColor: ColorsHelper.lightBabyBlue,
+              child: SvgPicture.asset(AppIcons.iIcon),
+            ),
           ),
         ),
         toolbarHeight: AppResponsive.height(context, value: 80),

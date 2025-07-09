@@ -1,25 +1,50 @@
 import 'package:go_router/go_router.dart';
-import 'package:restaurant/features/auth/views/login_view.dart';
-import 'package:restaurant/features/auth/views/register_view.dart';
+import 'package:restaurant/features/chief_part/chat/presentation/views/chat_screen.dart';
+import 'package:restaurant/features/chief_part/chat/presentation/views/list_chat_screen.dart';
+import 'package:restaurant/features/chief_part/chief_menu/presentation/view/chief_menu.dart';
+import 'package:restaurant/features/chief_part/chief_menu/presentation/view/withdraw.dart';
+import 'package:restaurant/features/chief_part/food_details/presentation/views/chief_food_details_views.dart';
+
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
-import 'package:restaurant/features/forget_password/presentation/views/forget_password_view.dart';
-import 'package:restaurant/features/forget_password/presentation/views/vertification_view.dart';
-import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
-import 'package:restaurant/features/home_user/presentation/views/restaurant_view.dart';
-import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
-import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
+
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
 import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
+
+import 'package:restaurant/features/chief_part/add_new_item/presentation/views/add_new_items.dart';
+import 'package:restaurant/features/chief_part/home/presentation/view/popular_term_screen.dart';
+import 'package:restaurant/features/chief_part/my_food_list/presentation/views/my_food_list_view.dart';
+import 'package:restaurant/features/chief_part/notification/presentation/view/notification.dart';
+import 'package:restaurant/features/chief_part/chief_menu/presentation/view/reviews.dart';
+import 'package:restaurant/features/auth/views/login_view.dart';
+import 'package:restaurant/features/auth/views/register_view.dart';
+import 'package:restaurant/features/favorits/presentation/views/favorites_view.dart';
+import 'package:restaurant/features/food_categories/presentation/views/food_categories_screen.dart';
+import 'package:restaurant/features/food_details/presentation/views/food_details_screen.dart';
+import 'package:restaurant/features/forget_password/presentation/views/forget_password_view.dart';
+import 'package:restaurant/features/forget_password/presentation/views/vertification_view.dart';
+import 'package:restaurant/features/fqs/presentation/view/fqs.dart';
+
+import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
+import 'package:restaurant/features/home_user/presentation/views/restaurant_view.dart';
+import 'package:restaurant/features/address/presentaion/view/address_view.dart';
+import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
+import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
+import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
+import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/notification/presentation/view/notification.dart';
+import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
-
+import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
-import 'package:restaurant/features/reviews/presentation/views/reviews.dart';
+import 'package:restaurant/features/search/presentation/views/search_screen.dart';
+import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
+import '../../features/address/presentaion/view/add_new_address_view.dart';
+import '../../features/auth/views/location_access_view.dart';
 
-import '../../features/menu/presentation/views/personal_info_view.dart';
 abstract class AppRouter {
   static const kSplashView = '/';
+  static const kOnboardingView = '/onBoardingView';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -30,50 +55,59 @@ abstract class AppRouter {
   static const kCartView = '/cart';
   static const kSucessPaymentView = '/sucessPayment';
   static const kNotificationView = '/notification';
+  static const kNotificationChiefView = '/notificationChief';
   static const kHomeUserView = "/homeUserView";
   static const krestaurantView = "/restaurantView";
-
+  static const kChifFoodList = '/chif_food_list';
+  static const kAddNewItem = '/add_new_item';
+  static const kChifHome = '/chif_home';
+  static const kChatListView = "/chatListView";
+  static const kChatChiefView = "/chatChiefView";
+  static const kMenuChiefView = "/menuChiefView";
+  static const kWithdrawView = "/withdrawChiefView";
+  static const kPopularFoodView = "/popularFoodView";
+  static const kPersonalInfoProfileView = "/personalInfoProfile";
+  static const kEditProfileView = "/editProfile";
+  static const kMenuProfileView = "/menuProfileView";
+  static const kAllCategoryView = "/allCategoryView";
+  static const kSearchScreenView = "/searchScreenView";
+  static const kFoodScreenView = "/foodScreenView";
+  static const kFoodDetailsScreenView = "/foodDetailsScreenView";
+  static const kRestaurantViewVersion = "/restaurantViewVersion";
+  static const kOrder = '/order';
+  static const kAddresses = '/addresses';
+  static const kFQS = '/fqs';
+  static const kFavorite = "/favorite";
+  static const kAddAddressView = "/addAddress";
+  static const kChifFoodDetails = '/chif_food_details';
+  static const kLocationAccess = '/locationAccess';
 
   static final router = GoRouter(
     routes: [
-
       GoRoute(
         path: kSplashView,
         builder: (context, state) => const SplashView(),
       ),
-      GoRoute(path: kSplashView, builder: (context, state) => const PersonalInfoView()),
-
       GoRoute(
-        path: ChifHomeView.id,
-        name: "welcome",
+        path: kChifHome,
         builder: (context, state) => const ChifHomeView(),
       ),
-      GoRoute(path:'/onBoardingView' ,
-      builder: (context, state) => OnboardingPage(),
-
-      ),
-      GoRoute(path:'/login' ,
-      builder: (context, state) => LoginView(),
-      
-      ),
-      //  GoRoute(path:'/homeView' ,
-      // builder: (context, state) => LoginView(),
-      
-      // ),
-        GoRoute(path:'/forgetPassword' ,
-      builder: (context, state) => ForgetPasswordView(),
-      
-      ),
-      GoRoute(path: "/signUp" , 
-      builder: (context, state) => SinUpView(),
-      ),
-        GoRoute(path: "/vertificationView" , 
-      builder: (context, state) => VertificationView(),
-      ),
       GoRoute(
-        path: ChifHomeView.id,
-        name: "Home",
-        builder: (context, state) => const ChifHomeView(),
+        path: kOnboardingView,
+        builder: (context, state) => OnboardingPage(),
+      ),
+      GoRoute(path: '/login', builder: (context, state) => LoginView()),
+
+      GoRoute(path: kLocationAccess, builder: (context, state) => LocationAccessView()),
+
+      GoRoute(
+        path: '/forgetPassword',
+        builder: (context, state) => ForgetPasswordView(),
+      ),
+      GoRoute(path: "/signUp", builder: (context, state) => SinUpView()),
+      GoRoute(
+        path: "/vertificationView",
+        builder: (context, state) => VertificationView(),
       ),
       GoRoute(
         path: kChatView,
@@ -81,6 +115,22 @@ abstract class AppRouter {
         builder: (context, state) => const ChatScreen(userId: "1"),
       ),
 
+      GoRoute(
+        path: kChifFoodDetails,
+        name: "chifFoodDetails",
+        builder: (context, state) => const FoodDetailsPage(),
+      ),
+
+      GoRoute(
+        path: kAddNewItem,
+        name: "addNewItem",
+        builder: (context, state) => AddNewItems(),
+      ),
+      GoRoute(
+        path: kChifFoodList,
+        name: "chifFoodList",
+        builder: (context, state) => MyFoodList(),
+      ),
       GoRoute(
         path: kMessageListView,
         name: "messageList",
@@ -114,14 +164,65 @@ abstract class AppRouter {
         builder: (context, state) => NotificationScreen(),
       ),
       GoRoute(
-        path: kHomeUserView,
-        builder: (context, state) => HomeUserView(),
+        path: kNotificationChiefView,
+        name: "notificationChief",
+        builder: (context, state) => NotificationChiefScreen(),
       ),
-       GoRoute(
+      GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
+      GoRoute(
         path: krestaurantView,
         builder: (context, state) => RestaurantView(),
+      ),
+      GoRoute(
+        path: kChatListView,
+        builder: (context, state) => ChatListScreenChief(),
+      ),
+      GoRoute(
+        path: kChatChiefView,
+        builder: (context, state) => ChatScreenChief(userId: "1"),
+      ),
+      GoRoute(
+        path: kMenuChiefView,
+        builder: (context, state) => ChiefMenuScreen(),
+      ),
+      GoRoute(path: kWithdrawView, builder: (context, state) => WithdrawView()),
+      GoRoute(
+        path: kPopularFoodView,
+        builder: (context, state) => PopularFoodScreen(),
+      ),
+      GoRoute(
+        path: kPersonalInfoProfileView,
+        builder: (context, state) => PersonalInfoView(),
+      ),
+      GoRoute(
+        path: kEditProfileView,
+        builder: (context, state) => EditProfileView(),
+      ),
+      GoRoute(path: kMenuProfileView, builder: (context, state) => MenuView()),
+
+      GoRoute(
+        path: kSearchScreenView,
+        builder: (context, state) => SearchScreen(),
+      ),
+      GoRoute(path: kFoodScreenView, builder: (context, state) => FoodScreen()),
+      GoRoute(
+        path: kFoodDetailsScreenView,
+        builder: (context, state) =>
+            FoodDetailsScreen(version: FoodDetailsVersion.version2),
+      ),
+      GoRoute(
+        path: kRestaurantViewVersion,
+        builder: (context, state) =>
+            const RestaurantViewScreen(version: RestaurantViewVersion.version1),
+      ),
+      GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
+      GoRoute(path: kFQS, builder: (_, __) => const FAQsScreen()),
+      GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),
+      GoRoute(path: kOrder, builder: (_, __) => const MyOrdersView()),
+      GoRoute(
+        path: kAddAddressView,
+        builder: (context, state) => AddNewAddressView(),
       ),
     ],
   );
 }
-

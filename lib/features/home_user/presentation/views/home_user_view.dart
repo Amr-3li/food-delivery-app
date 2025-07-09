@@ -17,106 +17,118 @@ class HomeUserView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: AppResponsive.height(context, value: 30),
-            left: AppResponsive.width(context, value: 20),
-          ),
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    right: AppResponsive.width(context, value: 20),
-                  ),
-                  child: CustomHomeAppBar(),
-                ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Padding(
+              padding: EdgeInsets.only(
+                top: AppResponsive.height(context, value: 30),
+                left: AppResponsive.width(context, value: 20),
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: AppResponsive.height(context, value: 10),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Row(
-                  children: [
-                    Text(
-                      "Hey Hala,",
-                      style: Styles.textStyle16.copyWith(
-                        fontWeight: FontWeight.normal,
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        right: AppResponsive.width(context, value: 20),
+                      ),
+                      child: CustomHomeAppBar(
+                        onTap: () {
+                          context.push(AppRouter.kMenuProfileView);
+                        },
                       ),
                     ),
-                    Text("Good Afternoon,", style: Styles.textStyle16),
-                  ],
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SearchButton(
-                  onTap: () {
-                    // context.push(AppRouter.)
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: AppResponsive.height(context, value: 25),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SubTitleAllCategories(
-                  subTitle: "All Categories",
-                  onTap: () {
-                    // context.push(kCategories)
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: AppResponsive.height(context, value: 10),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: AppResponsive.height(context, value: 200),
-
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: AppResponsive.height(context, value: 10),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Wrap(
+                      spacing: 5,
+                      children: [
+                        Text(
+                          "Hey Hala,",
+                          style: Styles.textStyle16.copyWith(
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        Text("Good Afternoon,", style: Styles.textStyle16),
+                      ],
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SearchButton(
+                      onTap: () {
+                        context.push(AppRouter.kSearchScreenView);
+                      },
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: AppResponsive.height(context, value: 25),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SubTitleAllCategories(
+                      subTitle: "All Categories",
+                      onTap: () {
+                        context.push(AppRouter.kFoodScreenView);
+                      },
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: AppResponsive.height(context, value: 10),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return SizedBox(
+                          height: AppResponsive.height(context, value: 200),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return CustomCategory();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: AppResponsive.height(context, value: 16),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SubTitleAllCategories(
+                      subTitle: "Open Restaurants",
+                      onTap: () {
+                        context.push(AppRouter.krestaurantView);
+                      },
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: AppResponsive.height(context, value: 16),
+                    ),
+                  ),
+                  SliverList.builder(
                     itemCount: 10,
                     itemBuilder: (context, index) {
-                      return CustomCategory();
+                      return Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12.sp),
+                        child: CustomRestorantInfo(),
+                      );
                     },
                   ),
-                ),
+                ],
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: AppResponsive.height(context, value: 16),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SubTitleAllCategories(
-                  subTitle: "Open Restaurants",
-                  onTap: () {
-                    context.push(AppRouter.krestaurantView);
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: AppResponsive.height(context, value: 16),
-                ),
-              ),
-              SliverList.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.sp),
-                    child: CustomRestorantInfo(),
-                  );
-                },
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

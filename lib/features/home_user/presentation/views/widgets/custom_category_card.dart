@@ -5,14 +5,12 @@ import 'package:restaurant/features/home_user/presentation/views/widgets/custom_
 import 'package:sizer/sizer.dart';
 
 class CustomCategory extends StatelessWidget {
-  const CustomCategory({
-    super.key,
-  });
+  const CustomCategory({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: AppResponsive.height(context, value: 12),
+      // spacing: AppResponsive.height(context, value: 12),
       children: [
         Container(
           width: AppResponsive.width(context, value: 122),
@@ -21,22 +19,27 @@ class CustomCategory extends StatelessWidget {
           margin: EdgeInsets.all(10.sp),
           decoration: BoxDecoration(
             color: Colors.white,
-              boxShadow: [
+            boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2), 
-                offset: Offset(0, 4), 
-                blurRadius: 5,       
+                color: Colors.black.withValues(alpha: 0.2),
+                offset: Offset(0, 4),
+                blurRadius: 5,
               ),
             ],
-            borderRadius: BorderRadius.circular(22.sp)
-            
+            borderRadius: BorderRadius.circular(22.sp),
           ),
-          child: 
-            
-           CustomNetworkImage(imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfL0Ahbgn1CWY-UjxICwSCX6QA9XPCLiLmfi3K1SPm15LLC8C056QRuYakxRlbx-jMWj8&usqp=CAU", width: 96, height: 81,)),
-        
-        
-        Text("Pizaa" , style: Styles.textStyle17.copyWith(fontWeight: FontWeight.bold),),
+          child: CustomNetworkImage(
+            imageUrl:
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfL0Ahbgn1CWY-UjxICwSCX6QA9XPCLiLmfi3K1SPm15LLC8C056QRuYakxRlbx-jMWj8&usqp=CAU",
+            width: 96,
+            height: 81,
+          ),
+        ),
+        SizedBox(height: AppResponsive.height(context, value: 12)),
+        Text(
+          "Pizaa",
+          style: Styles.textStyle17.copyWith(fontWeight: FontWeight.bold),
+        ),
       ],
     );
   }

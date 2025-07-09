@@ -37,6 +37,7 @@ class _AddReviewState extends State<AddReview> {
       return;
     }
 
+    // ignore: unused_local_variable
     final newReview = ReviewModel(
       userName: _nameController.text,
       userImage:
@@ -58,7 +59,12 @@ class _AddReviewState extends State<AddReview> {
         leading: Row(
           children: [
             SizedBox(width: 2.w),
-            BackIconAppBar(onTap: () {}, iconColor: ColorsHelper.lightBabyBlue),
+            BackIconAppBar(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              iconColor: ColorsHelper.lightBabyBlue,
+            ),
           ],
         ),
         title: Text("Add Review", style: Styles.textStyle17),

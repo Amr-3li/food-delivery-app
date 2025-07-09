@@ -48,7 +48,7 @@ class ChatListScreen extends StatelessWidget {
           },
           child: CircleAvatar(
             radius: 10,
-            child: SvgPicture.asset(Assets.assetsImagesIcon),
+            child: SvgPicture.asset(AppIcons.iIcon),
           ),
         ),
         title: Text(

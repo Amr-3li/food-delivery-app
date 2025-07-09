@@ -1,19 +1,20 @@
 import '../../../../core/icons.dart';
 import 'menu_model.dart';
+import '../../../../core/helper/app_router.dart'; // Make sure to import your router constants
 
 final List<MenuGroup> menuGroups = [
-
   // Group 1 : personal profile , addresses
   MenuGroup(
     items: [
       MenuItem(
-        icon: Assets.assetsPersonalInfo,
+        icon: AppIcons.assetsPersonalInfo,
         title: 'Personal Profile',
+        route: AppRouter.kPersonalInfoProfileView,
       ),
-
       MenuItem(
-        icon: Assets.assetsAddresses,
+        icon: AppIcons.assetsAddresses,
         title: 'Addresses',
+        route: AppRouter.kAddresses,
       ),
     ],
   ),
@@ -22,44 +23,42 @@ final List<MenuGroup> menuGroups = [
   MenuGroup(
     items: [
       MenuItem(
-        icon: Assets.assetsCart,
+        icon: AppIcons.assetsCart,
         title: 'Cart',
+        route: AppRouter.kCartView,
       ),
-
       MenuItem(
-        icon: Assets.assetsFavourite,
+        icon: AppIcons.assetsFavourite,
         title: 'Favourites',
+        route: AppRouter.kFavorite,
       ),
-
       MenuItem(
-        icon: Assets.assetsNotifications,
+        icon: AppIcons.assetsNotifications,
         title: 'Notifications',
+        route: AppRouter.kNotificationView,
       ),
-
-      MenuItem(
-        icon: Assets.assetsPaymentMethod,
-        title: 'Payment Method',
-      ),
+      // MenuItem(
+      //   icon: AppIcons.assetsPaymentMethod,
+      //   title: 'Payment Method',
+      //   route: AppRouter.k,
+      // ),
     ],
   ),
 
-  // Group 3 :  FAQs , user reviews , settings
+  // Group 3 : FAQs , user reviews , settings
   MenuGroup(
     items: [
+      MenuItem(icon: AppIcons.assetsFAQs, title: "FAQs", route: AppRouter.kFQS),
       MenuItem(
-        icon: Assets.assetsFAQs,
-        title: "FAQs",
-      ),
-
-      MenuItem(
-        icon: Assets.assetsReviews,
+        icon: AppIcons.assetsReviews,
         title: "User Reviews",
+        route: AppRouter.kAddReviewView,
       ),
-
-      MenuItem(
-        icon: Assets.assetsSettings,
-        title: "Settings",
-      ),
+      // MenuItem(
+      //   icon: AppIcons.assetsSettings,
+      //   title: "Settings",
+      //   route: AppRouter.kSettings,
+      // ),
     ],
   ),
 
@@ -67,8 +66,9 @@ final List<MenuGroup> menuGroups = [
   MenuGroup(
     items: [
       MenuItem(
-        icon: Assets.assetsLogout,
+        icon: AppIcons.assetsLogout,
         title: "Logout",
+        isLogout: true, // so you can check for logout in logic
       ),
     ],
   ),

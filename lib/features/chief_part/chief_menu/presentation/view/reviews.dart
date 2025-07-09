@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:restaurant/core/utils/color_helper.dart';
 
 import 'package:restaurant/core/utils/styles.dart';
@@ -57,7 +58,12 @@ class _ReviewScreenState extends State<ReviewScreen> {
         leading: Row(
           children: [
             SizedBox(width: 2.w),
-            BackIconAppBar(onTap: () {}, iconColor: ColorsHelper.lightBabyBlue),
+            BackIconAppBar(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              iconColor: ColorsHelper.lightBabyBlue,
+            ),
           ],
         ),
         title: Text("Reviews", style: Styles.textStyle17),

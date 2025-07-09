@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 
 class ReviewsSummary extends StatelessWidget {
   final double rating; // Variable rating (e.g., 4.9)
@@ -41,6 +43,7 @@ class ReviewsSummary extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
+                      GoRouter.of(context).push(AppRouter.kReviewView);
                       // Navigate to all reviews screen
                     },
                     child: const Text(

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/core/icons.dart';
+import 'package:restaurant/core/utils/color_helper.dart';
+import 'package:restaurant/core/utils/styles.dart';
 import 'package:svg_flutter/svg.dart';
 
-import '../../../../../core/icons.dart';
-import '../../../../../core/utils/color_helper.dart';
-import '../../../../../core/utils/styles.dart';
-
 class CustomAddressItem extends StatelessWidget {
-  const CustomAddressItem({super.key, required this.address, required this.icon, required this.title});
+  const CustomAddressItem({
+    super.key,
+    required this.address,
+    required this.icon,
+    required this.title,
+  });
 
   final String address;
   final String icon;
@@ -26,9 +30,7 @@ class CustomAddressItem extends StatelessWidget {
           CircleAvatar(
             radius: 24,
             backgroundColor: ColorsHelper.white,
-            child: SvgPicture.asset(
-                icon
-            ),
+            child: SvgPicture.asset(icon),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -36,18 +38,18 @@ class CustomAddressItem extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(title, style: Styles.textStyle16,),
+                    Text(title, style: Styles.textStyle16),
                     Spacer(),
-                    SvgPicture.asset(Assets.assetsEdit),
-                    SizedBox(width: 8,),
-                    SvgPicture.asset(Assets.assetsDelete),
+                    SvgPicture.asset(AppIcons.assetsEdit),
+                    SizedBox(width: 8),
+                    SvgPicture.asset(AppIcons.assetsDelete),
                   ],
                 ),
                 const SizedBox(height: 8),
-                Text(address, overflow: TextOverflow.ellipsis, maxLines: 2,)
+                Text(address, overflow: TextOverflow.ellipsis, maxLines: 2),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

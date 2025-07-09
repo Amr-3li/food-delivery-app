@@ -1,5 +1,6 @@
 class MenuGroup {
   final String? groupTitle;
+
   final List<MenuItem> items;
 
   MenuGroup({this.groupTitle, required this.items});

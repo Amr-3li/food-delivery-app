@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/core/icons.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
+
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
 import 'package:restaurant/features/notification/data/models/notification_model.dart';
 import 'package:restaurant/features/notification/presentation/view/widgets/notification_listtile.dart';
 import 'package:sizer/sizer.dart';
-import 'package:svg_flutter/svg.dart';
 
 class NotificationChiefScreen extends StatelessWidget {
   NotificationChiefScreen({super.key});
@@ -34,7 +35,12 @@ class NotificationChiefScreen extends StatelessWidget {
         leading: Row(
           children: [
             SizedBox(width: 4.w),
-            BackIconAppBar(onTap: () {}, iconColor: ColorsHelper.lightBabyBlue),
+            BackIconAppBar(
+              onTap: () {
+                GoRouter.of(context).push(AppRouter.kChifHome);
+              },
+              iconColor: ColorsHelper.lightBabyBlue,
+            ),
           ],
         ),
 
