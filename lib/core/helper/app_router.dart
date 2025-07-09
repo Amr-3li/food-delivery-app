@@ -34,7 +34,7 @@ abstract class AppRouter {
   static const krestaurantView = "/restaurantView";
 
 
-   final router = GoRouter(
+  static final router = GoRouter(
     routes: [
 
       GoRoute(

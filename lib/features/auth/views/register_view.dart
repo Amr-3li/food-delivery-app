@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/assets_data.dart';
 import 'package:restaurant/core/utils/styles.dart';
