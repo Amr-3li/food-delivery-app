@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:restaurant/core/helper/app_router.dart';
 
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
-import 'package:restaurant/features/notification/data/models/notification_model.dart';
-import 'package:restaurant/features/notification/presentation/view/widgets/notification_listtile.dart';
+import 'package:restaurant/features/chief_part/notification/data/models/notification_model.dart';
+import 'package:restaurant/features/chief_part/notification/presentation/view/widgets/notification_listtile.dart';
 import 'package:sizer/sizer.dart';
 
-class NotificationChiefScreen extends StatelessWidget {
-  NotificationChiefScreen({super.key});
+class NotificationScreen extends StatelessWidget {
+  NotificationScreen({super.key});
   final List<NotificationsModel> notifications = [
     NotificationsModel(
       imageUrl: "https://randomuser.me/api/portraits/men/1.jpg",
@@ -37,7 +35,7 @@ class NotificationChiefScreen extends StatelessWidget {
             SizedBox(width: 4.w),
             BackIconAppBar(
               onTap: () {
-                GoRouter.of(context).push(AppRouter.kChifHome);
+                Navigator.pop(context);
               },
               iconColor: ColorsHelper.lightBabyBlue,
             ),
