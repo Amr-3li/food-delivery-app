@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/assets_data.dart';
 import 'package:restaurant/core/helper/app_router.dart';
@@ -105,7 +106,7 @@ class _SinUpViewState extends State<SinUpView> {
                               if (_fkey.currentState!.validate()) {
                                 GoRouter.of(
                                   context,
-                                ).push(AppRouter.kHomeUserView);
+                                ).pushReplacement(AppRouter.kLocationAccess);
                               }
                             },
                           ),

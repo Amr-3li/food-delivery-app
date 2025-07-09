@@ -18,28 +18,6 @@ class AddAddressRepoImplementation implements AddAddressRepo {
 
   @override
   Future<Either<String, Position>> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return left('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return left('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return left(
-        'Location permissions are permanently denied, we cannot request permissions.',
-      );
-    }
-
     return right(await Geolocator.getCurrentPosition());
   }
 
