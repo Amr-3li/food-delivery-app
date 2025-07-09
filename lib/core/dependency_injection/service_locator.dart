@@ -9,6 +9,7 @@ import 'package:restaurant/features/chief_part/notification/data/api_services/no
 import 'package:restaurant/features/chief_part/notification/data/repository/notification_repository.dart';
 import 'package:restaurant/features/payment/data/repository/payment_repository.dart';
 import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
+import 'package:restaurant/features/chief_part/notification/presentation/cubit/notification_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -36,7 +37,10 @@ void setupLocator() {
   sl.registerLazySingleton(
     () => NotificationRepository(apiService: sl<NotificationServicesApi>()),
   );
-  sl.registerFactory(() => NotificationCubit(sl<NotificationRepository>()));
+  sl.registerLazySingleton(
+    () => NotificationCubit(
+        repository: sl<NotificationRepository>()), // Fixed this line
+  );
   sl.registerLazySingleton(() => PaymentRepository());
   sl.registerFactory(() => PaymentCubit(sl<PaymentRepository>()));
 }
