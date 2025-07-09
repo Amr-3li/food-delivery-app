@@ -6,4 +6,6 @@ class APIKey {
       "sk_test_51RVEgTQTuEnVAVOqmAaMXgWFaLjRReRzCPwep30mvFEcfOyARLj7mZKXhToyIDeZj03K2DAXYUOHM4qcsqYB2UbE00nnJ2YLWa";
   static const String networkImage =
       "https://static.vecteezy.com/system/resources/thumbnails/042/535/195/small_2x/profile-icon-illustration-png.png";
+  static const String baseApiUrl =
+      "https://round41-mobile-food.digital-vision-solutions.com/api";
 }
