@@ -1,12 +1,14 @@
 class NotificationsModel {
-  final String imageUrl;
+  final String id;
+  final String userId;
   final String title;
   final String subtitle;
-  final DateTime? date; // Optional date field
-  final bool isRead; // To track read status
+  final DateTime? date;
+  final bool isRead;
 
   NotificationsModel({
-    required this.imageUrl,
+    required this.id,
+    required this.userId,
     required this.title,
     required this.subtitle,
     this.date,
@@ -14,18 +16,23 @@ class NotificationsModel {
   });
 
   factory NotificationsModel.fromJson(Map<String, dynamic> json) {
+    final data = json['data'] ?? {};
     return NotificationsModel(
-      imageUrl: json['image_url'] ?? '',
-      title: json['title'] ?? '',
-      subtitle: json['subtitle'] ?? '',
-      date: json['date'] != null ? DateTime.parse(json['date']) : null,
-      isRead: json['is_read'] ?? false,
+      userId: data["user_id"],
+      id: json['id'] ?? '',
+      title: data['type'] ?? 'Notification',
+      subtitle: data['message'] ?? '',
+      date: data['created_at'] != null
+          ? DateTime.tryParse(data['created_at'])
+          : null,
+      isRead: json['read_at'] != null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'image_url': imageUrl,
+      "id": id,
+      "user_id": userId,
       'title': title,
       'subtitle': subtitle,
       'date': date?.toIso8601String(),

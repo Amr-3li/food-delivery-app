@@ -1,20 +1,24 @@
 import 'package:dio/dio.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/features/chief_part/notification/data/models/notification_model.dart';
+import 'package:dartz/dartz.dart';
+import 'package:restaurant/core/error/failure.dart';
 
 class NotificationServicesApi {
-  Dio dio;
+  final Dio dio;
+
   NotificationServicesApi({required this.dio});
+
   Map<String, dynamic> _getHeaders() {
     return {
       'Authorization':
-          'Bearer 15|XO9gx6yn5EmJcOAcbljbfHCqU7kbsjvoqhteKWhTc11d5dd4',
+          'Bearer 5|CcQu2XRuiWbsHv2tZjgLF9vMs6ARacAl7478Fk2x491557dc',
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     };
   }
 
-  Future<List<NotificationsModel>> getNotifications() async {
+  Future<Either<Failure, List<NotificationsModel>>> getNotifications() async {
     try {
       final response = await dio.get(
         '${APIKey.baseApiUrl}/notifications',
@@ -22,24 +26,36 @@ class NotificationServicesApi {
       );
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data['data'] ?? [];
-        return data.map((item) => NotificationsModel.fromJson(item)).toList();
+        final data = response.data['data'];
+        if (data is List) {
+          final notifications =
+              data.map((item) => NotificationsModel.fromJson(item)).toList();
+          return Right(notifications);
+        } else {
+          return const Right([]);
+        }
       } else {
-        throw Exception('Failed to load notifications');
+        return Left(Failure(errorMessage: 'Failed to load notifications'));
       }
     } on DioException catch (e) {
-      throw Exception('Network error: ${e.message}');
+      return Left(Failure(errorMessage: 'Network error: ${e.message}'));
+    } catch (e) {
+      return Left(Failure(errorMessage: 'Unexpected error: ${e.toString()}'));
     }
   }
 
-  Future<void> markAsRead(int notificationId) async {
+  Future<Either<Failure, Unit>> markAsRead(String notificationId) async {
     try {
       await dio.patch(
         '${APIKey.baseApiUrl}/notifications/$notificationId/read',
         options: Options(headers: _getHeaders()),
       );
+      return const Right(unit);
     } on DioException catch (e) {
-      throw Exception('Failed to mark as read: ${e.message}');
+      return Left(
+          Failure(errorMessage: 'Failed to mark as read: ${e.message}'));
+    } catch (e) {
+      return Left(Failure(errorMessage: 'Unexpected error: ${e.toString()}'));
     }
   }
 }

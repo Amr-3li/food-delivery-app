@@ -32,7 +32,6 @@ import 'package:restaurant/features/menu/presentation/views/edit_profile_view.da
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
-import 'package:restaurant/features/chief_part/notification/presentation/view/notification.dart';
 import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';

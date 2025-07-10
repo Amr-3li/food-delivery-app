@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/features/chief_part/notification/data/repository/notification_repository.dart';
 import 'package:restaurant/features/chief_part/notification/presentation/cubit/notification_state.dart';
+import 'package:bloc/bloc.dart';
 
 class NotificationCubit extends Cubit<NotificationState> {
   final NotificationRepository repository;
@@ -9,22 +10,32 @@ class NotificationCubit extends Cubit<NotificationState> {
 
   Future<void> fetchNotifications() async {
     emit(NotificationLoading());
-    try {
-      final notifications = await repository.getNotifications();
-      emit(NotificationSuccess(notifications: notifications));
-    } catch (e) {
-      emit(NotificationFailure(errorMessage: e.toString()));
-    }
+
+    final result = await repository.getNotifications();
+
+    result.fold(
+      (failure) {
+        emit(NotificationFailure(errorMessage: failure.errorMessage));
+      },
+      (notifications) {
+        emit(NotificationSuccess(notifications: notifications));
+      },
+    );
   }
 
-  Future<void> markNotificationAsRead(int notificationId) async {
-    try {
-      await repository.markAsRead(notificationId);
-      emit(NotificationMarkedAsRead(notificationId: notificationId));
-      // Refresh notifications after marking as read
-      await fetchNotifications();
-    } catch (e) {
-      emit(NotificationFailure(errorMessage: e.toString()));
-    }
+  Future<void> markNotificationAsRead(String notificationId) async {
+    emit(NotificationLoading());
+
+    final result = await repository.markAsRead(notificationId);
+
+    await result.fold(
+      (failure) async {
+        emit(NotificationFailure(errorMessage: failure.errorMessage));
+      },
+      (_) async {
+        emit(NotificationMarkedAsRead(notificationId: notificationId));
+        await fetchNotifications(); // Refresh the list
+      },
+    );
   }
 }

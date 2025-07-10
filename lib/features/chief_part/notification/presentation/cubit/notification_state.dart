@@ -17,6 +17,6 @@ class NotificationFailure extends NotificationState {
 }
 
 class NotificationMarkedAsRead extends NotificationState {
-  final int notificationId;
+  final String notificationId;
   NotificationMarkedAsRead({required this.notificationId});
 }
