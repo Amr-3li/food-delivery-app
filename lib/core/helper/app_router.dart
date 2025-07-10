@@ -32,19 +32,19 @@ import 'package:restaurant/features/menu/presentation/views/edit_profile_view.da
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
-import 'package:restaurant/features/notification/presentation/view/notification.dart';
+import 'package:restaurant/features/chief_part/notification/presentation/view/notification.dart';
 import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
+
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
-import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
+
 import '../../features/address/presentaion/view/add_new_address_view.dart';
-import '../../features/auth/views/location_access_view.dart';
 
 abstract class AppRouter {
-  static const kSplashView = '/';
-  static const kOnboardingView = '/onBoardingView';
+  static const kOnboardingView = '/';
+  static const kSplashView = '/splash';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -74,20 +74,19 @@ abstract class AppRouter {
   static const kFoodScreenView = "/foodScreenView";
   static const kFoodDetailsScreenView = "/foodDetailsScreenView";
   static const kRestaurantViewVersion = "/restaurantViewVersion";
-  static const kOrder = '/order';
-  static const kAddresses = '/addresses';
+  static const String kOrder = '/order';
+  static const String kAddresses = '/addresses';
   static const kFQS = '/fqs';
   static const kFavorite = "/favorite";
   static const kAddAddressView = "/addAddress";
   static const kChifFoodDetails = '/chif_food_details';
-  static const kLocationAccess = '/locationAccess';
 
   static final router = GoRouter(
     routes: [
       GoRoute(
        
         path: kSplashView,
-        builder: (context, state) => const SplashView(),
+        builder: (context, state) => const AddNewAddressView(),
       ),
       GoRoute(
         path: kChifHome,
@@ -98,9 +97,6 @@ abstract class AppRouter {
         builder: (context, state) => OnboardingPage(),
       ),
       GoRoute(path: '/login', builder: (context, state) => LoginView()),
-
-      GoRoute(path: kLocationAccess, builder: (context, state) => LocationAccessView()),
-
       GoRoute(
         path: '/forgetPassword',
         builder: (context, state) => ForgetPasswordView(),
@@ -164,11 +160,11 @@ abstract class AppRouter {
         name: "notification",
         builder: (context, state) => NotificationScreen(),
       ),
-      GoRoute(
-        path: kNotificationChiefView,
-        name: "notificationChief",
-        builder: (context, state) => NotificationChiefScreen(),
-      ),
+      // GoRoute(
+      //   path: kNotificationChiefView,
+      //   name: "notificationChief",
+      //   builder: (context, state) => NotificationChiefScreen(),
+      // ),
       GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
       GoRoute(
         path: krestaurantView,

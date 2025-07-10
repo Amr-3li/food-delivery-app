@@ -63,7 +63,6 @@ class _SinUpViewState extends State<SinUpView> {
                     topRight: Radius.circular(20),
                   ),
                 ),
-
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Form(
@@ -98,15 +97,15 @@ class _SinUpViewState extends State<SinUpView> {
                             isRetype: true,
                             originalPasswordController: passwordController,
                           ),
-
                           SizedBox(height: 5.h),
                           CustomMaterialButton(
                             buttonName: "Sign Up",
                             onPressed: () {
                               if (_fkey.currentState!.validate()) {
-                                GoRouter.of(
-                                  context,
-                                ).pushReplacement(AppRouter.kLocationAccess);
+                                // shimaa fix this key
+                                // GoRouter.of(
+                                //   context,
+                                // ).pushReplacement(AppRouter.kLocationAccess);
                               }
                             },
                           ),
