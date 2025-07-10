@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:restaurant/core/cache/cache_helper.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 
@@ -7,11 +8,14 @@ import 'package:restaurant/core/helper/app_router.dart';
 
 import 'package:sizer/sizer.dart';
 
-void main() {
+void main() async{
+   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+await CacheHelper.init();
   runApp(const MyApp());
 
   Stripe.publishableKey = APIKey.stripePublishableKey;
+
 }
 
 class MyApp extends StatelessWidget {
