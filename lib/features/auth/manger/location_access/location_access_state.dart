@@ -1,6 +1,5 @@
 part of 'location_access_cubit.dart';
 
-@immutable
 sealed class LocationAccessState {}
 
 final class LocationAccessInitial extends LocationAccessState {}

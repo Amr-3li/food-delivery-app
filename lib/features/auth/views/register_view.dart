@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:go_router/go_router.dart';
-import 'package:restaurant/core/assets_data.dart';
-import 'package:restaurant/core/helper/app_router.dart';
+
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_arrow_back.dart';
 import 'package:restaurant/core/widgets/custom_onboarding_button.dart';
@@ -10,6 +7,7 @@ import 'package:restaurant/features/auth/views/widgets/custom_password_textfiled
 import 'package:restaurant/features/auth/views/widgets/custom_text_form_field.dart';
 import 'package:restaurant/features/auth/views/widgets/title_authentication_pages.dart';
 import 'package:sizer/sizer.dart';
+import 'package:restaurant/core/assets_data.dart';
 
 class SinUpView extends StatefulWidget {
   const SinUpView({super.key});
