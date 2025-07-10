@@ -85,6 +85,7 @@ abstract class AppRouter {
   static final router = GoRouter(
     routes: [
       GoRoute(
+       
         path: kSplashView,
         builder: (context, state) => const SplashView(),
       ),

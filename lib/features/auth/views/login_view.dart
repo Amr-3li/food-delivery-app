@@ -119,15 +119,15 @@ class _LoginViewState extends State<LoginView> {
                               },
                             ),
                             SizedBox(height: 2.h),
-                            CustomMaterialButton(
-                              buttonName: "Login Chif",
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  GoRouter.of(context).go(AppRouter.kChifHome);
-                                }
-                              },
-                            ),
-                            SizedBox(height: 3.h),
+                            // CustomMaterialButton(
+                            //   buttonName: "Login Chif",
+                            //   onPressed: () {
+                            //     if (_formKey.currentState!.validate()) {
+                            //       GoRouter.of(context).go(AppRouter.kChifHome);
+                            //     }
+                            //   },
+                            // ),
+                            // SizedBox(height: 3.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

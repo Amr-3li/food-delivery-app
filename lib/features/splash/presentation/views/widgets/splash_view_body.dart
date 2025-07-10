@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/cache/cache_helper.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -30,10 +32,14 @@ class _SplashViewBodyState extends State<SplashViewBody> {
     );
   }
 
-  void delayedMethod() {
+  void delayedMethod() async{
+    final see = CacheHelper.getData(key: "seeOnboarding")?? false ;
+    print(see);
     Future.delayed(
       const Duration(seconds: 2),
-      () => context.go('/onBoardingView'),
+      () => {
+        see ?context.go("/login") : context.go(AppRouter.kOnboardingView)
+      },
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/cache/cache_helper.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_onboarding_button.dart';
@@ -75,17 +76,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
          
           ),
           SizedBox(height: 10.h,),
-          CustomMaterialButton(index: index, controller: controller , onPressed: (){  if (index < 3) {
+          CustomMaterialButton(index: index, controller: controller , onPressed: ()async{  if (index < 3) {
                     controller.nextPage(
           duration: Duration(milliseconds: 500),
           curve: Curves.bounceIn,
                     );
                   } else {
                    context.go("/login");
+               CacheHelper.saveData(key: "seeOnboarding", value: true);
                   }}, buttonName:isLastPage? "Get Started" :"Next",),
                   if(!isLastPage)
-          TextButton(onPressed: (){
+          TextButton(onPressed: ()async{
             context.go("/login");
+                CacheHelper.saveData(key: "seeOnboarding", value: true);
           }, child: Text("Skip", style: Styles.textStyle16.copyWith(color: ColorsHelper.grey),))
         ],
       ),
