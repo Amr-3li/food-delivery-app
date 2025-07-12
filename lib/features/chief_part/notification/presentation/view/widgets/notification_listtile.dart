@@ -9,10 +9,12 @@ class ListtileNotifications extends StatelessWidget {
     required this.subtitle,
     required this.title,
     this.onTap,
+    required this.date,
   });
   final String imageUrl;
   final String title;
   final String subtitle;
+  final String? date;
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class ListtileNotifications extends StatelessWidget {
         subtitle,
         style: Styles.textStyle13.copyWith(fontWeight: FontWeight.w400),
       ),
+      trailing: date != null ? Text(date!) : null,
       onTap: onTap,
       //   trailing: IconButton(
       //     icon: const Icon(Icons.delete, color: Colors.red),

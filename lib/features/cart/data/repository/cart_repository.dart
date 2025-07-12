@@ -9,7 +9,7 @@ class CartRepository {
 
   Future<List<CartModel>> getCart() => cartApiService.getCart();
 
-Future<void> fetchCart() async {
+  Future<void> fetchCart() async {
     _cartItems = await cartApiService.getCart();
   }
 
@@ -17,11 +17,12 @@ Future<void> fetchCart() async {
     required int dishId,
     required int sizeId,
     required int quantity,
-  }) => cartApiService.addToCart(
-    dishId: dishId,
-    sizeId: sizeId,
-    quantity: quantity,
-  );
+  }) =>
+      cartApiService.addToCart(
+        dishId: dishId,
+        sizeId: sizeId,
+        quantity: quantity,
+      );
 
   Future<void> updateCartItem({required int itemId, required int quantity}) =>
       cartApiService.updateCartItem(itemId: itemId, quantity: quantity);
