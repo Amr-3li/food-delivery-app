@@ -12,7 +12,7 @@ class NotificationServicesApi {
   Map<String, dynamic> _getHeaders() {
     return {
       'Authorization':
-          'Bearer 5|CcQu2XRuiWbsHv2tZjgLF9vMs6ARacAl7478Fk2x491557dc',
+          'Bearer 6|zq3OU0soHfdRsznwTWCxzn3Jk7Ouzut5hbHbNmeDe4ffe4a8',
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     };
@@ -28,8 +28,9 @@ class NotificationServicesApi {
       if (response.statusCode == 200) {
         final data = response.data['data'];
         if (data is List) {
-          final notifications =
-              data.map((item) => NotificationsModel.fromJson(item)).toList();
+          final notifications = data
+              .map((item) => NotificationsModel.fromJson(item))
+              .toList();
           return Right(notifications);
         } else {
           return const Right([]);
@@ -53,7 +54,8 @@ class NotificationServicesApi {
       return const Right(unit);
     } on DioException catch (e) {
       return Left(
-          Failure(errorMessage: 'Failed to mark as read: ${e.message}'));
+        Failure(errorMessage: 'Failed to mark as read: ${e.message}'),
+      );
     } catch (e) {
       return Left(Failure(errorMessage: 'Unexpected error: ${e.toString()}'));
     }

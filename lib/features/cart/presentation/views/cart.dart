@@ -98,7 +98,7 @@ class _CartViewState extends State<CartView> {
                   return CartItemContainer(
                     imageName: item.dish.image,
                     title: item.dish.name,
-                    price: '\$${item.price.toStringAsFixed(2)}',
+                    price: '\$${item.price.toStringAsFixed(2) * item.quantity}',
                     portion: item.quantity,
                     removeItemCart: () {
                       context.read<CartCubit>().deleteCartItem(item.id);
@@ -129,8 +129,21 @@ class _CartViewState extends State<CartView> {
             );
           },
         ),
-        bottomNavigationBar: ContainerBottomNavigator(
-          addressTitle: addressTitle,
+        bottomNavigationBar: Builder(
+          builder: (context) {
+            final state = context.watch<CartCubit>().state;
+            double total = 0.0;
+            if (state is CartSuccessState) {
+              total = state.cartModel.items.fold(0.0, (sum, item) {
+                return sum + (item.price * item.quantity);
+              });
+            }
+
+            return ContainerBottomNavigator(
+              total: total,
+              addressTitle: addressTitle,
+            );
+          },
         ),
       ),
     );

@@ -9,7 +9,7 @@ class CartApiServices {
   Map<String, dynamic> _getHeaders() {
     return {
       'Authorization':
-          'Bearer 15|XO9gx6yn5EmJcOAcbljbfHCqU7kbsjvoqhteKWhTc11d5dd4',
+          'Bearer 6|zq3OU0soHfdRsznwTWCxzn3Jk7Ouzut5hbHbNmeDe4ffe4a8',
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     };
