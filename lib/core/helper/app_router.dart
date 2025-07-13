@@ -37,6 +37,7 @@ import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
+import 'package:restaurant/features/reviews/presentation/views/review_resturant.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
@@ -79,11 +80,11 @@ abstract class AppRouter {
   static const kFavorite = "/favorite";
   static const kAddAddressView = "/addAddress";
   static const kChifFoodDetails = '/chif_food_details';
+  static const String kResturantReview = '/resturantReview';
 
   static final router = GoRouter(
     routes: [
       GoRoute(
-       
         path: kSplashView,
         builder: (context, state) => const AddNewAddressView(),
       ),
@@ -159,11 +160,11 @@ abstract class AppRouter {
         name: "notification",
         builder: (context, state) => NotificationScreen(),
       ),
-      // GoRoute(
-      //   path: kNotificationChiefView,
-      //   name: "notificationChief",
-      //   builder: (context, state) => NotificationChiefScreen(),
-      // ),
+      GoRoute(
+        path: kResturantReview,
+        name: "resturantReview",
+        builder: (context, state) => ReviewResturantScreen(),
+      ),
       GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
       GoRoute(
         path: krestaurantView,
