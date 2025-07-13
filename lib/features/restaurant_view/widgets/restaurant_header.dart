@@ -45,7 +45,7 @@ class RestaurantHeader extends StatelessWidget {
             ),
             onSelected: (value) {
               if (value == 'review') {
-                context.push(AppRouter.kReviewView);
+                context.push(AppRouter.kResturantReview);
               } else if (value == 'chat') {
                 context.push(AppRouter.kChatView);
               } else if (value == 'order') {
