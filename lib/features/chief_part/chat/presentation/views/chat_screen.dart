@@ -1,0 +1,111 @@
+import 'package:flutter/material.dart';
+import 'package:restaurant/core/icons.dart';
+
+import 'package:restaurant/core/utils/styles.dart';
+import 'package:restaurant/features/chat/data/models/chat_model.dart';
+import 'package:restaurant/features/chat/presentation/views/widgets/area_input.dart';
+import 'package:restaurant/features/chat/presentation/views/widgets/message_list.dart';
+import 'package:svg_flutter/svg.dart';
+
+import 'package:url_launcher/url_launcher.dart';
+
+class ChatScreenChief extends StatefulWidget {
+  const ChatScreenChief({super.key, required this.userId});
+  final String userId;
+  @override
+  State<ChatScreenChief> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreenChief> {
+  bool showEmojiPicker = false;
+  final FocusNode focusNode = FocusNode();
+  TextEditingController textController = TextEditingController();
+
+  final List<ChatMessages> messages = [
+    ChatMessages(
+      idFrom: 'user1',
+      idTo: 'user2',
+      timestamp: '2024-01-01 10:00:00',
+      content: 'Hey, how are you?',
+      type: 0,
+    ),
+    ChatMessages(
+      idFrom: 'user2',
+      idTo: 'user1',
+      timestamp: '2024-01-01 10:01:00',
+      content: 'I am good, thank you!',
+      type: 0,
+    ),
+    ChatMessages(
+      idFrom: 'user1',
+      idTo: 'user2',
+      timestamp: '2024-01-01 10:02:00',
+      content: 'Great to hear that!',
+      type: 0,
+    ),
+  ];
+
+  final String currentUserId = 'user1';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: SvgPicture.asset(AppIcons.iIcon),
+        ),
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPDheuafnrCB0q-VE5n3RLRREX5dN3JrdJzJF76tz0y80fP4uNM0ZTtXbXWA-e2yuWKKk&usqp=CAU",
+              ),
+              radius: 20,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              "User name",
+              style: Styles.textStyle16.copyWith(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () async {
+                final Uri launchUri = Uri(scheme: 'tel', path: '+201009247747');
+                if (await canLaunchUrl(launchUri)) {
+                  await launchUrl(launchUri);
+                } else {
+                  throw 'Could not launch $launchUri';
+                }
+              },
+              child: SvgPicture.asset(AppIcons.iCall),
+            ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: MessageList(
+              messages: messages,
+              currentUserId: currentUserId,
+            ),
+          ),
+          AreaInput(
+            currentUserId: currentUserId,
+            focusNode: focusNode,
+            messages: messages,
+            showEmojiPicker: showEmojiPicker,
+            textController: textController,
+          ),
+        ],
+      ),
+    );
+  }
+}

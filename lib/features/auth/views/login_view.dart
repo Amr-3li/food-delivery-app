@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_onboarding_button.dart';
@@ -17,12 +18,11 @@ class LoginView extends StatefulWidget {
   State<LoginView> createState() => _LoginViewState();
 }
 
-
-
 class _LoginViewState extends State<LoginView> {
-  final _key = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     super.dispose();
@@ -63,76 +63,88 @@ class _LoginViewState extends State<LoginView> {
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: SingleChildScrollView(
-                    child: Form(
-                      key: _key,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("EMAIL", style: Styles.textStyle14),
-                          CustomTextFormField(
-                            hintText: "example@gmail.com",
-                            keyboardType: TextInputType.emailAddress,
-                            lableText: "Email",
-                            controller: emailController,
-                          ),
-                          SizedBox(height: 2.h),
-                          Text("PASSWORD", style: Styles.textStyle14),
-                          PasswordFormField(
-                            controller: passwordController,
-                            isRetype: false,
-                          ),
-                          SizedBox(height: 1.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Checkbox(
-                                    value: false,
-                                    onChanged: (v) {},
-                                    activeColor: ColorsHelper.orange,
-                                    focusColor: ColorsHelper.buttongrey,
-                                  ),
-                                  Text(
-                                    "Remember me",
-                                    style: Styles.textStyle13.copyWith(
-                                      color: ColorsHelper.grey,
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("EMAIL", style: Styles.textStyle14),
+                            CustomTextFormField(
+                              hintText: "example@gmail.com",
+                              keyboardType: TextInputType.emailAddress,
+                              lableText: "Email",
+                              controller: emailController,
+                            ),
+                            SizedBox(height: 2.h),
+                            Text("PASSWORD", style: Styles.textStyle14),
+                            PasswordFormField(
+                              controller: passwordController,
+                              isRetype: false,
+                            ),
+                            SizedBox(height: 1.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                      value: false,
+                                      onChanged: (v) {},
+                                      activeColor: ColorsHelper.orange,
+                                      focusColor: ColorsHelper.buttongrey,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              CustomTextButton(
-                                buttonName: 'Forgot Password?',
-                                onPressed: () =>
-                                    context.push("/forgetPassword"),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 2.h),
-                          CustomMaterialButton(
-                            buttonName: "Login",
-                            onPressed: () {
-                              if (_key.currentState!.validate()) {}
-                              context.go("/homeView");
-                            },
-                          ),
-                          SizedBox(height: 3.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Don't have an account? ",
-                                style: Styles.textStyle16.copyWith(
-                                  color: ColorsHelper.grey,
+                                    Text(
+                                      "Remember me",
+                                      style: Styles.textStyle13.copyWith(
+                                        color: ColorsHelper.grey,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              CustomTextButton(
-                                buttonName: 'SIGN UP',
-                                onPressed: () => context.push("/signUp"),
-                              ),
-                            ],
-                          ),
-                        ],
+                                CustomTextButton(
+                                  buttonName: 'Forgot Password?',
+                                  onPressed: () =>
+                                      context.push("/forgetPassword"),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 2.h),
+                            CustomMaterialButton(
+                              buttonName: "Login",
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  context.go(AppRouter.kHomeUserView);
+                                }
+                              },
+                            ),
+                            SizedBox(height: 2.h),
+                            // CustomMaterialButton(
+                            //   buttonName: "Login Chif",
+                            //   onPressed: () {
+                            //     if (_formKey.currentState!.validate()) {
+                            //       GoRouter.of(context).go(AppRouter.kChifHome);
+                            //     }
+                            //   },
+                            // ),
+                            // SizedBox(height: 3.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Don't have an account? ",
+                                  style: Styles.textStyle16.copyWith(
+                                    color: ColorsHelper.grey,
+                                  ),
+                                ),
+                                CustomTextButton(
+                                  buttonName: 'SIGN UP',
+                                  onPressed: () => context.push("/signUp"),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

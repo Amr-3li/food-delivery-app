@@ -10,8 +10,13 @@ import 'package:restaurant/features/payment/presentaion/cubit/payment_state.dart
 import 'package:sizer/sizer.dart';
 
 class ContainerBottomNavigator extends StatelessWidget {
-  const ContainerBottomNavigator({super.key, required this.addressTitle});
+  const ContainerBottomNavigator({
+    super.key,
+    required this.addressTitle,
+    required this.total,
+  });
   final String addressTitle;
+  final double total;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -72,7 +77,7 @@ class ContainerBottomNavigator extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Total: \$120.00',
+                  'Total: \$$total',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Spacer(),

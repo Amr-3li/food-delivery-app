@@ -6,13 +6,14 @@ import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 
-import 'package:restaurant/features/cart/data/models/cart_model.dart';
+import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:restaurant/features/cart/presentation/cubit/cart_states.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/cart_item_container.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/container_bottom_navigator_bar.dart';
 
-import 'package:restaurant/features/payment/data/repository/payment_repository.dart';
 import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
+import 'package:sizer/sizer.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -22,34 +23,31 @@ class CartView extends StatefulWidget {
 }
 
 class _CartViewState extends State<CartView> {
-  final List<CartItemModel> cartItem = [
-    CartItemModel(
-      id: 1,
-      imageUrl:
-          "https://img.favpng.com/11/24/25/pizza-european-cuisine-calzone-italian-cuisine-png-favpng-ki4NN2rw8FPaSbubr08vTwbRG_t.jpg",
-      price: 60,
-      title: "pizza calzone European",
-    ),
-    CartItemModel(
-      id: 2,
-      imageUrl:
-          "https://img.favpng.com/11/24/25/pizza-european-cuisine-calzone-italian-cuisine-png-favpng-ki4NN2rw8FPaSbubr08vTwbRG_t.jpg",
-      price: 32,
-      title: "pizza calzone European",
-    ),
-  ];
   String addressTitle = "2118 Thornridge Cir. Syracuse";
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch cart when the view initializes
+    // context.read<CartCubit>().getCart();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PaymentCubit(sl<PaymentRepository>()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => sl<CartCubit>()..getCart()),
+        BlocProvider(create: (_) => sl<PaymentCubit>()),
+      ],
       child: Scaffold(
         backgroundColor: ColorsHelper.black,
         appBar: AppBar(
           backgroundColor: Colors.black54,
           leading: BackIconAppBar(
             iconColor: Colors.white.withValues(alpha: .3),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
           title: Text(
             "Cart",
@@ -68,42 +66,84 @@ class _CartViewState extends State<CartView> {
             ),
           ],
         ),
-        body: ListView.builder(
-          padding: EdgeInsets.only(
-            bottom: 80,
-          ), // Prevent overlap with bottom bar
-          itemCount: cartItem.length,
-          itemBuilder: (context, index) {
-            return CartItemContainer(
-              imageName: cartItem[index].imageUrl, //update image
-              title: cartItem[index].title,
-              price: '\$${cartItem[index].price}',
-              portion: cartItem[index].quantity,
-              removeItemCart: () {
-                setState(() {
-                  cartItem.removeAt(index);
-                });
-              },
-              onTapAdd: () {
-                setState(() {
-                  cartItem[index].quantity++;
-                });
-              },
-              onTapRemove: () {
-                setState(() {
-                  if (cartItem[index].quantity > 0) cartItem[index].quantity--;
-                });
-              },
+        body: BlocBuilder<CartCubit, CartStates>(
+          builder: (context, state) {
+            if (state is CartLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is CartFailureState) {
+              return Center(
+                child: Text(
+                  state.errorMessage,
+                  style: Styles.textStyle14.copyWith(color: ColorsHelper.white),
+                ),
+              );
+            } else if (state is CartSuccessState) {
+              final cart = state.cartModel;
+              if (cart.items.isEmpty) {
+                return Center(
+                  child: Text(
+                    'Your cart is empty',
+                    style: Styles.textStyle14.copyWith(
+                      color: ColorsHelper.white,
+                    ),
+                  ),
+                );
+              }
+
+              return ListView.builder(
+                padding: EdgeInsets.only(bottom: 10.h),
+                itemCount: cart.items.length,
+                itemBuilder: (context, index) {
+                  final item = cart.items[index];
+                  return CartItemContainer(
+                    imageName: item.dish.image,
+                    title: item.dish.name,
+                    price: '\$${item.price.toStringAsFixed(2) * item.quantity}',
+                    portion: item.quantity,
+                    removeItemCart: () {
+                      context.read<CartCubit>().deleteCartItem(item.id);
+                    },
+                    onTapAdd: () {
+                      context.read<CartCubit>().updateCartItem(
+                        itemId: item.id,
+                        quantity: item.quantity + 1,
+                      );
+                    },
+                    onTapRemove: () {
+                      if (item.quantity > 1) {
+                        context.read<CartCubit>().updateCartItem(
+                          itemId: item.id,
+                          quantity: item.quantity - 1,
+                        );
+                      }
+                    },
+                  );
+                },
+              );
+            }
+            return Center(
+              child: Text(
+                'No cart data available',
+                style: Styles.textStyle14.copyWith(color: ColorsHelper.white),
+              ),
             );
           },
-
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
         ),
+        bottomNavigationBar: Builder(
+          builder: (context) {
+            final state = context.watch<CartCubit>().state;
+            double total = 0.0;
+            if (state is CartSuccessState) {
+              total = state.cartModel.items.fold(0.0, (sum, item) {
+                return sum + (item.price * item.quantity);
+              });
+            }
 
-        // Bottom area using bottomNavigationBar
-        bottomNavigationBar: ContainerBottomNavigator(
-          addressTitle: addressTitle,
+            return ContainerBottomNavigator(
+              total: total,
+              addressTitle: addressTitle,
+            );
+          },
         ),
       ),
     );

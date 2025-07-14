@@ -3,13 +3,12 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:sizer/sizer.dart';
 
-import '../vertification_view.dart';
 
 class PinTextFiled extends StatelessWidget {
   const PinTextFiled({
-    super.key,
+    super.key, this.pinController,
   });
-
+final TextEditingController? pinController;
   @override
   Widget build(BuildContext context) {
     return PinCodeTextField(

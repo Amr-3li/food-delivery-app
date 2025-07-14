@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/menu/presentation/views/widgets/personal_info_view_body.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -16,10 +18,15 @@ class PersonalInfoView extends StatelessWidget {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.only(left: 16),
-          child: CircleAvatar(
-            radius: 22,
-            backgroundColor: ColorsHelper.lightBabyBlue,
-            child: SvgPicture.asset(Assets.assetsImagesIcon),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: CircleAvatar(
+              radius: 22,
+              backgroundColor: ColorsHelper.lightBabyBlue,
+              child: SvgPicture.asset(AppIcons.iIcon),
+            ),
           ),
         ),
         toolbarHeight: AppResponsive.height(context, value: 80),
@@ -27,9 +34,15 @@ class PersonalInfoView extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
-            child: TextButton(onPressed: () {}, child: Text('EDIT', style: Styles.textStyle16.copyWith(
-              color: ColorsHelper.orange,
-            ))),
+            child: TextButton(
+              onPressed: () {
+                context.push(AppRouter.kEditProfileView);
+              },
+              child: Text(
+                'EDIT',
+                style: Styles.textStyle16.copyWith(color: ColorsHelper.orange),
+              ),
+            ),
           ),
         ],
       ),

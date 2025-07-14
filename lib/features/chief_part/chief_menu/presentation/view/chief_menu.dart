@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:go_router/go_router.dart';
@@ -25,31 +26,27 @@ class ChiefMenuScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ProfileInfoRow(
-                    iconColor: ColorsHelper.orange,
-                    imageUrl: Assets.assetsPersonalInfo,
-                    text: "Personal Info",
-                    onPressed: () {},
-                  ),
-                  ProfileInfoRow(
                     iconColor: ColorsHelper.orangeDark,
                     text: "Chat",
-                    imageUrl: Assets.assetsImagesMessage,
+                    imageUrl: AppIcons.iMessage,
                     onPressed: () {
-                      context.go("/messageList");
+                      GoRouter.of(context).push(AppRouter.kChatChiefView);
                     },
                   ),
                   SizedBox(height: 3.h),
                   ProfileInfoRow(
                     iconColor: ColorsHelper.orange,
-                    imageUrl: Assets.assetsWithdrew,
+                    imageUrl: AppIcons.assetsWithdrew,
                     text: "Withdrawal History",
-                    onPressed: () {},
+                    onPressed: () {
+                      GoRouter.of(context).push(AppRouter.kWithdrawView);
+                    },
                   ),
 
                   ProfileInfoRow(
                     iconColor: ColorsHelper.green,
                     text: "Number of Orders",
-                    imageUrl: Assets.assetsImagesnoOrder,
+                    imageUrl: AppIcons.assetsImagesnoOrder,
                     onPressed: () {},
                     isOrder: true,
                   ),
@@ -57,17 +54,19 @@ class ChiefMenuScreen extends StatelessWidget {
                   ProfileInfoRow(
                     iconColor: ColorsHelper.green,
                     text: "User Reviews",
-                    imageUrl: Assets.assetsReviews,
+                    imageUrl: AppIcons.assetsReviews,
                     onPressed: () {
-                      context.go("/reviews");
+                      GoRouter.of(context).push(AppRouter.kReviewView);
                     }, // Navigate to reviews page,
                   ),
                   SizedBox(height: 3.h),
                   ProfileInfoRow(
                     iconColor: Colors.red,
                     text: "Log Out",
-                    imageUrl: Assets.assetsImagesLogoutl,
-                    onPressed: () {},
+                    imageUrl: AppIcons.assetsImagesLogoutl,
+                    onPressed: () {
+                      GoRouter.of(context).push(AppRouter.kOnboardingView);
+                    },
                   ),
                 ],
               ),

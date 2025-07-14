@@ -1,9 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/assets_data.dart';
-import 'package:restaurant/features/auth/views/login_view.dart';
-
+import 'package:restaurant/core/cache/cache_helper.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -12,9 +13,7 @@ class SplashViewBody extends StatefulWidget {
   State<SplashViewBody> createState() => _SplashViewBodyState();
 }
 
-class _SplashViewBodyState extends State<SplashViewBody>
-     {
-
+class _SplashViewBodyState extends State<SplashViewBody> {
   @override
   void initState() {
     super.initState();
@@ -22,30 +21,25 @@ class _SplashViewBodyState extends State<SplashViewBody>
     delayedMethod();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [          Image.asset(
-            AssetsData.logo,
-          ),
-
-        ],
+        children: [Image.asset(AssetsData.logo)],
       ),
     );
   }
 
-  
-  void delayedMethod() {
+  void delayedMethod() async{
+    final see = CacheHelper.getData(key: "seeOnboarding")?? false ;
+    print(see);
     Future.delayed(
       const Duration(seconds: 2),
-      () => Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginView()),
-      ),
+      () => {
+        see ?context.go("/login") : context.go(AppRouter.kOnboardingView)
+      },
     );
   }
 }

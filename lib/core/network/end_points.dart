@@ -1,0 +1,18 @@
+abstract class EndPoints {
+  static const String baseUrl =
+      'https://fruithub.digital-vision-solutions.com/api/';
+  static const String register = 'register';
+  static const String login = 'login';
+  static const String logout = 'logout';
+  static const String recommendedCombo = 'categories/4/products/';
+  static const String cart = 'cart';
+  static const String productDetails = 'products/';
+  static const String favorites = 'favourites';
+  static String categoryProducts(int categoryId) =>
+      'categories/$categoryId/products/';
+  static String searchProducts(String query) =>
+      '/products?search=$query';
+  static const String payment = 'payment';
+  static const String resetPassword = "password/reset";
+  static const String sendOtp = "password/send_otp";
+}

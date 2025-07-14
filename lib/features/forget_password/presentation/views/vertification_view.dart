@@ -13,9 +13,10 @@ class VertificationView extends StatefulWidget {
   @override
   State<VertificationView> createState() => _VertificationViewState();
 }
- TextEditingController pinController = TextEditingController();
-final key = GlobalKey<FormState>();
+
 class _VertificationViewState extends State<VertificationView> {
+   TextEditingController pinController = TextEditingController();
+final _vKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +59,7 @@ class _VertificationViewState extends State<VertificationView> {
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Form(
-                    key:key ,
+                    key:_vKey ,
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,14 +86,14 @@ class _VertificationViewState extends State<VertificationView> {
                               ),
                             ],
                           ),
-                          PinTextFiled(),
+                          PinTextFiled(pinController: pinController,),
 
                           SizedBox(height: 2.5.h),
                           CustomMaterialButton(
                             buttonName: "VERTFY",
                             onPressed: () {
-                              if(key.currentState!.validate()){
-                                
+                              if(_vKey.currentState!.validate()){
+
                               }
                             },
                           ),

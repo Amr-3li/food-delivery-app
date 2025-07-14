@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'populer_food.dart';
 
 class PopularFoodBuilder extends StatelessWidget {
@@ -34,6 +36,7 @@ class PopularFoodBuilder extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
+                    GoRouter.of(context).push(AppRouter.kPopularFoodView);
                     // Navigate to see all popular items
                   },
                   child: const Text(

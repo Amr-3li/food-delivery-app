@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/food_details/presentation/views/food_details_screen.dart';
 
 class ImageHeader extends StatelessWidget {
@@ -13,18 +15,32 @@ class ImageHeader extends StatelessWidget {
       color: Colors.grey[300],
       child: Stack(
         children: [
-          const Center(child: Icon(Icons.image, size: 100, color: Colors.white)),
+          const Center(
+            child: Icon(Icons.image, size: 100, color: Colors.white),
+          ),
           Positioned(
             top: 16,
             left: 16,
-            child: const Icon(Icons.arrow_back),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
           Positioned(
             top: 16,
             right: 16,
-            child: Icon(
-              Icons.favorite,
-              color: version == FoodDetailsVersion.version2 ? Colors.orange : Colors.grey,
+            child: IconButton(
+              onPressed: () {
+                GoRouter.of(context).push(AppRouter.kFavorite);
+              },
+              icon: Icon(
+                Icons.favorite,
+                color: version == FoodDetailsVersion.version2
+                    ? Colors.orange
+                    : Colors.grey,
+              ),
             ),
           ),
         ],
@@ -32,4 +48,3 @@ class ImageHeader extends StatelessWidget {
     );
   }
 }
-
