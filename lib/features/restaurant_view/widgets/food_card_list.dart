@@ -47,7 +47,6 @@ class FoodCardList extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // صورة رمادية Placeholder
                 Container(
                   height: 80,
                   width: double.infinity,
