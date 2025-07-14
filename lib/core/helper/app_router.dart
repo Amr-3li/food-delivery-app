@@ -109,7 +109,7 @@ abstract class AppRouter {
       GoRoute(
         path: kChatView,
         name: "chat",
-        builder: (context, state) => const ChatScreen(userId: "1"),
+        builder: (context, state) => const ChatScreen(),
       ),
 
       GoRoute(
@@ -176,7 +176,7 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kChatChiefView,
-        builder: (context, state) => ChatScreenChief(userId: "1"),
+        builder: (context, state) => ChatScreenChief(),
       ),
       GoRoute(
         path: kMenuChiefView,

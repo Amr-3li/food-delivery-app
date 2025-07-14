@@ -5,6 +5,9 @@ import 'package:restaurant/core/helper/dio_with_auth.dart';
 import 'package:restaurant/features/cart/data/repository/cart_repository.dart';
 import 'package:restaurant/features/cart/data/services/cart_services.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:restaurant/features/chat/data/repository/conversation_implementation_repo.dart';
+import 'package:restaurant/features/chat/data/service_api/conversation_api.dart';
+import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
 import 'package:restaurant/features/chief_part/notification/data/api_services/notification_api_services.dart';
 import 'package:restaurant/features/chief_part/notification/data/repository/notification_repository.dart';
 import 'package:restaurant/features/payment/data/repository/payment_repository.dart';
@@ -50,6 +53,11 @@ void setupLocator() {
   sl.registerLazySingleton(
     () => ReviewsCubit(sl<ReviewsRepositoryImplementation>()),
   );
+  sl.registerLazySingleton(() => ConversationApiService(sl()));
+  sl.registerLazySingleton(
+    () => ConversationRepository(sl<ConversationApiService>()),
+  );
+  sl.registerLazySingleton(() => ChatCubit(sl<ConversationRepository>()));
   sl.registerLazySingleton(() => PaymentRepository());
   sl.registerFactory(() => PaymentCubit(sl<PaymentRepository>()));
 }
