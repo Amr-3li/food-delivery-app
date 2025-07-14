@@ -5,15 +5,15 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:restaurant/core/utils/app_toast.dart';
+import 'package:restaurant/features/address/presentaion/view/widget/add_new_address_view_body.dart';
 
-import 'package:restaurant/features/address/presentaion/widget/add_new_address_view_body.dart';
 
 import 'package:svg_flutter/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../../core/icons.dart';
 import '../../../../core/utils/color_helper.dart';
-import '../../../menu/data/repo/add_address/add_address_repo_implemation.dart';
-import '../../../menu/presentation/manger/add_address/add_address_cubit.dart';
+import '../../data/repo/add_address/add_address_repo_implemation.dart';
+import '../manger/add_address/add_address_cubit.dart';
 
 class AddNewAddressView extends StatefulWidget {
   const AddNewAddressView({super.key});
@@ -33,7 +33,7 @@ class _AddNewAddressViewState extends State<AddNewAddressView> {
           AddAddressCubit(AddAddressRepoImplementation())..getCurrentLocation(),
       child: BlocConsumer<AddAddressCubit, AddAddressState>(
         listener: (context, state) {
-          if (state is AddAddressError) {
+          if (state is GetCurrentAddressError) {
             AppToast.showErrorToast(state.error);
             GoRouter.of(context).pop();
           }

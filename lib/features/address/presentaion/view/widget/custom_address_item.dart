@@ -27,11 +27,13 @@ class CustomAddressItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
+          if (icon != 'Other')
           CircleAvatar(
             radius: 24,
             backgroundColor: ColorsHelper.white,
-            child: SvgPicture.asset(icon),
+            child: SvgPicture.asset(icon == 'Home' ? AppIcons.assetsHome : AppIcons.assetsBag),
           ),
+          if (icon != 'Other')
           const SizedBox(width: 16),
           Expanded(
             child: Column(

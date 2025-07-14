@@ -8,4 +8,11 @@ abstract class AddAddressRepo {
     required double latitude,
     required double longitude,
   });
+  Future<Either<String, String>> addNewAddress({
+    required double latitude,
+    required double longitude,
+    String? displayName,
+    String? label,
+    bool? isDefault,
+  });
 }

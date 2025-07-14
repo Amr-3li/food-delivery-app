@@ -1,6 +1,6 @@
 abstract class EndPoints {
   static const String baseUrl =
-      'https://fruithub.digital-vision-solutions.com/api/';
+      'https://round41-mobile-food.digital-vision-solutions.com/api/';
   static const String register = 'register';
   static const String login = 'login';
   static const String logout = 'logout';
@@ -15,4 +15,5 @@ abstract class EndPoints {
   static const String payment = 'payment';
   static const String resetPassword = "password/reset";
   static const String sendOtp = "password/send_otp";
+  static const String address = "address";
 }

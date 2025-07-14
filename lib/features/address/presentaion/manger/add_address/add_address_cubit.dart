@@ -2,7 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:restaurant/features/address/data/model/address_details_model.dart';
-import 'package:restaurant/features/menu/data/repo/add_address/add_address_repo.dart';
+import 'package:restaurant/features/address/data/repo/add_address/add_address_repo_implemation.dart';
+
+import '../../../../address/data/repo/add_address/add_address_repo.dart';
 
 part 'add_address_state.dart';
 
@@ -21,16 +23,16 @@ class AddAddressCubit extends Cubit<AddAddressState> {
         .then(
           (value) => value.fold(
             (failure) {
-              emit(AddAddressError(failure));
+              emit(GetCurrentAddressError(failure));
             },
             (position) {
               currentPosition = position;
-              emit(AddAddressSuccess());
+              emit(GetCurrentAddressSuccess());
             },
           ),
         )
         .catchError((error) {
-          emit(AddAddressError(error.toString()));
+          emit(GetCurrentAddressError(error.toString()));
         });
   }
 
@@ -52,6 +54,31 @@ class AddAddressCubit extends Cubit<AddAddressState> {
       (addressDetails) {
         emit(GetAddressDetailsSuccess());
         this.addressDetails = addressDetails;
+      },
+    );
+  }
+
+  void addNewAddress({
+    required double latitude,
+    required double longitude,
+    String? displayName,
+    String? label,
+    bool? isDefault,
+  }) async {
+    final result = await addAddressRepo.addNewAddress(
+      latitude: latitude,
+      longitude: longitude,
+      displayName: displayName,
+      label: label,
+      isDefault: isDefault,
+    );
+
+    result.fold(
+          (failure) {
+        emit(AddNewAddressError(failure));
+      },
+          (message) {
+        emit(AddNewAddressSuccess(message));
       },
     );
   }
