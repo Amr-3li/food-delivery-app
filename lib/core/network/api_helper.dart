@@ -76,7 +76,7 @@ class ApiHelper {
         data: isFormData ? FormData.fromMap(data ?? {}) : data,
         options: Options(
           headers: {
-            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',
+            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken ?? '25|l4Ct2xRBq0cfR2BLYBEJ8XexKqx7Khx8lg7f7Fapeb9eda5b'}',
             'Content-Type': isFormData
                 ? 'multipart/form-data'
                 : 'application/json',
@@ -116,7 +116,7 @@ class ApiHelper {
         data: isFormData ? FormData.fromMap(data ?? {}) : data,
         options: Options(
           headers: {
-            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',
+            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken ?? '25|l4Ct2xRBq0cfR2BLYBEJ8XexKqx7Khx8lg7f7Fapeb9eda5b'}}',
           },
         ),
       ),

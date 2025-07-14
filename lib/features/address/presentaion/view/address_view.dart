@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant/features/address/data/repo/get_addresses/get_addresses_repo.dart';
+import 'package:restaurant/features/address/data/repo/get_addresses/get_addresses_repo_implemation.dart';
+import 'package:restaurant/features/address/presentaion/manger/add_address/add_address_cubit.dart';
+import 'package:restaurant/features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
+import 'package:restaurant/features/address/presentaion/view/widget/address_view_body.dart';
 
-import 'package:restaurant/features/address/presentaion/widget/address_view_body.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/helper/app_responsive.dart';
@@ -13,25 +18,39 @@ class AddressView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: CircleAvatar(
-              radius: 22,
-              backgroundColor: ColorsHelper.lightBabyBlue,
-              child: SvgPicture.asset(AppIcons.iIcon),
+    return BlocProvider(
+      create: (context) =>
+      GetAddressesCubit(GetAddressesRepoImplementation())
+        ..getAddresses(),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: CircleAvatar(
+                radius: 22,
+                backgroundColor: ColorsHelper.lightBabyBlue,
+                child: SvgPicture.asset(AppIcons.iIcon),
+              ),
             ),
           ),
+          toolbarHeight: AppResponsive.height(context, value: 80),
+          title: Text('My Address', style: Styles.textStyle18),
         ),
-        toolbarHeight: AppResponsive.height(context, value: 80),
-        title: Text('My Address', style: Styles.textStyle18),
+        body: BlocBuilder<GetAddressesCubit, GetAddressesState>(
+          builder: (context, state) {
+            if (GetAddressesCubit.get(context).addresses != null) {
+              return AddressViewBody(
+              addressModel: GetAddressesCubit.get(context).addresses,
+            );
+            }
+            return AddressViewBody();
+          },
+        ),
       ),
-      body: AddressViewBody(),
     );
   }
 }

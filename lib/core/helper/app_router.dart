@@ -41,10 +41,11 @@ import 'package:restaurant/features/reviews/presentation/views/review_resturant.
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
+import '../../features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
-  static const kOnboardingView = '/';
-  static const kSplashView = '/splash';
+  static const kOnboardingView = '/OnboardingView';
+  static const kSplashView = '/';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -86,7 +87,7 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: kSplashView,
-        builder: (context, state) => const AddNewAddressView(),
+        builder: (context, state) => const AddressView(),
       ),
       GoRoute(
         path: kChifHome,
