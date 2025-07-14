@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 
 import 'package:restaurant/core/constant_text.dart';
@@ -9,7 +8,7 @@ Dio createDioWithAuth() {
       baseUrl: APIKey.baseApiUrl,
       headers: {
         'Authorization':
-            'Bearer 1|nNKB1iQVaTcmyFr0A4HJu8oTUNkDEquKj0sKJgzz10f9dc40',
+            'Bearer 31|VSH7hXMuyRHRefKgfXifdbdJf0jTN8q3NhanvZWQ3d8c20e2',
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },

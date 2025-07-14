@@ -1,7 +1,7 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
-import 'package:restaurant/features/chat/data/models/chat_model.dart';
+import 'package:restaurant/features/chat/data/models/message_model.dart';
 
 class MessageItem extends StatelessWidget {
   const MessageItem({
@@ -9,8 +9,10 @@ class MessageItem extends StatelessWidget {
     required this.chatMessage,
     required this.isSender,
   });
-  final ChatMessages chatMessage;
+
+  final MessageModel chatMessage;
   final bool isSender;
+
   @override
   Widget build(BuildContext context) {
     return Bubble(
