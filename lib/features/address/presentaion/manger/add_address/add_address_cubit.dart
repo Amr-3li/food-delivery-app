@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:restaurant/features/address/data/model/address_details_model.dart';
-import 'package:restaurant/features/address/data/repo/add_address/add_address_repo_implemation.dart';
 
 import '../../../../address/data/repo/add_address/add_address_repo.dart';
 
@@ -74,10 +73,10 @@ class AddAddressCubit extends Cubit<AddAddressState> {
     );
 
     result.fold(
-          (failure) {
+      (failure) {
         emit(AddNewAddressError(failure));
       },
-          (message) {
+      (message) {
         emit(AddNewAddressSuccess(message));
       },
     );

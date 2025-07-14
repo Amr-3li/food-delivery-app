@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/core/dependency_injection/service_locator.dart';
+
 import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/chat/data/models/conversation_preview_model.dart';
-import 'package:restaurant/features/chat/data/repository/conversation_implementation_repo.dart';
+
 import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
 import 'package:restaurant/features/chat/presentation/cubit/conversation_states.dart';
-import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
+
 import 'package:restaurant/features/chief_part/chat/presentation/views/chat_screen.dart';
 import 'package:svg_flutter/svg.dart';
 

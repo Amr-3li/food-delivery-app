@@ -41,7 +41,6 @@ import 'package:restaurant/features/reviews/presentation/views/review_resturant.
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
-import '../../features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
   static const kOnboardingView = '/OnboardingView';

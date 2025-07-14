@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/core/network/end_points.dart';
@@ -79,8 +80,6 @@ class AddAddressRepoImplementation implements AddAddressRepo {
     return Left("Unknown error occurred.");
   }
 
-
-
   @override
   Future<Either<String, String>> addNewAddress({
     required double latitude,
@@ -95,12 +94,12 @@ class AddAddressRepoImplementation implements AddAddressRepo {
         lon: longitude,
         name: label,
         displayName: displayName,
-        isDefault: isDefault
+        isDefault: isDefault,
       );
 
-      print(latitude);
-      print(longitude);
-      print(addNewAddressModel.toJson());
+      debugPrint(latitude.toString());
+      debugPrint(longitude.toString());
+      debugPrint(addNewAddressModel.toJson().toString());
 
       ApiResponse apiResponse = await apiHelper.postRequest(
         endPoint: EndPoints.address,
@@ -118,5 +117,4 @@ class AddAddressRepoImplementation implements AddAddressRepo {
       return Left(errorResponse.message);
     }
   }
-
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
-import 'package:restaurant/core/icons.dart';
+
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
 import 'package:restaurant/features/address/data/model/address_model.dart';
@@ -20,19 +20,18 @@ class AddressViewBody extends StatelessWidget {
       child: Column(
         children: [
           if (addressModel != null)
-          Expanded(
-            child: ListView.separated(
-              itemBuilder: (context, index) => CustomAddressItem(
-                address: addressModel![index].displayName!,
-                icon: addressModel![index].name!,
-                title: addressModel![index].name!,
+            Expanded(
+              child: ListView.separated(
+                itemBuilder: (context, index) => CustomAddressItem(
+                  address: addressModel![index].displayName!,
+                  icon: addressModel![index].name!,
+                  title: addressModel![index].name!,
+                ),
+                separatorBuilder: (context, index) => SizedBox(height: 14),
+                itemCount: addressModel!.length,
               ),
-              separatorBuilder: (context, index) => SizedBox(height: 14),
-              itemCount: addressModel!.length,
             ),
-          ),
-          if (addressModel == null)
-          Spacer(),
+          if (addressModel == null) Spacer(),
           Padding(
             padding: const EdgeInsets.all(16),
             child: CustomElevatedButton(

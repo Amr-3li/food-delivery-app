@@ -38,7 +38,10 @@ class _AreaInputState extends State<AreaInput> {
           child: Row(
             children: [
               IconButton(
-                icon: SvgPicture.asset(AppIcons.iSmile, color: Colors.grey),
+                icon: SvgPicture.asset(
+                  AppIcons.iSmile,
+                  colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+                ),
                 onPressed: () {
                   widget.onEmojiToggle(!widget.showEmojiPicker);
                   if (!widget.showEmojiPicker) {
