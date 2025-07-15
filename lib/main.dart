@@ -18,19 +18,8 @@ void main() async {
     '15|XBQPpJMvRvQUCQufbI3Fl7OMvQTl5a9RNPJMe2oqc4067452',
   );
 
-  setupLocator();
   await CacheHelper.init();
   runApp(const MyApp());
-  setupLocator();
-  await CacheHelper.init();
-  runApp(
-    MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => sl<ChatCubit>())],
-      child: const MyApp(),
-    ),
-  );
-
-  Stripe.publishableKey = APIKey.stripePublishableKey;
 }
 
 class MyApp extends StatelessWidget {

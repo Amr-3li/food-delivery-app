@@ -22,7 +22,7 @@ class MealRepositoryImpl implements MealRepository {
       'category_id': categoryId.toString(),
       'image': imagePath,
       'is_available': isAvailable ? '1' : '0',
-      'ingredients[0]': 'salt', // Fixed as per requirements
+      'ingredients[0]': '1',
       'sizes[0][size]': 'medium',
       'sizes[0][price]': price.toString(),
     };
@@ -30,7 +30,7 @@ class MealRepositoryImpl implements MealRepository {
     await _apiHelper.postRequest(
       endPoint: EndPoints.meals,
       data: data,
-      isFormData: true, // Changed to true for file upload
+      isFormData: true,
       isProtected: true,
     );
   }

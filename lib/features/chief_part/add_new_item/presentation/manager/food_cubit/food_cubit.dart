@@ -96,7 +96,7 @@ class FoodCubit extends Cubit<FoodState> {
   Future<void> saveFoodDetails() async {
     try {
       // Validate state
-      if (state is! FoodLoaded) {
+      if (state is FoodLoaded) {
         throw ValidationException('Invalid state: Cannot save food details');
       }
 
