@@ -1,28 +1,30 @@
 import 'package:dio/dio.dart';
 import 'package:restaurant/core/constant_text.dart';
+import 'package:restaurant/core/network/api_helper.dart';
+
 import 'package:restaurant/features/chief_part/notification/data/models/notification_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:restaurant/core/error/failure.dart';
 
 class NotificationServicesApi {
-  final Dio dio;
+  ApiHelper apiHelper = ApiHelper();
 
-  NotificationServicesApi({required this.dio});
+  NotificationServicesApi();
 
-  Map<String, dynamic> _getHeaders() {
-    return {
-      'Authorization':
-          'Bearer 6|zq3OU0soHfdRsznwTWCxzn3Jk7Ouzut5hbHbNmeDe4ffe4a8',
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
-  }
+  // Map<String, dynamic> _getHeaders() {
+  //   return {
+  //     'Authorization':
+  //         'Bearer 6|zq3OU0soHfdRsznwTWCxzn3Jk7Ouzut5hbHbNmeDe4ffe4a8',
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json',
+  //   };
+  // }
 
   Future<Either<Failure, List<NotificationsModel>>> getNotifications() async {
     try {
-      final response = await dio.get(
-        '${APIKey.baseApiUrl}/notifications',
-        options: Options(headers: _getHeaders()),
+      final response = await apiHelper.getRequest(
+        endPoint: '${APIKey.baseApiUrl}/notifications',
+        isProtected: true,
       );
 
       if (response.statusCode == 200) {
@@ -47,9 +49,9 @@ class NotificationServicesApi {
 
   Future<Either<Failure, Unit>> markAsRead(String notificationId) async {
     try {
-      await dio.patch(
-        '${APIKey.baseApiUrl}/notifications/$notificationId/read',
-        options: Options(headers: _getHeaders()),
+      await apiHelper.patch(
+        endPoint: '${APIKey.baseApiUrl}/notifications/$notificationId/read',
+        isProtected: true,
       );
       return const Right(unit);
     } on DioException catch (e) {
