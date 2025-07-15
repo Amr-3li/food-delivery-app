@@ -26,7 +26,6 @@ class PopularFoodBuilder extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -36,8 +35,7 @@ class PopularFoodBuilder extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    GoRouter.of(context).push(AppRouter.kPopularFoodView);
-                    // Navigate to see all popular items
+                    GoRouter.of(context).go(AppRouter.kChifFoodList);
                   },
                   child: const Text(
                     'See All',

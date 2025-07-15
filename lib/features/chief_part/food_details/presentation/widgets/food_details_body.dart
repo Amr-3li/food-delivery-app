@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/features/chief_part/food_details/presentation/widgets/description.dart';
-import 'package:restaurant/features/chief_part/food_details/presentation/widgets/food_details_appbar.dart';
 import 'package:restaurant/features/chief_part/food_details/presentation/widgets/food_images.dart';
 import 'package:restaurant/features/chief_part/food_details/presentation/widgets/food_info.dart';
+import 'package:restaurant/features/chief_part/my_food_list/data/models/food_list_model.dart';
 
 class FoodDetailsBody extends StatefulWidget {
-  const FoodDetailsBody({super.key});
+  final Meal meal;
+
+  const FoodDetailsBody({super.key, required this.meal});
 
   @override
   State<FoodDetailsBody> createState() => _FoodDetailsBodyState();
@@ -19,14 +21,17 @@ class _FoodDetailsBodyState extends State<FoodDetailsBody> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            FoodDetailsAppbar(title: "Food details"),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [FoodImages(), FoodInfo(), Description()],
+                children: [
+                  FoodImages(meal: widget.meal),
+                  FoodInfo(meal: widget.meal),
+                  Description(meal: widget.meal),
+                ],
               ),
             ),
           ],

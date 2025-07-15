@@ -13,6 +13,7 @@ import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dar
 
 import 'package:restaurant/features/chief_part/add_new_item/presentation/views/add_new_items.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/popular_term_screen.dart';
+import 'package:restaurant/features/chief_part/my_food_list/data/models/food_list_model.dart';
 import 'package:restaurant/features/chief_part/my_food_list/presentation/views/my_food_list_view.dart';
 import 'package:restaurant/features/chief_part/notification/presentation/view/notification.dart';
 import 'package:restaurant/features/chief_part/chief_menu/presentation/view/reviews.dart';
@@ -83,7 +84,6 @@ abstract class AppRouter {
   static final router = GoRouter(
     routes: [
       GoRoute(
-       
         path: kSplashView,
         builder: (context, state) => const AddNewAddressView(),
       ),
@@ -93,7 +93,7 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kOnboardingView,
-        builder: (context, state) => OnboardingPage(),
+        builder: (context, state) => const ChifHomeView(),
       ),
       GoRoute(path: '/login', builder: (context, state) => LoginView()),
       GoRoute(
@@ -114,9 +114,11 @@ abstract class AppRouter {
       GoRoute(
         path: kChifFoodDetails,
         name: "chifFoodDetails",
-        builder: (context, state) => const FoodDetailsPage(),
+        builder: (context, state) {
+          final meal = state.extra as Meal;
+          return FoodDetailsPage(meal: meal);
+        },
       ),
-
       GoRoute(
         path: kAddNewItem,
         name: "addNewItem",

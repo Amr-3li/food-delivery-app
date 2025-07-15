@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:restaurant/core/helper/app_router.dart';
 
 class FoodOrderCard extends StatelessWidget {
   final String category;
   final String foodName;
   final String foodId;
   final String price;
-  final String imageUrl; // Add image URL parameter
   final VoidCallback onDonePressed;
   final VoidCallback onCancelPressed;
+  final String imageUrl;
 
   const FoodOrderCard({
     super.key,
@@ -17,15 +15,15 @@ class FoodOrderCard extends StatelessWidget {
     required this.foodName,
     required this.foodId,
     required this.price,
-    required this.imageUrl,
     required this.onDonePressed,
     required this.onCancelPressed,
+    required this.imageUrl,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => GoRouter.of(context).go(AppRouter.kChifFoodDetails),
+      onTap: () {},
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(

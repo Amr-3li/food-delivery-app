@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/chief_part/add_new_item/data/models/item_image.dart';
@@ -38,6 +39,20 @@ class _ImageUploadContent extends StatelessWidget {
 
   Future<void> _pickImage(BuildContext context) async {
     try {
+      final currentState = context.read<ItemImagesCubit>().state;
+      if (currentState is ItemImagesUpdated && currentState.images.isNotEmpty) {
+        Fluttertoast.showToast(
+          msg: "You can upload one image only",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black54,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        return;
+      }
+
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(
         source: ImageSource.gallery,

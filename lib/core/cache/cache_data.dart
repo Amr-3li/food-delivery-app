@@ -10,4 +10,13 @@ abstract class CacheData {
     await CacheHelper.removeData(key: CacheKeys.accessToken);
     await CacheHelper.removeData(key: CacheKeys.userName);
   }
+
+  static Future<void> initialize(String initialToken) async {
+    // Initialize SharedPreferences
+    await CacheHelper.init();
+
+    // Set the initial token
+    accessToken = initialToken;
+    await CacheHelper.saveData(key: CacheKeys.accessToken, value: initialToken);
+  }
 }

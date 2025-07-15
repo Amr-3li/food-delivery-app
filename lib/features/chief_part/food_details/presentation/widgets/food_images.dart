@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/features/chief_part/food_details/presentation/widgets/food_type.dart';
+import 'package:restaurant/features/chief_part/my_food_list/data/models/food_list_model.dart';
 
 class FoodImages extends StatefulWidget {
-  const FoodImages({super.key});
+  final Meal meal;
+
+  const FoodImages({super.key, required this.meal});
 
   @override
   State<FoodImages> createState() => _FoodImagesState();
@@ -11,12 +14,6 @@ class FoodImages extends StatefulWidget {
 class _FoodImagesState extends State<FoodImages> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  final List<String> foodImages = [
-    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500',
-    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500',
-    'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500',
-    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,55 +22,58 @@ class _FoodImagesState extends State<FoodImages> {
         SizedBox(
           height: 200,
           width: double.infinity,
-          child: PageView.builder(
+          child: PageView(
             controller: _pageController,
             onPageChanged: (index) {
               setState(() {
                 _currentPage = index;
               });
             },
-            itemCount: foodImages.length,
-            itemBuilder: (context, index) {
-              return Padding(
+            children: [
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16.0),
-                  child: Image.network(
-                    foodImages[index],
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: Colors.grey[300],
-                        child: const Icon(Icons.error),
-                      );
-                    },
-                  ),
+                  borderRadius: BorderRadius.circular(8),
+                  child: widget.meal.category.image.isNotEmpty
+                      ? Image.network(
+                          widget.meal.category.image,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return _buildFallbackImage();
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value:
+                                    loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },
+                        )
+                      : _buildFallbackImage(),
                 ),
-              );
-            },
+              ),
+            ],
           ),
         ),
         Positioned(
           bottom: 16,
           left: 16,
           right: 16,
-          child: FoodType(
-            currentPage: _currentPage,
-            totalImages: foodImages.length,
-          ),
+          child: FoodType(currentPage: _currentPage, totalImages: 1),
         ),
       ],
+    );
+  }
+
+  Widget _buildFallbackImage() {
+    return Container(
+      color: Colors.grey[300],
+      child: const Icon(Icons.fastfood, size: 40),
     );
   }
 
