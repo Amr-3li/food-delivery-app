@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 class ShowLineChart extends StatelessWidget {
   const ShowLineChart({
     super.key,
-    required String selectedPeriod,
-    required Map<String, List<FlSpot>> chartData,
-  }) : _selectedPeriod = selectedPeriod,
-       _chartData = chartData;
+    required List<FlSpot> spots,
+    required List<String> timeLabels,
+    required double maxY,
+  }) : _spots = spots,
+       _timeLabels = timeLabels,
+       _maxY = maxY;
 
-  final String _selectedPeriod;
-  final Map<String, List<FlSpot>> _chartData;
+  final List<FlSpot> _spots;
+  final List<String> _timeLabels;
+  final double _maxY;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class ShowLineChart extends StatelessWidget {
               getTooltipItems: (touchedSpots) {
                 return touchedSpots.map((spot) {
                   return LineTooltipItem(
-                    "\$${spot.y.toInt()}",
+                    "\$${spot.y.toStringAsFixed(2)}",
                     const TextStyle(color: Colors.white),
                   );
                 }).toList();
@@ -33,29 +36,21 @@ class ShowLineChart extends StatelessWidget {
             touchCallback: (event, response) {},
           ),
           minX: 0,
-          maxX: 6,
+          maxX: _spots.length > 1 ? _spots.length - 1.toDouble() : 1,
           minY: 0,
-          maxY: _selectedPeriod == 'Yearly' ? 1500 : 800, // Adjust scale
+          maxY: _maxY,
           titlesData: FlTitlesData(
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
                 interval: 1,
                 getTitlesWidget: (value, meta) {
-                  const labels = [
-                    "10AM",
-                    "11AM",
-                    "12PM",
-                    "01PM",
-                    "02PM",
-                    "03PM",
-                    "04PM",
-                  ];
-                  if (value.toInt() >= 0 && value.toInt() < labels.length) {
+                  if (value.toInt() >= 0 &&
+                      value.toInt() < _timeLabels.length) {
                     return Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                        labels[value.toInt()],
+                        _timeLabels[value.toInt()],
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.grey,
@@ -75,7 +70,7 @@ class ShowLineChart extends StatelessWidget {
           borderData: FlBorderData(show: false),
           lineBarsData: [
             LineChartBarData(
-              spots: _chartData[_selectedPeriod]!, // Dynamic data
+              spots: _spots,
               isCurved: true,
               color: Colors.orange,
               barWidth: 3,

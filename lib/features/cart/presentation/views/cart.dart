@@ -5,6 +5,8 @@ import 'package:restaurant/core/dependency_injection/service_locator.dart';
 
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
+import 'package:restaurant/features/address/presentaion/manger/add_address/add_address_cubit.dart';
+import 'package:restaurant/features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
 
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_states.dart';
@@ -38,6 +40,7 @@ class _CartViewState extends State<CartView> {
       providers: [
         BlocProvider(create: (_) => sl<CartCubit>()..getCart()),
         BlocProvider(create: (_) => sl<PaymentCubit>()),
+        BlocProvider(create: (_) => sl<GetAddressesCubit>()),
       ],
       child: Scaffold(
         backgroundColor: ColorsHelper.black,

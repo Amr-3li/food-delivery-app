@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:restaurant/features/chief_part/add_new_item/data/models/food_details.dart';
 import 'package:restaurant/features/chief_part/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chief_part/chat/presentation/views/list_chat_screen.dart';
 import 'package:restaurant/features/chief_part/chief_menu/presentation/view/chief_menu.dart';
@@ -15,6 +16,7 @@ import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dar
 
 import 'package:restaurant/features/chief_part/add_new_item/presentation/views/add_new_items.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/popular_term_screen.dart';
+import 'package:restaurant/features/chief_part/my_food_list/data/models/food_list_model.dart';
 import 'package:restaurant/features/chief_part/my_food_list/presentation/views/my_food_list_view.dart';
 import 'package:restaurant/features/chief_part/notification/presentation/view/notification.dart';
 import 'package:restaurant/features/chief_part/chief_menu/presentation/view/reviews.dart';
@@ -44,11 +46,12 @@ import 'package:restaurant/features/restaurant_view/presentation/views/restauran
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/reviews/presentation/views/review_resturant.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
+import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
 
 abstract class AppRouter {
-  static const kOnboardingView = '/';
+  static const kOnboardingView = '/chif_home';
   static const kSplashView = '/splash';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
@@ -65,7 +68,7 @@ abstract class AppRouter {
   static const krestaurantView = "/restaurantView";
   static const kChifFoodList = '/chif_food_list';
   static const kAddNewItem = '/add_new_item';
-  static const kChifHome = '/chif_home';
+  static const kChifHome = '/';
   static const kChatListView = "/chatListView";
   static const kChatChiefView = "/chatChiefView";
   static const kMenuChiefView = "/menuChiefView";
@@ -89,15 +92,17 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-      GoRoute(path: kSplashView, builder: (context, state) => const AddNewAddressView()),
+      GoRoute(path: kSplashView, builder: (context, state) => const SplashView()),
       GoRoute(path: kChifHome, builder: (context, state) => const ChifHomeView()),
       GoRoute(path: kOnboardingView, builder: (context, state) => OnboardingPage()),
+
       GoRoute(path: '/login', builder: (context, state) => LoginView()),
       GoRoute(path: '/forgetPassword', builder: (context, state) => ForgetPasswordView()),
       GoRoute(path: "/signUp", builder: (context, state) => SinUpView()),
       GoRoute(path: "/vertificationView", builder: (context, state) => VertificationView()),
+
       GoRoute(path: kChatView, builder: (context, state) => const ChatScreen(userId: "1")),
-      GoRoute(path: kChifFoodDetails, builder: (context, state) => const FoodDetailsPage()),
+      GoRoute(path: kChifFoodDetails, builder: (context, state) => const FoodDetails()),
       GoRoute(path: kAddNewItem, builder: (context, state) => AddNewItems()),
       GoRoute(path: kChifFoodList, builder: (context, state) => MyFoodList()),
       GoRoute(path: kMessageListView, builder: (context, state) => ChatListScreen()),
@@ -120,15 +125,19 @@ abstract class AppRouter {
       GoRoute(path: kSearchScreenView, builder: (context, state) => SearchScreen()),
       GoRoute(path: kFoodScreenView, builder: (context, state) => FoodScreen()),
       GoRoute(path: kFoodDetailsScreenView, builder: (context, state) => const FoodDetailsScreen()),
+
       GoRoute(
         path: kRestaurantViewVersion,
         builder: (context, state) => BlocProvider(
-          create: (_) =>
-              RestaurantViewCubit(RestaurantViewRepository(baseUrl: 'http://127.0.0.1:8000/api/resturants/5')
-)..getRestaurantView(),
+          create: (_) => RestaurantViewCubit(
+            RestaurantViewRepository(
+              baseUrl: 'http://127.0.0.1:8000/api/resturants/5',
+            ),
+          )..getRestaurantView(),
           child: const RestaurantViewScreen(),
         ),
       ),
+
       GoRoute(path: kAddresses, builder: (context, state) => const AddressView()),
       GoRoute(path: kFQS, builder: (context, state) => const FAQsScreen()),
       GoRoute(path: kFavorite, builder: (context, state) => const FavoritesView()),
@@ -137,3 +146,4 @@ abstract class AppRouter {
     ],
   );
 }
+ 

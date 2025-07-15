@@ -7,21 +7,30 @@ abstract class FoodState {
 class FoodInitial extends FoodState {
   @override
   final FoodDetails foodDetails;
-
   FoodInitial(this.foodDetails);
+}
+
+class FoodLoading extends FoodState {
+  @override
+  final FoodDetails foodDetails;
+  FoodLoading(this.foodDetails);
 }
 
 class FoodLoaded extends FoodState {
   @override
   final FoodDetails foodDetails;
-
   FoodLoaded(this.foodDetails);
 }
 
-class FoodError extends FoodState {
-  final String message;
+class FoodSuccess extends FoodState {
   @override
   final FoodDetails foodDetails;
+  FoodSuccess(this.foodDetails);
+}
 
+class FoodError extends FoodState {
+  @override
+  final FoodDetails foodDetails;
+  final String message;
   FoodError(this.message, this.foodDetails);
 }

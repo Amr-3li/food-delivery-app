@@ -1,77 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant/core/dependency_injection/service_locator.dart';
 
 import 'package:restaurant/core/icons.dart';
 
 import 'package:restaurant/core/utils/styles.dart';
-import 'package:restaurant/features/chat/data/models/chat_user_model.dart';
+
+import 'package:restaurant/features/chat/data/repository/conversation_implementation_repo.dart';
+import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
+import 'package:restaurant/features/chat/presentation/cubit/conversation_states.dart';
 import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
-import 'package:restaurant/features/chat/presentation/views/widgets/chat_list_item.dart';
+
 import 'package:svg_flutter/svg.dart';
 
 class ChatListScreen extends StatelessWidget {
-  final List<ChatUser> chatUsers = [
-    ChatUser(
-      id: 'user1',
-      name: 'Ali',
-      imageUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
-      lastMessage: 'Hey, how are you doing?',
-      unreadCount: 2,
-      lastMessageTime: DateTime.now().subtract(const Duration(minutes: 30)),
-    ),
-    ChatUser(
-      id: 'user2',
-      name: 'Nada',
-      imageUrl: 'https://randomuser.me/api/portraits/women/2.jpg',
-      lastMessage: 'The meeting is at 3pm',
-      unreadCount: 0,
-      lastMessageTime: DateTime.now().subtract(const Duration(hours: 2)),
-    ),
-    ChatUser(
-      id: 'user3',
-      name: 'Abdallah',
-      imageUrl: 'https://randomuser.me/api/portraits/men/3.jpg',
-      lastMessage: 'Please send me the documents',
-      unreadCount: 5,
-      lastMessageTime: DateTime.now().subtract(const Duration(days: 1)),
-    ),
-  ];
-
-  ChatListScreen({super.key});
+  const ChatListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: CircleAvatar(
-            radius: 10,
-            child: SvgPicture.asset(AppIcons.iIcon),
+    return BlocProvider(
+      create: (_) => ChatCubit(sl<ConversationRepository>()),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: CircleAvatar(
+              radius: 10,
+              child: SvgPicture.asset(AppIcons.iIcon),
+            ),
+          ),
+          title: Text(
+            'Chats',
+            style: Styles.textStyle18.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
-        title: Text(
-          'Chats',
-          style: Styles.textStyle18.copyWith(fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: chatUsers.length,
-        itemBuilder: (context, index) {
-          final user = chatUsers[index];
-          return ChatListItem(
-            user: user,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChatScreen(userId: user.id),
-                ),
+        body: BlocBuilder<ChatCubit, ChatState>(
+          builder: (context, state) {
+            if (state is ChatLoading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is ConversationsLoaded) {
+              return ListView.builder(
+                itemCount: state.conversations.length,
+                itemBuilder: (context, index) {
+                  final conversation = state.conversations[index];
+                  return ListTile(
+                    title: Text(conversation.otherParty.name),
+                    subtitle: Text(conversation.lastMessage.content),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => BlocProvider.value(
+                            value: context.read<ChatCubit>(),
+                            child: ChatScreen(
+                              // conversationId: conversation.id,
+                              // userName: conversation.otherParty.name,
+                              // imageUrl:
+                              //     conversation.otherParty.profileImage ?? '',
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
               );
-            },
-          );
-        },
+            } else if (state is ChatError) {
+              return Center(child: Text(state.message));
+            }
+            return SizedBox.shrink();
+          },
+        ),
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
 import 'package:restaurant/core/widgets/tex_form.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
-import 'package:restaurant/features/reviews/data/models/add_review_model.dart';
+
 import 'package:restaurant/features/reviews/presentation/cubit/review_cubit.dart';
 import 'package:restaurant/features/reviews/presentation/cubit/review_state.dart';
 import 'package:sizer/sizer.dart';

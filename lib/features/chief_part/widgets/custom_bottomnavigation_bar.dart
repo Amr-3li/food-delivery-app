@@ -76,13 +76,10 @@ class CustomBottomNavBar extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
-              border: Border.all(
-                color: currentIndex == 2 ? Colors.orange : Colors.grey,
-                width: 2,
-              ),
+              border: Border.all(color: Colors.orange, width: 2),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withAlpha(10),
+                  color: Colors.orange.withAlpha(10),
                   blurRadius: 10,
                   spreadRadius: 2,
                 ),

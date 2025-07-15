@@ -1,111 +1,105 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/core/icons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/core/utils/styles.dart';
-import 'package:restaurant/features/chat/data/models/chat_model.dart';
+
+import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
 import 'package:restaurant/features/chat/presentation/views/widgets/area_input.dart';
 import 'package:restaurant/features/chat/presentation/views/widgets/message_list.dart';
 import 'package:svg_flutter/svg.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.userId});
-  final String userId;
+  final int conversationId = 7;
+  final String userName = "omnia";
+  final String imageUrl =
+      "https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg?semt=ais_hybrid&w=740";
+  final String currentUserId = "user1";
+
+  const ChatScreen({
+    super.key,
+    // required this.conversationId,
+    // required this.userName,
+    // required this.imageUrl,
+    // required this.currentUserId,
+  });
+
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  late final FocusNode focusNode;
+  late final TextEditingController textController;
   bool showEmojiPicker = false;
-  final FocusNode focusNode = FocusNode();
-  TextEditingController textController = TextEditingController();
 
-  final List<ChatMessages> messages = [
-    ChatMessages(
-      idFrom: 'user1',
-      idTo: 'user2',
-      timestamp: '2024-01-01 10:00:00',
-      content: 'Hey, how are you?',
-      type: 0,
-    ),
-    ChatMessages(
-      idFrom: 'user2',
-      idTo: 'user1',
-      timestamp: '2024-01-01 10:01:00',
-      content: 'I am good, thank you!',
-      type: 0,
-    ),
-    ChatMessages(
-      idFrom: 'user1',
-      idTo: 'user2',
-      timestamp: '2024-01-01 10:02:00',
-      content: 'Great to hear that!',
-      type: 0,
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    focusNode = FocusNode();
+    textController = TextEditingController();
+    // Load messages when screen initializes
+    context.read<ChatCubit>().getConversationMessages(widget.conversationId);
+  }
 
-  final String currentUserId = 'user1';
+  @override
+  void dispose() {
+    focusNode.dispose();
+    textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: SvgPicture.asset(AppIcons.iIcon),
+        leading: IconButton(
+          icon: SvgPicture.asset(AppIcons.iIcon),
+          onPressed: () => Navigator.pop(context),
         ),
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPDheuafnrCB0q-VE5n3RLRREX5dN3JrdJzJF76tz0y80fP4uNM0ZTtXbXWA-e2yuWKKk&usqp=CAU",
-              ),
+              backgroundImage: NetworkImage(widget.imageUrl),
               radius: 20,
             ),
             const SizedBox(width: 10),
             Text(
-              "User name",
+              widget.userName,
               style: Styles.textStyle16.copyWith(fontWeight: FontWeight.bold),
             ),
           ],
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              onTap: () async {
-                final Uri launchUri = Uri(scheme: 'tel', path: '+201009247747');
-                if (await canLaunchUrl(launchUri)) {
-                  await launchUrl(launchUri);
-                } else {
-                  throw 'Could not launch $launchUri';
-                }
-              },
-              child: SvgPicture.asset(AppIcons.iCall),
-            ),
+          IconButton(
+            icon: SvgPicture.asset(AppIcons.iCall),
+            onPressed: _makePhoneCall,
           ),
         ],
       ),
       body: Column(
         children: [
-          Expanded(
-            child: MessageList(
-              messages: messages,
-              currentUserId: currentUserId,
-            ),
-          ),
+          Expanded(child: MessageList(currentUserId: widget.currentUserId)),
           AreaInput(
-            currentUserId: currentUserId,
             focusNode: focusNode,
-            messages: messages,
-            showEmojiPicker: showEmojiPicker,
             textController: textController,
+            showEmojiPicker: showEmojiPicker,
+            currentUserId: widget.currentUserId,
+            conversationId: widget.conversationId,
+            onEmojiToggle: (show) {
+              setState(() => showEmojiPicker = show);
+            },
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _makePhoneCall() async {
+    final Uri launchUri = Uri(scheme: 'tel', path: '+201009247747');
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    }
   }
 }

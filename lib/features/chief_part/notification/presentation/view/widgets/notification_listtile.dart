@@ -19,10 +19,7 @@ class ListtileNotifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: CircleAvatar(
-        radius: 35,
-        backgroundImage: NetworkImage(imageUrl),
-      ),
+      leading: CircleAvatar(radius: 35, child: Image.network(imageUrl)),
       title: SizedBox(
         width: 40.w,
         child: Text(title, style: Styles.textStyle14),

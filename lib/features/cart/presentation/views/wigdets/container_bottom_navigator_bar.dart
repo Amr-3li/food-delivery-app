@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
-import 'package:restaurant/features/cart/presentation/views/wigdets/edit_dialog.dart';
+import 'package:restaurant/features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
+import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
+
 import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
 import 'package:restaurant/features/payment/presentaion/cubit/payment_state.dart';
 import 'package:sizer/sizer.dart';
 
-class ContainerBottomNavigator extends StatelessWidget {
+class ContainerBottomNavigator extends StatefulWidget {
   const ContainerBottomNavigator({
     super.key,
     required this.addressTitle,
@@ -17,6 +20,19 @@ class ContainerBottomNavigator extends StatelessWidget {
   });
   final String addressTitle;
   final double total;
+
+  @override
+  State<ContainerBottomNavigator> createState() =>
+      _ContainerBottomNavigatorState();
+}
+
+class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
+  @override
+  void initState() {
+    context.read<GetAddressesCubit>().getDefaultAddressDetails();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,15 +58,16 @@ class ContainerBottomNavigator extends StatelessWidget {
                 SizedBox(height: 2.h),
                 TextButton(
                   onPressed: () {
-                    EditAddressDialog.showEditAddressDialog(
-                      context,
-                      title: addressTitle,
-                      onSave: (addressTitle) {},
-                      // final updatedAddress = address.copyWith(
-                      //   title: title,
+                    context.push(AppRouter.kAddAddressView);
+                    // EditAddressDialog.showEditAddressDialog(
+                    //   context,
+                    //   title: addressTitle,
+                    //   onSave: (addressTitle) {},
+                    //   // final updatedAddress = address.copyWith(
+                    //   //   title: title,
 
-                      // );
-                    );
+                    //   // );
+                    // );
                   },
                   child: Text(
                     "Edit",
@@ -62,22 +79,52 @@ class ContainerBottomNavigator extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              padding: EdgeInsets.all(3.h),
-              height: 8.h,
-              width: 90.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: ColorsHelper.lightBlue,
-              ),
+            BlocBuilder<GetAddressesCubit, GetAddressesState>(
+              builder: (context, state) {
+                final addressList = context.read<GetAddressesCubit>().addresses;
 
-              child: Text("2118 Thornridge Cir. Syracuse"),
+                if (state is GetAddressesError) {
+                  return Text(
+                    "Error loading address",
+                    style: TextStyle(color: Colors.red),
+                  );
+                } else if (state is GetAddressesSuccess) {
+                  if (addressList == null) {
+                    return Text("No address found");
+                  } else if (addressList.isEmpty) {
+                    return Container(
+                      padding: EdgeInsets.all(3.h),
+                      height: 8.h,
+                      width: 90.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: ColorsHelper.lightBlue,
+                      ),
+                      child: Center(child: Text("No default address set")),
+                    );
+                  } else {
+                    final address = addressList.first;
+                    return Container(
+                      padding: EdgeInsets.all(3.h),
+                      height: 8.h,
+                      width: 90.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: ColorsHelper.lightBlue,
+                      ),
+                      child: Text(address.displayName ?? "Unnamed address"),
+                    );
+                  }
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
             ),
             SizedBox(height: 4.h),
             Row(
               children: [
                 Text(
-                  'Total: \$$total',
+                  'Total: \$${widget.total}',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
@@ -90,8 +137,30 @@ class ContainerBottomNavigator extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {
-                        //  context.pushNamed('');
+                      onPressed: () async {
+                        final confirm = await showDialog<bool>(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Clear Cart"),
+                            content: Text(
+                              "Are you sure you want to clear the cart?",
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, true),
+                                child: Text("Yes"),
+                              ),
+                            ],
+                          ),
+                        );
+                        if (confirm == true) {
+                          // ignore: use_build_context_synchronously
+                          context.read<CartCubit>().clearCart();
+                        }
                       },
                       icon: Icon(Icons.arrow_forward_ios_rounded),
                     ),
@@ -113,14 +182,18 @@ class ContainerBottomNavigator extends StatelessWidget {
               },
               builder: (context, state) {
                 return CustomElevatedButton(
-                  buttonText: 'Place Order',
-                  onPressedFunction: () {
-                    context.read<PaymentCubit>().makePayment(
-                      courseId: "course123",
-                      amount: 5000,
-                      currency: "usd",
-                    );
-                  },
+                  buttonText: widget.total == 0 ? "Cart Empty" : 'Place Order',
+                  onPressedFunction: widget.total == 0
+                      ? () {
+                          context.push(AppRouter.kFoodScreenView);
+                        }
+                      : () {
+                          context.read<PaymentCubit>().makePayment(
+                            courseId: "course123",
+                            amount: 5000,
+                            currency: "usd",
+                          );
+                        },
                   buttonColor: ColorsHelper.orangeDark,
                   widthButton: double.infinity,
                   textColor: ColorsHelper.white,

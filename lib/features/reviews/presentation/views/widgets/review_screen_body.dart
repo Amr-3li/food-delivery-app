@@ -59,6 +59,7 @@ class ReviewResturantScreenBody extends StatelessWidget {
             context,
             MaterialPageRoute(builder: (_) => const AddReview()),
           );
+          // ignore: use_build_context_synchronously
           context.read<ReviewsCubit>().fetchReviews(); // refresh after back
         },
         child: const Icon(Icons.add),
