@@ -72,7 +72,7 @@ class _ChatListScreenChiefState extends State<ChatListScreenChief> {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
-                      conversation.otherParty.profileImage ?? '',
+                      "https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg?semt=ais_hybrid&w=740",
                     ),
                   ),
                   title: Text(conversation.otherParty.name),
@@ -113,7 +113,7 @@ class _ChatListScreenChiefState extends State<ChatListScreenChief> {
         builder: (_) => BlocProvider.value(
           value: context.read<ChatCubit>(),
           child: ChatScreenChief(
-            // conversationId: conversation.id,
+            conversationId: conversation.id,
             // userName: conversation.otherParty.name,
             // imageUrl: conversation.otherParty.profileImage ?? '',
           ),

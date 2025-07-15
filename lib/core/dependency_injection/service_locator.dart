@@ -2,6 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/helper/dio_with_auth.dart';
+import 'package:restaurant/features/address/data/repo/add_address/add_address_repo.dart';
+import 'package:restaurant/features/address/data/repo/get_addresses/get_addresses_repo_implemation.dart';
+import 'package:restaurant/features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
 import 'package:restaurant/features/cart/data/repository/cart_repository.dart';
 import 'package:restaurant/features/cart/data/services/cart_services.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
@@ -33,29 +36,33 @@ void setupLocator() {
     instanceName: 'stripeDio',
   );
   sl.registerLazySingleton<Dio>(() => createDioWithAuth());
-  sl.registerLazySingleton(() => CartApiServices(dio: sl()));
+  sl.registerLazySingleton(() => CartApiServices());
   sl.registerLazySingleton(() => CartRepository(sl<CartApiServices>()));
   sl.registerLazySingleton(
     () => CartCubit(cartRepository: sl<CartRepository>()),
   );
 
-  sl.registerLazySingleton(() => NotificationServicesApi(dio: sl()));
+  sl.registerLazySingleton(() => NotificationServicesApi());
   sl.registerLazySingleton(
     () => NotificationRepository(apiService: sl<NotificationServicesApi>()),
   );
   sl.registerLazySingleton(
     () => NotificationCubit(repository: sl<NotificationRepository>()),
   );
-  sl.registerLazySingleton(() => ReviewsApiService(dio: sl()));
+  sl.registerLazySingleton(() => ReviewsApiService());
   sl.registerLazySingleton(
     () => ReviewsRepositoryImplementation(sl<ReviewsApiService>()),
   );
   sl.registerLazySingleton(
     () => ReviewsCubit(sl<ReviewsRepositoryImplementation>()),
   );
-  sl.registerLazySingleton(() => ConversationApiService(sl()));
+  sl.registerLazySingleton(() => ConversationApiService());
   sl.registerLazySingleton(
     () => ConversationRepository(sl<ConversationApiService>()),
+  );
+  sl.registerLazySingleton(() => GetAddressesRepoImplementation());
+  sl.registerLazySingleton(
+    () => GetAddressesCubit(sl<GetAddressesRepoImplementation>()),
   );
   sl.registerLazySingleton(() => ChatCubit(sl<ConversationRepository>()));
   sl.registerLazySingleton(() => PaymentRepository());

@@ -1,25 +1,25 @@
 import 'package:dio/dio.dart';
 import 'package:restaurant/core/constant_text.dart';
+import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/features/reviews/data/models/add_review_model.dart';
 import 'package:restaurant/features/reviews/data/models/review_model.dart';
 
 class ReviewsApiService {
-  final Dio dio;
+  ApiHelper apiHelper = ApiHelper();
 
-  ReviewsApiService({required this.dio});
-  Map<String, dynamic> _getHeaders() {
-    return {
-      'Authorization':
-          'Bearer 1|0RANyvprNDP4Op4J00bd0cARAcRKUSIOQd1W9dXG3d058ffd',
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
-  }
+  ReviewsApiService();
+  // Map<String, dynamic> _getHeaders() {
+  //   return {
+  //     'Authorization':
+  //         'Bearer 1|0RANyvprNDP4Op4J00bd0cARAcRKUSIOQd1W9dXG3d058ffd',
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json',
+  //   };
+  // }
 
   Future<List<ReviewModel>> fetchReviews() async {
-    final response = await dio.get(
-      '${APIKey.baseApiUrl}/reviews',
-      options: Options(headers: _getHeaders()),
+    final response = await apiHelper.getRequest(
+      endPoint: '${APIKey.baseApiUrl}/reviews',
     );
 
     final List<dynamic> jsonList = response.data['data']['reviews'];
@@ -27,6 +27,9 @@ class ReviewsApiService {
   }
 
   Future<void> postReview(AddReviewRequest request) async {
-    await dio.post('${APIKey.baseApiUrl}/reviews', data: request.toJson());
+    await apiHelper.postRequest(
+      endPoint: '${APIKey.baseApiUrl}/reviews',
+      data: request.toJson(),
+    );
   }
 }

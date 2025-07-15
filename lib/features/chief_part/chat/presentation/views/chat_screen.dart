@@ -15,8 +15,8 @@ import 'package:svg_flutter/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatScreenChief extends StatefulWidget {
-  const ChatScreenChief({super.key});
-  final int conversationId = 7;
+  const ChatScreenChief({super.key, this.conversationId = 7});
+  final int conversationId;
   final String userName = "chief";
   final String imageUrl =
       "https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg?semt=ais_hybrid&w=740";
