@@ -10,7 +10,6 @@ class CustomCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      // spacing: AppResponsive.height(context, value: 12),
       children: [
         Container(
           width: AppResponsive.width(context, value: 122),
