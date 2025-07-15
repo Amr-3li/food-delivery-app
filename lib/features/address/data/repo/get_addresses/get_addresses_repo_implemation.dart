@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/core/network/end_points.dart';
 
@@ -9,7 +10,7 @@ import 'get_addresses_repo.dart';
 class GetAddressesRepoImplementation implements GetAddressesRepo {
   GetAddressesRepoImplementation._internal();
   static final GetAddressesRepoImplementation _instance =
-  GetAddressesRepoImplementation._internal();
+      GetAddressesRepoImplementation._internal();
 
   factory GetAddressesRepoImplementation() {
     return _instance;
@@ -20,7 +21,6 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
   @override
   Future<Either<String, List<AddNewAddressModel>>> getAddresses() async {
     try {
-
       ApiResponse apiResponse = await apiHelper.getRequest(
         endPoint: 'my/${EndPoints.address}',
         isProtected: true,
@@ -35,12 +35,31 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
       } else {
         return Left("Failed to add new address.");
       }
-
-
-    }  catch (e) {
+    } catch (e) {
       ApiResponse errorResponse = ApiResponse.fromError(e);
       return Left(errorResponse.message);
     }
   }
 
+  @override
+  Future<Either<String, AddNewAddressModel?>> getDefaultAddress() async {
+    try {
+      ApiResponse apiResponse = await apiHelper.getRequest(
+        endPoint: '${APIKey.baseApiUrl}/default/address',
+        isProtected: true,
+      );
+
+      final data = apiResponse.data['data'];
+
+      if (data != null && data['address'] != null) {
+        final address = AddNewAddressModel.fromJson(data['address']);
+        return Right(address);
+      } else {
+        return Right(null); // No default address exists
+      }
+    } catch (e) {
+      ApiResponse errorResponse = ApiResponse.fromError(e);
+      return Left(errorResponse.message);
+    }
+  }
 }

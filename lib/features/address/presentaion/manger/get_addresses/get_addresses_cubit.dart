@@ -28,4 +28,24 @@ class GetAddressesCubit extends Cubit<GetAddressesState> {
       },
     );
   }
+
+  void getDefaultAddressDetails() async {
+    final result = await getAddressesRepo.getDefaultAddress();
+
+    result.fold(
+      (failure) {
+        emit(GetAddressesError(failure));
+      },
+      (addressDetails) {
+        // 🟠 Handle null case from API
+        if (addressDetails == null) {
+          addresses = []; // Clear list
+          emit(GetAddressesSuccess()); // Still emit success
+        } else {
+          addresses = [addressDetails]; // Wrap in list
+          emit(GetAddressesSuccess());
+        }
+      },
+    );
+  }
 }
