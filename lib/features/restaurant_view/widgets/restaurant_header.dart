@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
-import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 
 class RestaurantHeader extends StatelessWidget {
-  final RestaurantViewVersion version;
+  final String imageUrl;
 
-  const RestaurantHeader({super.key, required this.version});
+  const RestaurantHeader({
+    super.key,
+    required this.imageUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
-          height: version == RestaurantViewVersion.version1 ? 180 : 200,
+          height: 200,
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(
-              version == RestaurantViewVersion.version1 ? 16 : 0,
+            borderRadius: BorderRadius.circular(0),
+            image: DecorationImage(
+              image: NetworkImage(imageUrl),
+              fit: BoxFit.cover,
             ),
           ),
-          width: double.infinity,
         ),
         Positioned(
           top: 12,
@@ -28,7 +31,7 @@ class RestaurantHeader extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -39,7 +42,7 @@ class RestaurantHeader extends StatelessWidget {
           top: 12,
           right: 12,
           child: PopupMenuButton<String>(
-            icon: CircleAvatar(
+            icon: const CircleAvatar(
               backgroundColor: Colors.white,
               child: Icon(Icons.more_horiz, color: Colors.black),
             ),
@@ -53,7 +56,7 @@ class RestaurantHeader extends StatelessWidget {
               }
             },
             itemBuilder: (BuildContext context) => [
-              PopupMenuItem<String>(
+              const PopupMenuItem<String>(
                 value: 'review',
                 child: Row(
                   children: [
@@ -63,7 +66,7 @@ class RestaurantHeader extends StatelessWidget {
                   ],
                 ),
               ),
-              PopupMenuItem<String>(
+              const PopupMenuItem<String>(
                 value: 'chat',
                 child: Row(
                   children: [
@@ -84,30 +87,15 @@ class RestaurantHeader extends StatelessWidget {
                 ),
               ),
             ],
-            offset: Offset(0, 40), // Adjust position of the popup
+            offset: const Offset(0, 40),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
             elevation: 4,
           ),
         ),
-        if (version == RestaurantViewVersion.version2)
-          const Positioned(
-            bottom: 12,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.circle, size: 8, color: Colors.grey),
-                SizedBox(width: 4),
-                Icon(Icons.circle, size: 8, color: Colors.orange),
-                SizedBox(width: 4),
-                Icon(Icons.circle, size: 8, color: Colors.grey),
-              ],
-            ),
-          ),
       ],
     );
   }
 }
+
