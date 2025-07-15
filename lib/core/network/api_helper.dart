@@ -63,6 +63,34 @@ class ApiHelper {
     );
   }
 
+  Future<ApiResponse> patch({
+    required String endPoint,
+    Map<String, dynamic>? data,
+    bool isFormData = false, // Changed default to false
+    bool isProtected = false,
+    bool sendRefreshToken = false,
+  }) async {
+    try {
+      final response = await dio.patch(
+        endPoint,
+        data: isFormData ? FormData.fromMap(data ?? {}) : data,
+        options: Options(
+          headers: {
+            if (isProtected)
+              'Authorization':
+                  'Bearer ${CacheData.accessToken ?? '41|g9QToPhB5Z3n7dCzoFQurY2pACxGCqj928mERreK1d9a5722'}',
+            'Content-Type': isFormData
+                ? 'multipart/form-data'
+                : 'application/json',
+          },
+        ),
+      );
+      return _parseResponse(response);
+    } on DioException catch (e) {
+      return _handleDioError(e);
+    }
+  }
+
   Future<ApiResponse> postRequest({
     required String endPoint,
     Map<String, dynamic>? data,
@@ -76,7 +104,9 @@ class ApiHelper {
         data: isFormData ? FormData.fromMap(data ?? {}) : data,
         options: Options(
           headers: {
-            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken ?? '25|l4Ct2xRBq0cfR2BLYBEJ8XexKqx7Khx8lg7f7Fapeb9eda5b'}',
+            if (isProtected)
+              'Authorization':
+                  'Bearer ${CacheData.accessToken ?? '41|g9QToPhB5Z3n7dCzoFQurY2pACxGCqj928mERreK1d9a5722'}',
             'Content-Type': isFormData
                 ? 'multipart/form-data'
                 : 'application/json',
@@ -116,7 +146,9 @@ class ApiHelper {
         data: isFormData ? FormData.fromMap(data ?? {}) : data,
         options: Options(
           headers: {
-            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken ?? '25|l4Ct2xRBq0cfR2BLYBEJ8XexKqx7Khx8lg7f7Fapeb9eda5b'}}',
+            if (isProtected)
+              'Authorization':
+                  'Bearer ${CacheData.accessToken ?? '41|g9QToPhB5Z3n7dCzoFQurY2pACxGCqj928mERreK1d9a5722'}',
           },
         ),
       ),
@@ -150,7 +182,9 @@ class ApiHelper {
         data: isFormData ? FormData.fromMap(data ?? {}) : data,
         options: Options(
           headers: {
-            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',
+            if (isProtected)
+              'Authorization':
+                  'Bearer ${CacheData.accessToken ?? '41|g9QToPhB5Z3n7dCzoFQurY2pACxGCqj928mERreK1d9a5722'}',
           },
         ),
       ),
@@ -166,7 +200,9 @@ class ApiHelper {
         endPoint,
         options: Options(
           headers: {
-            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',
+            if (isProtected)
+              'Authorization':
+                  'Bearer ${CacheData.accessToken ?? '41|g9QToPhB5Z3n7dCzoFQurY2pACxGCqj928mERreK1d9a5722'}',
           },
         ),
       ),
