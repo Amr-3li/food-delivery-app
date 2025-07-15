@@ -167,10 +167,10 @@ abstract class AppRouter {
         builder: (context, state) => ReviewResturantScreen(),
       ),
       GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
-      GoRoute(
-        path: krestaurantView,
-        builder: (context, state) => RestaurantView(),
-      ),
+      // GoRoute(
+      //   path: krestaurantView,
+      //   builder: (context, state) => RestaurantView(),
+      // ),
       GoRoute(
         path: kChatListView,
         builder: (context, state) => ChatListScreenChief(),
