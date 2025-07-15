@@ -61,6 +61,7 @@ class _AddNewItemsState extends State<AddNewItems> {
                         context.read<FoodCubit>().updateImages(images),
                     key: ValueKey(state),
                   ),
+
                   DeliveryOptionsWidget(
                     priceController: TextEditingController(
                       text: foodDetails.price.toString(),
@@ -69,6 +70,7 @@ class _AddNewItemsState extends State<AddNewItems> {
                         context.read<FoodCubit>().updateDeliveryType(option),
                     key: ValueKey(state),
                   ),
+
                   DetailsTextField(
                     controller: TextEditingController(
                       text: foodDetails.description,
