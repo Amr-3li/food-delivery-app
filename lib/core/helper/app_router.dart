@@ -45,7 +45,7 @@ import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 import '../../features/address/presentaion/view/add_new_address_view.dart';
 
 abstract class AppRouter {
-  static const kOnboardingView = '/';
+  static const kOnboardingView = '/chif_home';
   static const kSplashView = '/OnboardingView';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
@@ -62,7 +62,7 @@ abstract class AppRouter {
   static const krestaurantView = "/restaurantView";
   static const kChifFoodList = '/chif_food_list';
   static const kAddNewItem = '/add_new_item';
-  static const kChifHome = '/chif_home';
+  static const kChifHome = '/';
   static const kChatListView = "/chatListView";
   static const kChatChiefView = "/chatChiefView";
   static const kMenuChiefView = "/menuChiefView";

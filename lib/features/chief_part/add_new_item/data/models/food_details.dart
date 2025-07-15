@@ -15,7 +15,7 @@ class FoodDetails {
     this.images = const [],
     this.categoryId = 1,
     this.description = '',
-    this.price = 0.0,
+    this.price = 20.0,
     this.isAvailable = true,
     this.ingredients = const ['salt'],
     this.size = 'medium', // Constant size value

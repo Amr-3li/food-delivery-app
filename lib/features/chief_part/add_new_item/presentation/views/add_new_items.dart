@@ -19,75 +19,74 @@ class AddNewItems extends StatefulWidget {
 }
 
 class _AddNewItemsState extends State<AddNewItems> {
-  late final FoodCubit _foodCubit;
-
-  @override
-  void initState() {
-    super.initState();
-    final apiHelper = ApiHelper();
-    final mealRepository = MealRepositoryImpl(apiHelper);
-    _foodCubit = FoodCubit(mealRepository);
-  }
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void dispose() {
-    _foodCubit.close();
+    _priceController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => _foodCubit,
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: BlocBuilder<FoodCubit, FoodState>(
-            builder: (context, state) {
-              final foodDetails = state.foodDetails;
-              return ListView(
-                children: [
-                  CustomAppBar(key: ValueKey(state)),
-                  FoodHeader(
-                    onChanged: (name) =>
-                        context.read<FoodCubit>().updateName(name),
-                    onMealTypeChanged: (type) =>
-                        context.read<FoodCubit>().updateFoodType(type),
-                    key: ValueKey(state),
-                  ),
-                  const SizedBox(height: 24),
-                  ImageUploadSection(
-                    onImagesChanged: (images) =>
-                        context.read<FoodCubit>().updateImages(images),
-                    key: ValueKey(state),
-                  ),
+      create: (context) {
+        final apiHelper = ApiHelper();
+        final mealRepository = MealRepositoryImpl(apiHelper);
+        return FoodCubit(mealRepository); // will start as FoodLoaded
+      },
+      child: Form(
+        key: formKey,
+        child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: BlocBuilder<FoodCubit, FoodState>(
+              builder: (context, state) {
+                final foodDetails = state.foodDetails;
 
-                  DeliveryOptionsWidget(
-                    priceController: TextEditingController(
-                      text: foodDetails.price.toString(),
-                    ),
-                    onOptionSelected: (option) =>
-                        context.read<FoodCubit>().updateDeliveryType(option),
-                    key: ValueKey(state),
-                  ),
+                // Set initial values if needed
+                if (state is FoodLoaded) {
+                  _priceController.text = foodDetails.price.toString();
+                  _descriptionController.text = foodDetails.description;
+                }
 
-                  DetailsTextField(
-                    controller: TextEditingController(
-                      text: foodDetails.description,
+                return ListView(
+                  children: [
+                    const CustomAppBar(),
+                    FoodHeader(
+                      onChanged: (name) =>
+                          context.read<FoodCubit>().updateName(name),
+                      onMealTypeChanged: (type) =>
+                          context.read<FoodCubit>().updateFoodType(type),
                     ),
-                    onChanged: (description) => context
-                        .read<FoodCubit>()
-                        .updateDescription(description),
-                    key: ValueKey(state),
-                  ),
-                  SaveChangeButton(
-                    onPressed: () {
-                      context.read<FoodCubit>().saveFoodDetails();
-                    },
-                  ),
-                ],
-              );
-            },
+                    const SizedBox(height: 24),
+                    ImageUploadSection(
+                      onImagesChanged: (images) =>
+                          context.read<FoodCubit>().updateImages(images),
+                    ),
+                    DeliveryOptionsWidget(
+                      priceController: _priceController,
+                      onOptionSelected: (option) =>
+                          context.read<FoodCubit>().updateDeliveryType(option),
+                    ),
+                    DetailsTextField(
+                      controller: _descriptionController,
+                      onChanged: (description) => context
+                          .read<FoodCubit>()
+                          .updateDescription(description),
+                    ),
+                    SaveChangeButton(
+                      onPressed: () {
+                        context.read<FoodCubit>().saveFoodDetails();
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

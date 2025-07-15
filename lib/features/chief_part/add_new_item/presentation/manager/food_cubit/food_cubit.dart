@@ -11,7 +11,7 @@ import 'package:restaurant/features/chief_part/add_new_item/presentation/manager
 class FoodCubit extends Cubit<FoodState> {
   final MealRepository _mealRepository;
 
-  FoodCubit(this._mealRepository) : super(FoodInitial(FoodDetails()));
+  FoodCubit(this._mealRepository) : super(FoodLoaded(FoodDetails()));
 
   void resetForm() {
     emit(FoodInitial(FoodDetails()));
@@ -96,10 +96,10 @@ class FoodCubit extends Cubit<FoodState> {
   Future<void> saveFoodDetails() async {
     try {
       // Validate state
-      if (state is FoodLoaded) {
-        throw ValidationException('Invalid state: Cannot save food details');
+      if (state is! FoodLoaded) {
+        _showToast('Please fill out the form before saving.', isError: true);
+        return; // Stop the function if state is not FoodLoaded
       }
-
       final food = (state as FoodLoaded).foodDetails;
 
       // Validate fields
