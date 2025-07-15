@@ -4,7 +4,9 @@ import '../../../../../core/utils/color_helper.dart';
 import '../../../../../core/utils/styles.dart';
 
 class CustomLabelSelection extends StatefulWidget {
-  const CustomLabelSelection({super.key});
+  const CustomLabelSelection({super.key, required this.onChanged});
+
+  final ValueChanged<String> onChanged;
 
   @override
   State<CustomLabelSelection> createState() => _CustomLabelSelectionState();
@@ -14,6 +16,12 @@ class _CustomLabelSelectionState extends State<CustomLabelSelection> {
   String selectedLabel = 'Home';
 
   final List<String> labels = ['Home', 'Work', 'Other'];
+
+  @override
+  void initState() {
+    super.initState();
+    widget.onChanged(selectedLabel);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +41,8 @@ class _CustomLabelSelectionState extends State<CustomLabelSelection> {
                     setState(() {
                       selectedLabel = label;
                     });
+
+                    widget.onChanged(selectedLabel);
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(

@@ -32,13 +32,13 @@ class _SplashViewBodyState extends State<SplashViewBody> {
     );
   }
 
-  void delayedMethod() async{
-    final see = CacheHelper.getData(key: "seeOnboarding")?? false ;
-    print(see);
+  void delayedMethod() async {
+    final see = CacheHelper.getData(key: "seeOnboarding") ?? false;
+    debugPrint(see);
     Future.delayed(
       const Duration(seconds: 2),
       () => {
-        see ?context.go("/login") : context.go(AppRouter.kOnboardingView)
+        see ? context.go("/login") : context.go(AppRouter.kOnboardingView),
       },
     );
   }

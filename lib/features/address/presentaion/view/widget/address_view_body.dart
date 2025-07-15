@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
-import 'package:restaurant/core/icons.dart';
+
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
-import 'package:restaurant/features/address/presentaion/widget/custom_address_item.dart';
+import 'package:restaurant/features/address/data/model/address_model.dart';
+
+import 'custom_address_item.dart';
 
 class AddressViewBody extends StatelessWidget {
-  const AddressViewBody({super.key});
+  const AddressViewBody({super.key, this.addressModel});
+
+  final List<AddNewAddressModel>? addressModel;
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +19,19 @@ class AddressViewBody extends StatelessWidget {
       padding: const EdgeInsets.only(top: 18),
       child: Column(
         children: [
-          Expanded(
-            child: ListView.separated(
-              itemBuilder: (context, index) => CustomAddressItem(
-                address: '2464 Royal Ln. Mesa, New Jersey 45463',
-                icon: AppIcons.assetsHome,
-                title: 'Home',
+          if (addressModel != null)
+            Expanded(
+              child: ListView.separated(
+                itemBuilder: (context, index) => CustomAddressItem(
+                  address: addressModel![index].displayName!,
+                  icon: addressModel![index].name!,
+                  title: addressModel![index].name!,
+                ),
+                separatorBuilder: (context, index) => SizedBox(height: 14),
+                itemCount: addressModel!.length,
               ),
-              separatorBuilder: (context, index) => SizedBox(height: 14),
-              itemCount: 2,
             ),
-          ),
+          if (addressModel == null) Spacer(),
           Padding(
             padding: const EdgeInsets.all(16),
             child: CustomElevatedButton(

@@ -1,6 +1,6 @@
 class NotificationsModel {
   final String id;
-  final String userId;
+  final int userId;
   final String title;
   final String subtitle;
   final DateTime? date;

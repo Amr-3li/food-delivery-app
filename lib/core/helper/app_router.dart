@@ -38,13 +38,15 @@ import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
+import 'package:restaurant/features/reviews/presentation/views/review_resturant.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
+import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
 
 abstract class AppRouter {
   static const kOnboardingView = '/';
-  static const kSplashView = '/splash';
+  static const kSplashView = '/OnboardingView';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -80,12 +82,13 @@ abstract class AppRouter {
   static const kFavorite = "/favorite";
   static const kAddAddressView = "/addAddress";
   static const kChifFoodDetails = '/chif_food_details';
+  static const String kResturantReview = '/resturantReview';
 
   static final router = GoRouter(
     routes: [
       GoRoute(
         path: kSplashView,
-        builder: (context, state) => const AddNewAddressView(),
+        builder: (context, state) => const SplashView(),
       ),
       GoRoute(
         path: kChifHome,
@@ -108,7 +111,7 @@ abstract class AppRouter {
       GoRoute(
         path: kChatView,
         name: "chat",
-        builder: (context, state) => const ChatScreen(userId: "1"),
+        builder: (context, state) => const ChatScreen(),
       ),
 
       GoRoute(
@@ -161,23 +164,23 @@ abstract class AppRouter {
         name: "notification",
         builder: (context, state) => NotificationScreen(),
       ),
-      // GoRoute(
-      //   path: kNotificationChiefView,
-      //   name: "notificationChief",
-      //   builder: (context, state) => NotificationChiefScreen(),
-      // ),
-      GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
       GoRoute(
-        path: krestaurantView,
-        builder: (context, state) => RestaurantView(),
+        path: kResturantReview,
+        name: "resturantReview",
+        builder: (context, state) => ReviewResturantScreen(),
       ),
+      GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
+      // GoRoute(
+      //   path: krestaurantView,
+      //   builder: (context, state) => RestaurantView(),
+      // ),
       GoRoute(
         path: kChatListView,
         builder: (context, state) => ChatListScreenChief(),
       ),
       GoRoute(
         path: kChatChiefView,
-        builder: (context, state) => ChatScreenChief(userId: "1"),
+        builder: (context, state) => ChatScreenChief(),
       ),
       GoRoute(
         path: kMenuChiefView,

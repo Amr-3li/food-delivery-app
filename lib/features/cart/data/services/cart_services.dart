@@ -1,33 +1,33 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/constant_text.dart';
+import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/features/cart/data/models/cart_model.dart';
 
 class CartApiServices {
-  Dio dio;
-  CartApiServices({required this.dio});
-  Map<String, dynamic> _getHeaders() {
-    return {
-      'Authorization':
-          'Bearer 15|XO9gx6yn5EmJcOAcbljbfHCqU7kbsjvoqhteKWhTc11d5dd4',
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
-  }
+  ApiHelper apiHelper = ApiHelper();
+  CartApiServices();
+  // Map<String, dynamic> _getHeaders() {
+  //   return {
+  //     'Authorization':
+  //         'Bearer 6|zq3OU0soHfdRsznwTWCxzn3Jk7Ouzut5hbHbNmeDe4ffe4a8',
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json',
+  //   };
+  // }
 
   Future<List<CartModel>> getCart() async {
     try {
-      final response = await dio.get(
-        "${APIKey.baseApiUrl}/cart",
-        options: Options(
-          headers: _getHeaders(),
-          validateStatus: (status) => status! < 500,
-        ),
+      final response = await apiHelper.getRequest(
+        endPoint: "${APIKey.baseApiUrl}/cart",
+        isProtected: true,
+        // options: Options(
+        //   headers: _getHeaders(),
+        //   validateStatus: (status) => status! < 500,
+        // ),
       );
 
       if (response.statusCode == 200) {
         if (response.data['data'] != null) {
-          // Return a list with a single cart (most common scenario)
           return [CartModel.fromJson(response.data)];
         }
         return <CartModel>[];
@@ -46,9 +46,10 @@ class CartApiServices {
     required int sizeId,
     required int quantity,
   }) async {
-    await dio.post(
-      '/cart/items',
+    await apiHelper.postRequest(
+      endPoint: '${APIKey.baseApiUrl}/cart/items',
       data: {'dish_id': dishId, 'size_id': sizeId, 'quantity': quantity},
+      isProtected: true,
     );
   }
 
@@ -56,10 +57,28 @@ class CartApiServices {
     required int itemId,
     required int quantity,
   }) async {
-    await dio.put('/cart/items/$itemId', data: {'quantity': quantity});
+    await apiHelper.putRequest(
+      endPoint: '${APIKey.baseApiUrl}/cart/items/$itemId',
+      data: {'quantity': quantity},
+      isProtected: true,
+    );
   }
 
   Future<void> deleteCartItem(int itemId) async {
-    await dio.delete('/cart/$itemId');
+    await apiHelper.deleteRequest(
+      endPoint: '${APIKey.baseApiUrl}/cart/$itemId',
+      isProtected: true,
+    );
+  }
+
+  Future<void> clearCart() async {
+    final response = await apiHelper.postRequest(
+      endPoint: '${APIKey.baseApiUrl}/cart/clear',
+      isProtected: true,
+    );
+
+    if (response.statusCode != 200 || response.data['status'] != true) {
+      throw Exception(response.data['message'] ?? 'Failed to clear cart');
+    }
   }
 }

@@ -5,6 +5,8 @@ import 'package:restaurant/core/dependency_injection/service_locator.dart';
 
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
+import 'package:restaurant/features/address/presentaion/manger/add_address/add_address_cubit.dart';
+import 'package:restaurant/features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
 
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_states.dart';
@@ -38,6 +40,7 @@ class _CartViewState extends State<CartView> {
       providers: [
         BlocProvider(create: (_) => sl<CartCubit>()..getCart()),
         BlocProvider(create: (_) => sl<PaymentCubit>()),
+        BlocProvider(create: (_) => sl<GetAddressesCubit>()),
       ],
       child: Scaffold(
         backgroundColor: ColorsHelper.black,
@@ -98,7 +101,7 @@ class _CartViewState extends State<CartView> {
                   return CartItemContainer(
                     imageName: item.dish.image,
                     title: item.dish.name,
-                    price: '\$${item.price.toStringAsFixed(2)}',
+                    price: '\$${item.price.toStringAsFixed(2) * item.quantity}',
                     portion: item.quantity,
                     removeItemCart: () {
                       context.read<CartCubit>().deleteCartItem(item.id);
@@ -129,8 +132,21 @@ class _CartViewState extends State<CartView> {
             );
           },
         ),
-        bottomNavigationBar: ContainerBottomNavigator(
-          addressTitle: addressTitle,
+        bottomNavigationBar: Builder(
+          builder: (context) {
+            final state = context.watch<CartCubit>().state;
+            double total = 0.0;
+            if (state is CartSuccessState) {
+              total = state.cartModel.items.fold(0.0, (sum, item) {
+                return sum + (item.price * item.quantity);
+              });
+            }
+
+            return ContainerBottomNavigator(
+              total: total,
+              addressTitle: addressTitle,
+            );
+          },
         ),
       ),
     );

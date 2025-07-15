@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
-import 'package:restaurant/features/chat/data/models/chat_user_model.dart';
+import 'package:restaurant/features/chat/data/models/conversation_preview_model.dart';
 
 class ChatListItem extends StatelessWidget {
-  final ChatUser user;
+  final ConversationPreviewModel user;
   final VoidCallback onTap;
 
   const ChatListItem({super.key, required this.user, required this.onTap});
@@ -15,20 +15,20 @@ class ChatListItem extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(user.imageUrl),
+        backgroundImage: NetworkImage(user.otherParty.profileImage ?? ''),
         radius: 28,
       ),
       title: Row(
         children: [
           Expanded(
             child: Text(
-              user.name,
+              user.otherParty.name,
               style: Styles.textStyle16.copyWith(fontWeight: FontWeight.bold),
               overflow: TextOverflow.ellipsis,
             ),
           ),
           Text(
-            DateFormat('h:mm a').format(user.lastMessageTime),
+            user.lastMessageAt,
             style: Styles.textStyle12.copyWith(color: Colors.grey),
           ),
         ],
@@ -37,7 +37,7 @@ class ChatListItem extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              user.lastMessage,
+              user.lastMessage.content,
               style: Styles.textStyle14.copyWith(color: Colors.grey),
               overflow: TextOverflow.ellipsis,
             ),

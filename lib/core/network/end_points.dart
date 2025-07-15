@@ -1,7 +1,6 @@
 abstract class EndPoints {
   static const String baseUrl =
       'https://round41-mobile-food.digital-vision-solutions.com/api/';
-
   static const String register = 'register';
   static const String login = 'login';
   static const String logout = 'logout';
@@ -20,4 +19,5 @@ abstract class EndPoints {
   static String updateOrderStatus(int orderId, String status) =>
       '${baseUrl}chef/orders/$orderId/$status';
   static const String meals = '${baseUrl}meals';
+  static const String address = "address";
 }
