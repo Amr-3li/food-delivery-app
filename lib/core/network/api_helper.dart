@@ -92,15 +92,20 @@ class ApiHelper {
 
   Future<ApiResponse> postRequest({
     required String endPoint,
-    Map<String, dynamic>? data,
-    bool isFormData = false, // Changed default to false
+    dynamic data,
+    bool isFormData = false,
     bool isProtected = false,
     bool sendRefreshToken = false,
   }) async {
     try {
+      // ✅ Only wrap in FormData if it's not already FormData
+      final requestData = isFormData
+          ? (data is FormData ? data : FormData.fromMap(data ?? {}))
+          : data;
+
       final response = await dio.post(
         endPoint,
-        data: isFormData ? FormData.fromMap(data ?? {}) : data,
+        data: requestData,
         options: Options(
           headers: {
             if (isProtected)
