@@ -1,5 +1,6 @@
 
 import 'package:go_router/go_router.dart';
+import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/views/vertification_view.dart';
 import 'package:restaurant/features/chief_part/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chief_part/chat/presentation/views/list_chat_screen.dart';
@@ -95,7 +96,10 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kChifHome,
-        builder: (context, state) => const ChifHomeView(),
+        builder: (context, state) {
+           final chefModel = state.extra as UserModel;
+         return ChifHomeView(chefModel: chefModel,);
+        },
       ),
       GoRoute(
         path: kOnboardingView,

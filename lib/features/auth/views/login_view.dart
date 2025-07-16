@@ -46,6 +46,9 @@ bool isLoading = false;
   } else if (state is LoginSuccess) {
     setState(() => isLoading = false);
     AppToast.showSuccessToast("Login Successfully");
+    if (state.userData.data!.user!.type =="chef"){
+      context.go(AppRouter.kChifHome , extra: state.userData);
+    }
     context.go(AppRouter.kHomeUserView);
   } else if (state is AuthLoading) {
     setState(() => isLoading = true);
