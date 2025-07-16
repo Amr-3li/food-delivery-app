@@ -7,7 +7,6 @@ import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
-// <-- Add this import
 import 'package:sizer/sizer.dart';
 
 void main() async {

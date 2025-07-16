@@ -95,7 +95,9 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kOnboardingView,
-        builder: (context, state) => const ChifHomeView(),
+        builder: (context, state) {
+          return FoodDetailsScreen(foodId: 1);
+        },
       ),
       GoRoute(path: '/login', builder: (context, state) => LoginView()),
       GoRoute(
