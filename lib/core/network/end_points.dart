@@ -20,6 +20,8 @@ abstract class EndPoints {
       '${baseUrl}chef/orders/$orderId/$status';
   static const String meals = '${baseUrl}meals';
   static const String address = "address";
+  static const String getAddress = "my/addresses";
+  static const String profile = "profile";
   static const String verifyEmail = "email/verify";
   static const String searchPage = "client/meals_filter?";
 }

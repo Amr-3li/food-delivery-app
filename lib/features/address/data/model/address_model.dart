@@ -4,13 +4,15 @@ class AddNewAddressModel {
     required this.lon,
     required this.name,
     required this.displayName,
+    required this.address,
     required this.isDefault,
   });
 
-  final double? lat;
-  final double? lon;
-  final String? name;
-  final String? displayName;
+  final dynamic lat;
+  final dynamic lon;
+  final dynamic name;
+  final dynamic displayName;
+  final dynamic address;
   final bool? isDefault;
 
   factory AddNewAddressModel.fromJson(Map<String, dynamic> json){
@@ -19,6 +21,7 @@ class AddNewAddressModel {
       lon: json["lon"],
       name: json["name"],
       displayName: json["display_name"],
+      address: json["address"],
       isDefault: json["is_default"],
     );
   }
@@ -28,34 +31,8 @@ class AddNewAddressModel {
     "lon": lon,
     "name": name,
     "display_name": displayName,
+    "address" : address,
     "is_default": isDefault,
-  };
-
-}
-
-class AddressModel {
-  AddressModel({
-    required this.city,
-    required this.country,
-    required this.postcode,
-  });
-
-  final String? city;
-  final String? country;
-  final int? postcode;
-
-  factory AddressModel.fromJson(Map<String, dynamic> json){
-    return AddressModel(
-      city: json["city"],
-      country: json["country"],
-      postcode: json["postcode"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-    "city": city,
-    "country": country,
-    "postcode": postcode,
   };
 
 }

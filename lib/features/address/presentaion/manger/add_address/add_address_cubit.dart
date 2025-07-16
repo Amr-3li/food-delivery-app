@@ -58,10 +58,11 @@ class AddAddressCubit extends Cubit<AddAddressState> {
   }
 
   void addNewAddress({
-    required double latitude,
-    required double longitude,
+    required String latitude,
+    required String longitude,
     String? displayName,
     String? label,
+    String? address,
     bool? isDefault,
   }) async {
     final result = await addAddressRepo.addNewAddress(
@@ -69,6 +70,7 @@ class AddAddressCubit extends Cubit<AddAddressState> {
       longitude: longitude,
       displayName: displayName,
       label: label,
+      address: address,
       isDefault: isDefault,
     );
 
