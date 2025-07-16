@@ -13,18 +13,23 @@ import 'package:restaurant/features/forget_password/forgot_password_cubit/forgot
 // <-- Add this import
 import 'package:sizer/sizer.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  setupLocator();
   setupLocator();
   await CacheData.initialize(
     '15|XBQPpJMvRvQUCQufbI3Fl7OMvQTl5a9RNPJMe2oqc4067452',
   );
 
   await CacheHelper.init();
+  await CacheHelper.init();
 
   Stripe.publishableKey = APIKey.stripePublishableKey;
+  Stripe.publishableKey = APIKey.stripePublishableKey;
 
+  runApp(const MyApp());
   runApp(const MyApp());
 }
 

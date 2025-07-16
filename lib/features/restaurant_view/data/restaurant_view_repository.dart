@@ -1,15 +1,18 @@
 import 'package:dio/dio.dart';
+import 'package:restaurant/core/constant_text.dart';
+import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/features/restaurant_view/data/restaurant_view_model.dart';
 
 class RestaurantViewRepository {
-  final String baseUrl;
-  final Dio dio;
+  ApiHelper apiHelper = ApiHelper();
 
-  RestaurantViewRepository({required this.baseUrl}) : dio = Dio();
+  RestaurantViewRepository();
 
   Future<RestaurantViewModel> fetchRestaurantView() async {
     try {
-      final response = await dio.get(baseUrl);
+      final response = await apiHelper.getRequest(
+        endPoint: '${APIKey.baseApiUrl}/resturants/5',
+      );
 
       if (response.statusCode == 200) {
         final json = response.data;

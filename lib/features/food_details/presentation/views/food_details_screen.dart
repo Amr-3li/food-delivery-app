@@ -10,13 +10,21 @@ import 'package:restaurant/features/food_details/presentation/widgets/quantity_s
 import 'package:restaurant/features/food_details/presentation/widgets/size_selector.dart';
 
 class FoodDetailsScreen extends StatelessWidget {
-  const FoodDetailsScreen({super.key});
+  const FoodDetailsScreen({super.key, required this.foodId});
+  final int foodId;
+
+  Widget _buildFallbackImage() {
+    return Center(
+      child: Icon(Icons.fastfood, size: 40, color: Colors.grey[400]),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => FoodDetailsCubit(FoodDetailsRepository(dio: Dio()))
-        ..fetchFoodDetails(),
+      create: (context) =>
+          FoodDetailsCubit(FoodDetailsRepository(dio: Dio()))
+            ..fetchFoodDetails(), // ✅ Pass foodId here
       child: Scaffold(
         body: BlocBuilder<FoodDetailsCubit, FoodDetailsState>(
           builder: (context, state) {
@@ -32,10 +40,39 @@ class FoodDetailsScreen extends StatelessWidget {
                     expandedHeight: 250,
                     pinned: true,
                     flexibleSpace: FlexibleSpaceBar(
-                      title: Text(food.dishName, style: const TextStyle(fontSize: 16)),
-                      background: Image.network(
-                        food.dishImage,
-                        fit: BoxFit.cover,
+                      title: Text(
+                        food.dishName,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      background: Container(
+                        decoration: BoxDecoration(
+                          image: food.dishImage.isNotEmpty
+                              ? DecorationImage(
+                                  image: NetworkImage(food.dishImage),
+                                  fit: BoxFit.cover,
+                                  onError: (error, stackTrace) {},
+                                )
+                              : null,
+                        ),
+                        child: food.dishImage.isEmpty
+                            ? _buildFallbackImage()
+                            : Image.network(
+                                "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    _buildFallbackImage(),
+                                loadingBuilder: (context, child, progress) {
+                                  if (progress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value: progress.expectedTotalBytes != null
+                                          ? progress.cumulativeBytesLoaded /
+                                                progress.expectedTotalBytes!
+                                          : null,
+                                    ),
+                                  );
+                                },
+                              ),
                       ),
                     ),
                     leading: IconButton(
@@ -70,7 +107,11 @@ class FoodDetailsScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.star, color: Colors.orange, size: 20),
+                              const Icon(
+                                Icons.star,
+                                color: Colors.orange,
+                                size: 20,
+                              ),
                               const SizedBox(width: 4),
                               Text(food.avgRate),
                               const SizedBox(width: 12),
@@ -84,18 +125,26 @@ class FoodDetailsScreen extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 24),
-                          const Text("SIZE:", style: TextStyle(fontWeight: FontWeight.bold)),
+                          const Text(
+                            "SIZE:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           const SizedBox(height: 8),
                           const SizeSelector(),
                           const SizedBox(height: 24),
-                          const Text("INGREDIENTS:", style: TextStyle(fontWeight: FontWeight.bold)),
+                          const Text(
+                            "INGREDIENTS:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           const SizedBox(height: 8),
                           Center(
                             child: CircleAvatar(
                               backgroundColor: Colors.orange[50],
                               radius: 24,
                               child: Text(
-                                food.ingredient[0],
+                                food.ingredient.isNotEmpty
+                                    ? food.ingredient[0]
+                                    : '?',
                                 style: const TextStyle(fontSize: 16),
                               ),
                             ),
@@ -105,7 +154,10 @@ class FoodDetailsScreen extends StatelessWidget {
                             children: const [
                               Text(
                                 "\$32",
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               Spacer(),
                               QuantitySelector(),
@@ -117,7 +169,9 @@ class FoodDetailsScreen extends StatelessWidget {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.orange,
-                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),

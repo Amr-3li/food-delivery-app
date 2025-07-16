@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/helper/dio_with_auth.dart';
-import 'package:restaurant/features/address/data/repo/add_address/add_address_repo.dart';
+
 import 'package:restaurant/features/address/data/repo/get_addresses/get_addresses_repo_implemation.dart';
 import 'package:restaurant/features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
 import 'package:restaurant/features/cart/data/repository/cart_repository.dart';
@@ -13,6 +13,8 @@ import 'package:restaurant/features/chat/data/service_api/conversation_api.dart'
 import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
 import 'package:restaurant/features/chief_part/notification/data/api_services/notification_api_services.dart';
 import 'package:restaurant/features/chief_part/notification/data/repository/notification_repository.dart';
+import 'package:restaurant/features/food_categories/cubit/food_cubit.dart';
+import 'package:restaurant/features/food_categories/data/food_repository.dart';
 import 'package:restaurant/features/home_user/data/repository/category_repository.dart';
 import 'package:restaurant/features/home_user/data/repository/resturant_repository.dart';
 import 'package:restaurant/features/home_user/presentation/cubit/category/category_cubit.dart';
@@ -20,6 +22,8 @@ import 'package:restaurant/features/home_user/presentation/cubit/resturant/restu
 import 'package:restaurant/features/payment/data/repository/payment_repository.dart';
 import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
 import 'package:restaurant/features/chief_part/notification/presentation/cubit/notification_cubit.dart';
+import 'package:restaurant/features/restaurant_view/data/restaurant_view_repository.dart';
+import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_cubit.dart';
 import 'package:restaurant/features/reviews/data/api_services/review_api_services.dart';
 import 'package:restaurant/features/reviews/data/repository/review_repository_implementation.dart';
 import 'package:restaurant/features/reviews/presentation/cubit/review_cubit.dart';
@@ -75,4 +79,8 @@ void setupLocator() {
   sl.registerFactory(() => PaymentCubit(sl<PaymentRepository>()));
   sl.registerLazySingleton(() => RestaurantRepository());
   sl.registerLazySingleton(() => RestaurantCubit(sl()));
+  sl.registerLazySingleton(() => RestaurantViewRepository());
+  sl.registerLazySingleton(() => RestaurantViewCubit(sl()));
+  sl.registerLazySingleton(() => FoodUserRepository());
+  sl.registerLazySingleton(() => FoodUserCubit(sl()));
 }

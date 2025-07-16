@@ -1,20 +1,28 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/features/food_categories/data/food_model.dart';
+
 import 'package:restaurant/features/food_categories/data/food_repository.dart';
 import 'food_state.dart';
 
-class FoodCubit extends Cubit<FoodState> {
-  final FoodRepository foodRepository;
+class FoodUserCubit extends Cubit<FoodUserState> {
+  final FoodUserRepository foodRepository;
 
-  FoodCubit(this.foodRepository) : super(FoodInitial());
+  FoodUserCubit(this.foodRepository) : super(FoodUserSInitial());
 
   Future<void> fetchAllFoods() async {
-    emit(FoodLoading());
-    try {
-      final List<FoodModel> foods = await foodRepository.getAllFoods();
-      emit(FoodSuccess(foods));
-    } catch (e) {
-      emit(FoodFailure(e.toString()));
-    }
+    emit(FoodUserSLoading());
+    final result = await foodRepository.getAllFoods();
+    result.fold(
+      (failure) => emit(FoodUserSFailure(failure.errorMessage)),
+      (foods) => emit(FoodUserSSuccess(foods)),
+    );
+  }
+
+  Future<void> fetchFoodsByCategoryId(int id) async {
+    emit(FoodUserSLoading());
+    final result = await foodRepository.getFoodsDetails(id: id);
+    result.fold(
+      (failure) => emit(FoodUserSFailure(failure.errorMessage)),
+      (foods) => emit(FoodUserSSuccess(foods)),
+    );
   }
 }
