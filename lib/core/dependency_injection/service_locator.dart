@@ -20,6 +20,8 @@ import 'package:restaurant/features/home_user/presentation/cubit/resturant/restu
 import 'package:restaurant/features/payment/data/repository/payment_repository.dart';
 import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
 import 'package:restaurant/features/chief_part/notification/presentation/cubit/notification_cubit.dart';
+import 'package:restaurant/features/restaurant_view/data/restaurant_view_repository.dart';
+import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_cubit.dart';
 import 'package:restaurant/features/reviews/data/api_services/review_api_services.dart';
 import 'package:restaurant/features/reviews/data/repository/review_repository_implementation.dart';
 import 'package:restaurant/features/reviews/presentation/cubit/review_cubit.dart';
@@ -75,4 +77,6 @@ void setupLocator() {
   sl.registerFactory(() => PaymentCubit(sl<PaymentRepository>()));
   sl.registerLazySingleton(() => RestaurantRepository());
   sl.registerLazySingleton(() => RestaurantCubit(sl()));
+  sl.registerLazySingleton(() => RestaurantViewRepository());
+  sl.registerLazySingleton(() => RestaurantViewCubit(sl()));
 }

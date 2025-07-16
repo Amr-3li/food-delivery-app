@@ -51,7 +51,7 @@ import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 import '../../features/address/presentaion/view/add_new_address_view.dart';
 
 abstract class AppRouter {
-  static const kOnboardingView = '/chif_home';
+  static const kOnboardingView = '/';
   static const kSplashView = '/splash';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
@@ -68,7 +68,7 @@ abstract class AppRouter {
   static const krestaurantView = "/restaurantView";
   static const kChifFoodList = '/chif_food_list';
   static const kAddNewItem = '/add_new_item';
-  static const kChifHome = '/';
+  static const kChifHome = '/chif_home';
   static const kChatListView = "/chatListView";
   static const kChatChiefView = "/chatChiefView";
   static const kMenuChiefView = "/menuChiefView";
@@ -92,58 +92,116 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-      GoRoute(path: kSplashView, builder: (context, state) => const SplashView()),
-      GoRoute(path: kChifHome, builder: (context, state) => const ChifHomeView()),
-      GoRoute(path: kOnboardingView, builder: (context, state) => OnboardingPage()),
+      GoRoute(
+        path: kSplashView,
+        builder: (context, state) => const SplashView(),
+      ),
+      GoRoute(
+        path: kChifHome,
+        builder: (context, state) => const ChifHomeView(),
+      ),
+      GoRoute(
+        path: kOnboardingView,
+        builder: (context, state) => OnboardingPage(),
+      ),
 
       GoRoute(path: '/login', builder: (context, state) => LoginView()),
-      GoRoute(path: '/forgetPassword', builder: (context, state) => ForgetPasswordView()),
+      GoRoute(
+        path: '/forgetPassword',
+        builder: (context, state) => ForgetPasswordView(),
+      ),
       GoRoute(path: "/signUp", builder: (context, state) => SinUpView()),
-      GoRoute(path: "/vertificationView", builder: (context, state) => VertificationView()),
+      GoRoute(
+        path: "/vertificationView",
+        builder: (context, state) => VertificationView(),
+      ),
 
-      GoRoute(path: kChatView, builder: (context, state) => const ChatScreen(userId: "1")),
-      GoRoute(path: kChifFoodDetails, builder: (context, state) => const FoodDetails()),
+      GoRoute(path: kChatView, builder: (context, state) => const ChatScreen()),
+      GoRoute(
+        path: kChifFoodDetails,
+        builder: (context, state) => FoodDetailsScreen(),
+      ),
       GoRoute(path: kAddNewItem, builder: (context, state) => AddNewItems()),
       GoRoute(path: kChifFoodList, builder: (context, state) => MyFoodList()),
-      GoRoute(path: kMessageListView, builder: (context, state) => ChatListScreen()),
+      GoRoute(
+        path: kMessageListView,
+        builder: (context, state) => ChatListScreen(),
+      ),
       GoRoute(path: kReviewView, builder: (context, state) => ReviewScreen()),
       GoRoute(path: kAddReviewView, builder: (context, state) => AddReview()),
       GoRoute(path: kCartView, builder: (context, state) => CartView()),
-      GoRoute(path: kSucessPaymentView, builder: (context, state) => SucessPayment()),
-      GoRoute(path: kNotificationView, builder: (context, state) => NotificationScreen()),
-      GoRoute(path: kResturantReview, builder: (context, state) => ReviewResturantScreen()),
+      GoRoute(
+        path: kSucessPaymentView,
+        builder: (context, state) => SucessPayment(),
+      ),
+      GoRoute(
+        path: kNotificationView,
+        builder: (context, state) => NotificationScreen(),
+      ),
+      GoRoute(
+        path: kResturantReview,
+        builder: (context, state) => ReviewResturantScreen(),
+      ),
       GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
-      GoRoute(path: krestaurantView, builder: (context, state) => const RestaurantViewScreen()),
-      GoRoute(path: kChatListView, builder: (context, state) => ChatListScreenChief()),
-      GoRoute(path: kChatChiefView, builder: (context, state) => ChatScreenChief(userId: "1")),
-      GoRoute(path: kMenuChiefView, builder: (context, state) => ChiefMenuScreen()),
+      GoRoute(
+        path: krestaurantView,
+        builder: (context, state) => const RestaurantViewScreen(),
+      ),
+      GoRoute(
+        path: kChatListView,
+        builder: (context, state) => ChatListScreenChief(),
+      ),
+      GoRoute(
+        path: kChatChiefView,
+        builder: (context, state) => ChatScreenChief(),
+      ),
+      GoRoute(
+        path: kMenuChiefView,
+        builder: (context, state) => ChiefMenuScreen(),
+      ),
       GoRoute(path: kWithdrawView, builder: (context, state) => WithdrawView()),
-      GoRoute(path: kPopularFoodView, builder: (context, state) => PopularFoodScreen()),
-      GoRoute(path: kPersonalInfoProfileView, builder: (context, state) => PersonalInfoView()),
-      GoRoute(path: kEditProfileView, builder: (context, state) => EditProfileView()),
+      GoRoute(
+        path: kPopularFoodView,
+        builder: (context, state) => PopularFoodScreen(),
+      ),
+      GoRoute(
+        path: kPersonalInfoProfileView,
+        builder: (context, state) => PersonalInfoView(),
+      ),
+      GoRoute(
+        path: kEditProfileView,
+        builder: (context, state) => EditProfileView(),
+      ),
       GoRoute(path: kMenuProfileView, builder: (context, state) => MenuView()),
-      GoRoute(path: kSearchScreenView, builder: (context, state) => SearchScreen()),
+      GoRoute(
+        path: kSearchScreenView,
+        builder: (context, state) => SearchScreen(),
+      ),
       GoRoute(path: kFoodScreenView, builder: (context, state) => FoodScreen()),
-      GoRoute(path: kFoodDetailsScreenView, builder: (context, state) => const FoodDetailsScreen()),
+      GoRoute(
+        path: kFoodDetailsScreenView,
+        builder: (context, state) => const FoodDetailsScreen(),
+      ),
 
       GoRoute(
         path: kRestaurantViewVersion,
-        builder: (context, state) => BlocProvider(
-          create: (_) => RestaurantViewCubit(
-            RestaurantViewRepository(
-              baseUrl: 'http://127.0.0.1:8000/api/resturants/5',
-            ),
-          )..getRestaurantView(),
-          child: const RestaurantViewScreen(),
-        ),
+        builder: (context, state) => const RestaurantViewScreen(),
       ),
 
-      GoRoute(path: kAddresses, builder: (context, state) => const AddressView()),
+      GoRoute(
+        path: kAddresses,
+        builder: (context, state) => const AddressView(),
+      ),
       GoRoute(path: kFQS, builder: (context, state) => const FAQsScreen()),
-      GoRoute(path: kFavorite, builder: (context, state) => const FavoritesView()),
+      GoRoute(
+        path: kFavorite,
+        builder: (context, state) => const FavoritesView(),
+      ),
       GoRoute(path: kOrder, builder: (context, state) => const MyOrdersView()),
-      GoRoute(path: kAddAddressView, builder: (context, state) => AddNewAddressView()),
+      GoRoute(
+        path: kAddAddressView,
+        builder: (context, state) => AddNewAddressView(),
+      ),
     ],
   );
 }
- 

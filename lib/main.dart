@@ -5,28 +5,24 @@ import 'package:restaurant/core/cache/cache_data.dart';
 import 'package:restaurant/core/cache/cache_helper.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
-import 'package:restaurant/features/cart/presentation/views/cart.dart';
-import 'package:restaurant/features/food_categories/presentation/views/food_categories_screen.dart';
-import 'package:restaurant/features/food_details/presentation/views/food_details_screen.dart';
-import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
-import 'package:restaurant/features/restaurant_view/widgets/filter_sheet.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
+// <-- Add this import
 import 'package:sizer/sizer.dart';
-import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  setupLocator(); 
+  setupLocator();
   await CacheData.initialize(
     '15|XBQPpJMvRvQUCQufbI3Fl7OMvQTl5a9RNPJMe2oqc4067452',
   );
 
-  await CacheHelper.init(); 
+  await CacheHelper.init();
 
-  Stripe.publishableKey = APIKey.stripePublishableKey; 
+  Stripe.publishableKey = APIKey.stripePublishableKey;
 
-  runApp(const MyApp()); 
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -34,9 +30,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: RestaurantViewScreen(),
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return BlocProvider<ChatCubit>(
+          create: (_) => sl<ChatCubit>(),
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: AppRouter.router,
+          ),
+        );
+      },
     );
   }
 }
