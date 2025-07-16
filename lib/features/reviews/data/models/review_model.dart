@@ -38,16 +38,18 @@ class ReviewModel {
 
 class Customer {
   final int id;
-  final String name;
-  final String profileImage;
+  final String? name;
+  final String? profileImage;
 
   Customer({required this.id, required this.name, required this.profileImage});
 
   factory Customer.fromJson(Map<String, dynamic> json) {
     return Customer(
       id: json['id'],
-      name: json['name'],
-      profileImage: json['profile_image'],
+      name: json['name'] ?? "someone",
+      profileImage:
+          json['profile_image'] ??
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzDXmfrBvj-07Fz17-V1BCk9C16ODy8yGGCQ&s",
     );
   }
 }

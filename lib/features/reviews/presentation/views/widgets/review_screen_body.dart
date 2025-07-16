@@ -43,7 +43,7 @@ class ReviewResturantScreenBody extends StatelessWidget {
                     rating: review.rating,
                     reviewText: review.comment,
                     reviewTitle: "Review",
-                    userName: review.customer.name,
+                    userName: review.customer.name ?? "Anonymous User",
                   );
                 },
               );

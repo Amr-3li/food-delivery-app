@@ -20,6 +20,7 @@ class ReviewsApiService {
   Future<List<ReviewModel>> fetchReviews() async {
     final response = await apiHelper.getRequest(
       endPoint: '${APIKey.baseApiUrl}/reviews',
+      isFormData: false,
     );
 
     final List<dynamic> jsonList = response.data['data']['reviews'];
@@ -29,7 +30,9 @@ class ReviewsApiService {
   Future<void> postReview(AddReviewRequest request) async {
     await apiHelper.postRequest(
       endPoint: '${APIKey.baseApiUrl}/reviews',
+      isProtected: true,
       data: request.toJson(),
+      isFormData: false,
     );
   }
 }
