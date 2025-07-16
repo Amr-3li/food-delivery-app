@@ -34,21 +34,6 @@ class MenuView extends StatelessWidget {
         ),
         toolbarHeight: AppResponsive.height(context, value: 80),
         title: Text('Profile', style: Styles.textStyle18),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: GestureDetector(
-              onTap: () {
-                GoRouter.of(context).push(AppRouter.kEditProfileView);
-              },
-              child: CircleAvatar(
-                radius: 20,
-                backgroundColor: ColorsHelper.lightBabyBlue,
-                child: SvgPicture.asset(AppIcons.assetsMoreHorizontal),
-              ),
-            ),
-          ),
-        ],
       ),
       body: MenuViewBody(),
     );
