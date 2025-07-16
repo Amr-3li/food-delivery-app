@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:restaurant/core/helper/app_router.dart';
+
 import 'package:restaurant/features/menu/presentation/views/widgets/menu_view_body.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -9,8 +7,6 @@ import '../../../../core/helper/app_responsive.dart';
 import '../../../../core/icons.dart';
 import '../../../../core/utils/color_helper.dart';
 import '../../../../core/utils/styles.dart';
-import '../../data/repo/menu/menu_repo_implemation.dart';
-import '../manger/menu/menu_cubit.dart';
 
 class MenuView extends StatelessWidget {
   const MenuView({super.key});

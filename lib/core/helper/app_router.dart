@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/views/login_view.dart';
@@ -31,8 +31,7 @@ import 'package:restaurant/features/forget_password/presentation/views/sent_otp.
 import 'package:restaurant/features/fqs/presentation/view/fqs.dart';
 import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
 import 'package:restaurant/features/internet/views/internet_view.dart';
-import 'package:restaurant/features/menu/data/repo/menu/menu_repo_implemation.dart';
-import 'package:restaurant/features/menu/presentation/manger/menu/menu_cubit.dart';
+
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
@@ -64,8 +63,8 @@ abstract class AppRouter {
   static const kSucessPaymentView = '/sucessPayment';
   static const kNotificationView = '/notification';
   static const kNotificationChiefView = '/notificationChief';
-  static const krestaurantView = "/restaurantView";
-  static const kAllRestaurantsView = "/restaurantView";
+  static const kRestaurantView = "/restaurantView";
+  static const kAllRestaurantsView = "/allrestaurantView";
   static const kChifFoodList = '/chif_food_list';
   static const kAddNewItem = '/add_new_item';
   static const kChifHome = '/chif_home';
@@ -147,9 +146,11 @@ abstract class AppRouter {
           ),
           GoRoute(path: kHomeUserView, builder: (_, __) => HomeUserView()),
           GoRoute(
-            path: krestaurantView,
+            path: kRestaurantView,
             builder: (_, state) {
-              final int id = state.extra as int;
+              final id =
+                  state.extra as int? ??
+                  5; // Handle null case with default value
               return RestaurantViewScreen(id: id);
             },
           ),

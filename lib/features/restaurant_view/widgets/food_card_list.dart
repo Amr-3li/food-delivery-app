@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
-import 'package:restaurant/features/cart/data/repository/cart_abstract_repo.dart';
+
 import 'package:restaurant/features/cart/data/repository/cart_repository.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_states.dart';
@@ -38,7 +38,7 @@ class FoodCardList extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.grey.withValues(alpha: .1),
                   blurRadius: 6,
                   spreadRadius: 1,
                 ),

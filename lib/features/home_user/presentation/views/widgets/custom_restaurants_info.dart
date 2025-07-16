@@ -19,7 +19,7 @@ class CustomRestorantInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(AppRouter.krestaurantView, extra: restaurant.id);
+        context.push(AppRouter.kRestaurantView, extra: restaurant.id);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

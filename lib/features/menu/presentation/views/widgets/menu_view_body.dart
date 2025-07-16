@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
+import 'package:restaurant/features/menu/data/repo/menu/menu_repo.dart';
+import 'package:restaurant/features/menu/data/repo/menu/menu_repo_implemation.dart';
 import 'package:restaurant/features/menu/presentation/manger/menu/menu_cubit.dart';
 import '../../../data/models/menu_group_list.dart';
 import 'custom_menu_list.dart';
@@ -14,38 +16,40 @@ class MenuViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 18, left: 18, right: 18),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            BlocBuilder<MenuCubit, MenuState>(
-              builder: (context, state) {
-                if (MenuCubit.get(context).userModel != null) {
-                  return CustomUserInfo(
-                    userModel: MenuCubit.get(context).userModel!,
-                  );
-                }
-                return CustomUserInfo();
-              },
-            ),
-            const SizedBox(height: 28),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) =>
-                  CustomMenuList(
-                    menuGroup: menuGroups[index],
-                    onTap: () {
-                      context.push(
-                        menuGroups[index].items[index].route ??
-                            AppRouter.kAddresses,
-                      );
-                    },
-                  ),
-              separatorBuilder: (context, index) => SizedBox(height: 16),
-              itemCount: menuGroups.length,
-            ),
-            SizedBox(height: 16),
-          ],
+      child: BlocProvider(
+        create: (context) => MenuCubit(MenuRepoImplementation()),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              BlocBuilder<MenuCubit, MenuState>(
+                builder: (context, state) {
+                  if (MenuCubit.get(context).userModel != null) {
+                    return CustomUserInfo(
+                      userModel: MenuCubit.get(context).userModel!,
+                    );
+                  }
+                  return CustomUserInfo();
+                },
+              ),
+              const SizedBox(height: 28),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => CustomMenuList(
+                  menuGroup: menuGroups[index],
+                  onTap: () {
+                    context.push(
+                      menuGroups[index].items[index].route ??
+                          AppRouter.kAddresses,
+                    );
+                  },
+                ),
+                separatorBuilder: (context, index) => SizedBox(height: 16),
+                itemCount: menuGroups.length,
+              ),
+              SizedBox(height: 16),
+            ],
+          ),
         ),
       ),
     );

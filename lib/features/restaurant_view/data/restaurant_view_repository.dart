@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/features/restaurant_view/data/restaurant_view_model.dart';

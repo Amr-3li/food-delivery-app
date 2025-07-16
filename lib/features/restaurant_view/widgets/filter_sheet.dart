@@ -46,17 +46,20 @@ class _FilterSheetState extends State<FilterSheet> {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: ['Delivery', 'Pick Up', 'Offer', 'Online payment available']
-                .map((label) => _FilterChip(
-                      label: label,
-                      selected: selectedDelivery == label,
-                      onTap: () {
-                        setState(() {
-                          selectedDelivery = label;
-                        });
-                      },
-                    ))
-                .toList(),
+            children:
+                ['Delivery', 'Pick Up', 'Offer', 'Online payment available']
+                    .map(
+                      (label) => _FilterChip(
+                        label: label,
+                        selected: selectedDelivery == label,
+                        onTap: () {
+                          setState(() {
+                            selectedDelivery = label;
+                          });
+                        },
+                      ),
+                    )
+                    .toList(),
           ),
 
           const SizedBox(height: 24),
@@ -64,18 +67,20 @@ class _FilterSheetState extends State<FilterSheet> {
           const SizedBox(height: 8),
           Row(
             children: ['10-15 min', '20 min', '30 min']
-                .map((label) => Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: _TimeChip(
-                        label: label,
-                        selected: selectedTime == label,
-                        onTap: () {
-                          setState(() {
-                            selectedTime = label;
-                          });
-                        },
-                      ),
-                    ))
+                .map(
+                  (label) => Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: _TimeChip(
+                      label: label,
+                      selected: selectedTime == label,
+                      onTap: () {
+                        setState(() {
+                          selectedTime = label;
+                        });
+                      },
+                    ),
+                  ),
+                )
                 .toList(),
           ),
 
@@ -84,18 +89,20 @@ class _FilterSheetState extends State<FilterSheet> {
           const SizedBox(height: 8),
           Row(
             children: ['S', '\$\$', '\$\$\$']
-                .map((label) => Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: _PriceChip(
-                        label: label,
-                        selected: selectedPrice == label,
-                        onTap: () {
-                          setState(() {
-                            selectedPrice = label;
-                          });
-                        },
-                      ),
-                    ))
+                .map(
+                  (label) => Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: _PriceChip(
+                      label: label,
+                      selected: selectedPrice == label,
+                      onTap: () {
+                        setState(() {
+                          selectedPrice = label;
+                        });
+                      },
+                    ),
+                  ),
+                )
                 .toList(),
           ),
 
@@ -114,7 +121,9 @@ class _FilterSheetState extends State<FilterSheet> {
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Icon(
                     Icons.star,
-                    color: index == selectedRating ? Colors.orange : Colors.grey[400],
+                    color: index == selectedRating
+                        ? Colors.orange
+                        : Colors.grey[400],
                   ),
                 ),
               );
@@ -134,15 +143,18 @@ class _FilterSheetState extends State<FilterSheet> {
               ),
               onPressed: () {
                 // Example: Print selected filters
-                print("Delivery: $selectedDelivery");
-                print("Time: $selectedTime");
-                print("Price: $selectedPrice");
-                print("Rating: ${selectedRating + 1} stars");
+                debugPrint("Delivery: $selectedDelivery");
+                debugPrint("Time: $selectedTime");
+                debugPrint("Price: $selectedPrice");
+                debugPrint("Rating: ${selectedRating + 1} stars");
                 Navigator.pop(context); // Close sheet
               },
-              child: const Text('FILTER', style: TextStyle(color: Colors.white)),
+              child: const Text(
+                'FILTER',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -168,7 +180,11 @@ class _FilterChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  const _FilterChip({required this.label, this.selected = false, required this.onTap});
+  const _FilterChip({
+    required this.label,
+    this.selected = false,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +214,11 @@ class _TimeChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  const _TimeChip({required this.label, this.selected = false, required this.onTap});
+  const _TimeChip({
+    required this.label,
+    this.selected = false,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +247,11 @@ class _PriceChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  const _PriceChip({required this.label, this.selected = false, required this.onTap});
+  const _PriceChip({
+    required this.label,
+    this.selected = false,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

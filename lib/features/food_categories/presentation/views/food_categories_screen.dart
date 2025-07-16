@@ -5,7 +5,6 @@ import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/cart/data/repository/cart_repository.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:restaurant/features/chief_part/add_new_item/presentation/manager/food_cubit/food_cubit.dart';
 import 'package:restaurant/features/food_categories/cubit/food_cubit.dart';
 import 'package:restaurant/features/food_categories/cubit/food_state.dart';
 

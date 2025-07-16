@@ -13,16 +13,18 @@ class SplashViewBody extends StatefulWidget {
   @override
   State<SplashViewBody> createState() => _SplashViewBodyState();
 }
+
 Future<String> checkLoginStatus() async {
   final token = await SecureCacheHelper.getData(key: 'token');
 
   if (token != null) {
-    print(token);
-   return AppRouter.kHomeUserView;
+    debugPrint(token);
+    return AppRouter.kHomeUserView;
   } else {
-   return AppRouter.kLoginView;
+    return AppRouter.kLoginView;
   }
 }
+
 class _SplashViewBodyState extends State<SplashViewBody> {
   @override
   void initState() {
@@ -43,7 +45,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   }
 
   void delayedMethod() async {
-    final see =await CacheHelper.getData(key: "seeOnboarding") ?? false;
+    final see = await CacheHelper.getData(key: "seeOnboarding") ?? false;
     final nextRoute = await checkLoginStatus();
     debugPrint("see $see");
     Future.delayed(

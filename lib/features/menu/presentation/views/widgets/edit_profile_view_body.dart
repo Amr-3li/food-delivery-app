@@ -109,11 +109,11 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
                   buttonText: 'Save',
                   onPressedFunction: () {
                     if (checkDataNotNull()) {
-                      print('profile image: ${image?.path}');
-                      print('name: ${textController.text}');
-                      print('email: ${emailController.text}');
-                      print('phone: ${phoneController.text}');
-                      print('bio: ${bioController.text}');
+                      debugPrint('profile image: ${image?.path}');
+                      debugPrint('name: ${textController.text}');
+                      debugPrint('email: ${emailController.text}');
+                      debugPrint('phone: ${phoneController.text}');
+                      debugPrint('bio: ${bioController.text}');
                       MenuCubit.get(context).editCustomerProfile(
                         profileImage: image,
                         name: textController.text,

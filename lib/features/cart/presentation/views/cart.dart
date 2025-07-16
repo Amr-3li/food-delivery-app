@@ -36,7 +36,7 @@ class _CartViewState extends State<CartView> {
         appBar: AppBar(
           backgroundColor: Colors.black54,
           leading: BackIconAppBar(
-            iconColor: Colors.white.withOpacity(.3),
+            iconColor: Colors.white.withValues(alpha: .3),
             onTap: () => Navigator.pop(context),
           ),
           title: Text(

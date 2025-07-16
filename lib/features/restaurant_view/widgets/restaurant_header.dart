@@ -5,15 +5,11 @@ import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
 import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
-import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 
 class RestaurantHeader extends StatelessWidget {
   final String imageUrl;
 
-  const RestaurantHeader({
-    super.key,
-    required this.imageUrl,
-  });
+  const RestaurantHeader({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -116,4 +112,3 @@ class RestaurantHeader extends StatelessWidget {
     );
   }
 }
-

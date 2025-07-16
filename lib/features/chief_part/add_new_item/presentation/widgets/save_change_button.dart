@@ -27,12 +27,12 @@ class SaveChangeButton extends StatelessWidget {
               onPressed: () async {
                 final state = context.read<FoodCubit>().state;
                 if (state is FoodLoaded) {
-                  print('Trying to save: ${state.foodDetails.toMap()}');
+                  debugPrint('Trying to save: ${state.foodDetails.toMap()}');
                 }
                 try {
                   await context.read<FoodCubit>().saveFoodDetails();
                 } catch (e) {
-                  print('Save failed: $e');
+                  debugPrint('Save failed: $e');
                 }
               },
               style: ElevatedButton.styleFrom(

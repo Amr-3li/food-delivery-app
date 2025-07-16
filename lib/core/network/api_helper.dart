@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 
-import '../cache/cache_data.dart';
 import 'api_response.dart';
 import 'end_points.dart';
 
