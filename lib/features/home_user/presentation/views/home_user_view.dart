@@ -122,7 +122,6 @@ class HomeUserView extends StatelessWidget {
                                         onTap: () {
                                           context.push(
                                             AppRouter.kFoodScreenView,
-                                            extra: category.id,
                                           );
                                         },
                                       );
