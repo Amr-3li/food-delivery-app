@@ -1,4 +1,5 @@
-
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/views/vertification_view.dart';
@@ -29,6 +30,7 @@ import 'package:restaurant/features/forget_password/presentation/views/sent_otp.
 import 'package:restaurant/features/fqs/presentation/view/fqs.dart';
 import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
 import 'package:restaurant/features/address/presentaion/view/address_view.dart';
+import 'package:restaurant/features/internet/views/internet_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
@@ -43,6 +45,10 @@ import 'package:restaurant/features/search/presentation/views/search_screen.dart
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
+import '../../features/menu/data/repo/menu/menu_repo_implemation.dart';
+import '../../features/menu/presentation/manger/menu/menu_cubit.dart';
+import '../dependency_injection/service_locator.dart';
+import '../network/network_info.dart';
 
 abstract class AppRouter {
   static const kOnboardingView = '/OnboardingView';
@@ -90,155 +96,176 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-      GoRoute(
-        path: kSplashView,
-        builder: (context, state) => const SplashView(),
-      ),
-      GoRoute(
-        path: kChifHome,
-        builder: (context, state) {
-           final chefModel = state.extra as UserModel;
-         return ChifHomeView(chefModel: chefModel,);
+      ShellRoute(
+        builder: (context, state, child) {
+          return ValueListenableBuilder<bool>(
+            valueListenable: sl<NetworkInfo>().isConnected,
+            builder: (context, isConnected, _) {
+              if (!isConnected) {
+                return const InternetView();
+              }
+              return child;
+            },
+          );
         },
-      ),
-      GoRoute(
-        path: kOnboardingView,
-        builder: (context, state) => OnboardingPage(),
-      ),
-      GoRoute(path: kLoginView, builder: (context, state) => LoginView()),
-      GoRoute(
-        path: '/forgetPassword',
-        builder: (context, state) => ForgetPasswordView(),
-      ),
-      GoRoute(path: "/signUp", builder: (context, state) => SinUpView()),
-      GoRoute(
-        path: kVerifyEmail,
-        builder: (context, state) {
-           final email = state.extra as String;
-          return VertificationView(email: email,);},
-        
-      ),
-        GoRoute(
-        path: kSendOtp,
-        builder: (context, state) {
-           final email = state.extra as String;
-          return SentOtp(email: email,);},
-        
-      ),
-      GoRoute(
-        path: kChatView,
-        name: "chat",
-        builder: (context, state) => const ChatScreen(),
-      ),
+        routes: [
+          // GoRoute(
+          //   path: kSplashView,
+          //   builder: (context, state) => const SplashView(),
+          // ),
+          GoRoute(
+            path: kChifHome,
+            builder: (context, state) {
+              final chefModel = state.extra as UserModel;
+              return ChifHomeView(chefModel: chefModel,);
+            },
+          ),
+          GoRoute(
+            path: kOnboardingView,
+            builder: (context, state) => OnboardingPage(),
+          ),
+          GoRoute(path: kLoginView, builder: (context, state) => LoginView()),
+          GoRoute(
+            path: '/forgetPassword',
+            builder: (context, state) => ForgetPasswordView(),
+          ),
+          GoRoute(path: "/signUp", builder: (context, state) => SinUpView()),
+          GoRoute(
+            path: kVerifyEmail,
+            builder: (context, state) {
+              final email = state.extra as String;
+              return VertificationView(email: email,);},
 
-     GoRoute(
-        path: kChifFoodDetails,
-        name: "chifFoodDetails",
-        builder: (context, state) {
-          final meal = state.extra as Meal;
-          return FoodDetailsPage(meal: meal);
-   },
-),
+          ),
+          GoRoute(
+            path: kSendOtp,
+            builder: (context, state) {
+              final email = state.extra as String;
+              return SentOtp(email: email,);},
 
-      GoRoute(
-        path: kAddNewItem,
-        name: "addNewItem",
-        builder: (context, state) => AddNewItems(),
-      ),
-      GoRoute(
-        path: kChifFoodList,
-        name: "chifFoodList",
-        builder: (context, state) => MyFoodList(),
-      ),
-      GoRoute(
-        path: kMessageListView,
-        name: "messageList",
-        builder: (context, state) => ChatListScreen(),
-      ),
-      GoRoute(
-        path: kReviewView,
-        name: "review",
-        builder: (context, state) => ReviewScreen(),
-      ),
-      GoRoute(
-        path: kAddReviewView,
-        name: "addReview",
-        builder: (context, state) => AddReview(),
-      ),
-      GoRoute(
-        path: kCartView,
-        name: "cart",
-        builder: (context, state) => CartView(),
-      ),
-
-      GoRoute(
-        path: kSucessPaymentView,
-        name: "sucessPayment",
-        builder: (context, state) => SucessPayment(),
-      ),
-
-      GoRoute(
-        path: kNotificationView,
-        name: "notification",
-        builder: (context, state) => NotificationScreen(),
-      ),
-      GoRoute(
-        path: kResturantReview,
-        name: "resturantReview",
-        builder: (context, state) => ReviewResturantScreen(),
-      ),
-      GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
-      GoRoute(path: krestaurantView, builder: (context, state) => const RestaurantViewScreen()),
-      GoRoute(path: kChatListView, builder: (context, state) => ChatListScreenChief()),
-      GoRoute(path: kChatChiefView, builder: (context, state) => ChatScreenChief()),
-      GoRoute(path: kMenuChiefView, builder: (context, state) => ChiefMenuScreen()),
-      GoRoute(path: kWithdrawView, builder: (context, state) => WithdrawView()),
-      GoRoute(
-        path: kPopularFoodView,
-        builder: (context, state) => PopularFoodScreen(),
-      ),
-      GoRoute(
-        path: kPersonalInfoProfileView,
-        builder: (context, state) => PersonalInfoView(),
-      ),
-      GoRoute(
-        path: kEditProfileView,
-        builder: (context, state) => EditProfileView(),
-      ),
-      GoRoute(path: kMenuProfileView, builder: (context, state) => MenuView()),
-      GoRoute(
-        path: kSearchScreenView,
-        builder: (context, state) => SearchScreen(),
-      ),
-      GoRoute(path: kFoodScreenView, builder: (context, state) => FoodScreen()),
-      GoRoute(
-        path: kFoodDetailsScreenView,
-        builder: (context, state) {
-          final int id = state.extra as int;
-          return FoodDetailsScreen(foodId: id);
-        },
-      ),
-
-      GoRoute(
-        path: kRestaurantViewVersion,
-        builder: (context, state) =>
+          ),
+          GoRoute(
+            path: kChatView,
+            name: "chat",
+            builder: (context, state) => const ChatScreen(),
+          ),
+          GoRoute(
+            path: kChifFoodDetails,
+            name: "chifFoodDetails",
+            builder: (context, state) {
+              final meal = state.extra as Meal;
+              return FoodDetailsPage(meal: meal);
+            },
+          ),
+          GoRoute(
+            path: kAddNewItem,
+            name: "addNewItem",
+            builder: (context, state) => AddNewItems(),
+          ),
+          GoRoute(
+            path: kChifFoodList,
+            name: "chifFoodList",
+            builder: (context, state) => MyFoodList(),
+          ),
+          GoRoute(
+            path: kMessageListView,
+            name: "messageList",
+            builder: (context, state) => ChatListScreen(),
+          ),
+          GoRoute(
+            path: kReviewView,
+            name: "review",
+            builder: (context, state) => ReviewScreen(),
+          ),
+          GoRoute(
+            path: kAddReviewView,
+            name: "addReview",
+            builder: (context, state) => AddReview(),
+          ),
+          GoRoute(
+            path: kCartView,
+            name: "cart",
+            builder: (context, state) => CartView(),
+          ),
+          GoRoute(
+            path: kSucessPaymentView,
+            name: "sucessPayment",
+            builder: (context, state) => SucessPayment(),
+          ),
+          GoRoute(
+            path: kNotificationView,
+            name: "notification",
+            builder: (context, state) => NotificationScreen(),
+          ),
+          GoRoute(
+            path: kResturantReview,
+            name: "resturantReview",
+            builder: (context, state) => ReviewResturantScreen(),
+          ),
+          GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
+          GoRoute(path: krestaurantView, builder: (context, state) => const RestaurantViewScreen()),
+          GoRoute(path: kChatListView, builder: (context, state) => ChatListScreenChief()),
+          GoRoute(path: kChatChiefView, builder: (context, state) => ChatScreenChief()),
+          GoRoute(path: kMenuChiefView, builder: (context, state) => ChiefMenuScreen()),
+          GoRoute(path: kWithdrawView, builder: (context, state) => WithdrawView()),
+          GoRoute(
+            path: kPopularFoodView,
+            builder: (context, state) => PopularFoodScreen(),
+          ),
+          ShellRoute(builder: (context, state, child) {
+            return BlocProvider(
+              create: (_) => MenuCubit(MenuRepoImplementation())..getCustomerProfile(),
+              child: child,
+            );
+          }, routes: [
+            GoRoute(
+              path: kSplashView,
+              builder: (context, state) => MenuView(),
+            ),
+            GoRoute(
+              path: kPersonalInfoProfileView,
+              builder: (context, state) => PersonalInfoView(),
+            ),
+            GoRoute(
+              path: kEditProfileView,
+              builder: (context, state) => EditProfileView(),
+            ),
+          ],),
+          GoRoute(
+            path: kSearchScreenView,
+            builder: (context, state) => SearchScreen(),
+          ),
+          GoRoute(path: kFoodScreenView, builder: (context, state) => FoodScreen()),
+          GoRoute(
+            path: kFoodDetailsScreenView,
+            builder: (context, state) {
+              final int id = state.extra as int;
+              return FoodDetailsScreen(foodId: id);
+            },
+          ),
+          GoRoute(
+            path: kRestaurantViewVersion,
+            builder: (context, state) =>
             const RestaurantViewScreen(),
+          ),
+          GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
+          GoRoute(path: kFQS, builder: (_, __) => const FAQsScreen()),
+          GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),
+          GoRoute(path: kOrder, builder: (_, __) => const MyOrdersView()),
+          GoRoute(
+            path: kAddAddressView,
+            builder: (context, state) => AddNewAddressView(),
+          ),
+          GoRoute(path: kResetPassword ,
+              builder: (context , state){
+                final email = state.extra as String;
+                final otp = state.extra as String;
+                return ConfiremPassword(email: email, otp: otp);
+              }
+          )
+        ],
       ),
-      GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
-      GoRoute(path: kFQS, builder: (_, __) => const FAQsScreen()),
-      GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),
-      GoRoute(path: kOrder, builder: (_, __) => const MyOrdersView()),
-      GoRoute(
-        path: kAddAddressView,
-        builder: (context, state) => AddNewAddressView(),
-      ),
-      GoRoute(path: kResetPassword ,
-      builder: (context , state){
-        final email = state.extra as String;
-        final otp = state.extra as String;
-        return ConfiremPassword(email: email, otp: otp);
-      }
-      )
+
     ],
   );
 }
