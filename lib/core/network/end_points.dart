@@ -21,4 +21,5 @@ abstract class EndPoints {
   static const String meals = '${baseUrl}meals';
   static const String address = "address";
   static const String verifyEmail = "email/verify";
+  static const String searchPage = "client/meals_filter?";
 }
