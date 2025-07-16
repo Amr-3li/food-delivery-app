@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import '../cache/cache_data.dart';
@@ -29,16 +31,16 @@ class ApiHelper {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          print("--- Headers : ${options.headers.toString()}");
-          print("--- endpoint : ${options.path.toString()}");
+          log("--- Headers : ${options.headers.toString()}");
+          log("--- endpoint : ${options.path.toString()}");
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          print("--- Response : ${response.data.toString()}");
+          log("--- Response : ${response.data.toString()}");
           return handler.next(response);
         },
         onError: (DioException error, handler) async {
-          print("--- Error : ${error.response?.data.toString()}");
+          log("--- Error : ${error.response?.data.toString()}");
 
           // Handle HTML responses
           if (error.response?.data is String &&
@@ -77,7 +79,7 @@ class ApiHelper {
           headers: {
             if (isProtected)
               'Authorization':
-                  'Bearer ${CacheData.accessToken ?? '41|g9QToPhB5Z3n7dCzoFQurY2pACxGCqj928mERreK1d9a5722'}',
+                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
             'Content-Type': isFormData
                 ? 'multipart/form-data'
                 : 'application/json',
@@ -110,7 +112,7 @@ class ApiHelper {
           headers: {
             if (isProtected)
               'Authorization':
-                  'Bearer ${CacheData.accessToken ?? '41|g9QToPhB5Z3n7dCzoFQurY2pACxGCqj928mERreK1d9a5722'}',
+                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
             'Content-Type': isFormData
                 ? 'multipart/form-data'
                 : 'application/json',
@@ -152,7 +154,7 @@ class ApiHelper {
           headers: {
             if (isProtected)
               'Authorization':
-                  'Bearer ${CacheData.accessToken ?? '41|g9QToPhB5Z3n7dCzoFQurY2pACxGCqj928mERreK1d9a5722'}',
+                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
           },
         ),
       ),
@@ -188,7 +190,7 @@ class ApiHelper {
           headers: {
             if (isProtected)
               'Authorization':
-                  'Bearer ${CacheData.accessToken ?? '41|g9QToPhB5Z3n7dCzoFQurY2pACxGCqj928mERreK1d9a5722'}',
+                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
           },
         ),
       ),
@@ -206,7 +208,7 @@ class ApiHelper {
           headers: {
             if (isProtected)
               'Authorization':
-                  'Bearer ${CacheData.accessToken ?? '41|g9QToPhB5Z3n7dCzoFQurY2pACxGCqj928mERreK1d9a5722'}',
+                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
           },
         ),
       ),

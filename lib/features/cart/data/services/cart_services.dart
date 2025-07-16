@@ -19,6 +19,7 @@ class CartApiServices {
     try {
       final response = await apiHelper.getRequest(
         endPoint: "${APIKey.baseApiUrl}/cart",
+        isFormData: false,
         isProtected: true,
         // options: Options(
         //   headers: _getHeaders(),
@@ -43,12 +44,19 @@ class CartApiServices {
 
   Future<void> addToCart({
     required int dishId,
-    required int sizeId,
-    required int quantity,
+    String sizeName = "large",
+    required int price,
+    String note = "note",
   }) async {
     await apiHelper.postRequest(
       endPoint: '${APIKey.baseApiUrl}/cart/items',
-      data: {'dish_id': dishId, 'size_id': sizeId, 'quantity': quantity},
+      data: {
+        'dish_id': dishId,
+        'size_name': sizeName,
+        'note': note,
+        "price": price,
+      },
+      isFormData: false,
       isProtected: true,
     );
   }
@@ -61,6 +69,7 @@ class CartApiServices {
       endPoint: '${APIKey.baseApiUrl}/cart/items/$itemId',
       data: {'quantity': quantity},
       isProtected: true,
+      isFormData: false,
     );
   }
 
@@ -75,6 +84,7 @@ class CartApiServices {
     final response = await apiHelper.postRequest(
       endPoint: '${APIKey.baseApiUrl}/cart/clear',
       isProtected: true,
+      isFormData: false,
     );
 
     if (response.statusCode != 200 || response.data['status'] != true) {

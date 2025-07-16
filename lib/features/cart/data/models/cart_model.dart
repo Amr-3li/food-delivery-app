@@ -1,3 +1,34 @@
+class CartModel {
+  final int id;
+  final int customerId;
+  final String status;
+  final List<CartItemModel> items;
+  final double total;
+
+  CartModel({
+    required this.id,
+    required this.customerId,
+    required this.status,
+    required this.items,
+    required this.total,
+  });
+
+  factory CartModel.fromJson(Map<String, dynamic> json) {
+    final data = json['data'];
+    final cart = data['cart'];
+
+    return CartModel(
+      id: cart['id'],
+      customerId: cart['customer_id'],
+      status: cart['status'],
+      items: (cart['items'] as List<dynamic>)
+          .map((item) => CartItemModel.fromJson(item))
+          .toList(),
+      total: double.parse(data['total'].toString()),
+    );
+  }
+}
+
 class CartItemModel {
   final int id;
   final int cartId;
@@ -26,7 +57,7 @@ class CartItemModel {
       dishId: json['dish_id'],
       sizeId: json['size_id'],
       quantity: json['quantity'],
-      price: (json['price'] as num).toDouble(),
+      price: double.parse(json['price'].toString()),
       dish: DishModel.fromJson(json['dish']),
       size: DishSizeModel.fromJson(json['size']),
     );
@@ -89,38 +120,7 @@ class DishSizeModel {
       id: json['id'],
       dishId: json['dish_id'],
       size: json['size'],
-      price: double.parse(json['price']),
-    );
-  }
-}
-
-class CartModel {
-  final int id;
-  final int customerId;
-  final String status;
-  final List<CartItemModel> items;
-  final double total;
-
-  CartModel({
-    required this.id,
-    required this.customerId,
-    required this.status,
-    required this.items,
-    required this.total,
-  });
-
-  factory CartModel.fromJson(Map<String, dynamic> json) {
-    final data = json['data'] ?? json;
-    final cart = data['cart'] ?? data;
-
-    return CartModel(
-      id: cart['id'],
-      customerId: cart['customer_id'],
-      status: cart['status'],
-      items: (data['items'] as List<dynamic>? ?? [])
-          .map((item) => CartItemModel.fromJson(item))
-          .toList(),
-      total: (data['total'] as num?)?.toDouble() ?? 0.0,
+      price: double.parse(json['price'].toString()),
     );
   }
 }

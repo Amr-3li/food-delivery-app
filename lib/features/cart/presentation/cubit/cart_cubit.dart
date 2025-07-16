@@ -32,19 +32,14 @@ class CartCubit extends Cubit<CartStates> {
     }
   }
 
-  Future<void> addToCart({
-    required int dishId,
-    required int sizeId,
-    required int quantity,
-  }) async {
+  Future<void> addToCart({required int dishId, required int price}) async {
     emit(CartLoadingState());
     try {
-      await cartRepository.addToCart(
-        dishId: dishId,
-        sizeId: sizeId,
-        quantity: quantity,
-      );
-      // Refresh cart after adding
+      await cartRepository.addToCart(dishId: dishId, price: price);
+
+      /// ⏱ Wait 500ms to ensure backend processes cart update
+      await Future.delayed(const Duration(milliseconds: 500));
+
       await getCart();
     } catch (e) {
       emit(CartFailureState(errorMessage: e.toString()));

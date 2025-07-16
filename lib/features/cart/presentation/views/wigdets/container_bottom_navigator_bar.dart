@@ -124,7 +124,7 @@ class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
             Row(
               children: [
                 Text(
-                  'Total: \$${widget.total}',
+                  'Total: \$${widget.total.toStringAsFixed(2)}',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
@@ -189,8 +189,10 @@ class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
                         }
                       : () {
                           context.read<PaymentCubit>().makePayment(
-                            courseId: "course123",
-                            amount: 5000,
+                            orderId: "1233",
+                            amount:
+                                widget.total.toInt() *
+                                100, // Convert to cents for USD
                             currency: "usd",
                           );
                         },

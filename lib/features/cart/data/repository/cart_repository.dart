@@ -16,15 +16,8 @@ class CartRepository extends CartAbstractRepository {
   }
 
   @override
-  Future<void> addToCart({
-    required int dishId,
-    required int sizeId,
-    required int quantity,
-  }) => cartApiService.addToCart(
-    dishId: dishId,
-    sizeId: sizeId,
-    quantity: quantity,
-  );
+  Future<void> addToCart({required int dishId, required int price}) =>
+      cartApiService.addToCart(dishId: dishId, price: price);
   @override
   Future<void> updateCartItem({required int itemId, required int quantity}) =>
       cartApiService.updateCartItem(itemId: itemId, quantity: quantity);
