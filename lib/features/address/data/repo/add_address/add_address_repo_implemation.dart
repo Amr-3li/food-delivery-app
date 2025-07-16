@@ -31,7 +31,7 @@ class AddAddressRepoImplementation implements AddAddressRepo {
   Future<Either<String, AddressDetailsModel>> getAddressDetails({
     required double latitude,
     required double longitude,
-    int retries = 3, // عدد المحاولات
+    int retries = 3,
   }) async {
     int attempt = 0;
 
@@ -82,10 +82,11 @@ class AddAddressRepoImplementation implements AddAddressRepo {
 
   @override
   Future<Either<String, String>> addNewAddress({
-    required double latitude,
-    required double longitude,
+    required String latitude,
+    required String longitude,
     String? displayName,
     String? label,
+    String? address,
     bool? isDefault,
   }) async {
     try {
@@ -94,6 +95,7 @@ class AddAddressRepoImplementation implements AddAddressRepo {
         lon: longitude,
         name: label,
         displayName: displayName,
+        address: address,
         isDefault: isDefault,
       );
 
