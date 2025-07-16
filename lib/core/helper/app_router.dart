@@ -27,7 +27,7 @@ import 'package:restaurant/features/forget_password/presentation/views/vertifica
 import 'package:restaurant/features/fqs/presentation/view/fqs.dart';
 
 import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
-import 'package:restaurant/features/home_user/presentation/views/restaurant_view.dart';
+
 import 'package:restaurant/features/address/presentaion/view/address_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
