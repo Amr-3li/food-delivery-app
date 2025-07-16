@@ -119,6 +119,12 @@ class HomeUserView extends StatelessWidget {
                                       return CustomCategory(
                                         name: category.name,
                                         imageUrl: category.image,
+                                        onTap: () {
+                                          context.push(
+                                            AppRouter.kFoodScreenView,
+                                            extra: category.id,
+                                          );
+                                        },
                                       );
                                     },
                                   );

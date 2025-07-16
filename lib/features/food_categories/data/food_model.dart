@@ -13,10 +13,10 @@ class FoodModel {
 
   factory FoodModel.fromJson(Map<String, dynamic> json) {
     return FoodModel(
-      id: json['id'],
-      name: json['name'],
-      image: json['image'],
-      mealType: json['meal_type'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      image: json['image'] ?? '',
+      mealType: json['meal_type'] ?? '',
     );
   }
 }

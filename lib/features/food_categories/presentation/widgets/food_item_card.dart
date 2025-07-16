@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class FoodItemCard extends StatelessWidget {
   final String title;
@@ -6,7 +7,7 @@ class FoodItemCard extends StatelessWidget {
   final String price;
   final String image;
   final void Function()? onTap;
-
+  final void Function()? onTapAdd;
   const FoodItemCard({
     super.key,
     required this.title,
@@ -14,7 +15,13 @@ class FoodItemCard extends StatelessWidget {
     required this.price,
     required this.image,
     required this.onTap,
+    required this.onTapAdd,
   });
+  Widget _buildFallbackImage() {
+    return Center(
+      child: Icon(Icons.fastfood, size: 40, color: Colors.grey[400]),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,25 +37,36 @@ class FoodItemCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                image,
-                height: 80,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  height: 80,
-                  color: Colors.grey[300],
-                  child: const Icon(Icons.image_not_supported),
-                ),
+            SizedBox(
+              height: 15.h,
+              width: 40.w,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: image.isNotEmpty
+                    ? Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return _buildFallbackImage();
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
+                      )
+                    : _buildFallbackImage(),
               ),
             ),
+
             const SizedBox(height: 10),
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
             Text(
               subtitle,
               style: const TextStyle(fontSize: 12, color: Colors.grey),
@@ -61,10 +79,13 @@ class FoodItemCard extends StatelessWidget {
                   price,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 14,
                   backgroundColor: Colors.orange,
-                  child: Icon(Icons.add, size: 16, color: Colors.white),
+                  child: IconButton(
+                    onPressed: onTapAdd,
+                    icon: Icon(Icons.add, size: 16, color: Colors.white),
+                  ),
                 ),
               ],
             ),

@@ -1,19 +1,19 @@
 import 'package:restaurant/features/food_categories/data/food_model.dart';
 
-abstract class FoodState {}
+abstract class FoodUserState {}
 
-class FoodInitial extends FoodState {}
+class FoodUserSInitial extends FoodUserState {}
 
-class FoodLoading extends FoodState {}
+class FoodUserSLoading extends FoodUserState {}
 
-class FoodSuccess extends FoodState {
+class FoodUserSSuccess extends FoodUserState {
   final List<FoodModel> foods;
 
-  FoodSuccess(this.foods);
+  FoodUserSSuccess(this.foods);
 }
 
-class FoodFailure extends FoodState {
+class FoodUserSFailure extends FoodUserState {
   final String error;
 
-  FoodFailure(this.error);
+  FoodUserSFailure(this.error);
 }

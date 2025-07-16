@@ -13,6 +13,8 @@ import 'package:restaurant/features/chat/data/service_api/conversation_api.dart'
 import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
 import 'package:restaurant/features/chief_part/notification/data/api_services/notification_api_services.dart';
 import 'package:restaurant/features/chief_part/notification/data/repository/notification_repository.dart';
+import 'package:restaurant/features/food_categories/cubit/food_cubit.dart';
+import 'package:restaurant/features/food_categories/data/food_repository.dart';
 import 'package:restaurant/features/home_user/data/repository/category_repository.dart';
 import 'package:restaurant/features/home_user/data/repository/resturant_repository.dart';
 import 'package:restaurant/features/home_user/presentation/cubit/category/category_cubit.dart';
@@ -79,4 +81,6 @@ void setupLocator() {
   sl.registerLazySingleton(() => RestaurantCubit(sl()));
   sl.registerLazySingleton(() => RestaurantViewRepository());
   sl.registerLazySingleton(() => RestaurantViewCubit(sl()));
+  sl.registerLazySingleton(() => FoodUserRepository());
+  sl.registerLazySingleton(() => FoodUserCubit(sl()));
 }
