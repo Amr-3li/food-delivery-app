@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_arrow_back.dart';
 import 'package:restaurant/core/widgets/custom_onboarding_button.dart';
@@ -7,16 +9,21 @@ import 'package:restaurant/features/auth/views/widgets/title_authentication_page
 import 'package:restaurant/features/forget_password/presentation/views/widgets/pin_text_filed.dart';
 import 'package:sizer/sizer.dart';
 
-class VertificationView extends StatefulWidget {
-  const VertificationView({super.key});
-
+class SentOtp extends StatefulWidget {
+  const SentOtp({super.key, required this.email});
+final String email;
   @override
-  State<VertificationView> createState() => _VertificationViewState();
+  State<SentOtp> createState() => _SentOtpState();
 }
 
-class _VertificationViewState extends State<VertificationView> {
-   TextEditingController pinController = TextEditingController();
+class _SentOtpState extends State<SentOtp> {
+   TextEditingController otpController = TextEditingController();
 final _vKey = GlobalKey<FormState>();
+@override
+  void dispose() {
+    otpController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +45,7 @@ final _vKey = GlobalKey<FormState>();
                     subTitle: 'We have sent a code to your email',
                   ),
                   Text(
-                    "example@gmail.com",
+                    widget.email,
                     style: Styles.textStyle16.copyWith(color: Colors.white),
                   ),
                 ],
@@ -86,13 +93,14 @@ final _vKey = GlobalKey<FormState>();
                               ),
                             ],
                           ),
-                          PinTextFiled(pinController: pinController,),
+                          PinTextFiled(pinController: otpController,),
 
                           SizedBox(height: 2.5.h),
                           CustomMaterialButton(
                             buttonName: "VERTFY",
                             onPressed: () {
                               if(_vKey.currentState!.validate()){
+                                context.push(AppRouter.kResetPassword , extra: {"email":widget.email , "otp":otpController.text.trim() });
 
                               }
                             },

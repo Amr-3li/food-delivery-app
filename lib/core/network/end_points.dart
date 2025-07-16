@@ -16,4 +16,5 @@ abstract class EndPoints {
   static const String resetPassword = "password/reset";
   static const String sendOtp = "password/send_otp";
   static const String address = "address";
+  static const String verifyEmail = "email/verify";
 }

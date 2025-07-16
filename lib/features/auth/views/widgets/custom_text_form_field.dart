@@ -10,7 +10,7 @@ class CustomTextFormField extends StatelessWidget {
     this.textInputAction = TextInputAction.next,
     this.autofillHints,
     this.controller,
-    this.obscureText = false, required this.lableText,
+    this.obscureText = false, required this.lableText, this.maxLines,
   });
   final String hintText;
   final Widget? icon;
@@ -20,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final String lableText;
   final bool obscureText; 
+  final int? maxLines ;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -27,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       textInputAction: textInputAction,
       autofillHints: autofillHints,
+       maxLines:maxLines ,
       cursorColor: ColorsHelper.orange,
       keyboardType: keyboardType,
       decoration: InputDecoration(
