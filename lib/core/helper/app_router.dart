@@ -85,19 +85,11 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-      GoRoute(
-        path: kSplashView,
-        builder: (context, state) => const SplashView(),
-      ),
-      GoRoute(
-        path: kChifHome,
-        builder: (context, state) => const ChifHomeView(),
-      ),
+      GoRoute(path: kSplashView, builder: (context, state) => HomeUserView()),
+      GoRoute(path: kChifHome, builder: (context, state) => HomeUserView()),
       GoRoute(
         path: kOnboardingView,
-        builder: (context, state) {
-          return FoodDetailsScreen(foodId: 1);
-        },
+        builder: (context, state) => HomeUserView(),
       ),
       GoRoute(path: '/login', builder: (context, state) => LoginView()),
       GoRoute(

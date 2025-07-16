@@ -4,8 +4,6 @@ import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/features/restaurant_view/data/restaurant_view_repository.dart';
 import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_cubit.dart';
 import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_state.dart';
-import 'package:restaurant/features/restaurant_view/widgets/food_card_list.dart';
-import 'package:restaurant/features/restaurant_view/widgets/category_chips.dart';
 import 'package:restaurant/features/restaurant_view/data/restaurant_view_model.dart';
 
 class RestaurantViewScreen extends StatefulWidget {
@@ -35,18 +33,26 @@ class _RestaurantViewScreenState extends State<RestaurantViewScreen> {
                 final restaurant = data.restaurant;
                 final categories = data.categories;
 
-                selectedCategory ??= categories.first;
+                selectedCategory ??= state.selectedCategory;
 
                 return CustomScrollView(
                   slivers: [
                     SliverAppBar(
                       expandedHeight: 200,
                       pinned: true,
+                      actions: [
+                        IconButton(
+                          icon: const Icon(Icons.filter_list),
+                          onPressed: () {},
+                        ),
+                      ],
                       flexibleSpace: FlexibleSpaceBar(
                         title: Text(restaurant.name),
                         background: Image.network(
                           restaurant.profileImage,
                           fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) =>
+                              Container(color: Colors.grey[200]),
                         ),
                       ),
                     ),
@@ -59,38 +65,139 @@ class _RestaurantViewScreenState extends State<RestaurantViewScreen> {
                             style: const TextStyle(color: Colors.grey),
                           ),
                           const SizedBox(height: 16),
-                          const Row(
+                          Row(
                             children: [
-                              Icon(Icons.star, color: Colors.orange, size: 20),
-                              SizedBox(width: 4),
-                              Text("4.7"),
-                              SizedBox(width: 12),
-                              Icon(Icons.delivery_dining, size: 20),
-                              SizedBox(width: 4),
-                              Text("Free"),
-                              SizedBox(width: 12),
-                              Icon(Icons.timer, size: 20),
-                              SizedBox(width: 4),
-                              Text("20 min"),
+                              const Icon(
+                                Icons.star,
+                                color: Colors.orange,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 12),
+                              const Icon(Icons.delivery_dining, size: 20),
+                              const SizedBox(width: 4),
+                              const Text("Free"),
+                              const SizedBox(width: 12),
+                              const Icon(Icons.timer, size: 20),
+                              const SizedBox(width: 4),
+                              const Text("20 min"),
                             ],
                           ),
                           const SizedBox(height: 16),
-                          CategoryChips(
-                            categories: categories,
-                            selectedCategory: selectedCategory!,
-                            onCategorySelected: (category) {
-                              setState(() {
-                                selectedCategory = category;
-                              });
-                            },
+                          SizedBox(
+                            height: 50,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: categories.length,
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(width: 8),
+                              itemBuilder: (context, index) {
+                                final category = categories[index];
+                                return ChoiceChip(
+                                  label: Text(category.name),
+                                  selected: selectedCategory?.id == category.id,
+                                  onSelected: (selected) {
+                                    setState(() {
+                                      selectedCategory = category;
+                                    });
+                                    context
+                                        .read<RestaurantViewCubit>()
+                                        .selectCategory(category);
+                                  },
+                                );
+                              },
+                            ),
                           ),
                           const SizedBox(height: 24),
                           Text(
-                            "${selectedCategory!.name} (${selectedCategory!.meals.length})",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            "${selectedCategory?.name} (${selectedCategory?.meals.length ?? 0})",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
                           ),
                           const SizedBox(height: 12),
-                          FoodCardList(meals: selectedCategory!.meals),
+                          ListView.separated(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: selectedCategory?.meals.length ?? 0,
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(height: 16),
+                            itemBuilder: (context, index) {
+                              final meal = selectedCategory!.meals[index];
+                              return Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.network(
+                                          meal.image,
+                                          width: 80,
+                                          height: 80,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (_, __, ___) =>
+                                              Container(
+                                                width: 80,
+                                                height: 80,
+                                                color: Colors.grey[200],
+                                              ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              meal.name,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              meal.description,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.star,
+                                                  color: Colors.orange,
+                                                  size: 16,
+                                                ),
+                                                const SizedBox(width: 4),
+                                                Text(
+                                                  "${meal.rating.toStringAsFixed(1)}",
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  "\$${meal.sizes.first.price.toStringAsFixed(2)}",
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ]),
                       ),
                     ),

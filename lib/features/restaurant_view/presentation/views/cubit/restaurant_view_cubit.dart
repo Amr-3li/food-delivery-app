@@ -8,15 +8,49 @@ class RestaurantViewCubit extends Cubit<RestaurantViewState> {
 
   RestaurantViewCubit(this.repository) : super(RestaurantViewInitial());
 
-  void getRestaurantView() async {
+  Future<void> getRestaurantView() async {
     try {
       emit(RestaurantViewLoading());
-      final data = await repository.fetchRestaurantView();
+      final RestaurantViewModel data = await repository.fetchRestaurantView();
+
+      if (data.categories.isEmpty) {
+        emit(RestaurantViewError('No categories available'));
+        return;
+      }
+
       final defaultCategory = data.categories.first;
-      emit(RestaurantViewLoaded(
-        restaurantView: data,
-        selectedCategory: defaultCategory,
-      ));
+      emit(
+        RestaurantViewLoaded(
+          restaurantView: data,
+          selectedCategory: defaultCategory,
+        ),
+      );
+    } catch (e) {
+      emit(RestaurantViewError(e.toString()));
+    }
+  }
+
+  Future<void> getFilteredRestaurantView({
+    required int rate,
+    required int price,
+  }) async {
+    try {
+      emit(RestaurantViewLoading());
+      final RestaurantViewModel data = await repository
+          .fetchFilteredRestaurantView(rate, price);
+
+      if (data.categories.isEmpty) {
+        emit(RestaurantViewError('No categories available after filtering'));
+        return;
+      }
+
+      final defaultCategory = data.categories.first;
+      emit(
+        RestaurantViewLoaded(
+          restaurantView: data,
+          selectedCategory: defaultCategory,
+        ),
+      );
     } catch (e) {
       emit(RestaurantViewError(e.toString()));
     }
@@ -27,5 +61,14 @@ class RestaurantViewCubit extends Cubit<RestaurantViewState> {
     if (currentState is RestaurantViewLoaded) {
       emit(currentState.copyWith(selectedCategory: category));
     }
+  }
+
+  // Optional: Helper method to get the current restaurant view model
+  RestaurantViewModel? get currentRestaurantViewModel {
+    final currentState = state;
+    if (currentState is RestaurantViewLoaded) {
+      return currentState.restaurantView;
+    }
+    return null;
   }
 }

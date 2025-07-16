@@ -5,7 +5,6 @@ import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/cart/data/repository/cart_repository.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:restaurant/features/chief_part/add_new_item/presentation/manager/food_cubit/food_cubit.dart';
 import 'package:restaurant/features/food_categories/cubit/food_cubit.dart';
 import 'package:restaurant/features/food_categories/cubit/food_state.dart';
 
@@ -14,7 +13,6 @@ import 'package:restaurant/features/food_categories/data/food_repository.dart';
 import 'package:restaurant/features/restaurant_view/widgets/filter_sheet.dart';
 import '../widgets/food_item_card.dart';
 import '../widgets/category_selector.dart';
-import '../widgets/open_restaurants_section.dart';
 
 class FoodScreen extends StatefulWidget {
   const FoodScreen({super.key});
@@ -159,21 +157,6 @@ class _FoodScreenState extends State<FoodScreen> {
                         },
                       ),
                       const SizedBox(height: 20),
-
-                      /// Open Restaurants
-                      const Text(
-                        "Open Restaurants",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      InkWell(
-                        onTap: () =>
-                            context.push(AppRouter.kRestaurantViewVersion),
-                        child: const OpenRestaurantsSection(),
-                      ),
                     ],
                   ),
                 ),
