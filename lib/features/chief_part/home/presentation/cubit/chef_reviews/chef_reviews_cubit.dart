@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/features/chief_part/home/data/repository/reviews/chef_reviews_repository.dart';
 
@@ -20,27 +18,8 @@ class ChefReviewsCubit extends Cubit<ChefReviewsState> {
           totalReviews: summary.totalReviews,
         ),
       );
-    } on SocketException catch (e) {
-      emit(
-        ChefReviewsError(
-          message: 'Network error: Please check your internet connection',
-          errorType: ErrorType.network,
-        ),
-      );
-    } on HttpException catch (e) {
-      emit(
-        ChefReviewsError(
-          message: 'Server error: ${e.message}',
-          errorType: ErrorType.server,
-        ),
-      );
-    } on FormatException catch (e) {
-      emit(
-        ChefReviewsError(
-          message: 'Data format error: ${e.message}',
-          errorType: ErrorType.format,
-        ),
-      );
+    } catch (e) {
+      emit(ChefReviewsError(message: e.toString()));
     }
   }
 }

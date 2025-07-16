@@ -1,7 +1,5 @@
 part of 'chef_reviews_cubit.dart';
 
-enum ErrorType { network, server, format, api, unknown }
-
 abstract class ChefReviewsState {
   const ChefReviewsState();
 }
@@ -22,12 +20,6 @@ class ChefReviewsLoaded extends ChefReviewsState {
 
 class ChefReviewsError extends ChefReviewsState {
   final String message;
-  final ErrorType errorType;
-  final int? statusCode;
 
-  const ChefReviewsError({
-    required this.message,
-    required this.errorType,
-    this.statusCode,
-  });
+  const ChefReviewsError({required this.message});
 }

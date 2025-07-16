@@ -1,12 +1,9 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:restaurant/features/chief_part/add_new_item/data/models/food_details.dart';
 import 'package:restaurant/features/chief_part/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chief_part/chat/presentation/views/list_chat_screen.dart';
 import 'package:restaurant/features/chief_part/chief_menu/presentation/view/chief_menu.dart';
 import 'package:restaurant/features/chief_part/chief_menu/presentation/view/withdraw.dart';
 import 'package:restaurant/features/chief_part/food_details/presentation/views/chief_food_details_views.dart';
-import 'package:restaurant/features/food_details/data/food_details_repository.dart';
 
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
 
@@ -27,10 +24,9 @@ import 'package:restaurant/features/food_details/presentation/views/food_details
 import 'package:restaurant/features/forget_password/presentation/views/forget_password_view.dart';
 import 'package:restaurant/features/forget_password/presentation/views/vertification_view.dart';
 import 'package:restaurant/features/fqs/presentation/view/fqs.dart';
-import 'package:restaurant/features/restaurant_view/data/restaurant_view_repository.dart';
 
 import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
-
+import 'package:restaurant/features/home_user/presentation/views/restaurant_view.dart';
 import 'package:restaurant/features/address/presentaion/view/address_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
@@ -38,8 +34,6 @@ import 'package:restaurant/features/menu/presentation/views/personal_info_view.d
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
-import 'package:restaurant/features/restaurant_view/data/restaurant_view_repository.dart';
-import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_cubit.dart';
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
@@ -50,8 +44,8 @@ import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 import '../../features/address/presentaion/view/add_new_address_view.dart';
 
 abstract class AppRouter {
-  static const kOnboardingView = '/';
-  static const kSplashView = '/splash';
+  static const kOnboardingView = '/chif_home';
+  static const kSplashView = '/OnboardingView';
   static const kChatView = '/chat';
   static const kMessageListView = '/messageList';
   static const kReviewView = '/review';
@@ -67,7 +61,7 @@ abstract class AppRouter {
   static const krestaurantView = "/restaurantView";
   static const kChifFoodList = '/chif_food_list';
   static const kAddNewItem = '/add_new_item';
-  static const kChifHome = '/chif_home';
+  static const kChifHome = '/';
   static const kChatListView = "/chatListView";
   static const kChatChiefView = "/chatChiefView";
   static const kMenuChiefView = "/menuChiefView";
@@ -101,9 +95,8 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kOnboardingView,
-        builder: (context, state) => OnboardingPage(),
+        builder: (context, state) => const ChifHomeView(),
       ),
-
       GoRoute(path: '/login', builder: (context, state) => LoginView()),
       GoRoute(
         path: '/forgetPassword',
@@ -114,38 +107,72 @@ abstract class AppRouter {
         path: "/vertificationView",
         builder: (context, state) => VertificationView(),
       ),
+      GoRoute(
+        path: kChatView,
+        name: "chat",
+        builder: (context, state) => const ChatScreen(),
+      ),
 
-      GoRoute(path: kChatView, builder: (context, state) => const ChatScreen()),
       GoRoute(
         path: kChifFoodDetails,
-        builder: (context, state) => FoodDetailsScreen(),
+        name: "chifFoodDetails",
+        builder: (context, state) {
+          final meal = state.extra as Meal;
+          return FoodDetailsPage(meal: meal);
+        },
       ),
-      GoRoute(path: kAddNewItem, builder: (context, state) => AddNewItems()),
-      GoRoute(path: kChifFoodList, builder: (context, state) => MyFoodList()),
+      GoRoute(
+        path: kAddNewItem,
+        name: "addNewItem",
+        builder: (context, state) => AddNewItems(),
+      ),
+      GoRoute(
+        path: kChifFoodList,
+        name: "chifFoodList",
+        builder: (context, state) => MyFoodList(),
+      ),
       GoRoute(
         path: kMessageListView,
+        name: "messageList",
         builder: (context, state) => ChatListScreen(),
       ),
-      GoRoute(path: kReviewView, builder: (context, state) => ReviewScreen()),
-      GoRoute(path: kAddReviewView, builder: (context, state) => AddReview()),
-      GoRoute(path: kCartView, builder: (context, state) => CartView()),
       GoRoute(
-        path: kSucessPaymentView,
-        builder: (context, state) => SucessPayment(),
+        path: kReviewView,
+        name: "review",
+        builder: (context, state) => ReviewScreen(),
       ),
       GoRoute(
+        path: kAddReviewView,
+        name: "addReview",
+        builder: (context, state) => AddReview(),
+      ),
+      GoRoute(
+        path: kCartView,
+        name: "cart",
+        builder: (context, state) => CartView(),
+      ),
+
+      GoRoute(
+        path: kSucessPaymentView,
+        name: "sucessPayment",
+        builder: (context, state) => SucessPayment(),
+      ),
+
+      GoRoute(
         path: kNotificationView,
+        name: "notification",
         builder: (context, state) => NotificationScreen(),
       ),
       GoRoute(
         path: kResturantReview,
+        name: "resturantReview",
         builder: (context, state) => ReviewResturantScreen(),
       ),
       GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
-      GoRoute(
-        path: krestaurantView,
-        builder: (context, state) => const RestaurantViewScreen(),
-      ),
+      // GoRoute(
+      //   path: krestaurantView,
+      //   builder: (context, state) => RestaurantView(),
+      // ),
       GoRoute(
         path: kChatListView,
         builder: (context, state) => ChatListScreenChief(),
@@ -168,31 +195,21 @@ abstract class AppRouter {
         builder: (context, state) => EditProfileView(),
       ),
       GoRoute(path: kMenuProfileView, builder: (context, state) => MenuView()),
+
       GoRoute(
         path: kSearchScreenView,
         builder: (context, state) => SearchScreen(),
       ),
       GoRoute(path: kFoodScreenView, builder: (context, state) => FoodScreen()),
-      GoRoute(
-        path: kFoodDetailsScreenView,
-        builder: (context, state) => const FoodDetailsScreen(),
-      ),
 
       GoRoute(
         path: kRestaurantViewVersion,
         builder: (context, state) => const RestaurantViewScreen(),
       ),
-
-      GoRoute(
-        path: kAddresses,
-        builder: (context, state) => const AddressView(),
-      ),
-      GoRoute(path: kFQS, builder: (context, state) => const FAQsScreen()),
-      GoRoute(
-        path: kFavorite,
-        builder: (context, state) => const FavoritesView(),
-      ),
-      GoRoute(path: kOrder, builder: (context, state) => const MyOrdersView()),
+      GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
+      GoRoute(path: kFQS, builder: (_, __) => const FAQsScreen()),
+      GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),
+      GoRoute(path: kOrder, builder: (_, __) => const MyOrdersView()),
       GoRoute(
         path: kAddAddressView,
         builder: (context, state) => AddNewAddressView(),
