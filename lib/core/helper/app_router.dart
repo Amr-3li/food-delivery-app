@@ -102,8 +102,6 @@ abstract class AppRouter {
         builder: (context, state) => OnboardingPage(),
       ),
       GoRoute(path: kLoginView, builder: (context, state) => LoginView()),
-
-      GoRoute(path: '/login', builder: (context, state) => LoginView()),
       GoRoute(
         path: '/forgetPassword',
         builder: (context, state) => ForgetPasswordView(),
@@ -125,18 +123,13 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kChatView,
+        name: "chat",
         builder: (context, state) => const ChatScreen(),
       ),
 
      GoRoute(
-        path: "/vertificationView",
-        builder: (context, state) => VertificationView(email: state.extra as String,),
-      ),
-
-      GoRoute(path: kChatView, builder: (context, state) => const ChatScreen()),
-      GoRoute(
         path: kChifFoodDetails,
-        
+        name: "chifFoodDetails",
         builder: (context, state) {
           final meal = state.extra as Meal;
           return FoodDetailsPage(meal: meal);
@@ -145,47 +138,49 @@ abstract class AppRouter {
 
       GoRoute(
         path: kAddNewItem,
-        // name: "addNewItem",
+        name: "addNewItem",
         builder: (context, state) => AddNewItems(),
       ),
       GoRoute(
         path: kChifFoodList,
+        name: "chifFoodList",
         builder: (context, state) => MyFoodList(),
       ),
       GoRoute(
         path: kMessageListView,
+        name: "messageList",
         builder: (context, state) => ChatListScreen(),
       ),
       GoRoute(
         path: kReviewView,
-        
+        name: "review",
         builder: (context, state) => ReviewScreen(),
       ),
       GoRoute(
         path: kAddReviewView,
-      
+        name: "addReview",
         builder: (context, state) => AddReview(),
       ),
       GoRoute(
         path: kCartView,
-     
+        name: "cart",
         builder: (context, state) => CartView(),
       ),
 
       GoRoute(
         path: kSucessPaymentView,
-       
+        name: "sucessPayment",
         builder: (context, state) => SucessPayment(),
       ),
 
       GoRoute(
         path: kNotificationView,
-       
+        name: "notification",
         builder: (context, state) => NotificationScreen(),
       ),
       GoRoute(
         path: kResturantReview,
-      
+        name: "resturantReview",
         builder: (context, state) => ReviewResturantScreen(),
       ),
       GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
@@ -193,28 +188,6 @@ abstract class AppRouter {
       GoRoute(path: kChatListView, builder: (context, state) => ChatListScreenChief()),
       GoRoute(path: kChatChiefView, builder: (context, state) => ChatScreenChief()),
       GoRoute(path: kMenuChiefView, builder: (context, state) => ChiefMenuScreen()),
-        
-      GoRoute(
-        path: kResturantReview,
-        builder: (context, state) => ReviewResturantScreen(),
-      ),
-      GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
-      GoRoute(
-        path: krestaurantView,
-        builder: (context, state) => const RestaurantViewScreen(),
-      ),
-      GoRoute(
-        path: kChatListView,
-        builder: (context, state) => ChatListScreenChief(),
-      ),
-      GoRoute(
-        path: kChatChiefView,
-        builder: (context, state) => ChatScreenChief(),
-      ),
-      GoRoute(
-        path: kMenuChiefView,
-        builder: (context, state) => ChiefMenuScreen(),
-      ),
       GoRoute(path: kWithdrawView, builder: (context, state) => WithdrawView()),
       GoRoute(
         path: kPopularFoodView,
@@ -251,16 +224,6 @@ abstract class AppRouter {
       GoRoute(path: kFQS, builder: (_, __) => const FAQsScreen()),
       GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),
       GoRoute(path: kOrder, builder: (_, __) => const MyOrdersView()),
-      GoRoute(
-        path: kAddresses,
-        builder: (context, state) => const AddressView(),
-      ),
-      GoRoute(path: kFQS, builder: (context, state) => const FAQsScreen()),
-      GoRoute(
-        path: kFavorite,
-        builder: (context, state) => const FavoritesView(),
-      ),
-      GoRoute(path: kOrder, builder: (context, state) => const MyOrdersView()),
       GoRoute(
         path: kAddAddressView,
         builder: (context, state) => AddNewAddressView(),
