@@ -122,48 +122,6 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: kAddNewItem,
-        name: "addNewItem",
-        builder: (context, state) => AddNewItems(),
-      ),
-      GoRoute(
-        path: kChifFoodList,
-        name: "chifFoodList",
-        builder: (context, state) => MyFoodList(),
-      ),
-      GoRoute(
-        path: kMessageListView,
-        name: "messageList",
-        builder: (context, state) => ChatListScreen(),
-      ),
-      GoRoute(
-        path: kReviewView,
-        name: "review",
-        builder: (context, state) => ReviewScreen(),
-      ),
-      GoRoute(
-        path: kAddReviewView,
-        name: "addReview",
-        builder: (context, state) => AddReview(),
-      ),
-      GoRoute(
-        path: kCartView,
-        name: "cart",
-        builder: (context, state) => CartView(),
-      ),
-
-      GoRoute(
-        path: kSucessPaymentView,
-        name: "sucessPayment",
-        builder: (context, state) => SucessPayment(),
-      ),
-
-      GoRoute(
-        path: kNotificationView,
-        name: "notification",
-        builder: (context, state) => NotificationScreen(),
-      ),
-      GoRoute(
         path: kResturantReview,
         name: "resturantReview",
         builder: (context, state) => ReviewResturantScreen(),
@@ -201,6 +159,13 @@ abstract class AppRouter {
         builder: (context, state) => SearchScreen(),
       ),
       GoRoute(path: kFoodScreenView, builder: (context, state) => FoodScreen()),
+      GoRoute(
+        path: kFoodDetailsScreenView,
+        builder: (context, state) {
+          final int id = state.extra as int;
+          return FoodDetailsScreen(foodId: id);
+        },
+      ),
 
       GoRoute(
         path: kRestaurantViewVersion,
