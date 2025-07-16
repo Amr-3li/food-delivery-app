@@ -170,7 +170,7 @@ class _FoodScreenState extends State<FoodScreen> {
                       const SizedBox(height: 10),
                       InkWell(
                         onTap: () =>
-                            context.push(AppRouter.kRestaurantViewVersion),
+                            context.push(AppRouter.kAllRestaurantsView),
                         child: const OpenRestaurantsSection(),
                       ),
                     ],
