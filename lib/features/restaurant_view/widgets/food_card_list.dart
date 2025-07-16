@@ -1,42 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/features/restaurant_view/data/restaurant_view_model.dart';
 
 class FoodCardList extends StatelessWidget {
-  const FoodCardList({super.key});
+  final List<MealModel> meals;
+
+  const FoodCardList({super.key, required this.meals});
 
   @override
   Widget build(BuildContext context) {
-    final items = [
-      {
-        "title": "Burger Ferguson",
-        "subtitle": "Spicy Restaurant",
-        "price": "\$40",
-      },
-      {
-        "title": "Pizza Pepperoni",
-        "subtitle": "Spicy Restaurant",
-        "price": "\$35",
-      },
-    ];
-
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(), // scroll من الأب
-      itemCount: items.length,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: meals.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // 2 كروت في كل صف
+        crossAxisCount: 2,
         crossAxisSpacing: 12,
         mainAxisSpacing: 16,
-        childAspectRatio: 0.75, // تناسق العرض والارتفاع
+        childAspectRatio: 0.75,
       ),
       itemBuilder: (context, index) {
-        final item = items[index];
+        final meal = meals[index];
+        final price = "${meal.sizes.first.price.toStringAsFixed(0)} ${meal.sizes.first.currency}";
+
         return Container(
           decoration: BoxDecoration(
-            color: Colors.white, // ← اللون الأبيض للخلفية
+            color: Colors.white,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withValues(alpha: .1),
+                color: Colors.grey.withOpacity(0.1),
                 blurRadius: 6,
                 spreadRadius: 1,
               ),
@@ -47,23 +39,27 @@ class FoodCardList extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // صورة رمادية Placeholder
-                Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300], // ← رمادي فاتح لصورة الأكل
-                    borderRadius: BorderRadius.circular(12),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    meal.image,
+                    height: 80,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  item['title']!,
+                  meal.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  item['subtitle']!,
+                  meal.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(color: Colors.grey, fontSize: 12),
                 ),
                 const Spacer(),
@@ -71,7 +67,7 @@ class FoodCardList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      item['price']!,
+                      price,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Container(

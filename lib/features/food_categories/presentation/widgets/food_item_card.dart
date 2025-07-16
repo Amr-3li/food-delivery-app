@@ -4,12 +4,15 @@ class FoodItemCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final String price;
+  final String image;
   final void Function()? onTap;
+
   const FoodItemCard({
     super.key,
     required this.title,
     required this.subtitle,
     required this.price,
+    required this.image,
     required this.onTap,
   });
 
@@ -27,9 +30,25 @@ class FoodItemCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(height: 80, color: Colors.grey[400]), // image placeholder
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                image,
+                height: 80,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  height: 80,
+                  color: Colors.grey[300],
+                  child: const Icon(Icons.image_not_supported),
+                ),
+              ),
+            ),
             const SizedBox(height: 10),
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
             Text(
               subtitle,
               style: const TextStyle(fontSize: 12, color: Colors.grey),
@@ -42,10 +61,10 @@ class FoodItemCard extends StatelessWidget {
                   price,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 14,
                   backgroundColor: Colors.orange,
-                  child: const Icon(Icons.add, size: 16, color: Colors.white),
+                  child: Icon(Icons.add, size: 16, color: Colors.white),
                 ),
               ],
             ),

@@ -125,20 +125,6 @@ class FoodItemCard extends StatelessWidget {
                         style: const TextStyle(fontSize: 12),
                       ),
                       const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.green),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: const Text(
-                          'Pick UP',
-                          style: TextStyle(color: Colors.green, fontSize: 12),
-                        ),
-                      ),
                     ],
                   ),
                 ],

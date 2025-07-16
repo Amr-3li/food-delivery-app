@@ -5,32 +5,28 @@ import 'package:restaurant/core/cache/cache_data.dart';
 import 'package:restaurant/core/cache/cache_helper.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
-
+import 'package:restaurant/features/cart/presentation/views/cart.dart';
+import 'package:restaurant/features/food_categories/presentation/views/food_categories_screen.dart';
+import 'package:restaurant/features/food_details/presentation/views/food_details_screen.dart';
+import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
+import 'package:restaurant/features/restaurant_view/widgets/filter_sheet.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
-
 import 'package:sizer/sizer.dart';
-
+import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  setupLocator(); 
   await CacheData.initialize(
     '15|XBQPpJMvRvQUCQufbI3Fl7OMvQTl5a9RNPJMe2oqc4067452',
   );
 
-  setupLocator();
-  await CacheHelper.init();
-  runApp(const MyApp());
-  setupLocator();
-  await CacheHelper.init();
-  runApp(
-    MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => sl<ChatCubit>())],
-      child: const MyApp(),
-    ),
-  );
+  await CacheHelper.init(); 
 
-  Stripe.publishableKey = APIKey.stripePublishableKey;
+  Stripe.publishableKey = APIKey.stripePublishableKey; 
+
+  runApp(const MyApp()); 
 }
 
 class MyApp extends StatelessWidget {
@@ -38,13 +34,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: AppRouter.router,
-        );
-      },
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: RestaurantViewScreen(),
     );
   }
 }
