@@ -12,7 +12,6 @@ import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
 
 import 'package:restaurant/features/chief_part/add_new_item/presentation/views/add_new_items.dart';
-import 'package:restaurant/features/chief_part/home/presentation/view/popular_term_screen.dart';
 import 'package:restaurant/features/chief_part/my_food_list/data/models/food_list_model.dart';
 import 'package:restaurant/features/chief_part/my_food_list/presentation/views/my_food_list_view.dart';
 import 'package:restaurant/features/chief_part/notification/presentation/view/notification.dart';
@@ -187,10 +186,6 @@ abstract class AppRouter {
         builder: (context, state) => ChiefMenuScreen(),
       ),
       GoRoute(path: kWithdrawView, builder: (context, state) => WithdrawView()),
-      GoRoute(
-        path: kPopularFoodView,
-        builder: (context, state) => PopularFoodScreen(),
-      ),
       GoRoute(
         path: kPersonalInfoProfileView,
         builder: (context, state) => PersonalInfoView(),

@@ -20,4 +20,6 @@ abstract class EndPoints {
       '${baseUrl}chef/orders/$orderId/$status';
   static const String meals = '${baseUrl}meals';
   static const String address = "address";
+  static String chifReviews(int chifReview) =>
+      '${baseUrl}chefs/$chifReview/reviews/';
 }

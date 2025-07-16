@@ -19,15 +19,28 @@ class _RevenueDashboardState extends State<RevenueDashboard> {
   @override
   void initState() {
     super.initState();
+    _fetchData();
+  }
+
+  void _fetchData() {
     context.read<ChefStatisticsCubit>().fetchInitialData(
       period: _selectedPeriod,
     );
   }
 
+  @override
+  void didUpdateWidget(covariant RevenueDashboard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.key != widget.key) {
+      _fetchData();
+    }
+  }
+
   List<FlSpot> _convertRevenueData(List<dynamic>? revenueDetails) {
     if (revenueDetails == null || revenueDetails.isEmpty) {
-      return [FlSpot(0, 0)];
+      return [const FlSpot(0, 0)];
     }
+
     final limitedDetails = revenueDetails.length > 6
         ? revenueDetails.sublist(revenueDetails.length - 6)
         : revenueDetails;
@@ -44,7 +57,7 @@ class _RevenueDashboardState extends State<RevenueDashboard> {
 
   List<String> _getTimeLabels(List<dynamic>? revenueDetails) {
     if (revenueDetails == null || revenueDetails.isEmpty) {
-      return ['', '', '', '', '', ''];
+      return List.filled(6, '');
     }
 
     final limitedDetails = revenueDetails.length > 6
@@ -56,18 +69,29 @@ class _RevenueDashboardState extends State<RevenueDashboard> {
         .toList();
   }
 
+  double _calculateMaxY(List<FlSpot> spots) {
+    if (spots.isEmpty) return 1000;
+    return spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b) * 1.2;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChefStatisticsCubit, ChefStatisticsState>(
+      buildWhen: (previous, current) {
+        // Only rebuild when we have new loaded data
+        return current is ChefStatisticsLoaded;
+      },
       builder: (context, state) {
+        final revenue = state is ChefStatisticsLoaded
+            ? state.statistics.revenue
+            : 0.0;
         final revenueDetails = state is ChefStatisticsLoaded
             ? state.statistics.revenueDetails
             : null;
+
         final spots = _convertRevenueData(revenueDetails);
         final timeLabels = _getTimeLabels(revenueDetails);
-        final maxY = spots.isNotEmpty
-            ? spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b) * 1.2
-            : 1000;
+        final maxY = _calculateMaxY(spots);
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -99,9 +123,7 @@ class _RevenueDashboardState extends State<RevenueDashboard> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          state is ChefStatisticsLoaded
-                              ? "\$${state.statistics.revenue.toStringAsFixed(2)}"
-                              : "\$0.00",
+                          "\$${revenue.toStringAsFixed(2)}",
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -115,20 +137,11 @@ class _RevenueDashboardState extends State<RevenueDashboard> {
                       items: _periods.map((String period) {
                         return DropdownMenuItem<String>(
                           value: period,
-                          child: Row(
-                            children: [
-                              Text(
-                                _selectedPeriod == period
-                                    ? '• $period'
-                                    : period,
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
+                          child: Text(period),
                         );
                       }).toList(),
                       onChanged: (String? newValue) {
-                        if (newValue != null) {
+                        if (newValue != null && newValue != _selectedPeriod) {
                           setState(() {
                             _selectedPeriod = newValue;
                           });
@@ -141,11 +154,7 @@ class _RevenueDashboardState extends State<RevenueDashboard> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                ShowLineChart(
-                  spots: spots,
-                  timeLabels: timeLabels,
-                  maxY: maxY.toDouble(),
-                ),
+                ShowLineChart(spots: spots, timeLabels: timeLabels, maxY: maxY),
               ],
             ),
           ),
