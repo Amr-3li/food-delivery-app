@@ -145,7 +145,7 @@ class HomeUserView extends StatelessWidget {
                       child: SubTitleAllCategories(
                         subTitle: "Open Restaurants",
                         onTap: () {
-                          context.push(AppRouter.krestaurantView);
+                          context.push(AppRouter.kAllRestaurantsView);
                         },
                       ),
                     ),

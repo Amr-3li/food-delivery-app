@@ -139,8 +139,7 @@ class _FoodScreenState extends State<FoodScreen> {
                                   onTapAdd: () {
                                     context.read<CartCubit>().addToCart(
                                       dishId: food.id,
-                                      sizeId: 1,
-                                      quantity: 1,
+                                      price: 100,
                                     );
 
                                     ScaffoldMessenger.of(context).showSnackBar(

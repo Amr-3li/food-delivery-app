@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dio/dio.dart';
+import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_router.dart';
+import 'package:restaurant/features/cart/data/repository/cart_repository.dart';
+import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:restaurant/features/food_details/data/food_details_repository.dart';
 import 'package:restaurant/features/food_details/presentation/cubit/food_details_cubit.dart';
 import 'package:restaurant/features/food_details/presentation/cubit/food_details_state.dart';
@@ -21,10 +24,17 @@ class FoodDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          FoodDetailsCubit(FoodDetailsRepository(dio: Dio()))
-            ..fetchFoodDetails(), // ✅ Pass foodId here
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              FoodDetailsCubit(FoodDetailsRepository(dio: Dio()))
+                ..fetchFoodDetails(),
+        ),
+        BlocProvider(
+          create: (context) => CartCubit(cartRepository: sl<CartRepository>()),
+        ),
+      ], // ✅ Pass foodId here
       child: Scaffold(
         body: BlocBuilder<FoodDetailsCubit, FoodDetailsState>(
           builder: (context, state) {
@@ -164,27 +174,37 @@ class FoodDetailsScreen extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 16),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.orange,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
+                          Builder(
+                            builder: (buttonContext) => SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.orange,
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
                                 ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                              ),
-                              onPressed: () {
-                                context.push(AppRouter.kCartView);
-                              },
-                              child: const Text(
-                                "ADD TO CART",
-                                style: TextStyle(color: Colors.white),
+                                onPressed: () {
+                                  buttonContext.read<CartCubit>().addToCart(
+                                    dishId: foodId,
+                                    price: 100,
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        '${food.dishName} added to cart',
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Text("ADD TO CART"),
                               ),
                             ),
                           ),
+
                           const SizedBox(height: 32),
                         ],
                       ),

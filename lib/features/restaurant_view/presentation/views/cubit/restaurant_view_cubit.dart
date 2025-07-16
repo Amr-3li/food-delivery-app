@@ -8,15 +8,17 @@ class RestaurantViewCubit extends Cubit<RestaurantViewState> {
 
   RestaurantViewCubit(this.repository) : super(RestaurantViewInitial());
 
-  void getRestaurantView() async {
+  void getRestaurantView(int id) async {
     try {
       emit(RestaurantViewLoading());
-      final data = await repository.fetchRestaurantView();
+      final data = await repository.fetchRestaurantView(id);
       final defaultCategory = data.categories.first;
-      emit(RestaurantViewLoaded(
-        restaurantView: data,
-        selectedCategory: defaultCategory,
-      ));
+      emit(
+        RestaurantViewLoaded(
+          restaurantView: data,
+          selectedCategory: defaultCategory,
+        ),
+      );
     } catch (e) {
       emit(RestaurantViewError(e.toString()));
     }

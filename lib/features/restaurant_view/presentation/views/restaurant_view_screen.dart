@@ -9,8 +9,8 @@ import 'package:restaurant/features/restaurant_view/widgets/category_chips.dart'
 import 'package:restaurant/features/restaurant_view/data/restaurant_view_model.dart';
 
 class RestaurantViewScreen extends StatefulWidget {
-  const RestaurantViewScreen({super.key});
-
+  const RestaurantViewScreen({super.key, required this.id});
+  final int id;
   @override
   State<RestaurantViewScreen> createState() => _RestaurantViewScreenState();
 }
@@ -23,7 +23,7 @@ class _RestaurantViewScreenState extends State<RestaurantViewScreen> {
     return BlocProvider(
       create: (context) =>
           RestaurantViewCubit(sl<RestaurantViewRepository>())
-            ..getRestaurantView(),
+            ..getRestaurantView(widget.id),
       child: Scaffold(
         body: SafeArea(
           child: BlocBuilder<RestaurantViewCubit, RestaurantViewState>(
@@ -43,9 +43,9 @@ class _RestaurantViewScreenState extends State<RestaurantViewScreen> {
                       expandedHeight: 200,
                       pinned: true,
                       flexibleSpace: FlexibleSpaceBar(
-                        title: Text(restaurant.name),
+                        title: Text(restaurant.name ?? "Restaurant"),
                         background: Image.network(
-                          restaurant.profileImage,
+                          "https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg",
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -55,7 +55,8 @@ class _RestaurantViewScreenState extends State<RestaurantViewScreen> {
                       sliver: SliverList(
                         delegate: SliverChildListDelegate([
                           Text(
-                            restaurant.description,
+                            restaurant.description ??
+                                "No description available.",
                             style: const TextStyle(color: Colors.grey),
                           ),
                           const SizedBox(height: 16),
