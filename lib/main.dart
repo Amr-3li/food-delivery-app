@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:restaurant/core/cache/cache_data.dart';
 import 'package:restaurant/core/cache/cache_helper.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
@@ -10,7 +11,6 @@ import 'package:restaurant/features/auth/data/repos/auth_repo_implementation.dar
 import 'package:restaurant/features/auth/views/cubit/auth_cubit.dart/auth_cubit.dart';
 import 'package:restaurant/features/forget_password/forgot_password_cubit/forgot_password_cubit.dart';
 import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
-
 import 'package:sizer/sizer.dart';
 
 void main() async {
@@ -36,13 +36,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: AppRouter.router,
-        );
-      },
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: RestaurantViewScreen(),
     );
   }
 }

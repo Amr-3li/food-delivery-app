@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant/features/chief_part/home/presentation/cubit/chef_statistics/chef_statistics_cubit.dart';
+import 'package:restaurant/features/chief_part/home/presentation/cubit/chef_statistics/chef_statistics_state.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/show_chart_linebar.dart';
 
 class RevenueDashboard extends StatefulWidget {
@@ -10,136 +13,144 @@ class RevenueDashboard extends StatefulWidget {
 }
 
 class _RevenueDashboardState extends State<RevenueDashboard> {
-  String _selectedPeriod = 'Daily'; // Default selection
-  final List<String> _periods = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
+  String _selectedPeriod = 'today';
+  final List<String> _periods = ['today', 'last_month', 'last_year'];
 
-  // Mock data for different time periods (replace with your actual data)
-  final Map<String, List<FlSpot>> _chartData = {
-    'Daily': const [
-      FlSpot(0, 200),
-      FlSpot(1, 300),
-      FlSpot(2, 500),
-      FlSpot(3, 400),
-      FlSpot(4, 350),
-      FlSpot(5, 250),
-      FlSpot(6, 100),
-    ],
-    'Weekly': const [
-      FlSpot(0, 100),
-      FlSpot(1, 400),
-      FlSpot(2, 600),
-      FlSpot(3, 300),
-      FlSpot(4, 700),
-      FlSpot(5, 500),
-      FlSpot(6, 200),
-    ],
-    'Monthly': const [
-      FlSpot(0, 300),
-      FlSpot(1, 600),
-      FlSpot(2, 400),
-      FlSpot(3, 800),
-      FlSpot(4, 500),
-      FlSpot(5, 900),
-      FlSpot(6, 700),
-    ],
-    'Yearly': const [
-      FlSpot(0, 500),
-      FlSpot(1, 800),
-      FlSpot(2, 600),
-      FlSpot(3, 1000),
-      FlSpot(4, 700),
-      FlSpot(5, 1200),
-      FlSpot(6, 900),
-    ],
-  };
+  @override
+  void initState() {
+    super.initState();
+    context.read<ChefStatisticsCubit>().fetchInitialData(
+      period: _selectedPeriod,
+    );
+  }
+
+  List<FlSpot> _convertRevenueData(List<dynamic>? revenueDetails) {
+    if (revenueDetails == null || revenueDetails.isEmpty) {
+      return [FlSpot(0, 0)];
+    }
+    final limitedDetails = revenueDetails.length > 6
+        ? revenueDetails.sublist(revenueDetails.length - 6)
+        : revenueDetails;
+
+    return limitedDetails.asMap().entries.map((entry) {
+      final index = entry.key;
+      final detail = entry.value;
+      return FlSpot(
+        index.toDouble(),
+        double.tryParse(detail['revenue']?.toString() ?? '0') ?? 0,
+      );
+    }).toList();
+  }
+
+  List<String> _getTimeLabels(List<dynamic>? revenueDetails) {
+    if (revenueDetails == null || revenueDetails.isEmpty) {
+      return ['', '', '', '', '', ''];
+    }
+
+    final limitedDetails = revenueDetails.length > 6
+        ? revenueDetails.sublist(revenueDetails.length - 6)
+        : revenueDetails;
+
+    return limitedDetails
+        .map((detail) => detail['time']?.toString() ?? '')
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(10),
-              blurRadius: 10,
-              spreadRadius: 2,
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Total Revenue",
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                    const SizedBox(height: 4),
-                    const Text(
-                      "\$2,241",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                DropdownButton<String>(
-                  value: _selectedPeriod,
-                  underline: Container(),
-                  items: _periods.map((String period) {
-                    return DropdownMenuItem<String>(
-                      value: period,
-                      child: Row(
-                        children: [
-                          Text(period),
-                          const Icon(Icons.arrow_drop_down, color: Colors.grey),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedPeriod = newValue!;
-                    });
-                  },
+    return BlocBuilder<ChefStatisticsCubit, ChefStatisticsState>(
+      builder: (context, state) {
+        final revenueDetails = state is ChefStatisticsLoaded
+            ? state.statistics.revenueDetails
+            : null;
+        final spots = _convertRevenueData(revenueDetails);
+        final timeLabels = _getTimeLabels(revenueDetails);
+        final maxY = spots.isNotEmpty
+            ? spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b) * 1.2
+            : 1000;
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(10),
+                  blurRadius: 10,
+                  spreadRadius: 2,
                 ),
               ],
             ),
-
-            const SizedBox(height: 16),
-
-            // "See Details" Link
-            const Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "See Details",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Total Revenue",
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          state is ChefStatisticsLoaded
+                              ? "\$${state.statistics.revenue.toStringAsFixed(2)}"
+                              : "\$0.00",
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    DropdownButton<String>(
+                      value: _selectedPeriod,
+                      underline: Container(),
+                      items: _periods.map((String period) {
+                        return DropdownMenuItem<String>(
+                          value: period,
+                          child: Row(
+                            children: [
+                              Text(
+                                _selectedPeriod == period
+                                    ? '• $period'
+                                    : period,
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          setState(() {
+                            _selectedPeriod = newValue;
+                          });
+                          context.read<ChefStatisticsCubit>().refreshData(
+                            period: newValue,
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
-              ),
+                const SizedBox(height: 16),
+                ShowLineChart(
+                  spots: spots,
+                  timeLabels: timeLabels,
+                  maxY: maxY.toDouble(),
+                ),
+              ],
             ),
-
-            const SizedBox(height: 16),
-
-            ShowLineChart(
-              selectedPeriod: _selectedPeriod,
-              chartData: _chartData,
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

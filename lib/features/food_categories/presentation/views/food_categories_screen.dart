@@ -1,13 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
+import 'package:restaurant/features/food_categories/data/food_model.dart';
+import 'package:restaurant/features/food_categories/data/food_repository.dart';
 import 'package:restaurant/features/restaurant_view/widgets/filter_sheet.dart';
 import '../widgets/food_item_card.dart';
 import '../widgets/category_selector.dart';
 import '../widgets/open_restaurants_section.dart';
 
-class FoodScreen extends StatelessWidget {
+class FoodScreen extends StatefulWidget {
   const FoodScreen({super.key});
+
+  @override
+  State<FoodScreen> createState() => _FoodScreenState();
+}
+
+class _FoodScreenState extends State<FoodScreen> {
+  String selectedCategory = 'breakfast'; 
+  List<FoodModel> foods = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchFoodsByCategory(selectedCategory);
+  }
+
+  Future<void> fetchFoodsByCategory(String category) async {
+    final allFoods = await FoodRepository().getAllFoods();
+
+    final filtered = allFoods.where(
+      (food) => food.mealType.toLowerCase() == category.toLowerCase(),
+    ).toList();
+
+    setState(() {
+      foods = filtered;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +53,21 @@ class FoodScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(Icons.arrow_back),
+                      icon: const Icon(Icons.arrow_back),
                     ),
-
-                    SizedBox(width: 10),
-                    CategorySelector(),
-                    Spacer(),
-                    Icon(Icons.search),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
+                    CategorySelector(
+                      selectedCategory: selectedCategory,
+                      onCategorySelected: (value) {
+                        setState(() {
+                          selectedCategory = value;
+                        });
+                        fetchFoodsByCategory(value);
+                      },
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.search),
+                    const SizedBox(width: 10),
                     IconButton(
                       onPressed: () {
                         showModalBottomSheet(
@@ -42,57 +77,39 @@ class FoodScreen extends StatelessWidget {
                           builder: (_) => const FilterSheet(),
                         );
                       },
-                      icon: Icon(Icons.tune),
-                    ), // filter icon
+                      icon: const Icon(Icons.tune),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  "Popular Burgers",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                Text(
+                  "Popular ${selectedCategory[0].toUpperCase()}${selectedCategory.substring(1)}",
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 const SizedBox(height: 10),
-                GridView.count(
+                GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 0.75,
-                  children: [
-                    FoodItemCard(
-                      onTap: () {
-                        context.push(AppRouter.kFoodDetailsScreenView);
-                      },
-                      title: "Burger Bistro",
-                      subtitle: "Rose Garden",
-                      price: "\$40",
-                    ),
-                    FoodItemCard(
-                      onTap: () {
-                        context.push(AppRouter.kFoodDetailsScreenView);
-                      },
-                      title: "Smokin' Burger",
-                      subtitle: "Cafenio Restaurant",
-                      price: "\$60",
-                    ),
-                    FoodItemCard(
-                      onTap: () {
-                        context.push(AppRouter.kFoodDetailsScreenView);
-                      },
-                      title: "Buffalo Burgers",
-                      subtitle: "Kaji Firm Kitchen",
-                      price: "\$75",
-                    ),
-                    FoodItemCard(
-                      onTap: () {
-                        context.push(AppRouter.kFoodDetailsScreenView);
-                      },
-                      title: "Bullseye Burgers",
-                      subtitle: "Kabab Restaurant",
-                      price: "\$94",
-                    ),
-                  ],
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.75,
+                  ),
+                  itemCount: foods.length,
+                  itemBuilder: (context, index) {
+                    final food = foods[index];
+                    return FoodItemCard(
+                          onTap: () {
+                          context.push(AppRouter.kFoodDetailsScreenView);
+                              },
+                         title: food.name,
+                              subtitle: food.mealType,
+                                price: '',
+                                image: food.image,
+                                 );
+
+                  },
                 ),
                 const SizedBox(height: 20),
                 const Text(

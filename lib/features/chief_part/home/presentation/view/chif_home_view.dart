@@ -1,60 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
+import 'package:restaurant/core/network/api_helper.dart';
+import 'package:restaurant/features/chief_part/home/data/repository/chef_statistics/chef_statistics_repository_impl.dart';
+import 'package:restaurant/features/chief_part/home/presentation/cubit/chef_statistics/chef_statistics_cubit.dart';
+import 'package:restaurant/features/chief_part/home/presentation/widget/chif_home_body.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/custom_appbar.dart';
-import 'package:restaurant/features/chief_part/home/presentation/widget/order_form_sheet.dart';
-import 'package:restaurant/features/chief_part/home/presentation/widget/order_widget.dart';
-import 'package:restaurant/features/chief_part/home/presentation/widget/populer_food_builder.dart';
-import 'package:restaurant/features/chief_part/home/presentation/widget/revenue_dashboard.dart';
-import 'package:restaurant/features/chief_part/home/presentation/widget/reviews_summary.dart';
 import 'package:restaurant/features/chief_part/widgets/custom_bottomnavigation_bar.dart';
 
-class ChifHomeView extends StatelessWidget {
+class ChifHomeView extends StatefulWidget {
   const ChifHomeView({super.key});
 
   @override
+  State<ChifHomeView> createState() => _ChifHomeViewState();
+}
+
+class _ChifHomeViewState extends State<ChifHomeView> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        dynamicText: "Hotel Lab",
-        onLeadingPressed: () {
-          GoRouter.of(context).push(AppRouter.kMenuChiefView);
-          debugPrint("Leading button pressed");
-        },
-        userImageUrl:
-            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: ListView(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: OrdersWidget(
-                    count: 20,
-                    subtext: 'running order',
-                    onTap: () => OrderFormSheet.show(context),
-                  ),
-                ),
-                Expanded(
-                  child: OrdersWidget(
-                    count: 5,
-                    subtext: 'order quest',
-                    onTap: () => OrderFormSheet.show(context),
-                  ),
-                ),
-              ],
-            ),
-            RevenueDashboard(),
-            const ReviewsSummary(rating: 4.1, reviewCount: 20),
-            const PopularFoodBuilder(),
-          ],
+    return BlocProvider(
+      create: (context) =>
+          ChefStatisticsCubit(ChefStatisticsRepositoryImpl(ApiHelper()))
+            ..fetchInitialData(), // Changed to fetchInitialData
+      child: Scaffold(
+        appBar: CustomAppBar(
+          dynamicText: "Hotel Lab",
+          onLeadingPressed: () {
+            GoRouter.of(context).push(AppRouter.kMenuChiefView);
+            debugPrint("Leading button pressed");
+          },
+          userImageUrl:
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
         ),
-      ),
-      bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: 0, // Food List is second item
-        context: context,
+        body: const ChifHomeBody(),
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: 0,
+          context: context,
+        ),
       ),
     );
   }

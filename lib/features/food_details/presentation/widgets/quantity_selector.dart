@@ -1,31 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/features/food_details/presentation/views/food_details_screen.dart';
 
-class QuantitySelector extends StatelessWidget {
-  final FoodDetailsVersion version;
+class QuantitySelector extends StatefulWidget {
+  const QuantitySelector({super.key});
 
-  const QuantitySelector({super.key, required this.version});
+  @override
+  State<QuantitySelector> createState() => _QuantitySelectorState();
+}
+
+class _QuantitySelectorState extends State<QuantitySelector> {
+  int quantity = 1;
+
+  void increase() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void decrease() {
+    if (quantity > 1) {
+      setState(() {
+        quantity--;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         FloatingActionButton.small(
-          heroTag: version == FoodDetailsVersion.version1 ? 'minus1' : 'minus2',
-          onPressed: () {},
+          heroTag: 'minus',
+          onPressed: decrease,
           backgroundColor: Colors.deepPurple[100],
           elevation: 0,
           child: const Icon(Icons.remove, color: Colors.black),
         ),
         const SizedBox(width: 12),
-        const Text(
-          "2",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        Text(
+          quantity.toString(),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(width: 12),
         FloatingActionButton.small(
-          heroTag: version == FoodDetailsVersion.version1 ? 'plus1' : 'plus2',
-          onPressed: () {},
+          heroTag: 'plus',
+          onPressed: increase,
           backgroundColor: Colors.deepPurple[100],
           elevation: 0,
           child: const Icon(Icons.add, color: Colors.black),
@@ -34,4 +52,3 @@ class QuantitySelector extends StatelessWidget {
     );
   }
 }
-

@@ -1,63 +1,63 @@
 import 'package:restaurant/features/chief_part/add_new_item/data/models/item_image.dart';
 
 class FoodDetails {
-  final String id;
   final String name;
   final List<ItemImage> images;
-  final String foodType;
-  final String deliveryType;
+  final int categoryId;
   final String description;
   final double price;
-  final double rating;
-  final int reviewCount;
+  final bool isAvailable;
+  final List<String> ingredients;
+  final String size; // Made this a constant value
 
   const FoodDetails({
-    this.id = '',
     this.name = '',
     this.images = const [],
-    this.foodType = 'Main Course',
-    this.deliveryType = 'pickup',
+    this.categoryId = 1,
     this.description = '',
-    this.price = 0.0,
-    this.rating = 0.0,
-    this.reviewCount = 0,
+    this.price = 20.0,
+    this.isAvailable = true,
+    this.ingredients = const ['salt'],
+    this.size = 'medium', // Constant size value
   });
 
   FoodDetails copyWith({
     String? id,
     String? name,
     List<ItemImage>? images,
-    String? foodType,
-    String? deliveryType,
+    int? categoryId,
     String? description,
     double? price,
-    double? rating,
-    int? reviewCount,
+    bool? isAvailable,
+    List<String>? ingredients,
+    String? size,
   }) {
     return FoodDetails(
-      id: id ?? this.id,
       name: name ?? this.name,
       images: images ?? this.images,
-      foodType: foodType ?? this.foodType,
-      deliveryType: deliveryType ?? this.deliveryType,
+      categoryId: categoryId ?? this.categoryId,
       description: description ?? this.description,
       price: price ?? this.price,
-      rating: rating ?? this.rating,
-      reviewCount: reviewCount ?? this.reviewCount,
+      isAvailable: isAvailable ?? this.isAvailable,
+      ingredients: ingredients ?? this.ingredients,
+      size:
+          size ?? this.size, // Keep the constant size unless explicitly changed
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'name': name,
-      'images': images.map((img) => img.file.path).toList(),
-      'foodType': foodType,
-      'deliveryType': deliveryType,
+      'image': images.isNotEmpty
+          ? images.first.file.path
+          : null, // Only first image
+      'category_id': categoryId,
       'description': description,
       'price': price,
-      'rating': rating,
-      'reviewCount': reviewCount,
+      'is_available': isAvailable ? 1 : 0,
+      'ingredients[0]': ingredients.isNotEmpty ? ingredients.first : 'salt',
+      'sizes[0][size]': 'medium',
+      'sizes[0][price]': price.toString(),
     };
   }
 }

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 import '../cache/cache_data.dart';
 import 'api_response.dart';
@@ -30,16 +29,16 @@ class ApiHelper {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          debugPrint("--- Headers : ${options.headers.toString()}");
-          debugPrint("--- endpoint : ${options.path.toString()}");
+          print("--- Headers : ${options.headers.toString()}");
+          print("--- endpoint : ${options.path.toString()}");
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          debugPrint("--- Response : ${response.data.toString()}");
+          print("--- Response : ${response.data.toString()}");
           return handler.next(response);
         },
         onError: (DioException error, handler) async {
-          debugPrint("--- Error : ${error.response?.data.toString()}");
+          print("--- Error : ${error.response?.data.toString()}");
 
           // Handle HTML responses
           if (error.response?.data is String &&
@@ -93,15 +92,20 @@ class ApiHelper {
 
   Future<ApiResponse> postRequest({
     required String endPoint,
-    Map<String, dynamic>? data,
-    bool isFormData = false, // Changed default to false
+    dynamic data,
+    bool isFormData = false,
     bool isProtected = false,
     bool sendRefreshToken = false,
   }) async {
     try {
+      // ✅ Only wrap in FormData if it's not already FormData
+      final requestData = isFormData
+          ? (data is FormData ? data : FormData.fromMap(data ?? {}))
+          : data;
+
       final response = await dio.post(
         endPoint,
-        data: isFormData ? FormData.fromMap(data ?? {}) : data,
+        data: requestData,
         options: Options(
           headers: {
             if (isProtected)

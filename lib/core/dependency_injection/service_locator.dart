@@ -13,6 +13,10 @@ import 'package:restaurant/features/chat/data/service_api/conversation_api.dart'
 import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
 import 'package:restaurant/features/chief_part/notification/data/api_services/notification_api_services.dart';
 import 'package:restaurant/features/chief_part/notification/data/repository/notification_repository.dart';
+import 'package:restaurant/features/home_user/data/repository/category_repository.dart';
+import 'package:restaurant/features/home_user/data/repository/resturant_repository.dart';
+import 'package:restaurant/features/home_user/presentation/cubit/category/category_cubit.dart';
+import 'package:restaurant/features/home_user/presentation/cubit/resturant/resturant_cubit.dart';
 import 'package:restaurant/features/payment/data/repository/payment_repository.dart';
 import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
 import 'package:restaurant/features/chief_part/notification/presentation/cubit/notification_cubit.dart';
@@ -64,7 +68,11 @@ void setupLocator() {
   sl.registerLazySingleton(
     () => GetAddressesCubit(sl<GetAddressesRepoImplementation>()),
   );
+  sl.registerLazySingleton(() => CategoryRepository());
+  sl.registerFactory(() => CategoryCubit(sl<CategoryRepository>()));
   sl.registerLazySingleton(() => ChatCubit(sl<ConversationRepository>()));
   sl.registerLazySingleton(() => PaymentRepository());
   sl.registerFactory(() => PaymentCubit(sl<PaymentRepository>()));
+  sl.registerLazySingleton(() => RestaurantRepository());
+  sl.registerLazySingleton(() => RestaurantCubit(sl()));
 }

@@ -10,11 +10,15 @@ abstract class EndPoints {
   static const String favorites = 'favourites';
   static String categoryProducts(int categoryId) =>
       'categories/$categoryId/products/';
-  static String searchProducts(String query) =>
-      '/products?search=$query';
+  static String searchProducts(String query) => '/products?search=$query';
   static const String payment = 'payment';
   static const String resetPassword = "password/reset";
   static const String sendOtp = "password/send_otp";
+  static const String chefStatistics = '${baseUrl}chef/statistics';
+  static const String chefOrdersRunning = '${baseUrl}chef/orders/running';
+  static String updateOrderStatus(int orderId, String status) =>
+      '${baseUrl}chef/orders/$orderId/$status';
+  static const String meals = '${baseUrl}meals';
   static const String address = "address";
   static const String verifyEmail = "email/verify";
 }

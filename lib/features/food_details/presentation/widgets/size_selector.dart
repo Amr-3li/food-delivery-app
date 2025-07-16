@@ -1,22 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/features/food_details/presentation/views/food_details_screen.dart';
 
-class SizeSelector extends StatelessWidget {
-  final FoodDetailsVersion version;
+class SizeSelector extends StatefulWidget {
+  const SizeSelector({super.key});
 
-  const SizeSelector({super.key, required this.version});
+  @override
+  State<SizeSelector> createState() => _SizeSelectorState();
+}
+
+class _SizeSelectorState extends State<SizeSelector> {
+  String selectedSize = '14"';
+
+  final sizes = ['10"', '14"', '16"'];
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: ["10\"", "14\"", "16\""].map((size) {
-        final isSelected = size == "14\"";
+      children: sizes.map((size) {
+        final isSelected = size == selectedSize;
+
         return Padding(
           padding: const EdgeInsets.all(4.0),
-          child: CircleAvatar(
-            backgroundColor: isSelected ? Colors.orange : Colors.grey[200],
-            child: Text(size, style: TextStyle(color: isSelected ? Colors.white : Colors.black)),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedSize = size;
+              });
+            },
+            child: CircleAvatar(
+              radius: 24,
+              backgroundColor: isSelected ? Colors.orange : Colors.grey[200],
+              child: Text(
+                size,
+                style: TextStyle(
+                  color: isSelected ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
         );
       }).toList(),

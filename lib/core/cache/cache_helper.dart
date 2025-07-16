@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/core/cache/cache_data.dart';
+import 'package:restaurant/core/cache/cache_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
   // Change from late final to nullable and private
   static SharedPreferences? _sharedPreferences;
+
+  // Initialize only once
+  static Future<void> init() async {
+    if (_sharedPreferences == null) {
+      _sharedPreferences = await SharedPreferences.getInstance();
+      debugPrint('SharedPreferences initialized successfully');
+
+      // Load existing data if any
+      CacheData.accessToken = _sharedPreferences!.getString(
+        CacheKeys.accessToken,
+      );
+      CacheData.userName = _sharedPreferences!.getString(CacheKeys.userName);
+      CacheData.firstTime = _sharedPreferences!.getBool(CacheKeys.firstTime);
+    }
+  }
 
   // Getter with null check
   static SharedPreferences get sharedPreferences {
@@ -13,14 +30,6 @@ class CacheHelper {
       );
     }
     return _sharedPreferences!;
-  }
-
-  // Initialize only once
-  static Future<void> init() async {
-    if (_sharedPreferences == null) {
-      _sharedPreferences = await SharedPreferences.getInstance();
-      debugPrint('SharedPreferences initialized successfully');
-    }
   }
 
   static Future<bool> saveData({
