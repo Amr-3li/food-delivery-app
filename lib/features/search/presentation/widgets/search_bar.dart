@@ -9,7 +9,7 @@ final SearchCubit cubit;
   Widget build(BuildContext context) {
     return TextField(
       onChanged: (value){
-cubit.getResult(search: value);
+cubit.searchRequest(search: value);
       },
        textInputAction: TextInputAction.search,
       decoration: InputDecoration(
