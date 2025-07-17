@@ -3,14 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 
 class ReviewsSummary extends StatelessWidget {
-  final double rating;
-  final int reviewCount;
-
-  const ReviewsSummary({
-    super.key,
-    required this.rating,
-    required this.reviewCount,
-  });
+  const ReviewsSummary({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +57,14 @@ class ReviewsSummary extends StatelessWidget {
                       style: DefaultTextStyle.of(context).style,
                       children: [
                         TextSpan(
-                          text: '${rating.toStringAsFixed(1)}',
+                          text: '5',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         TextSpan(
-                          text: ' Total $reviewCount Reviews',
+                          text: ' Total 3 Reviews',
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.grey,

@@ -4,17 +4,32 @@ import 'package:restaurant/features/restaurant_view/widgets/filter_sheet.dart';
 import 'package:restaurant/features/search/data/search_cubit/search_cubit.dart';
 import 'package:restaurant/features/search/data/search_cubit/search_states.dart';
 import 'package:restaurant/features/search/data/search_model/search_model.dart';
+import 'package:restaurant/features/search/data/search_repos/search_repo_implementation.dart';
 import '../widgets/food_item_card.dart';
 import '../widgets/category_selector.dart';
 
-class FoodScreen extends StatefulWidget {
+/// Entry point with BlocProvider
+class FoodScreen extends StatelessWidget {
   const FoodScreen({super.key});
 
   @override
-  State<FoodScreen> createState() => _FoodScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => SearchCubit(SearchRepoImplementation()),
+      child: const FoodScreenContent(),
+    );
+  }
 }
 
-class _FoodScreenState extends State<FoodScreen> {
+/// Main screen content
+class FoodScreenContent extends StatefulWidget {
+  const FoodScreenContent({super.key});
+
+  @override
+  State<FoodScreenContent> createState() => _FoodScreenContentState();
+}
+
+class _FoodScreenContentState extends State<FoodScreenContent> {
   String selectedCategory = 'breakfast';
   final TextEditingController _searchController = TextEditingController();
 
@@ -90,7 +105,7 @@ class _FoodScreenState extends State<FoodScreen> {
                 selectedCategory: selectedCategory,
                 onCategorySelected: (value) {
                   setState(() => selectedCategory = value);
-                  // You might want to trigger a search by category here
+                  // Trigger category-based filtering if needed
                 },
               ),
               const SizedBox(height: 20),
@@ -120,6 +135,15 @@ class _FoodScreenState extends State<FoodScreen> {
   }
 
   Widget _buildFoodGrid(List<SearchModel> items) {
+    if (items.isEmpty) {
+      return const Center(
+        child: Text(
+          'No food matches your selection.',
+          style: TextStyle(fontSize: 16, color: Colors.grey),
+        ),
+      );
+    }
+
     return GridView.builder(
       physics: const BouncingScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -24,10 +24,6 @@ abstract class EndPoints {
   static const String address = "address";
   static String chifReviews(int chifReview) =>
       '${baseUrl}chefs/$chifReview/reviews/';
-  static String updateOrderStatus(int orderId, String status) =>
-      'chef/orders/$orderId/$status';
-  static const String meals = 'meals';
-  static const String address = "address";
   static const String getAddress = "my/addresses";
   static const String profile = "profile";
   static const String verifyEmail = "email/verify";

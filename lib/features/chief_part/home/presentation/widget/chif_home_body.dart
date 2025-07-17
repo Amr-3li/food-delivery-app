@@ -33,7 +33,7 @@ class ChifHomeBody extends StatelessWidget {
             ],
           ),
           RevenueDashboard(),
-          ReviewsSummary(rating: 4.1, reviewCount: 20),
+          ReviewsSummary(),
           PopularFoodBuilder(),
         ],
       ),

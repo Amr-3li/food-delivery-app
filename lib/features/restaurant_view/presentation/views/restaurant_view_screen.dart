@@ -1,218 +1,213 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
-import 'package:restaurant/features/restaurant_view/data/restaurant_view_repository.dart';
-import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_cubit.dart';
-import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_state.dart';
-import 'package:restaurant/features/restaurant_view/data/restaurant_view_model.dart';
+import 'package:restaurant/core/network/network_info.dart';
+import 'package:restaurant/features/auth/data/models/user_model.dart';
+import 'package:restaurant/features/auth/views/login_view.dart';
+import 'package:restaurant/features/auth/views/register_view.dart';
+import 'package:restaurant/features/auth/views/vertification_view.dart';
+import 'package:restaurant/features/cart/presentation/views/cart.dart';
+import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
+import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
+import 'package:restaurant/features/chief_part/add_new_item/presentation/views/add_new_items.dart';
+import 'package:restaurant/features/chief_part/chat/presentation/views/chat_screen.dart'
+    as ChiefChatScreen;
+import 'package:restaurant/features/chief_part/chat/presentation/views/list_chat_screen.dart'
+    as ChiefChatList;
+import 'package:restaurant/features/chief_part/chief_menu/presentation/view/chief_menu.dart';
+import 'package:restaurant/features/chief_part/chief_menu/presentation/view/reviews.dart';
+import 'package:restaurant/features/chief_part/chief_menu/presentation/view/withdraw.dart';
+import 'package:restaurant/features/chief_part/food_details/presentation/views/chief_food_details_views.dart';
+import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
+import 'package:restaurant/features/chief_part/my_food_list/data/models/food_list_model.dart';
+import 'package:restaurant/features/chief_part/my_food_list/presentation/views/my_food_list_view.dart';
+import 'package:restaurant/features/chief_part/notification/presentation/view/notification.dart';
+import 'package:restaurant/features/favorits/presentation/views/favorites_view.dart';
+import 'package:restaurant/features/food_categories/presentation/views/food_categories_screen.dart';
+import 'package:restaurant/features/food_details/presentation/views/food_details_screen.dart';
+import 'package:restaurant/features/forget_password/presentation/confirem_password.dart';
+import 'package:restaurant/features/forget_password/presentation/views/forget_password_view.dart';
+import 'package:restaurant/features/forget_password/presentation/views/sent_otp.dart';
+import 'package:restaurant/features/fqs/presentation/view/fqs.dart';
+import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
+import 'package:restaurant/features/internet/views/internet_view.dart';
+import 'package:restaurant/features/menu/data/repo/menu/menu_repo_implemation.dart';
+import 'package:restaurant/features/menu/presentation/manger/menu/menu_cubit.dart';
+import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
+import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
+import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
+import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
+import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
+import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
+import 'package:restaurant/features/restaurant_view/presentation/views/all_resturant_screen.dart';
+import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
+import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
+import 'package:restaurant/features/reviews/presentation/views/review_resturant.dart';
+import 'package:restaurant/features/search/presentation/views/search_screen.dart';
+import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
+import 'package:restaurant/features/address/presentaion/view/address_view.dart';
+import 'package:restaurant/features/address/presentaion/view/add_new_address_view.dart';
 
-class RestaurantViewScreen extends StatefulWidget {
-  const RestaurantViewScreen({super.key, required this.id});
-  final int id;
-  @override
-  State<RestaurantViewScreen> createState() => _RestaurantViewScreenState();
-}
+abstract class AppRouter {
+  static const kSplashView = '/';
+  static const kLoginView = '/login';
+  static const kOnboardingView = '/onboarding';
+  static const kHomeUserView = '/homeUserView';
+  static const kChatView = '/chat';
+  static const kMessageListView = '/messageList';
+  static const kReviewView = '/review';
+  static const kAddReviewView = '/addReview';
+  static const kCartView = '/cart';
+  static const kSucessPaymentView = '/sucessPayment';
+  static const kNotificationView = '/notification';
+  static const kNotificationChiefView = '/notificationChief';
+  static const krestaurantView = "/restaurantView";
+  static const kAllRestaurantsView = "/restaurantView";
+  static const kChifFoodList = '/chif_food_list';
+  static const kAddNewItem = '/add_new_item';
+  static const kChifHome = '/chif_home';
+  static const kChatListView = "/chatListView";
+  static const kChatChiefView = "/chatChiefView";
+  static const kMenuChiefView = "/menuChiefView";
+  static const kWithdrawView = "/withdrawChiefView";
+  static const kPopularFoodView = "/popularFoodView";
+  static const kPersonalInfoProfileView = "/personalInfoProfile";
+  static const kEditProfileView = "/editProfile";
+  static const kMenuProfileView = "/menuProfileView";
+  static const kSearchScreenView = "/searchScreenView";
+  static const kFoodScreenView = "/foodScreenView";
+  static const kFoodDetailsScreenView = "/foodDetailsScreenView";
+  static const kOrder = '/order';
+  static const kAddresses = '/addresses';
+  static const kFQS = '/fqs';
+  static const kFavorite = "/favorite";
+  static const kAddAddressView = "/addAddress";
+  static const kChifFoodDetails = '/chif_food_details';
+  static const kResturantReview = '/resturantReview';
+  static const kVerifyEmail = "/vertificationView";
+  static const kSendOtp = "/sendOtp";
+  static const kResetPassword = "/resetPassword";
 
-class _RestaurantViewScreenState extends State<RestaurantViewScreen> {
-  CategoryModel? selectedCategory;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          RestaurantViewCubit(sl<RestaurantViewRepository>())
-            ..getRestaurantView(widget.id),
-      child: Scaffold(
-        body: SafeArea(
-          child: BlocBuilder<RestaurantViewCubit, RestaurantViewState>(
+  static final router = GoRouter(
+    routes: [
+      ShellRoute(
+        builder: (context, state, child) {
+          return ValueListenableBuilder<bool>(
+            valueListenable: sl<NetworkInfo>().isConnected,
+            builder: (context, isConnected, _) {
+              return isConnected ? child : const InternetView();
+            },
+          );
+        },
+        routes: [
+          GoRoute(path: kSplashView, builder: (_, __) => const SplashView()),
+          GoRoute(path: kLoginView, builder: (_, __) => LoginView()),
+          GoRoute(path: kOnboardingView, builder: (_, __) => OnboardingPage()),
+          GoRoute(path: '/signUp', builder: (_, __) => SinUpView()),
+          GoRoute(
+            path: '/forgetPassword',
+            builder: (_, __) => ForgetPasswordView(),
+          ),
+          GoRoute(
+            path: kSendOtp,
             builder: (context, state) {
-              if (state is RestaurantViewLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is RestaurantViewLoaded) {
-                final data = state.restaurantView;
-                final restaurant = data.restaurant;
-                final categories = data.categories;
-
-                selectedCategory ??= state.selectedCategory;
-
-                return CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      expandedHeight: 200,
-                      pinned: true,
-                      actions: [
-                        IconButton(
-                          icon: const Icon(Icons.filter_list),
-                          onPressed: () {},
-                        ),
-                      ],
-                      flexibleSpace: FlexibleSpaceBar(
-                        title: Text(restaurant.name ?? "Restaurant"),
-                        background: Image.network(
-                          "https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg",
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) =>
-                              Container(color: Colors.grey[200]),
-                        ),
-                      ),
-                    ),
-                    SliverPadding(
-                      padding: const EdgeInsets.all(16),
-                      sliver: SliverList(
-                        delegate: SliverChildListDelegate([
-                          Text(
-                            restaurant.description ??
-                                "No description available.",
-                            style: const TextStyle(color: Colors.grey),
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.star,
-                                color: Colors.orange,
-                                size: 20,
-                              ),
-                              const SizedBox(width: 12),
-                              const Icon(Icons.delivery_dining, size: 20),
-                              const SizedBox(width: 4),
-                              const Text("Free"),
-                              const SizedBox(width: 12),
-                              const Icon(Icons.timer, size: 20),
-                              const SizedBox(width: 4),
-                              const Text("20 min"),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          SizedBox(
-                            height: 50,
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: categories.length,
-                              separatorBuilder: (_, __) =>
-                                  const SizedBox(width: 8),
-                              itemBuilder: (context, index) {
-                                final category = categories[index];
-                                return ChoiceChip(
-                                  label: Text(category.name),
-                                  selected: selectedCategory?.id == category.id,
-                                  onSelected: (selected) {
-                                    setState(() {
-                                      selectedCategory = category;
-                                    });
-                                    context
-                                        .read<RestaurantViewCubit>()
-                                        .selectCategory(category);
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          Text(
-                            "${selectedCategory?.name} (${selectedCategory?.meals.length ?? 0})",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: selectedCategory?.meals.length ?? 0,
-                            separatorBuilder: (_, __) =>
-                                const SizedBox(height: 16),
-                            itemBuilder: (context, index) {
-                              final meal = selectedCategory!.meals[index];
-                              return Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Image.network(
-                                          meal.image,
-                                          width: 80,
-                                          height: 80,
-                                          fit: BoxFit.cover,
-                                          errorBuilder: (_, __, ___) =>
-                                              Container(
-                                                width: 80,
-                                                height: 80,
-                                                color: Colors.grey[200],
-                                              ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              meal.name,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 4),
-                                            Text(
-                                              meal.description,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                color: Colors.grey[600],
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.star,
-                                                  color: Colors.orange,
-                                                  size: 16,
-                                                ),
-                                                const SizedBox(width: 4),
-                                                Text(
-                                                  "${meal.rating.toStringAsFixed(1)}",
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Text(
-                                                  "\$${meal.sizes.first.price.toStringAsFixed(2)}",
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ]),
-                      ),
-                    ),
-                  ],
-                );
-              } else if (state is RestaurantViewError) {
-                return Center(child: Text("Error: ${state.message}"));
-              } else {
-                return const SizedBox();
-              }
+              final email = state.extra as String;
+              return SentOtp(email: email);
             },
           ),
-        ),
+          GoRoute(
+            path: kResetPassword,
+            builder: (context, state) {
+              final map = state.extra as Map<String, dynamic>;
+              return ConfiremPassword(email: map['email'], otp: map['otp']);
+            },
+          ),
+          GoRoute(
+            path: kVerifyEmail,
+            builder: (context, state) {
+              final email = state.extra as String;
+              return VertificationView(email: email);
+            },
+          ),
+          GoRoute(path: kChatView, builder: (_, __) => const ChatScreen()),
+          GoRoute(path: kMessageListView, builder: (_, __) => ChatListScreen()),
+          GoRoute(path: kReviewView, builder: (_, __) => ReviewScreen()),
+          GoRoute(path: kAddReviewView, builder: (_, __) => AddReview()),
+          GoRoute(path: kCartView, builder: (_, __) => CartView()),
+          GoRoute(
+            path: kSucessPaymentView,
+            builder: (_, __) => SucessPayment(),
+          ),
+          GoRoute(
+            path: kNotificationView,
+            builder: (_, __) => NotificationScreen(),
+          ),
+          GoRoute(path: kHomeUserView, builder: (_, __) => HomeUserView()),
+
+          GoRoute(
+            path: kAllRestaurantsView,
+            builder: (_, __) => const AllRestaurantsScreen(),
+          ),
+          GoRoute(path: kChifFoodList, builder: (_, __) => MyFoodList()),
+          GoRoute(path: kAddNewItem, builder: (_, __) => AddNewItems()),
+          GoRoute(
+            path: kChifHome,
+            builder: (_, state) {
+              final chef = state.extra as UserModel;
+              return ChifHomeView(chefModel: chef);
+            },
+          ),
+          GoRoute(
+            path: kChatListView,
+            builder: (_, __) => ChiefChatList.ChatListScreenChief(),
+          ),
+          GoRoute(
+            path: kChatChiefView,
+            builder: (_, __) => ChiefChatScreen.ChatScreenChief(),
+          ),
+          GoRoute(path: kMenuChiefView, builder: (_, __) => ChiefMenuScreen()),
+          GoRoute(path: kWithdrawView, builder: (_, __) => WithdrawView()),
+
+          GoRoute(
+            path: kPersonalInfoProfileView,
+            builder: (_, __) => PersonalInfoView(),
+          ),
+          GoRoute(
+            path: kEditProfileView,
+            builder: (_, __) => EditProfileView(),
+          ),
+          GoRoute(path: kMenuProfileView, builder: (_, __) => MenuView()),
+          GoRoute(path: kSearchScreenView, builder: (_, __) => SearchScreen()),
+          GoRoute(path: kFoodScreenView, builder: (_, __) => FoodScreen()),
+          GoRoute(
+            path: kFoodDetailsScreenView,
+            builder: (_, state) {
+              final int id = state.extra as int;
+              return FoodDetailsScreen(foodId: id);
+            },
+          ),
+          GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
+          GoRoute(
+            path: kAddAddressView,
+            builder: (_, __) => AddNewAddressView(),
+          ),
+          GoRoute(path: kFQS, builder: (_, __) => const FAQsScreen()),
+          GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),
+          GoRoute(path: kOrder, builder: (_, __) => const MyOrdersView()),
+          GoRoute(
+            path: kResturantReview,
+            builder: (_, __) => ReviewResturantScreen(),
+          ),
+          GoRoute(
+            path: kChifFoodDetails,
+            builder: (_, state) {
+              final meal = state.extra as Meal;
+              return FoodDetailsPage(meal: meal);
+            },
+          ),
+        ],
       ),
-    );
-  }
+    ],
+  );
 }

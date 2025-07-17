@@ -30,9 +30,9 @@ import 'package:restaurant/features/address/presentaion/view/address_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
+import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
-import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/reviews/presentation/views/review_resturant.dart';
@@ -100,7 +100,12 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kOnboardingView,
-        builder: (context, state) => HomeUserView(),
+        builder: (context, state) => OnboardingPage(),
+      ),
+      GoRoute(
+        path: '/chat',
+        name: 'chat', // This name must be unique
+        builder: (context, state) => const ChatScreen(),
       ),
       GoRoute(path: kLoginView, builder: (context, state) => LoginView()),
       GoRoute(
@@ -122,78 +127,41 @@ abstract class AppRouter {
           return SentOtp(email: email);
         },
       ),
-      GoRoute(
-        path: kChatView,
-        name: "chat",
-        builder: (context, state) => const ChatScreen(),
-      ),
-      GoRoute(
-        path: kChatView,
-        name: "chat",
-        builder: (context, state) => const ChatScreen(),
-      ),
+      GoRoute(path: kChatView, builder: (context, state) => const ChatScreen()),
+      GoRoute(path: kChatView, builder: (context, state) => const ChatScreen()),
 
       GoRoute(
         path: kChifFoodDetails,
-        name: "chifFoodDetails",
         builder: (context, state) {
           final meal = state.extra as Meal;
           return FoodDetailsPage(meal: meal);
         },
       ),
 
-      GoRoute(
-        path: kAddNewItem,
-        name: "addNewItem",
-        builder: (context, state) => AddNewItems(),
-      ),
-      GoRoute(
-        path: kChifFoodList,
-        name: "chifFoodList",
-        builder: (context, state) => MyFoodList(),
-      ),
+      GoRoute(path: kAddNewItem, builder: (context, state) => AddNewItems()),
+      GoRoute(path: kChifFoodList, builder: (context, state) => MyFoodList()),
       GoRoute(
         path: kMessageListView,
-        name: "messageList",
         builder: (context, state) => ChatListScreen(),
       ),
-      GoRoute(
-        path: kReviewView,
-        name: "review",
-        builder: (context, state) => ReviewScreen(),
-      ),
-      GoRoute(
-        path: kAddReviewView,
-        name: "addReview",
-        builder: (context, state) => AddReview(),
-      ),
-      GoRoute(
-        path: kCartView,
-        name: "cart",
-        builder: (context, state) => CartView(),
-      ),
+      GoRoute(path: kReviewView, builder: (context, state) => ReviewScreen()),
+      GoRoute(path: kAddReviewView, builder: (context, state) => AddReview()),
+      GoRoute(path: kCartView, builder: (context, state) => CartView()),
 
       GoRoute(
         path: kSucessPaymentView,
-        name: "sucessPayment",
         builder: (context, state) => SucessPayment(),
       ),
 
       GoRoute(
         path: kNotificationView,
-        name: "notification",
         builder: (context, state) => NotificationScreen(),
       ),
       GoRoute(
         path: kResturantReview,
-        name: "resturantReview",
         builder: (context, state) => ReviewResturantScreen(),
       ),
       GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
-      GoRoute(
-        path: krestaurantView,
-        builder: (context, state) => const RestaurantViewScreen(),
-      ),
       GoRoute(
         path: kChatListView,
         builder: (context, state) => ChatListScreenChief(),
@@ -230,10 +198,6 @@ abstract class AppRouter {
         },
       ),
 
-      GoRoute(
-        path: kRestaurantViewVersion,
-        builder: (context, state) => const RestaurantViewScreen(),
-      ),
       GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
       GoRoute(path: kFQS, builder: (_, __) => const FAQsScreen()),
       GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),

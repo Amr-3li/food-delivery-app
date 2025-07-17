@@ -33,7 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "Location",
+              "chef",
               style: TextStyle(fontSize: 12, color: Colors.grey),
             ),
             Text(

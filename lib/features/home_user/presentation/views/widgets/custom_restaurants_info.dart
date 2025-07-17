@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
-import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/icons.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
@@ -18,9 +16,7 @@ class CustomRestorantInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.push(AppRouter.kRestaurantView, extra: restaurant.id);
-      },
+      onTap: () {},
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -12,7 +12,7 @@ import 'package:restaurant/features/chief_part/widgets/custom_bottomnavigation_b
 
 class ChifHomeView extends StatefulWidget {
   const ChifHomeView({super.key, required this.chefModel});
-final UserModel chefModel;
+  final UserModel chefModel;
   @override
   State<ChifHomeView> createState() => _ChifHomeViewState();
 }
@@ -26,7 +26,7 @@ class _ChifHomeViewState extends State<ChifHomeView> {
             ..fetchInitialData(), // Changed to fetchInitialData
       child: Scaffold(
         appBar: CustomAppBar(
-          dynamicText: "Hotel Lab",
+          dynamicText: 'Erik Oberbrunner',
           onLeadingPressed: () {
             GoRouter.of(context).push(AppRouter.kMenuChiefView);
             debugPrint("Leading button pressed");
