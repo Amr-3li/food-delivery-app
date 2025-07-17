@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
-import 'package:restaurant/features/menu/data/repo/menu/menu_repo.dart';
+import 'package:restaurant/features/auth/views/cubit/auth_cubit.dart/auth_cubit.dart';
+
 import 'package:restaurant/features/menu/data/repo/menu/menu_repo_implemation.dart';
 import 'package:restaurant/features/menu/presentation/manger/menu/menu_cubit.dart';
 import '../../../data/models/menu_group_list.dart';
@@ -37,13 +38,18 @@ class MenuViewBody extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) => CustomMenuList(
                   menuGroup: menuGroups[index],
-                  onTap: () {
-                    context.push(
-                      menuGroups[index].items[index].route ??
-                          AppRouter.kAddresses,
-                    );
+                  onItemTap: (item) {
+                    if (item.isLogout) {
+                      context
+                          .read<AuthCubit>()
+                          .logout(); // 🔐 call Cubit logout
+                      context.go(AppRouter.kLoginView);
+                    } else if (item.route != null) {
+                      context.push(item.route!); // ➡️ navigate normally
+                    }
                   },
                 ),
+
                 separatorBuilder: (context, index) => SizedBox(height: 16),
                 itemCount: menuGroups.length,
               ),

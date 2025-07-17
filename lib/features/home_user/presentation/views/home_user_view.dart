@@ -86,7 +86,7 @@ class HomeUserView extends StatelessWidget {
                       child: SubTitleAllCategories(
                         subTitle: "All Categories",
                         onTap: () {
-                          context.push(AppRouter.kFoodScreenView);
+                          context.push(AppRouter.kAllCategoryView);
                         },
                       ),
                     ),
@@ -121,7 +121,8 @@ class HomeUserView extends StatelessWidget {
                                         imageUrl: category.image,
                                         onTap: () {
                                           context.push(
-                                            AppRouter.kFoodScreenView,
+                                            AppRouter.kFoodDetailsScreenView,
+                                            extra: category.id,
                                           );
                                         },
                                       );
@@ -145,7 +146,7 @@ class HomeUserView extends StatelessWidget {
                       child: SubTitleAllCategories(
                         subTitle: "Open Restaurants",
                         onTap: () {
-                          context.push(AppRouter.krestaurantView);
+                          context.push(AppRouter.kAllRestaurantsView);
                         },
                       ),
                     ),

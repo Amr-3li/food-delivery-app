@@ -11,6 +11,7 @@ import 'package:restaurant/features/food_details/presentation/cubit/food_details
 import 'package:restaurant/features/food_details/presentation/cubit/food_details_state.dart';
 import 'package:restaurant/features/food_details/presentation/widgets/quantity_selector.dart';
 import 'package:restaurant/features/food_details/presentation/widgets/size_selector.dart';
+import 'package:sizer/sizer.dart';
 
 class FoodDetailsScreen extends StatelessWidget {
   const FoodDetailsScreen({super.key, required this.foodId});
@@ -93,7 +94,18 @@ class FoodDetailsScreen extends StatelessWidget {
                       IconButton(
                         icon: const Icon(Icons.favorite, color: Colors.orange),
                         onPressed: () {
-                          context.push(AppRouter.kFavorite);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Added to favorites"),
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                50,
+                                168,
+                                20,
+                              ),
+                              duration: const Duration(seconds: 1),
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -141,38 +153,38 @@ class FoodDetailsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           const SizeSelector(),
-                          const SizedBox(height: 24),
-                          const Text(
-                            "INGREDIENTS:",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 8),
-                          Center(
-                            child: CircleAvatar(
-                              backgroundColor: Colors.orange[50],
-                              radius: 24,
-                              child: Text(
-                                food.ingredient.isNotEmpty
-                                    ? food.ingredient[0]
-                                    : '?',
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 32),
-                          Row(
-                            children: const [
-                              Text(
-                                "\$32",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Spacer(),
-                              QuantitySelector(),
-                            ],
-                          ),
+                          SizedBox(height: 20.h),
+                          // const Text(
+                          //   "INGREDIENTS:",
+                          //   style: TextStyle(fontWeight: FontWeight.bold),
+                          // ),
+                          // const SizedBox(height: 8),
+                          // Center(
+                          //   child: CircleAvatar(
+                          //     backgroundColor: Colors.orange[50],
+                          //     radius: 24,
+                          //     child: Text(
+                          //       food.ingredient.isNotEmpty
+                          //           ? food.ingredient[0]
+                          //           : '?',
+                          //       style: const TextStyle(fontSize: 16),
+                          //     ),
+                          //   ),
+                          // ),
+                          // SizedBox(height: 20.h),
+                          // Row(
+                          //   children: const [
+                          //     Text(
+                          //       "\$32",
+                          //       style: TextStyle(
+                          //         fontSize: 18,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          //     ),
+                          //     Spacer(),
+                          //     QuantitySelector(),
+                          //   ],
+                          // ),
                           const SizedBox(height: 16),
                           Builder(
                             builder: (buttonContext) => SizedBox(

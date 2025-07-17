@@ -5,10 +5,16 @@ import 'package:restaurant/features/auth/data/models/user_model.dart';
 import '../../../../core/error/failure.dart';
 
 abstract class AuthRepo {
-Future<Either<void , Failure>>userRegister({required UserModel userModel});
-Future<Either<UserData , Failure>>userLogin({required String email , required String password});
-Future<Either<void , Failure>>forgetPassword({required UserModel userModel});
-Future<Either<void , Failure>>sendOtp({required String email});
-Future<Either<void , Failure>>verifyEmail({required String email ,  required String otp});
-
+  Future<Either<void, Failure>> userRegister({required UserModel userModel});
+  Future<Either<UserData, Failure>> userLogin({
+    required String email,
+    required String password,
+  });
+  Future<Either<void, Failure>> forgetPassword({required UserModel userModel});
+  Future<Either<void, Failure>> sendOtp({required String email});
+  Future<Either<void, Failure>> verifyEmail({
+    required String email,
+    required String otp,
+  });
+  Future<Either<Failure, void>> logout();
 }

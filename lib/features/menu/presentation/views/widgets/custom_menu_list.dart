@@ -10,11 +10,11 @@ class CustomMenuList extends StatelessWidget {
   const CustomMenuList({
     super.key,
     required this.menuGroup,
-    required this.onTap,
+    required this.onItemTap,
   });
 
   final MenuGroup menuGroup;
-  final void Function()? onTap;
+  final void Function(MenuItem item) onItemTap;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +31,7 @@ class CustomMenuList extends StatelessWidget {
                 name: item.title,
                 icon: item.icon,
                 data: item.data,
-                onTap: item.route != null
-                    ? () => context.push(item.route!)
-                    : null,
+                onTap: () => onItemTap(item),
               ),
             )
             .toList(),

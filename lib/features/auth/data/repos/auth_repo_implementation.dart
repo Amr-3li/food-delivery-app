@@ -130,4 +130,22 @@ class AuthRepoImplementation extends AuthRepo {
       return Right(Failure(errorMessage: apiResponse.message));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> logout() async {
+    try {
+      final response = await apiHelper.postRequest(
+        endPoint: EndPoints.logout,
+        isProtected: true, // Requires auth token
+      );
+
+      if (response.status) {
+        return const Right(null); // Success
+      } else {
+        return Left(Failure(errorMessage: response.message ?? 'Logout failed'));
+      }
+    } catch (e) {
+      return Left(Failure(errorMessage: e.toString()));
+    }
+  }
 }

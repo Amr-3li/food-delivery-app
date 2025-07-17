@@ -20,7 +20,7 @@ class PersonalInfoViewBody extends StatelessWidget {
           CustomUserInfo(userModel: userModel),
           const SizedBox(height: 28),
           CustomMenuList(
-            onTap: () {},
+            onItemTap: (item) {},
             menuGroup: MenuGroup(
               items: [
                 MenuItem(

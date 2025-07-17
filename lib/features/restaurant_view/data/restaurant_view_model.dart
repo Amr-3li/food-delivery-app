@@ -58,36 +58,36 @@ class MealModel {
   }
 }
 
-class CategoryModel {
-  final int id;
-  final String name;
-  final String? image;
-  final String mealType;
-  final List<MealModel> meals;
+// class CategoryModel {
+//   final int id;
+//   final String name;
+//   final String? image;
+//   final String mealType;
+//   final List<MealModel> meals;
 
-  CategoryModel({
-    required this.id,
-    required this.name,
-    this.image,
-    required this.mealType,
-    required this.meals,
-  });
+//   CategoryModel({
+//     required this.id,
+//     required this.name,
+//     this.image,
+//     required this.mealType,
+//     required this.meals,
+//   });
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    return CategoryModel(
-      id: json['category']['id'],
-      name: json['category']['name'] ?? 'Unnamed Category',
-      image:
-          json['category']['image'] ??
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzDXmfrBvj-07Fz17-V1BCk9C16ODy8yGGCQ&s",
+// factory CategoryModel.fromJson(Map<String, dynamic> json) {
+//   return CategoryModel(
+//     id: json['category']['id'],
+//     name: json['category']['name'] ?? 'Unnamed Category',
+//     image:
+//         json['category']['image'] ??
+//         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzDXmfrBvj-07Fz17-V1BCk9C16ODy8yGGCQ&s",
 
-      mealType: json['category']['meal_type'] ?? '',
-      meals: (json['meals'] as List)
-          .map((meal) => MealModel.fromJson(meal))
-          .toList(),
-    );
-  }
-}
+//     mealType: json['category']['meal_type'] ?? '',
+//     meals: (json['meals'] as List)
+//         .map((meal) => MealModel.fromJson(meal))
+//         .toList(),
+//   );
+// }
+//}
 
 class RestaurantModel {
   final int id;
@@ -128,16 +128,19 @@ class RestaurantModel {
 
 class RestaurantViewModel {
   final RestaurantModel restaurant;
-  final List<CategoryModel> categories;
+  // final List<CategoryModel> categories;
 
-  RestaurantViewModel({required this.restaurant, required this.categories});
+  RestaurantViewModel({
+    required this.restaurant,
+    // required this.categories
+  });
 
   factory RestaurantViewModel.fromJson(Map<String, dynamic> json) {
     return RestaurantViewModel(
       restaurant: RestaurantModel.fromJson(json['Resturant']),
-      categories: (json['menu']['categories'] as List)
-          .map((e) => CategoryModel.fromJson(e))
-          .toList(),
+      // categories: (json['menu']['categories'] as List)
+      //     .map((e) => CategoryModel.fromJson(e))
+      //     .toList(),
     );
   }
 }
