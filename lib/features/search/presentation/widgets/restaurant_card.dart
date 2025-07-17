@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class ResturantCard extends StatelessWidget {
   final String name;
-  final double rating;
-
-  const ResturantCard({super.key, required this.name, required this.rating});
+  final String rating;
+final String url;
+  const ResturantCard({super.key, required this.name, required this.rating, required this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class ResturantCard extends StatelessWidget {
           Container(
             width: 50,
             height: 50,
-            color: Colors.grey[400],
+            decoration: BoxDecoration(image:DecorationImage(image: NetworkImage(url) , fit: BoxFit.cover)),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -27,7 +27,7 @@ class ResturantCard extends StatelessWidget {
                   children: [
                     const Icon(Icons.star, size: 16, color: Colors.orange),
                     const SizedBox(width: 4),
-                    Text(rating.toString(), style: const TextStyle(fontSize: 14)),
+                    Text(rating, style: const TextStyle(fontSize: 14)),
                   ],
                 ),
               ],

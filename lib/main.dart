@@ -18,19 +18,16 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   setupLocator();
-  setupLocator();
   await CacheData.initialize(
     '15|XBQPpJMvRvQUCQufbI3Fl7OMvQTl5a9RNPJMe2oqc4067452',
   );
 
   await CacheHelper.init();
-  await CacheHelper.init();
+ 
 
   Stripe.publishableKey = APIKey.stripePublishableKey;
-  Stripe.publishableKey = APIKey.stripePublishableKey;
+  runApp(const MyApp());
 
-  runApp(const MyApp());
-  runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

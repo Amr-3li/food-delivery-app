@@ -5,10 +5,10 @@ import 'package:restaurant/features/search/data/search_repos/search_repo.dart';
 class SearchCubit extends Cubit<SearchStates>{
   SearchCubit(this.searchRepo):super(InitialState());
 final SearchRepo searchRepo;
-getResult({required String search}){
+getResult({required String search})async{
 emit(LoadingState());
-var result = searchRepo.searchRequest(search: search);
-
+var result =await searchRepo.searchRequest(search: search);
+result.fold((right)=>emit(SuccessSearch(results: right)), (left)=>emit(FailureState(errorMessage: left.errorMessage)));
 }
 
 }

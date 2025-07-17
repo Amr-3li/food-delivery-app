@@ -1,4 +1,5 @@
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/views/vertification_view.dart';
@@ -39,6 +40,8 @@ import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/reviews/presentation/views/review_resturant.dart';
+import 'package:restaurant/features/search/data/search_cubit/search_cubit.dart';
+import 'package:restaurant/features/search/data/search_repos/search_repo_implementation.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 
@@ -208,7 +211,11 @@ abstract class AppRouter {
       GoRoute(path: kMenuProfileView, builder: (context, state) => MenuView()),
       GoRoute(
         path: kSearchScreenView,
-        builder: (context, state) => SearchScreen(),
+        builder: (context, state) => BlocProvider(
+      create: (context) => SearchCubit(SearchRepoImplementation(), ),
+      child: SearchScreen(),
+      ),
+      
       ),
       GoRoute(path: kFoodScreenView, builder: (context, state) => FoodScreen()),
       GoRoute(
