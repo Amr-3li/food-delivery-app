@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_cubit.dart';
 
 class FilterSheet extends StatefulWidget {
-  const FilterSheet({super.key});
+  final Function(int rate, int price) onFilterApplied;
+
+  const FilterSheet({super.key, required this.onFilterApplied});
 
   @override
   State<FilterSheet> createState() => _FilterSheetState();
@@ -103,17 +103,8 @@ class _FilterSheetState extends State<FilterSheet> {
                 final price = _priceController.text.isNotEmpty
                     ? int.parse(_priceController.text)
                     : 0;
-
-                // Get the cubit instance
-                final restaurantCubit = context.read<RestaurantViewCubit>();
-
-                // Apply filters
-                restaurantCubit.getFilteredRestaurantView(
-                  rate: selectedRating,
-                  price: price,
-                );
-
-                Navigator.pop(context); // Close sheet
+                widget.onFilterApplied(selectedRating, price);
+                Navigator.pop(context);
               },
               child: const Text(
                 'FILTER',
