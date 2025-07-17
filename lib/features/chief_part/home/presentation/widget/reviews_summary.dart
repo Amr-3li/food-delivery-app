@@ -3,14 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 
 class ReviewsSummary extends StatelessWidget {
-  final double rating; // Variable rating (e.g., 4.9)
-  final int reviewCount; // Variable review count (e.g., 20)
-
-  const ReviewsSummary({
-    super.key,
-    required this.rating,
-    required this.reviewCount,
-  });
+  const ReviewsSummary({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +26,6 @@ class ReviewsSummary extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -44,12 +36,11 @@ class ReviewsSummary extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       GoRouter.of(context).push(AppRouter.kReviewView);
-                      // Navigate to all reviews screen
                     },
                     child: const Text(
                       'See All Reviews',
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.orange,
                         decoration: TextDecoration.underline,
                       ),
                     ),
@@ -57,28 +48,23 @@ class ReviewsSummary extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8),
-
-              // Rating Summary
               Row(
                 children: [
-                  // Star Icon
                   const Icon(Icons.star, color: Colors.amber, size: 28),
                   const SizedBox(width: 8),
-
-                  // Rating Text
                   RichText(
                     text: TextSpan(
                       style: DefaultTextStyle.of(context).style,
                       children: [
                         TextSpan(
-                          text: '$rating', // Dynamic rating
+                          text: '5',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         TextSpan(
-                          text: ' Total $reviewCount Reviews', // Dynamic count
+                          text: ' Total 3 Reviews',
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.grey,

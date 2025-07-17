@@ -15,34 +15,37 @@ class CustomRestorantInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomNetworkImage(
-          imageUrl:
-              "https://popmenucloud.com/cdn-cgi/image/width%3D1200%2Cheight%3D1200%2Cfit%3Dscale-down%2Cformat%3Dauto%2Cquality%3D60/evuzicja/678850d5-0715-407f-92dd-499326242d71.jpg",
-          width: 327,
-          height: 140,
-        ),
-        Text(restaurant.name, style: Styles.textStyle20),
-        Text(
-          restaurant.description,
-          style: Styles.textStyle14.copyWith(color: ColorsHelper.grayWords),
-        ),
-        SizedBox(height: AppResponsive.height(context, value: 10)),
-        Row(
-          children: [
-            CustomIconsTitl(
-              title: ' ${restaurant.averageRating}',
-              iconUrl: AppIcons.iStar,
-            ),
-            SizedBox(width: AppResponsive.width(context, value: 12)),
-            CustomIconsTitl(title: ' Free', iconUrl: AppIcons.iCar),
-            SizedBox(width: AppResponsive.width(context, value: 12)),
-            CustomIconsTitl(title: ' 20 min', iconUrl: AppIcons.iWatch),
-          ],
-        ),
-      ],
+    return GestureDetector(
+      onTap: () {},
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomNetworkImage(
+            imageUrl:
+                "https://popmenucloud.com/cdn-cgi/image/width%3D1200%2Cheight%3D1200%2Cfit%3Dscale-down%2Cformat%3Dauto%2Cquality%3D60/evuzicja/678850d5-0715-407f-92dd-499326242d71.jpg",
+            width: 327,
+            height: 140,
+          ),
+          Text(restaurant.name, style: Styles.textStyle20),
+          Text(
+            restaurant.description,
+            style: Styles.textStyle14.copyWith(color: ColorsHelper.grayWords),
+          ),
+          SizedBox(height: AppResponsive.height(context, value: 10)),
+          Row(
+            children: [
+              CustomIconsTitl(
+                title: ' ${restaurant.averageRating}',
+                iconUrl: AppIcons.iStar,
+              ),
+              SizedBox(width: AppResponsive.width(context, value: 12)),
+              CustomIconsTitl(title: ' Free', iconUrl: AppIcons.iCar),
+              SizedBox(width: AppResponsive.width(context, value: 12)),
+              CustomIconsTitl(title: ' 20 min', iconUrl: AppIcons.iWatch),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

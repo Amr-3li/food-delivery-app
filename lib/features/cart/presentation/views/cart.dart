@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
-
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
-import 'package:restaurant/features/address/presentaion/manger/add_address/add_address_cubit.dart';
 import 'package:restaurant/features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
-
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_states.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/back_icon_appbar.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/cart_item_container.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/container_bottom_navigator_bar.dart';
-
 import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
 import 'package:sizer/sizer.dart';
 
@@ -28,16 +23,10 @@ class _CartViewState extends State<CartView> {
   String addressTitle = "2118 Thornridge Cir. Syracuse";
 
   @override
-  void initState() {
-    super.initState();
-    // Fetch cart when the view initializes
-    // context.read<CartCubit>().getCart();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        // ✅ FIX: Call getCart immediately when providing CartCubit
         BlocProvider(create: (_) => sl<CartCubit>()..getCart()),
         BlocProvider(create: (_) => sl<PaymentCubit>()),
         BlocProvider(create: (_) => sl<GetAddressesCubit>()),
@@ -48,9 +37,7 @@ class _CartViewState extends State<CartView> {
           backgroundColor: Colors.black54,
           leading: BackIconAppBar(
             iconColor: Colors.white.withValues(alpha: .3),
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: () => Navigator.pop(context),
           ),
           title: Text(
             "Cart",
@@ -101,7 +88,8 @@ class _CartViewState extends State<CartView> {
                   return CartItemContainer(
                     imageName: item.dish.image,
                     title: item.dish.name,
-                    price: '\$${item.price.toStringAsFixed(2) * item.quantity}',
+                    price:
+                        '\$${(item.price * item.quantity).toStringAsFixed(2)}',
                     portion: item.quantity,
                     removeItemCart: () {
                       context.read<CartCubit>().deleteCartItem(item.id);

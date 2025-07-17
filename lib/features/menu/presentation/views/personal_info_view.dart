@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
+
+import 'package:restaurant/features/menu/presentation/manger/menu/menu_cubit.dart';
 import 'package:restaurant/features/menu/presentation/views/widgets/personal_info_view_body.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -46,7 +49,16 @@ class PersonalInfoView extends StatelessWidget {
           ),
         ],
       ),
-      body: PersonalInfoViewBody(),
+      body: BlocBuilder<MenuCubit, MenuState>(
+        builder: (context, state) {
+          if (MenuCubit.get(context).userModel != null) {
+            return PersonalInfoViewBody(
+              userModel: MenuCubit.get(context).userModel!,
+            );
+          }
+          return PersonalInfoViewBody();
+        },
+      ),
     );
   }
 }

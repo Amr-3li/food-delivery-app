@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/error/failure.dart';

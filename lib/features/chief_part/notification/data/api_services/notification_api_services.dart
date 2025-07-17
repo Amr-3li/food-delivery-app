@@ -25,6 +25,7 @@ class NotificationServicesApi {
       final response = await apiHelper.getRequest(
         endPoint: '${APIKey.baseApiUrl}/notifications',
         isProtected: true,
+        isFormData: false,
       );
 
       if (response.statusCode == 200) {
@@ -52,6 +53,7 @@ class NotificationServicesApi {
       await apiHelper.patch(
         endPoint: '${APIKey.baseApiUrl}/notifications/$notificationId/read',
         isProtected: true,
+        isFormData: false,
       );
       return const Right(unit);
     } on DioException catch (e) {

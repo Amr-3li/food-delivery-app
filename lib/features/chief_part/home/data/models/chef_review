@@ -1,0 +1,17 @@
+
+class ChefReviewsSummary {
+  final double averageRating;
+  final int totalReviews;
+
+  ChefReviewsSummary({
+    required this.averageRating,
+    required this.totalReviews,
+  });
+
+  factory ChefReviewsSummary.fromJson(Map<String, dynamic> json) {
+    return ChefReviewsSummary(
+      averageRating: (json['average_rating'] as num).toDouble(),
+      totalReviews: json['total_reviews'],
+    );
+  }
+}

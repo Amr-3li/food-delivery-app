@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FilterSheet extends StatefulWidget {
-  const FilterSheet({super.key});
+  final Function(int rate, int price) onFilterApplied;
+
+  const FilterSheet({super.key, required this.onFilterApplied});
 
   @override
   State<FilterSheet> createState() => _FilterSheetState();
 }
 
 class _FilterSheetState extends State<FilterSheet> {
-  String selectedDelivery = 'Delivery';
-  String selectedTime = '10-15 min';
-  String selectedPrice = '\$\$';
+  final TextEditingController _priceController = TextEditingController();
   int selectedRating = 3;
+
+  @override
+  void dispose() {
+    _priceController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -41,80 +48,40 @@ class _FilterSheetState extends State<FilterSheet> {
           ),
           const SizedBox(height: 24),
 
-          const _SectionTitle(title: 'OFFERS'),
+          const _SectionTitle(title: 'PRICE RANGE'),
           const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: ['Delivery', 'Pick Up', 'Offer', 'Online payment available']
-                .map((label) => _FilterChip(
-                      label: label,
-                      selected: selectedDelivery == label,
-                      onTap: () {
-                        setState(() {
-                          selectedDelivery = label;
-                        });
-                      },
-                    ))
-                .toList(),
+          TextField(
+            controller: _priceController,
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            decoration: InputDecoration(
+              hintText: 'Enter max price',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            ),
           ),
 
           const SizedBox(height: 24),
-          const _SectionTitle(title: 'DELIVER TIME'),
-          const SizedBox(height: 8),
-          Row(
-            children: ['10-15 min', '20 min', '30 min']
-                .map((label) => Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: _TimeChip(
-                        label: label,
-                        selected: selectedTime == label,
-                        onTap: () {
-                          setState(() {
-                            selectedTime = label;
-                          });
-                        },
-                      ),
-                    ))
-                .toList(),
-          ),
-
-          const SizedBox(height: 24),
-          const _SectionTitle(title: 'PRICING'),
-          const SizedBox(height: 8),
-          Row(
-            children: ['S', '\$\$', '\$\$\$']
-                .map((label) => Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: _PriceChip(
-                        label: label,
-                        selected: selectedPrice == label,
-                        onTap: () {
-                          setState(() {
-                            selectedPrice = label;
-                          });
-                        },
-                      ),
-                    ))
-                .toList(),
-          ),
-
-          const SizedBox(height: 24),
-          const _SectionTitle(title: 'RATING'),
+          const _SectionTitle(title: 'MINIMUM RATING'),
           const SizedBox(height: 8),
           Row(
             children: List.generate(5, (index) {
               return GestureDetector(
                 onTap: () {
                   setState(() {
-                    selectedRating = index;
+                    selectedRating = index + 1; // 1-5 stars
                   });
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Icon(
                     Icons.star,
-                    color: index == selectedRating ? Colors.orange : Colors.grey[400],
+                    color: index < selectedRating
+                        ? Colors.orange
+                        : Colors.grey[400],
+                    size: 32,
                   ),
                 ),
               );
@@ -133,16 +100,18 @@ class _FilterSheetState extends State<FilterSheet> {
                 ),
               ),
               onPressed: () {
-                // Example: Print selected filters
-                print("Delivery: $selectedDelivery");
-                print("Time: $selectedTime");
-                print("Price: $selectedPrice");
-                print("Rating: ${selectedRating + 1} stars");
-                Navigator.pop(context); // Close sheet
+                final price = _priceController.text.isNotEmpty
+                    ? int.parse(_priceController.text)
+                    : 0;
+                widget.onFilterApplied(selectedRating, price);
+                Navigator.pop(context);
               },
-              child: const Text('FILTER', style: TextStyle(color: Colors.white)),
+              child: const Text(
+                'FILTER',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -159,95 +128,6 @@ class _SectionTitle extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  const _FilterChip({required this.label, this.selected = false, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.circular(20),
-          color: selected ? Colors.orange : Colors.white,
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: selected ? Colors.white : Colors.black,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TimeChip extends StatelessWidget {
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  const _TimeChip({required this.label, this.selected = false, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: selected ? Colors.orange : Colors.grey.shade200,
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: selected ? Colors.white : Colors.black,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _PriceChip extends StatelessWidget {
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  const _PriceChip({required this.label, this.selected = false, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: selected ? Colors.orange : Colors.grey.shade200,
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: selected ? Colors.white : Colors.black,
-          ),
-        ),
-      ),
     );
   }
 }

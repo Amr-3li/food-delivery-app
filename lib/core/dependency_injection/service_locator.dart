@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:restaurant/core/constant_text.dart';
 import 'package:restaurant/core/helper/dio_with_auth.dart';
+import 'package:restaurant/core/network/network_info.dart';
 
 import 'package:restaurant/features/address/data/repo/get_addresses/get_addresses_repo_implemation.dart';
 import 'package:restaurant/features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
@@ -83,4 +84,7 @@ void setupLocator() {
   sl.registerLazySingleton(() => RestaurantViewCubit(sl()));
   sl.registerLazySingleton(() => FoodUserRepository());
   sl.registerLazySingleton(() => FoodUserCubit(sl()));
+
+  // Registering the NetworkInfo
+  sl.registerLazySingleton(() => NetworkInfo());
 }

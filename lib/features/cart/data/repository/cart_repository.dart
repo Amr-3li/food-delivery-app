@@ -5,26 +5,16 @@ import '../models/cart_model.dart';
 
 class CartRepository extends CartAbstractRepository {
   final CartApiServices cartApiService;
-  List<CartModel> _cartItems = [];
   CartRepository(this.cartApiService);
 
   @override
   Future<List<CartModel>> getCart() => cartApiService.getCart();
   @override
-  Future<void> fetchCart() async {
-    _cartItems = await cartApiService.getCart();
-  }
+  Future<void> fetchCart() async {}
 
   @override
-  Future<void> addToCart({
-    required int dishId,
-    required int sizeId,
-    required int quantity,
-  }) => cartApiService.addToCart(
-    dishId: dishId,
-    sizeId: sizeId,
-    quantity: quantity,
-  );
+  Future<void> addToCart({required int dishId, required int price}) =>
+      cartApiService.addToCart(dishId: dishId, price: price);
   @override
   Future<void> updateCartItem({required int itemId, required int quantity}) =>
       cartApiService.updateCartItem(itemId: itemId, quantity: quantity);

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,13 +10,11 @@ import 'package:restaurant/features/chief_part/chat/presentation/views/list_chat
 import 'package:restaurant/features/chief_part/chief_menu/presentation/view/chief_menu.dart';
 import 'package:restaurant/features/chief_part/chief_menu/presentation/view/withdraw.dart';
 import 'package:restaurant/features/chief_part/food_details/presentation/views/chief_food_details_views.dart';
-
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
 import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
 import 'package:restaurant/features/chief_part/add_new_item/presentation/views/add_new_items.dart';
-import 'package:restaurant/features/chief_part/home/presentation/view/popular_term_screen.dart';
 import 'package:restaurant/features/chief_part/my_food_list/data/models/food_list_model.dart';
 import 'package:restaurant/features/chief_part/my_food_list/presentation/views/my_food_list_view.dart';
 import 'package:restaurant/features/chief_part/notification/presentation/view/notification.dart';
@@ -30,6 +30,7 @@ import 'package:restaurant/features/forget_password/presentation/views/sent_otp.
 import 'package:restaurant/features/fqs/presentation/view/fqs.dart';
 import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
 import 'package:restaurant/features/address/presentaion/view/address_view.dart';
+import 'package:restaurant/features/internet/views/internet_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
@@ -46,6 +47,10 @@ import 'package:restaurant/features/search/presentation/views/search_screen.dart
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
+import '../../features/menu/data/repo/menu/menu_repo_implemation.dart';
+import '../../features/menu/presentation/manger/menu/menu_cubit.dart';
+import '../dependency_injection/service_locator.dart';
+import '../network/network_info.dart';
 
 abstract class AppRouter {
   static const kOnboardingView = '/OnboardingView';
@@ -90,6 +95,7 @@ abstract class AppRouter {
   static const String kVerifyEmail = "/vertificationView";
   static const String kSendOtp = "/sendOtp";
   static const String kResetPassword = "/resetPassword";
+  static const kMenuView = "/menuView";
 
   static final router = GoRouter(
     routes: [
@@ -191,15 +197,15 @@ abstract class AppRouter {
         builder: (context, state) => ReviewResturantScreen(),
       ),
       GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
-      GoRoute(path: krestaurantView, builder: (context, state) => const RestaurantViewScreen()),
+      // GoRoute(path: krestaurantView, builder: (context, state) => const RestaurantViewScreen()),
       GoRoute(path: kChatListView, builder: (context, state) => ChatListScreenChief()),
       GoRoute(path: kChatChiefView, builder: (context, state) => ChatScreenChief()),
       GoRoute(path: kMenuChiefView, builder: (context, state) => ChiefMenuScreen()),
       GoRoute(path: kWithdrawView, builder: (context, state) => WithdrawView()),
-      GoRoute(
-        path: kPopularFoodView,
-        builder: (context, state) => PopularFoodScreen(),
-      ),
+      // GoRoute(
+      //   path: kPopularFoodView,
+      //   builder: (context, state) => PopularFoodScreen(),
+      // ),
       GoRoute(
         path: kPersonalInfoProfileView,
         builder: (context, state) => PersonalInfoView(),
@@ -226,11 +232,11 @@ abstract class AppRouter {
         },
       ),
 
-      GoRoute(
-        path: kRestaurantViewVersion,
-        builder: (context, state) =>
-            const RestaurantViewScreen(),
-      ),
+      // GoRoute(
+      //   path: kRestaurantViewVersion,
+      //   builder: (context, state) =>
+      //       const RestaurantViewScreen(),
+      // ),
       GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
       GoRoute(path: kFQS, builder: (_, __) => const FAQsScreen()),
       GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),

@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:restaurant/core/error/failure.dart';
 import 'package:restaurant/features/auth/data/models/user_data/user_data.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
+
+import '../../../../core/error/failure.dart';
 
 abstract class AuthRepo {
 Future<Either<void , Failure>>userRegister({required UserModel userModel});
