@@ -97,9 +97,10 @@ class _AddNewAddressViewBodyState extends State<AddNewAddressViewBody> {
                 onPressedFunction: () {
                   if (widget.addressDetailsModel != null) {
                     AddAddressCubit.get(context).addNewAddress(
-                      latitude: double.parse(widget.addressDetailsModel!.lat!),
-                      longitude: double.parse(widget.addressDetailsModel!.lon!),
+                      latitude: widget.addressDetailsModel!.lat!,
+                      longitude: widget.addressDetailsModel!.lon!,
                       displayName: widget.addressDetailsModel!.displayName,
+                      address: widget.addressDetailsModel!.address?.country,
                       label: label,
                       isDefault: isDefault ?? false,
                     );

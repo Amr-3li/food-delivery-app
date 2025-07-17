@@ -39,7 +39,7 @@ class FoodItemCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 15.h,
+              height: 14.h,
               width: 40.w,
               child: _isImageValid(image)
                   ? CustomNetworkImage(

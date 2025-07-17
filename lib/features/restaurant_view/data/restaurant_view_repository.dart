@@ -8,10 +8,10 @@ class RestaurantViewRepository {
 
   RestaurantViewRepository();
 
-  Future<RestaurantViewModel> fetchRestaurantView() async {
+  Future<RestaurantViewModel> fetchRestaurantView(int id) async {
     try {
       final response = await apiHelper.getRequest(
-        endPoint: '${APIKey.baseApiUrl}/resturants/5',
+        endPoint: '${APIKey.baseApiUrl}/resturants/$id',
       );
 
       if (response.statusCode == 200) {

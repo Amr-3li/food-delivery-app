@@ -22,6 +22,7 @@ class ConversationApiService {
     final response = await apiHelper.getRequest(
       endPoint: '${APIKey.baseApiUrl}/conversations/$conversationId',
       isProtected: true,
+      isFormData: false,
     );
 
     if (response.statusCode == 200) {
@@ -35,6 +36,7 @@ class ConversationApiService {
     final response = await apiHelper.getRequest(
       endPoint: '${APIKey.baseApiUrl}/conversations',
       isProtected: true,
+      isFormData: false,
     );
     final List data = response.data['data']['conversations'];
     return data.map((e) => ConversationPreviewModel.fromJson(e)).toList();

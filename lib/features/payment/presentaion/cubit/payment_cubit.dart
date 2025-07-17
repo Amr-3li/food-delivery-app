@@ -7,7 +7,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   PaymentCubit(this.paymentRepository) : super(PaymentInitial());
 
   Future<void> makePayment({
-    required String courseId,
+    required String orderId,
     required int amount,
     required String currency,
   }) async {

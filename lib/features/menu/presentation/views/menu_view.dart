@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:restaurant/core/helper/app_router.dart';
+
 import 'package:restaurant/features/menu/presentation/views/widgets/menu_view_body.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -31,21 +30,6 @@ class MenuView extends StatelessWidget {
         ),
         toolbarHeight: AppResponsive.height(context, value: 80),
         title: Text('Profile', style: Styles.textStyle18),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: GestureDetector(
-              onTap: () {
-                GoRouter.of(context).push(AppRouter.kEditProfileView);
-              },
-              child: CircleAvatar(
-                radius: 20,
-                backgroundColor: ColorsHelper.lightBabyBlue,
-                child: SvgPicture.asset(AppIcons.assetsMoreHorizontal),
-              ),
-            ),
-          ),
-        ],
       ),
       body: MenuViewBody(),
     );

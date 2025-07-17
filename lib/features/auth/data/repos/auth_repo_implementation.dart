@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+
 import 'package:restaurant/core/cache/secure_cache_helper.dart';
 import 'package:restaurant/core/error/failure.dart';
 import 'package:restaurant/core/network/api_helper.dart';
@@ -9,124 +9,125 @@ import 'package:restaurant/features/auth/data/models/user_data/user_data.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/data/repos/auth_repo.dart';
 
-class AuthRepoImplementation extends AuthRepo{
- final ApiHelper apiHelper= ApiHelper();
- 
-  @override
-  Future<Either<void, Failure>> forgetPassword({required UserModel userModel}) async{
-  try {
-    final response = await apiHelper.postRequest(
-      endPoint: EndPoints.resetPassword,
-      data:userModel.resetPasswordDataToJson(),
-    );
-
-    // final apiResponse = ApiResponse.fromResponse(response as Response);
-
-    if (response.status) {
-      return const Left(null); 
-    } else {
-      return Right(Failure(errorMessage: response.message)); 
-    }
-  } catch (error) {
-    final apiResponse = ApiResponse.fromError(error);
-    return Right(Failure(errorMessage: apiResponse.message));
-  }
-}
+class AuthRepoImplementation extends AuthRepo {
+  final ApiHelper apiHelper = ApiHelper();
 
   @override
-  Future<Either<UserData, Failure>> userLogin({required String email , required String password })async {
+  Future<Either<void, Failure>> forgetPassword({
+    required UserModel userModel,
+  }) async {
     try {
-    final response = await apiHelper.postRequest(
-      endPoint: EndPoints.login,
-      data: {"email":email ,
-      "password":password
-      
-      },
-    );
+      final response = await apiHelper.postRequest(
+        endPoint: EndPoints.resetPassword,
+        data: userModel.resetPasswordDataToJson(),
+      );
 
-    // final apiResponse = ApiResponse.fromResponse(response as Response);
+      // final apiResponse = ApiResponse.fromResponse(response as Response);
 
-    if (response.status) {
-      final userData = UserData.fromJson(response.data);
-      final token = userData.data!.accessToken;
-      if (token != null ) {
-        await SecureCacheHelper.saveData(
-          key: 'token',
-          value: token, 
-        );
+      if (response.status) {
+        return const Left(null);
+      } else {
+        return Right(Failure(errorMessage: response.message));
       }
-   
-      return  Left(userData); 
-    } else {
-      return Right(Failure(errorMessage: response.message)); 
+    } catch (error) {
+      final apiResponse = ApiResponse.fromError(error);
+      return Right(Failure(errorMessage: apiResponse.message));
     }
-  } catch (error) {
-    final apiResponse = ApiResponse.fromError(error);
-    return Right(Failure(errorMessage: apiResponse.message));
-  }
   }
 
   @override
-Future<Either<void, Failure>> userRegister({required UserModel userModel}) async {
-  try {
-    final response = await apiHelper.postRequest(
-      endPoint: EndPoints.register,
-      data: userModel.registerDataToJson(),
-    );
-
-    // final apiResponse = ApiResponse.fromResponse(response as Response);
-
-    if (response.status) {
-      return const Left(null); 
-    } else {
-      return Right(Failure(errorMessage: response.message)); 
-    }
-  } catch (error) {
-    final apiResponse = ApiResponse.fromError(error);
-    return Right(Failure(errorMessage: apiResponse.message));
-  }
-}
-
-  @override
-  Future<Either<void, Failure>> sendOtp({required String email}) async{
+  Future<Either<UserData, Failure>> userLogin({
+    required String email,
+    required String password,
+  }) async {
     try {
-    final response = await apiHelper.postRequest(
-      endPoint: EndPoints.sendOtp,
-      data: {"email":email},
-    );
+      final response = await apiHelper.postRequest(
+        endPoint: EndPoints.login,
+        data: {"email": email, "password": password},
+      );
 
-    if (response.status) {
-      return const Left(null); 
-    } else {
-      return Right(Failure(errorMessage: response.message)); 
+      // final apiResponse = ApiResponse.fromResponse(response as Response);
+
+      if (response.status) {
+        final userData = UserData.fromJson(response.data);
+        final token = userData.data!.accessToken;
+        if (token != null) {
+          await SecureCacheHelper.saveData(key: 'token', value: token);
+        }
+
+        return Left(userData);
+      } else {
+        return Right(Failure(errorMessage: response.message));
+      }
+    } catch (error) {
+      final apiResponse = ApiResponse.fromError(error);
+      return Right(Failure(errorMessage: apiResponse.message));
     }
-  } catch (error) {
-    final apiResponse = ApiResponse.fromError(error);
-    return Right(Failure(errorMessage: apiResponse.message));
   }
-  }
-  
+
   @override
-  Future<Either<void, Failure>> verifyEmail({required String email , required String otp}) async{
-  try {
-    final response = await apiHelper.postRequest(
-      endPoint: EndPoints.verifyEmail,
-      data: {"email":email ,
-      "otp":otp,
-      
-      },
-    );
+  Future<Either<void, Failure>> userRegister({
+    required UserModel userModel,
+  }) async {
+    try {
+      final response = await apiHelper.postRequest(
+        endPoint: EndPoints.register,
+        data: userModel.registerDataToJson(),
+      );
 
-    // final apiResponse = ApiResponse.fromResponse(response as Response);
+      // final apiResponse = ApiResponse.fromResponse(response as Response);
 
-    if (response.status) {
-      return const Left(null); 
-    } else {
-      return Right(Failure(errorMessage: response.message)); 
+      if (response.status) {
+        return const Left(null);
+      } else {
+        return Right(Failure(errorMessage: response.message));
+      }
+    } catch (error) {
+      final apiResponse = ApiResponse.fromError(error);
+      return Right(Failure(errorMessage: apiResponse.message));
     }
-  } catch (error) {
-    final apiResponse = ApiResponse.fromError(error);
-    return Right(Failure(errorMessage: apiResponse.message));
   }
+
+  @override
+  Future<Either<void, Failure>> sendOtp({required String email}) async {
+    try {
+      final response = await apiHelper.postRequest(
+        endPoint: EndPoints.sendOtp,
+        data: {"email": email},
+      );
+
+      if (response.status) {
+        return const Left(null);
+      } else {
+        return Right(Failure(errorMessage: response.message));
+      }
+    } catch (error) {
+      final apiResponse = ApiResponse.fromError(error);
+      return Right(Failure(errorMessage: apiResponse.message));
+    }
+  }
+
+  @override
+  Future<Either<void, Failure>> verifyEmail({
+    required String email,
+    required String otp,
+  }) async {
+    try {
+      final response = await apiHelper.postRequest(
+        endPoint: EndPoints.verifyEmail,
+        data: {"email": email, "otp": otp},
+      );
+
+      // final apiResponse = ApiResponse.fromResponse(response as Response);
+
+      if (response.status) {
+        return const Left(null);
+      } else {
+        return Right(Failure(errorMessage: response.message));
+      }
+    } catch (error) {
+      final apiResponse = ApiResponse.fromError(error);
+      return Right(Failure(errorMessage: apiResponse.message));
+    }
   }
 }

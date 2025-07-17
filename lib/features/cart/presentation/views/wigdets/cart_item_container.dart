@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/add_remove_container.dart';
+import 'package:restaurant/features/home_user/presentation/views/widgets/custom_network_image.dart';
 import 'package:sizer/sizer.dart';
 
 class CartItemContainer extends StatelessWidget {
@@ -51,10 +52,11 @@ class CartItemContainer extends StatelessWidget {
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  imageName,
-                  fit: BoxFit.cover,
-                ), //make it network
+                child: CustomNetworkImage(
+                  imageUrl: imageName,
+                  height: 15.h,
+                  width: 40.w,
+                ),
               ),
             ),
 

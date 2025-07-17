@@ -22,7 +22,7 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
   Future<Either<String, List<AddNewAddressModel>>> getAddresses() async {
     try {
       ApiResponse apiResponse = await apiHelper.getRequest(
-        endPoint: 'my/${EndPoints.address}',
+        endPoint: EndPoints.getAddress,
         isProtected: true,
       );
 
