@@ -6,7 +6,6 @@ import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/search/data/search_cubit/search_cubit.dart';
 import 'package:restaurant/features/search/data/search_cubit/search_states.dart';
-import 'package:restaurant/features/search/data/search_repos/search_repo_implementation.dart';
 import 'package:restaurant/features/search/presentation/widgets/restaurant_card.dart';
 import '../widgets/search_bar.dart';
 
