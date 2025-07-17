@@ -24,4 +24,6 @@ abstract class EndPoints {
   static const String address = "address";
   static String chifReviews(int chifReview) =>
       '${baseUrl}chefs/$chifReview/reviews/';
+  static const String verifyEmail = "email/verify";
+  static const String searchPage = "client/meals_filter?";
 }

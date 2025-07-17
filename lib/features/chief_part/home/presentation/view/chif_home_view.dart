@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/network/api_helper.dart';
+import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/chief_part/home/data/repository/chef_statistics/chef_statistics_repository_impl.dart';
 import 'package:restaurant/features/chief_part/home/presentation/cubit/chef_statistics/chef_statistics_cubit.dart';
 import 'package:restaurant/features/chief_part/home/presentation/widget/chif_home_body.dart';
@@ -10,8 +11,8 @@ import 'package:restaurant/features/chief_part/home/presentation/widget/custom_a
 import 'package:restaurant/features/chief_part/widgets/custom_bottomnavigation_bar.dart';
 
 class ChifHomeView extends StatefulWidget {
-  const ChifHomeView({super.key});
-
+  const ChifHomeView({super.key, required this.chefModel});
+final UserModel chefModel;
   @override
   State<ChifHomeView> createState() => _ChifHomeViewState();
 }

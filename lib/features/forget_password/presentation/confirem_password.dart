@@ -8,22 +8,31 @@ import 'package:restaurant/core/utils/app_toast.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_arrow_back.dart';
 import 'package:restaurant/core/widgets/custom_onboarding_button.dart';
+import 'package:restaurant/features/auth/data/models/user_model.dart';
+import 'package:restaurant/features/auth/views/widgets/custom_password_textfiled.dart';
 import 'package:restaurant/features/forget_password/forgot_password_cubit/forgot_password_cubit.dart';
 import 'package:restaurant/features/forget_password/forgot_password_cubit/forgot_password_states.dart';
-import 'package:restaurant/features/auth/views/widgets/custom_text_form_field.dart';
 import 'package:restaurant/features/auth/views/widgets/title_authentication_pages.dart';
 import 'package:sizer/sizer.dart';
 
-class ForgetPasswordView extends StatefulWidget {
-  const ForgetPasswordView({super.key});
-
+class ConfiremPassword extends StatefulWidget {
+  const ConfiremPassword({super.key, required this.email, required this.otp});
+final String email ;
+final String otp;
   @override
-  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
+  State<ConfiremPassword> createState() => _ConfiremPasswordState();
 }
-class _ForgetPasswordViewState extends State<ForgetPasswordView> {
+class _ConfiremPasswordState extends State<ConfiremPassword> {
   final _key = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController password = TextEditingController();
+    TextEditingController confirmPassword = TextEditingController();
   bool isLoading = false;
+  @override
+  void dispose() {
+    password.dispose();
+    confirmPassword.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,10 +42,10 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
          if (state is ForgotPasswordFailure) {
         setState(() => isLoading = false);
         AppToast.showErrorToast(state.errorMessage);
-      } else if (state is ForgotPasswordSendOtpSuccess ) {
+      } else if (state is ForgotPasswordSuccess ) {
         setState(() => isLoading = false);
-        AppToast.showSuccessToast("check your email");
-        context.go(AppRouter.kSendOtp , extra: emailController.text.trim());
+        AppToast.showSuccessToast("Reset Password Successfuly , Go to login page");
+        context.go(AppRouter.kLoginView ,);
       } else if (state is ForgotPasswordLoading) {
         setState(() => isLoading = true);
       }
@@ -58,7 +67,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                   left: 18.w,
                   child: TitleAuthenticationPages(
                     title: 'Forgot Password',
-                    subTitle: 'Please sign in to your existing account',
+                    subTitle: 'Please Enter New Password',
                   ),
                 ),
                 Positioned.fill(
@@ -81,20 +90,17 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("EMAIL", style: Styles.textStyle14),
-                              CustomTextFormField(
-                                hintText: "example@gmail.com",
-                                keyboardType: TextInputType.emailAddress,
-                                controller: emailController,
-                                lableText: 'Email',
-                              ),
-          
+                              Text("Password", style: Styles.textStyle14),
+                            PasswordFormField(controller: password, isRetype: false,),
                               SizedBox(height: 2.5.h),
+                               Text("Confirem Password", style: Styles.textStyle14),
+                            PasswordFormField(controller: confirmPassword, isRetype: true, originalPasswordController: password,),
+                            SizedBox(height: 2.5.h),
                               CustomMaterialButton(
-                                buttonName: "SEND CODE",
+                                buttonName: "RESET PASSWORD",
                                 onPressed: () {
                                   if (_key.currentState!.validate()) {
-                                    BlocProvider.of<ForgotPasswordCubit>(context).sendOtp(email: emailController.text.trim());
+                                    BlocProvider.of<ForgotPasswordCubit>(context).resetPassword(userModel: UserModel(email: widget.email, password: password.text , passwordConfirmation: confirmPassword.text ,otp: widget.otp));
                                   }
                                   // context.push("/vertificationView");
                                 },
