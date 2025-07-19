@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/views/vertification_view.dart';
@@ -21,6 +23,7 @@ import 'package:restaurant/features/auth/views/login_view.dart';
 import 'package:restaurant/features/auth/views/register_view.dart';
 import 'package:restaurant/features/favorits/presentation/views/favorites_view.dart';
 import 'package:restaurant/features/food_categories/presentation/views/food_categories_screen.dart';
+import 'package:restaurant/features/food_details/presentation/views/all_category_screen.dart';
 import 'package:restaurant/features/food_details/presentation/views/food_details_screen.dart';
 import 'package:restaurant/features/forget_password/presentation/confirem_password.dart';
 import 'package:restaurant/features/forget_password/presentation/views/forget_password_view.dart';
@@ -35,10 +38,13 @@ import 'package:restaurant/features/menu/presentation/views/personal_info_view.d
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
+import 'package:restaurant/features/restaurant_view/presentation/views/all_resturant_screen.dart';
 
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/reviews/presentation/views/review_resturant.dart';
+import 'package:restaurant/features/search/data/search_cubit/search_cubit.dart';
+import 'package:restaurant/features/search/data/search_repos/search_repo_implementation.dart';
 import 'package:restaurant/features/search/presentation/views/search_screen.dart';
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 
@@ -79,7 +85,7 @@ abstract class AppRouter {
   static const kSearchScreenView = "/searchScreenView";
   static const kFoodScreenView = "/foodScreenView";
   static const kFoodDetailsScreenView = "/foodDetailsScreenView";
-  static const kRestaurantViewVersion = "/restaurantViewVersion";
+  static const kAllRestaurantsView = "/restaurantAllView";
   static const String kOrder = '/order';
   static const String kAddresses = '/addresses';
   static const kFQS = '/fqs';
@@ -148,6 +154,7 @@ abstract class AppRouter {
             name: "chat",
             builder: (context, state) => const ChatScreen(),
           ),
+
           GoRoute(
             path: kChifFoodDetails,
             name: "chifFoodDetails",
@@ -156,6 +163,7 @@ abstract class AppRouter {
               return FoodDetailsPage(meal: meal);
             },
           ),
+
           GoRoute(
             path: kAddNewItem,
             name: "addNewItem",
@@ -186,11 +194,13 @@ abstract class AppRouter {
             name: "cart",
             builder: (context, state) => CartView(),
           ),
+
           GoRoute(
             path: kSucessPaymentView,
             name: "sucessPayment",
             builder: (context, state) => SucessPayment(),
           ),
+
           GoRoute(
             path: kNotificationView,
             name: "notification",
@@ -201,10 +211,8 @@ abstract class AppRouter {
             name: "resturantReview",
             builder: (context, state) => ReviewResturantScreen(),
           ),
-          GoRoute(
-            path: kHomeUserView,
-            builder: (context, state) => HomeUserView(),
-          ),
+          GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
+          // GoRoute(path: krestaurantView, builder: (context, state) => const RestaurantViewScreen()),
           GoRoute(
             path: kChatListView,
             builder: (context, state) => ChatListScreenChief(),
@@ -217,44 +225,46 @@ abstract class AppRouter {
             path: kMenuChiefView,
             builder: (context, state) => ChiefMenuScreen(),
           ),
+          GoRoute(path: kWithdrawView, builder: (context, state) => WithdrawView()),
           GoRoute(
-            path: kWithdrawView,
-            builder: (context, state) => WithdrawView(),
-          ),
-          ShellRoute(
-            builder: (context, state, child) {
-              return BlocProvider(
-                create: (_) =>
-                    MenuCubit(MenuRepoImplementation())..getCustomerProfile(),
-                child: child,
-              );
+            path: krestaurantView,
+            builder: (context, state) {
+              final int? id = state.extra as int?;
+              return RestaurantViewScreen(id: id ?? 8);
             },
-            routes: [
-              GoRoute(path: kMenuView, builder: (context, state) => MenuView()),
-              GoRoute(
-                path: kPersonalInfoProfileView,
-                builder: (context, state) => PersonalInfoView(),
-              ),
-              GoRoute(
-                path: kEditProfileView,
-                builder: (context, state) => EditProfileView(),
-              ),
-            ],
           ),
+          GoRoute(
+            path: kPersonalInfoProfileView,
+            builder: (context, state) => PersonalInfoView(),
+          ),
+          GoRoute(
+            path: kAllCategoryView,
+            builder: (context, state) => AllCategoriesScreen(),
+          ),
+          GoRoute(
+            path: kEditProfileView,
+            builder: (context, state) => EditProfileView(),
+          ),
+          GoRoute(path: kMenuProfileView, builder: (context, state) => MenuView()),
           GoRoute(
             path: kSearchScreenView,
-            builder: (context, state) => SearchScreen(),
+            builder: (context, state) => BlocProvider(
+              create: (context) => SearchCubit(SearchRepoImplementation()),
+              child: SearchScreen(),
+            ),
           ),
-          GoRoute(
-            path: kFoodScreenView,
-            builder: (context, state) => FoodScreen(),
-          ),
+          GoRoute(path: kFoodScreenView, builder: (context, state) => FoodScreen()),
           GoRoute(
             path: kFoodDetailsScreenView,
             builder: (context, state) {
               final int id = state.extra as int;
               return FoodDetailsScreen(foodId: id);
             },
+          ),
+
+          GoRoute(
+            path: kAllRestaurantsView,
+            builder: (context, state) => const AllRestaurantsScreen(),
           ),
           GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
           GoRoute(path: kFQS, builder: (_, __) => const FAQsScreen()),

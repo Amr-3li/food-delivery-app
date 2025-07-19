@@ -8,20 +8,20 @@ class RestaurantViewLoading extends RestaurantViewState {}
 
 class RestaurantViewLoaded extends RestaurantViewState {
   final RestaurantViewModel restaurantView;
-  final CategoryModel selectedCategory;
+  //final CategoryModel selectedCategory;
 
   RestaurantViewLoaded({
     required this.restaurantView,
-    required this.selectedCategory,
+    // required this.selectedCategory,
   });
 
   RestaurantViewLoaded copyWith({
     RestaurantViewModel? restaurantView,
-    CategoryModel? selectedCategory,
+    //CategoryModel? selectedCategory,
   }) {
     return RestaurantViewLoaded(
       restaurantView: restaurantView ?? this.restaurantView,
-      selectedCategory: selectedCategory ?? this.selectedCategory,
+      //   selectedCategory: selectedCategory ?? this.selectedCategory,
     );
   }
 }
@@ -31,4 +31,3 @@ class RestaurantViewError extends RestaurantViewState {
 
   RestaurantViewError(this.message);
 }
-

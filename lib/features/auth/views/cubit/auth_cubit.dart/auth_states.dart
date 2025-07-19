@@ -13,9 +13,13 @@ class LoginSuccess extends AuthState {
 }
 
 class RegisterSuccess extends AuthState {}
-class VerifyEmailSuccess extends AuthState{}
+
+class VerifyEmailSuccess extends AuthState {}
+
 class AuthError extends AuthState {
   final String message;
 
   AuthError(this.message);
 }
+
+class LogoutSuccess extends AuthState {}

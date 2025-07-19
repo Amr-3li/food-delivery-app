@@ -12,11 +12,11 @@ class RestaurantViewCubit extends Cubit<RestaurantViewState> {
     try {
       emit(RestaurantViewLoading());
       final data = await repository.fetchRestaurantView(id);
-      final defaultCategory = data.categories.first;
+      //  final defaultCategory = data.categories.first;
       emit(
         RestaurantViewLoaded(
           restaurantView: data,
-          selectedCategory: defaultCategory,
+          //selectedCategory: defaultCategory,
         ),
       );
     } catch (e) {
@@ -24,12 +24,12 @@ class RestaurantViewCubit extends Cubit<RestaurantViewState> {
     }
   }
 
-  void selectCategory(CategoryModel category) {
-    final currentState = state;
-    if (currentState is RestaurantViewLoaded) {
-      emit(currentState.copyWith(selectedCategory: category));
-    }
-  }
+  // void selectCategory(CategoryModel category) {
+  //   final currentState = state;
+  //   if (currentState is RestaurantViewLoaded) {
+  //     emit(currentState.copyWith(selectedCategory: category));
+  //   }
+  // }
 
   // Optional: Helper method to get the current restaurant view model
   RestaurantViewModel? get currentRestaurantViewModel {

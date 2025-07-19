@@ -10,8 +10,9 @@ class SuccessSearch extends SearchStates {
   final List<SearchModel> results;
   SuccessSearch({required this.results});
 }
-
-class FailureState extends SearchStates {
+class FailureState extends SearchStates{
   final String errorMessage;
   FailureState({required this.errorMessage});
+
+ 
 }
