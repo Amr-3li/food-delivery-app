@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:restaurant/core/cache/cache_data.dart';
+import 'package:svg_flutter/svg.dart';
 
 import 'api_response.dart';
 import 'end_points.dart';
@@ -77,8 +79,7 @@ class ApiHelper {
         options: Options(
           headers: {
             if (isProtected)
-              'Authorization':
-                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
+              'Authorization': 'Bearer 5|5WspKEk0RJfKs4b32Fixv699pwPbjqnFq11xQ23C4b4463ec}',
             'Content-Type': isFormData
                 ? 'multipart/form-data'
                 : 'application/json',
@@ -110,8 +111,7 @@ class ApiHelper {
         options: Options(
           headers: {
             if (isProtected)
-              'Authorization':
-                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
+              'Authorization': 'Bearer 5|5WspKEk0RJfKs4b32Fixv699pwPbjqnFq11xQ23C4b4463ec',
             'Content-Type': isFormData
                 ? 'multipart/form-data'
                 : 'application/json',
@@ -153,7 +153,7 @@ class ApiHelper {
           headers: {
             if (isProtected)
               'Authorization':
-                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
+                  'Bearer 5|5WspKEk0RJfKs4b32Fixv699pwPbjqnFq11xQ23C4b4463ec',
           },
         ),
       ),
@@ -189,7 +189,7 @@ class ApiHelper {
           headers: {
             if (isProtected)
               'Authorization':
-                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
+                  'Bearer 5|5WspKEk0RJfKs4b32Fixv699pwPbjqnFq11xQ23C4b4463ec}',
           },
         ),
       ),
@@ -207,7 +207,7 @@ class ApiHelper {
           headers: {
             if (isProtected)
               'Authorization':
-                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
+                  'Bearer 5|5WspKEk0RJfKs4b32Fixv699pwPbjqnFq11xQ23C4b4463ec',
           },
         ),
       ),

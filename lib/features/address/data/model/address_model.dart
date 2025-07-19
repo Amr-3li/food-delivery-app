@@ -1,38 +1,35 @@
-class AddNewAddressModel {
-  AddNewAddressModel({
+class AddressesModel {
+  AddressesModel({
     required this.lat,
     required this.lon,
     required this.name,
     required this.displayName,
-    required this.address,
     required this.isDefault,
   });
 
-  final dynamic lat;
-  final dynamic lon;
-  final dynamic name;
-  final dynamic displayName;
-  final dynamic address;
+  final String? lat;
+  final String? lon;
+  final String? name;
+  final String? displayName;
   final bool? isDefault;
 
-  factory AddNewAddressModel.fromJson(Map<String, dynamic> json){
-    return AddNewAddressModel(
-      lat: json["lat"],
-      lon: json["lon"],
-      name: json["name"],
-      displayName: json["display_name"],
-      address: json["address"],
-      isDefault: json["is_default"],
+  factory AddressesModel.fromJson(Map<String, dynamic> json) {
+    return AddressesModel(
+      lat: json["lat"]?.toString(),
+      lon: json["lon"]?.toString(),
+      name: json["name"]?.toString(),
+      displayName: json["display_name"]?.toString(),
+      isDefault: json["is_default"] == 1 || json["is_default"] == true,
     );
   }
+
 
   Map<String, dynamic> toJson() => {
     "lat": lat,
     "lon": lon,
     "name": name,
     "display_name": displayName,
-    "address" : address,
-    "is_default": isDefault,
+    "is_default": isDefault == true ? 1 : 0,
   };
 
 }

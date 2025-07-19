@@ -86,16 +86,14 @@ class AddAddressRepoImplementation implements AddAddressRepo {
     required String longitude,
     String? displayName,
     String? label,
-    String? address,
     bool? isDefault,
   }) async {
     try {
-      AddNewAddressModel addNewAddressModel = AddNewAddressModel(
+      AddressesModel addNewAddressModel = AddressesModel(
         lat: latitude,
         lon: longitude,
         name: label,
         displayName: displayName,
-        address: address,
         isDefault: isDefault,
       );
 
@@ -109,14 +107,15 @@ class AddAddressRepoImplementation implements AddAddressRepo {
         isProtected: true,
       );
 
-      if (apiResponse.data['status'] == true) {
+      if (apiResponse.status) {
         return Right('New address added successfully.');
       } else {
         return Left("Failed to add new address.");
       }
-    } catch (e) {
-      ApiResponse errorResponse = ApiResponse.fromError(e);
-      return Left(errorResponse.message);
+    } catch (e, stackTrace) {
+      debugPrint('Error adding new address: $e');
+      debugPrint('StackTrace: $stackTrace');
+      return Left("An unexpected error occurred.");
     }
   }
 }

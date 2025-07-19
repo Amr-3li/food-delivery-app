@@ -17,11 +17,6 @@ import 'package:sizer/sizer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
-
-  // await CacheData.initialize(
-  //   '15|XBQPpJMvRvQUCQufbI3Fl7OMvQTl5a9RNPJMe2oqc4067452',
-  // );
-
   await CacheHelper.init();
   Stripe.publishableKey = APIKey.stripePublishableKey;
   sl<NetworkInfo>().initialize();

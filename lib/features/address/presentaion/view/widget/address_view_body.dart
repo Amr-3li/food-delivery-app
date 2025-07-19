@@ -11,7 +11,7 @@ import 'custom_address_item.dart';
 class AddressViewBody extends StatelessWidget {
   const AddressViewBody({super.key, this.addressModel});
 
-  final List<AddNewAddressModel>? addressModel;
+  final List<AddressesModel>? addressModel;
 
   @override
   Widget build(BuildContext context) {

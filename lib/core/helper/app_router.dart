@@ -108,10 +108,10 @@ abstract class AppRouter {
           );
         },
         routes: [
-          // GoRoute(
-          //   path: kSplashView,
-          //   builder: (context, state) => const SplashView(),
-          // ),
+          GoRoute(
+            path: kSplashView,
+            builder: (context, state) => const SplashView(),
+          ),
           GoRoute(
             path: kChifHome,
             builder: (context, state) {

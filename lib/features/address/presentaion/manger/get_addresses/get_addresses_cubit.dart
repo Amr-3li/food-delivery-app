@@ -13,7 +13,7 @@ class GetAddressesCubit extends Cubit<GetAddressesState> {
 
   static GetAddressesCubit get(context) => BlocProvider.of(context);
 
-  List<AddNewAddressModel>? addresses;
+  List<AddressesModel>? addresses;
 
   void getAddresses() async {
     final result = await getAddressesRepo.getAddresses();

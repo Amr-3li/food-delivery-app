@@ -17,42 +17,43 @@ class AddressDetailsModel {
     this.boundingbox,
   });
 
-  final int? placeId;
+  final String? placeId;
   final String? licence;
   final String? osmType;
-  final int? osmId;
+  final String? osmId;
   final String? lat;
   final String? lon;
   final String? addressDetailsModelClass;
   final String? type;
-  final int? placeRank;
-  final double? importance;
+  final String? placeRank;
+  final String? importance;
   final String? addresstype;
   final String? name;
   final String? displayName;
   final Address? address;
   final List<String>? boundingbox;
 
-  factory AddressDetailsModel.fromJson(Map<String, dynamic> json){
+  factory AddressDetailsModel.fromJson(Map<String, dynamic> json) {
     return AddressDetailsModel(
-      placeId: json["place_id"],
-      licence: json["licence"],
-      osmType: json["osm_type"],
-      osmId: json["osm_id"],
-      lat: json["lat"],
-      lon: json["lon"],
-      addressDetailsModelClass: json["class"],
-      type: json["type"],
-      placeRank: json["place_rank"],
-      importance: json["importance"],
-      addresstype: json["addresstype"],
-      name: json["name"],
-      displayName: json["display_name"],
+      placeId: json["place_id"]?.toString(),
+      licence: json["licence"]?.toString(),
+      osmType: json["osm_type"]?.toString(),
+      osmId: json["osm_id"]?.toString(),
+      lat: json["lat"]?.toString(),
+      lon: json["lon"]?.toString(),
+      addressDetailsModelClass: json["class"]?.toString(),
+      type: json["type"]?.toString(),
+      placeRank: json["place_rank"]?.toString(),
+      importance: json["importance"]?.toString(),
+      addresstype: json["addresstype"]?.toString(),
+      name: json["name"]?.toString(),
+      displayName: json["display_name"]?.toString(),
       address: json["address"] == null ? null : Address.fromJson(json["address"]),
-      boundingbox: json["boundingbox"] == null ? [] : List<String>.from(json["boundingbox"]!.map((x) => x)),
+      boundingbox: json["boundingbox"] == null
+          ? []
+          : List<String>.from(json["boundingbox"].map((x) => x.toString())),
     );
   }
-
 }
 
 class Address {
@@ -78,18 +79,17 @@ class Address {
   final String? country;
   final String? countryCode;
 
-  factory Address.fromJson(Map<String, dynamic> json){
+  factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
-      houseNumber: json["house_number"],
-      road: json["road"],
-      neighbourhood: json["neighbourhood"],
-      city: json["city"],
-      state: json["state"],
-      iso31662Lvl4: json["ISO3166-2-lvl4"],
-      postcode: json["postcode"],
-      country: json["country"],
-      countryCode: json["country_code"],
+      houseNumber: json["house_number"]?.toString(),
+      road: json["road"]?.toString(),
+      neighbourhood: json["neighbourhood"]?.toString(),
+      city: json["city"]?.toString(),
+      state: json["state"]?.toString(),
+      iso31662Lvl4: json["ISO3166-2-lvl4"]?.toString(),
+      postcode: json["postcode"]?.toString(),
+      country: json["country"]?.toString(),
+      countryCode: json["country_code"]?.toString(),
     );
   }
-
 }
