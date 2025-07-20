@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
+import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
+import 'package:restaurant/core/utils/icons.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
@@ -11,6 +13,7 @@ import 'package:restaurant/features/cart/presentation/views/wigdets/cart_item_co
 import 'package:restaurant/features/cart/presentation/views/wigdets/container_bottom_navigator_bar.dart';
 import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
 import 'package:sizer/sizer.dart';
+import 'package:svg_flutter/svg.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -35,10 +38,20 @@ class _CartViewState extends State<CartView> {
         backgroundColor: ColorsHelper.black,
         appBar: AppBar(
           backgroundColor: Colors.black54,
-          leading: BackIconAppBar(
-            iconColor: Colors.white.withValues(alpha: .3),
-            onTap: () => Navigator.pop(context),
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: CircleAvatar(
+                radius: 22,
+                backgroundColor: ColorsHelper.lightBabyBlue,
+                child: SvgPicture.asset(AppIcons.iIcon),
+              ),
+            ),
           ),
+          toolbarHeight: AppResponsive.height(context, value: 80),
           title: Text(
             "Cart",
             style: Styles.textStyle17.copyWith(color: ColorsHelper.white),
