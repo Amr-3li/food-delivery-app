@@ -18,24 +18,27 @@ class MyOrdersView extends StatelessWidget {
         appBar: AppBar(
           leading: Padding(
             padding: const EdgeInsets.only(left: 16),
-            child: CircleAvatar(
-              radius: 22,
-              backgroundColor: ColorsHelper.lightBabyBlue,
-              child: SvgPicture.asset(AppIcons.iIcon),
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: CircleAvatar(
+                radius: 22,
+                backgroundColor: ColorsHelper.lightBabyBlue,
+                child: SvgPicture.asset(AppIcons.iIcon),
+              ),
             ),
           ),
           toolbarHeight: AppResponsive.height(context, value: 80),
           title: Text('My Orders', style: Styles.textStyle18),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: CircleAvatar(
-                radius: 20,
-                backgroundColor: ColorsHelper.lightBabyBlue,
-                child: SvgPicture.asset(AppIcons.assetsMoreHorizontal),
-              ),
-            ),
-          ],
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.only(right: 16),
+          //     child: CircleAvatar(
+          //       radius: 20,
+          //       backgroundColor: ColorsHelper.lightBabyBlue,
+          //       child: SvgPicture.asset(AppIcons.assetsMoreHorizontal),
+          //     ),
+          //   ),
+          // ],
           bottom: TabBar(
             indicatorColor: ColorsHelper.orange,
             indicator: UnderlineTabIndicator(

@@ -54,9 +54,7 @@ class HomeUserView extends StatelessWidget {
                         height: AppResponsive.height(context, value: 10),
                       ),
                     ),
-                    SliverToBoxAdapter(
-                      child: SearchButton(),
-                    ),
+                    SliverToBoxAdapter(child: SearchButton()),
                     SliverToBoxAdapter(
                       child: SizedBox(
                         height: AppResponsive.height(context, value: 25),
@@ -98,7 +96,9 @@ class HomeUserView extends StatelessWidget {
                                       final category = state.categories[index];
                                       return CustomCategory(
                                         name: category.name,
-                                        imageUrl: category.image,
+                                        imageUrl:
+                                            category.image ??
+                                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXZylLZLdEOnpA7xCFv_tEqFvcThCY70wK7Q&s",
                                         onTap: () {
                                           context.push(
                                             AppRouter.kFoodDetailsScreenView,

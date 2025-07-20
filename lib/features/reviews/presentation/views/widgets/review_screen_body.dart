@@ -32,6 +32,15 @@ class ReviewResturantScreenBody extends StatelessWidget {
             } else if (state is ReviewsError) {
               return Center(child: Text(state.message));
             } else if (state is ReviewsLoaded) {
+              if (state.reviews.isEmpty) {
+                return const Center(
+                  child: Text(
+                    "No reviews yet",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                );
+              }
+
               return ListView.builder(
                 itemCount: state.reviews.length,
                 itemBuilder: (context, index) {

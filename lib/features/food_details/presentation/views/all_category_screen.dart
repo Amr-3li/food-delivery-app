@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_router.dart';
+import 'package:restaurant/features/restaurant_view/widgets/food_card_list.dart';
 
 import '../../../home/presentation/cubit/category/category_cubit.dart';
 import '../../../home/presentation/cubit/category/category_state.dart';
-import '../../../home/presentation/views/widgets/custom_category_card.dart';
 
 class AllCategoriesScreen extends StatelessWidget {
   const AllCategoriesScreen({super.key});
@@ -37,8 +37,8 @@ class AllCategoriesScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Spacer(),
-                    const Icon(Icons.search),
+                    // const Spacer(),
+                    // const Icon(Icons.search),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -72,9 +72,15 @@ class AllCategoriesScreen extends StatelessWidget {
                           itemCount: categories.length,
                           itemBuilder: (context, index) {
                             final category = categories[index];
-                            return CustomCategory(
-                              name: category.name,
-                              imageUrl: category.image,
+                            return FoodCardList(
+                              mealId: category.id,
+
+                              categorydescription:
+                                  category.description ??
+                                  "No description available",
+                              categoryPrice: "\$ 120.00",
+                              categoryName: category.name,
+                              imageuRL: category.image,
                               onTap: () {
                                 context.push(
                                   AppRouter.kFoodDetailsScreenView,

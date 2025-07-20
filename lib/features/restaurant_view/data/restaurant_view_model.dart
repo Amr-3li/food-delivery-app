@@ -138,9 +138,9 @@ class RestaurantViewModel {
   factory RestaurantViewModel.fromJson(Map<String, dynamic> json) {
     return RestaurantViewModel(
       restaurant: RestaurantModel.fromJson(json['Resturant']),
-      // categories: (json['menu']['categories'] as List)
-      //     .map((e) => CategoryModel.fromJson(e))
-      //     .toList(),
+      //   categories: (json['menu']['categories'] as List)
+      //       .map((e) => CategoryModel.fromJson(e))
+      //       .toList(),
     );
   }
 }
