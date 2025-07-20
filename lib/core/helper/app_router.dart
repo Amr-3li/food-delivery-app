@@ -28,7 +28,6 @@ import 'package:restaurant/features/food_details/presentation/views/food_details
 import 'package:restaurant/features/forget_password/presentation/confirem_password.dart';
 import 'package:restaurant/features/forget_password/presentation/views/forget_password_view.dart';
 import 'package:restaurant/features/forget_password/presentation/views/sent_otp.dart';
-import 'package:restaurant/features/fqs/presentation/view/fqs.dart';
 import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
 import 'package:restaurant/features/address/presentaion/view/address_view.dart';
 import 'package:restaurant/features/internet/views/internet_view.dart';
@@ -51,6 +50,7 @@ import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 import '../../features/address/presentaion/view/add_new_address_view.dart';
 import '../../features/menu/data/repo/menu/menu_repo_implemation.dart';
 import '../../features/menu/presentation/manger/menu/menu_cubit.dart';
+import '../../features/menu/presentation/views/faqs_view.dart';
 import '../dependency_injection/service_locator.dart';
 import '../network/network_info.dart';
 
@@ -114,10 +114,10 @@ abstract class AppRouter {
           );
         },
         routes: [
-          // GoRoute(
-          //   path: kSplashView,
-          //   builder: (context, state) => const SplashView(),
-          // ),
+          GoRoute(
+            path: kSplashView,
+            builder: (context, state) => const SplashView(),
+          ),
           GoRoute(
             path: kChifHome,
             builder: (context, state) {
@@ -268,7 +268,7 @@ abstract class AppRouter {
             builder: (context, state) => const AllRestaurantsScreen(),
           ),
           GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
-          GoRoute(path: kFQS, builder: (_, __) => const FAQsScreen()),
+          GoRoute(path: kFQS, builder: (_, __) => const FaqsView()),
           GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),
           GoRoute(path: kOrder, builder: (_, __) => const MyOrdersView()),
           GoRoute(
@@ -295,7 +295,7 @@ abstract class AppRouter {
               );
             },
             routes: [
-              GoRoute(path: kSplashView, builder: (context, state) => MenuView()),
+              GoRoute(path: kMenuView, builder: (context, state) => MenuView()),
               GoRoute(
                 path: kPersonalInfoProfileView,
                 builder: (context, state) => PersonalInfoView(),
