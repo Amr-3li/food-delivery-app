@@ -9,7 +9,7 @@ import 'package:restaurant/features/menu/presentation/manger/menu/menu_cubit.dar
 import 'package:image_picker/image_picker.dart';
 import 'package:restaurant/features/menu/presentation/views/widgets/custom_edit_form_field.dart';
 
-import '../../../../../core/assets_data.dart';
+import '../../../../../core/utils/assets_data.dart';
 import '../../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../../core/widgets/image_picker/image_picker_view.dart';
 

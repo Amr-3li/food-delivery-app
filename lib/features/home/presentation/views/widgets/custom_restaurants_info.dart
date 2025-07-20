@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:restaurant/core/helper/app_responsive.dart';
-import 'package:restaurant/core/helper/app_router.dart';
-import 'package:restaurant/core/icons.dart';
-import 'package:restaurant/core/utils/color_helper.dart';
-import 'package:restaurant/core/utils/styles.dart';
-import 'package:restaurant/features/home_user/data/models/restaurant_model.dart';
-import 'package:restaurant/features/home_user/presentation/views/widgets/custom_icons_and_title.dart'
-    show CustomIconsTitl;
-import 'package:restaurant/features/home_user/presentation/views/widgets/custom_network_image.dart';
+
+import '../../../../../core/helper/app_responsive.dart';
+import '../../../../../core/helper/app_router.dart';
+import '../../../../../core/utils/color_helper.dart';
+import '../../../../../core/utils/icons.dart';
+import '../../../../../core/utils/styles.dart';
+
+import '../../../data/models/restaurant_model.dart';
+import 'custom_icons_and_title.dart';
+import 'custom_network_image.dart';
 
 class CustomRestorantInfo extends StatelessWidget {
   final RestaurantModel restaurant;

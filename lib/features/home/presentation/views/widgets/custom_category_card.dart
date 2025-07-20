@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:restaurant/core/utils/styles.dart';
-import 'package:restaurant/features/home_user/presentation/views/widgets/custom_network_image.dart';
 import 'package:sizer/sizer.dart';
+
+import 'custom_network_image.dart';
 
 class CustomCategory extends StatelessWidget {
   final String name;

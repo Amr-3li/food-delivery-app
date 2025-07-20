@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:restaurant/core/icons.dart';
+import 'package:restaurant/core/utils/icons.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/chief_part/food_details/presentation/widgets/food_details_body.dart';
 import 'package:restaurant/features/chief_part/my_food_list/data/models/food_list_model.dart';

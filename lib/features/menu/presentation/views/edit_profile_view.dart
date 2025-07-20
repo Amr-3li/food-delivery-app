@@ -3,7 +3,7 @@ import 'package:restaurant/features/menu/presentation/views/widgets/edit_profile
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/helper/app_responsive.dart';
-import '../../../../core/icons.dart';
+import '../../../../core/utils/icons.dart';
 import '../../../../core/utils/color_helper.dart';
 import '../../../../core/utils/styles.dart';
 

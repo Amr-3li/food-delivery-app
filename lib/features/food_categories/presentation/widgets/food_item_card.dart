@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/features/home_user/presentation/views/widgets/custom_network_image.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../home/presentation/views/widgets/custom_network_image.dart';
 
 class FoodItemCard extends StatelessWidget {
   final String title;

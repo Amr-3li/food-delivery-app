@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:restaurant/features/home_user/data/models/category_model.dart';
+
+import '../../../data/models/category_model.dart';
+
 
 abstract class CategoryState extends Equatable {
   @override

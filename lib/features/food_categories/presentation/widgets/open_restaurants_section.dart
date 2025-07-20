@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
-import 'package:restaurant/features/home_user/data/repository/resturant_repository.dart';
-import 'package:restaurant/features/home_user/presentation/cubit/resturant/resturant_cubit.dart';
-import 'package:restaurant/features/home_user/presentation/cubit/resturant/resturant_state.dart';
-import 'package:restaurant/features/home_user/presentation/views/widgets/custom_restaurants_info.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../home/data/repository/resturant_repository.dart';
+import '../../../home/presentation/cubit/resturant/resturant_cubit.dart';
+import '../../../home/presentation/cubit/resturant/resturant_state.dart';
+import '../../../home/presentation/views/widgets/custom_restaurants_info.dart';
 
 class OpenRestaurantsSection extends StatelessWidget {
   const OpenRestaurantsSection({super.key});

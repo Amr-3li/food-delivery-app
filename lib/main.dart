@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'package:restaurant/core/cache/cache_helper.dart';
-import 'package:restaurant/core/constant_text.dart';
+import 'package:restaurant/core/utils/constant_text.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/network/network_info.dart';

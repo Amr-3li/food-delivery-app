@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/features/home_user/data/repository/resturant_repository.dart';
-import 'package:restaurant/features/home_user/presentation/cubit/resturant/resturant_state.dart';
+import 'package:restaurant/features/home/presentation/cubit/resturant/resturant_state.dart';
+
+import '../../../data/repository/resturant_repository.dart';
+
 
 class RestaurantCubit extends Cubit<RestaurantState> {
   final RestaurantRepository repository;

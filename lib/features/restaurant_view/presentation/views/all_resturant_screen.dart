@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
-import 'package:restaurant/features/home_user/presentation/cubit/resturant/resturant_cubit.dart';
-import 'package:restaurant/features/home_user/presentation/cubit/resturant/resturant_state.dart';
-import 'package:restaurant/features/home_user/presentation/views/widgets/custom_restaurants_info.dart';
+
+import '../../../home/presentation/cubit/resturant/resturant_cubit.dart';
+import '../../../home/presentation/cubit/resturant/resturant_state.dart';
+import '../../../home/presentation/views/widgets/custom_restaurants_info.dart';
 
 class AllRestaurantsScreen extends StatelessWidget {
   const AllRestaurantsScreen({super.key});

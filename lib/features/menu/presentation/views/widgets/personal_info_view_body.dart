@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restaurant/features/menu/data/models/customer_profile_model.dart';
 import 'package:restaurant/features/menu/data/models/menu_model.dart';
 
-import '../../../../../core/icons.dart';
+import '../../../../../core/utils/icons.dart';
 import 'custom_menu_list.dart';
 import 'custom_user_info.dart';
 

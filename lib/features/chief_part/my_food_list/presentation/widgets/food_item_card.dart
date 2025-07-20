@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
-import 'package:restaurant/core/icons.dart';
+import 'package:restaurant/core/utils/icons.dart';
 import 'package:restaurant/features/chief_part/my_food_list/data/models/food_list_model.dart';
 import 'package:svg_flutter/svg.dart';
 

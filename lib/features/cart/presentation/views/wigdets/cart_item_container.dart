@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/add_remove_container.dart';
-import 'package:restaurant/features/home_user/presentation/views/widgets/custom_network_image.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../home/presentation/views/widgets/custom_network_image.dart';
 
 class CartItemContainer extends StatelessWidget {
   const CartItemContainer({

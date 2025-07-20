@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/utils/assets_data.dart';
 import 'package:restaurant/features/menu/data/models/customer_profile_model.dart';
 
 import '../../../../../core/utils/color_helper.dart';

@@ -28,7 +28,6 @@ import 'package:restaurant/features/food_details/presentation/views/food_details
 import 'package:restaurant/features/forget_password/presentation/confirem_password.dart';
 import 'package:restaurant/features/forget_password/presentation/views/forget_password_view.dart';
 import 'package:restaurant/features/forget_password/presentation/views/sent_otp.dart';
-import 'package:restaurant/features/home_user/presentation/views/home_user_view.dart';
 import 'package:restaurant/features/address/presentaion/view/address_view.dart';
 import 'package:restaurant/features/internet/views/internet_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
@@ -48,6 +47,7 @@ import 'package:restaurant/features/search/presentation/views/search_screen.dart
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
+import '../../features/home/presentation/views/home_user_view.dart';
 import '../../features/menu/data/repo/menu/menu_repo_implemation.dart';
 import '../../features/menu/presentation/manger/menu/menu_cubit.dart';
 import '../../features/menu/presentation/views/faqs_view.dart';

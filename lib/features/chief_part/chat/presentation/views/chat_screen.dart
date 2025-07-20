@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:restaurant/core/icons.dart';
+import 'package:restaurant/core/utils/icons.dart';
 
 import 'package:restaurant/core/utils/styles.dart';
 
