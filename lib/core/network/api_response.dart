@@ -20,7 +20,8 @@ class ApiResponse {
       status: response.data["status"] ?? false,
       statusCode: response.statusCode ?? 500,
       data: response.data,
-      message: response.data["message"] ?? 'An error occurred.',
+      message: response.data["message"]?.toString() ?? 'An error occurred.',
+
     );
   }
 

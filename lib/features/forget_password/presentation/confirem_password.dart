@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/utils/assets_data.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/app_toast.dart';
 import 'package:restaurant/core/utils/styles.dart';

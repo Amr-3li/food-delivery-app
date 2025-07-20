@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:restaurant/core/constant_text.dart';
+import 'package:restaurant/core/utils/constant_text.dart';
 import 'package:restaurant/core/error/failure.dart';
 import 'package:restaurant/core/network/api_helper.dart';
-import 'package:restaurant/features/home_user/data/models/category_model.dart';
+import 'package:restaurant/features/home/data/models/category_model.dart';
+
 
 class CategoryRepository {
   CategoryRepository();

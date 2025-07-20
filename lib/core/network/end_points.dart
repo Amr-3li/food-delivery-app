@@ -26,6 +26,7 @@ abstract class EndPoints {
       '${baseUrl}chefs/$chifReview/reviews/';
   static const String getAddress = "my/addresses";
   static const String profile = "profile";
+  static const String updateProfile = "update/user";
   static const String verifyEmail = "email/verify";
   static const String searchPage = "client/meals_filter?";
 }

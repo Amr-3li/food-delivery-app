@@ -10,7 +10,7 @@ import 'package:restaurant/features/address/presentaion/view/widget/add_new_addr
 
 import 'package:svg_flutter/svg.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../../../core/icons.dart';
+import '../../../../core/utils/icons.dart';
 import '../../../../core/utils/color_helper.dart';
 import '../../data/repo/add_address/add_address_repo_implemation.dart';
 import '../manger/add_address/add_address_cubit.dart';

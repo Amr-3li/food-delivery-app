@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/utils/assets_data.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_arrow_back.dart';

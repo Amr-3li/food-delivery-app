@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/utils/assets_data.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/app_toast.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
@@ -27,36 +27,35 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-bool isLoading = false;
+  bool isLoading = false;
   @override
   void dispose() {
-     emailController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     super.dispose();
-   
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-     if (state is AuthError) {
-    setState(() => isLoading = false);
-    AppToast.showErrorToast(state.message);
-  } else if (state is LoginSuccess) {
-    setState(() => isLoading = false);
-    AppToast.showSuccessToast("Login Successfully");
-    if (state.userData.data!.user!.type =="chef"){
-      context.go(AppRouter.kChifHome , extra: state.userData);
-    }
-    context.go(AppRouter.kHomeUserView);
-  } else if (state is AuthLoading) {
-    setState(() => isLoading = true);
-  }
+        if (state is AuthError) {
+          setState(() => isLoading = false);
+          AppToast.showErrorToast(state.message);
+        } else if (state is LoginSuccess) {
+          setState(() => isLoading = false);
+          AppToast.showSuccessToast("Login Successfully");
+          if (state.userData.data!.user!.type == "chef") {
+            context.go(AppRouter.kChifHome, extra: state.userData);
+          }
+          context.go(AppRouter.kHomeUserView);
+        } else if (state is AuthLoading) {
+          setState(() => isLoading = true);
+        }
       },
       child: Scaffold(
         backgroundColor: Colors.black,
-        body:  ModalProgressHUD(
+        body: ModalProgressHUD(
           inAsyncCall: isLoading,
           child: SafeArea(
             child: Stack(
@@ -82,11 +81,11 @@ bool isLoading = false;
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
-                        topLeft:const Radius.circular(20),
-                        topRight:const Radius.circular(20),
+                        topLeft: const Radius.circular(20),
+                        topRight: const Radius.circular(20),
                       ),
                     ),
-          
+
                     child: Padding(
                       padding: const EdgeInsets.all(24.0),
                       child: SingleChildScrollView(

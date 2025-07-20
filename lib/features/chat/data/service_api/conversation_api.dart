@@ -1,4 +1,4 @@
-import 'package:restaurant/core/constant_text.dart';
+import 'package:restaurant/core/utils/constant_text.dart';
 import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/features/chat/data/models/conversation_preview_model.dart';
 import 'package:restaurant/features/chat/data/models/message_model.dart';

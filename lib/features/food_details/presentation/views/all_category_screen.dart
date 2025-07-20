@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_router.dart';
-import 'package:restaurant/features/home_user/presentation/cubit/category/category_cubit.dart';
-import 'package:restaurant/features/home_user/presentation/cubit/category/category_state.dart';
 
-import 'package:restaurant/features/home_user/presentation/views/widgets/custom_category_card.dart';
+import '../../../home/presentation/cubit/category/category_cubit.dart';
+import '../../../home/presentation/cubit/category/category_state.dart';
+import '../../../home/presentation/views/widgets/custom_category_card.dart';
 
 class AllCategoriesScreen extends StatelessWidget {
   const AllCategoriesScreen({super.key});

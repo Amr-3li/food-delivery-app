@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:restaurant/core/constant_text.dart';
+import 'package:restaurant/core/utils/constant_text.dart';
 import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/core/network/end_points.dart';
 
@@ -19,7 +19,7 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
   ApiHelper apiHelper = ApiHelper();
 
   @override
-  Future<Either<String, List<AddNewAddressModel>>> getAddresses() async {
+  Future<Either<String, List<AddressesModel>>> getAddresses() async {
     try {
       ApiResponse apiResponse = await apiHelper.getRequest(
         endPoint: EndPoints.getAddress,
@@ -27,9 +27,9 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
       );
 
       if (apiResponse.data != null) {
-        List<AddNewAddressModel> addressesList = [];
+        List<AddressesModel> addressesList = [];
         for (var item in apiResponse.data['data']['addresses']) {
-          addressesList.add(AddNewAddressModel.fromJson(item));
+          addressesList.add(AddressesModel.fromJson(item));
         }
         return Right(addressesList);
       } else {
@@ -42,7 +42,7 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
   }
 
   @override
-  Future<Either<String, AddNewAddressModel?>> getDefaultAddress() async {
+  Future<Either<String, AddressesModel?>> getDefaultAddress() async {
     try {
       ApiResponse apiResponse = await apiHelper.getRequest(
         endPoint: '${APIKey.baseApiUrl}/default/address',
@@ -52,7 +52,7 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
       final data = apiResponse.data['data'];
 
       if (data != null && data['address'] != null) {
-        final address = AddNewAddressModel.fromJson(data['address']);
+        final address = AddressesModel.fromJson(data['address']);
         return Right(address);
       } else {
         return Right(null); // No default address exists

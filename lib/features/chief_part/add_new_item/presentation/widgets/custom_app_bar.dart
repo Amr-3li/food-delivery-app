@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/core/icons.dart';
+import 'package:restaurant/core/utils/icons.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/chief_part/add_new_item/presentation/manager/food_cubit/food_cubit.dart';
 import 'package:svg_flutter/svg.dart';

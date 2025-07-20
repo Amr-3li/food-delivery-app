@@ -21,4 +21,5 @@ class ColorsHelper {
   static Color lightWhite = HexColor("F6F8FA");
   static Color grayWords = HexColor("A0A5BA");
   static Color whiteGray = HexColor("F6F6F6");
+  static Color blueBlack = HexColor("181C2E");
 }

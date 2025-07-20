@@ -15,7 +15,7 @@ import 'package:restaurant/features/auth/views/widgets/custom_password_textfiled
 import 'package:restaurant/features/auth/views/widgets/custom_text_form_field.dart';
 import 'package:restaurant/features/auth/views/widgets/title_authentication_pages.dart';
 import 'package:sizer/sizer.dart';
-import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/utils/assets_data.dart';
 
 class SinUpView extends StatefulWidget {
   const SinUpView({super.key});

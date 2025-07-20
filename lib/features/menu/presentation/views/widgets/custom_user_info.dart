@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/utils/assets_data.dart';
 import 'package:restaurant/features/menu/data/models/customer_profile_model.dart';
 
 import '../../../../../core/utils/color_helper.dart';
@@ -15,7 +15,7 @@ class CustomUserInfo extends StatelessWidget {
     return Row(
       children: [
         if (userModel?.profileImage == null)
-        CircleAvatar(radius: 50, backgroundColor: ColorsHelper.orangeGrey, child: Image.asset(AssetsData.defaultUserImage, height: 70, width: 70, fit: BoxFit.cover,)),
+        CircleAvatar(radius: 50, backgroundColor: ColorsHelper.orange.withAlpha(100), child: Image.asset(AssetsData.defaultUserImage, height: 75, width: 75,)),
         if (userModel?.profileImage != null)
         CircleAvatar(radius: 50, backgroundImage: NetworkImage(userModel!.profileImage!),),
         const SizedBox(width: 24),

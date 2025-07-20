@@ -55,15 +55,11 @@ class MenuRepoImplementation implements MenuRepo {
         phone: phone,
         bio: bio,
       );
-      ApiResponse apiResponse = await apiHelper.postRequest(
-        endPoint: EndPoints.profile,
+      ApiResponse apiResponse = await apiHelper.putRequest(
+        endPoint: EndPoints.updateProfile,
         isProtected: true,
-        isFormData: true,
+        isFormData: false,
         data: userModel.toJson(),
-      );
-
-      debugPrint(
-        'apiResponse---------------------------------------????${apiResponse.data}',
       );
 
       if (apiResponse.data != null) {

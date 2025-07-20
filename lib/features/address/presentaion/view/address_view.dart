@@ -9,7 +9,7 @@ import 'package:restaurant/features/address/presentaion/view/widget/address_view
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/helper/app_responsive.dart';
-import '../../../../core/icons.dart';
+import '../../../../core/utils/icons.dart';
 import '../../../../core/utils/color_helper.dart';
 import '../../../../core/utils/styles.dart';
 

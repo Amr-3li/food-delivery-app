@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import 'package:restaurant/core/constant_text.dart';
+import 'package:restaurant/core/utils/constant_text.dart';
 
 Dio createDioWithAuth() {
   final dio = Dio(

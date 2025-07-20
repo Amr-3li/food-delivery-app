@@ -9,7 +9,7 @@ import 'package:restaurant/features/menu/presentation/manger/menu/menu_cubit.dar
 import 'package:image_picker/image_picker.dart';
 import 'package:restaurant/features/menu/presentation/views/widgets/custom_edit_form_field.dart';
 
-import '../../../../../core/assets_data.dart';
+import '../../../../../core/utils/assets_data.dart';
 import '../../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../../core/widgets/image_picker/image_picker_view.dart';
 
@@ -116,10 +116,10 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
                       debugPrint('bio: ${bioController.text}');
                       MenuCubit.get(context).editCustomerProfile(
                         profileImage: image,
-                        name: textController.text,
-                        email: emailController.text,
-                        phone: phoneController.text,
-                        bio: bioController.text,
+                        name: textController.text.isNotEmpty ? textController.text.trim() : userModel?.name,
+                        email: emailController.text.isNotEmpty ? emailController.text.trim() : userModel?.email,
+                        phone: phoneController.text.isNotEmpty ? phoneController.text.trim() : userModel?.phone,
+                        bio: bioController.text.isNotEmpty ? bioController.text.trim() : userModel?.bio,
                       );
                     }
                   },

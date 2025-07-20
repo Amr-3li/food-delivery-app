@@ -7,6 +7,7 @@ import 'package:restaurant/core/utils/color_helper.dart';
 
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
 import 'package:restaurant/features/address/data/model/address_details_model.dart';
+import 'package:restaurant/features/address/data/model/address_model.dart';
 import 'package:restaurant/features/address/presentaion/manger/add_address/add_address_cubit.dart';
 import 'package:restaurant/features/menu/presentation/views/widgets/custom_label_selection.dart';
 
@@ -97,11 +98,10 @@ class _AddNewAddressViewBodyState extends State<AddNewAddressViewBody> {
                 onPressedFunction: () {
                   if (widget.addressDetailsModel != null) {
                     AddAddressCubit.get(context).addNewAddress(
-                      latitude: widget.addressDetailsModel!.lat!,
-                      longitude: widget.addressDetailsModel!.lon!,
+                      latitude: widget.addressDetailsModel!.lat!.toString(),
+                      longitude: widget.addressDetailsModel!.lon!.toString(),
                       displayName: widget.addressDetailsModel!.displayName,
-                      address: widget.addressDetailsModel!.address?.country,
-                      label: label,
+                      label: label.toString(),
                       isDefault: isDefault ?? false,
                     );
                   }

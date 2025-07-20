@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:restaurant/features/address/data/model/address_details_model.dart';
+import 'package:restaurant/features/address/data/model/address_model.dart';
 
 import '../../../../address/data/repo/add_address/add_address_repo.dart';
 
@@ -62,7 +63,6 @@ class AddAddressCubit extends Cubit<AddAddressState> {
     required String longitude,
     String? displayName,
     String? label,
-    String? address,
     bool? isDefault,
   }) async {
     final result = await addAddressRepo.addNewAddress(
@@ -70,7 +70,6 @@ class AddAddressCubit extends Cubit<AddAddressState> {
       longitude: longitude,
       displayName: displayName,
       label: label,
-      address: address,
       isDefault: isDefault,
     );
 

@@ -4,7 +4,7 @@ import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/orders/presentation/views/widgets/my_orders_view_body.dart';
 import 'package:svg_flutter/svg.dart';
 
-import '../../../../core/icons.dart';
+import '../../../../core/utils/icons.dart';
 import '../../../../core/utils/color_helper.dart';
 
 class MyOrdersView extends StatelessWidget {

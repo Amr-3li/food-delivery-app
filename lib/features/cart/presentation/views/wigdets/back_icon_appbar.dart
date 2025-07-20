@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/core/icons.dart';
+import 'package:restaurant/core/utils/icons.dart';
 import 'package:svg_flutter/svg.dart';
 
 // ignore: must_be_immutable
