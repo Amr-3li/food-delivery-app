@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/views/vertification_view.dart';
@@ -284,13 +283,12 @@ abstract class AppRouter {
             },
           ),
 
-
           // menu Feature
           ShellRoute(
             builder: (context, state, child) {
               return BlocProvider(
                 create: (_) =>
-                MenuCubit(MenuRepoImplementation())..getCustomerProfile(),
+                    MenuCubit(MenuRepoImplementation())..getCustomerProfile(),
                 child: child,
               );
             },

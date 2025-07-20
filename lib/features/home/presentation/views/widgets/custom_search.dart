@@ -5,7 +5,7 @@ import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/icons.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
-import 'package:sizer/sizer.dart';
+
 import 'package:svg_flutter/svg.dart';
 
 class SearchButton extends StatelessWidget {
@@ -17,12 +17,8 @@ class SearchButton extends StatelessWidget {
         GoRouter.of(context).push(AppRouter.kSearchScreenView);
       },
       child: Container(
-        margin: EdgeInsets.only(
-          top: AppResponsive.height(context, value: 16),
-        ),
-        padding: EdgeInsets.only(
-          left: AppResponsive.width(context, value: 12),
-        ),
+        margin: EdgeInsets.only(top: AppResponsive.height(context, value: 16)),
+        padding: EdgeInsets.only(left: AppResponsive.width(context, value: 12)),
         width: AppResponsive.width(context, value: 325),
         height: AppResponsive.height(context, value: 60),
         decoration: BoxDecoration(

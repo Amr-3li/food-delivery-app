@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/auth/views/cubit/auth_cubit.dart/auth_cubit.dart';
 
-import 'package:restaurant/features/menu/data/repo/menu/menu_repo_implemation.dart';
 import 'package:restaurant/features/menu/presentation/manger/menu/menu_cubit.dart';
 import '../../../data/models/menu_group_list.dart';
 import 'custom_menu_list.dart';
@@ -38,9 +37,7 @@ class MenuViewBody extends StatelessWidget {
                 menuGroup: menuGroups[index],
                 onItemTap: (item) {
                   if (item.isLogout) {
-                    context
-                        .read<AuthCubit>()
-                        .logout(); // 🔐 call Cubit logout
+                    context.read<AuthCubit>().logout(); // 🔐 call Cubit logout
                     context.go(AppRouter.kLoginView);
                   } else if (item.route != null) {
                     context.push(item.route!); // ➡️ navigate normally

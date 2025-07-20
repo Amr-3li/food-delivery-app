@@ -7,7 +7,6 @@ import 'package:svg_flutter/svg.dart';
 import '../../../../../core/utils/assets_data.dart';
 import '../../../../../core/utils/styles.dart';
 
-
 class CustomHomeAppBar extends StatelessWidget {
   const CustomHomeAppBar({super.key});
 
@@ -22,18 +21,20 @@ class CustomHomeAppBar extends StatelessWidget {
           child: CircleAvatar(
             radius: 25,
             backgroundColor: ColorsHelper.orange.withAlpha(100),
-            child: Image.asset(AssetsData.defaultUserImage, height: 25, width: 25,),
+            child: Image.asset(
+              AssetsData.defaultUserImage,
+              height: 25,
+              width: 25,
+            ),
           ),
         ),
-        SizedBox(width: 12,),
+        SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Hey Hala,",
-              style: Styles.textStyle16.copyWith(
-                fontWeight: FontWeight.normal,
-              ),
+              style: Styles.textStyle16.copyWith(fontWeight: FontWeight.normal),
             ),
             Text("Good Afternoon,", style: Styles.textStyle16),
           ],
@@ -46,7 +47,7 @@ class CustomHomeAppBar extends StatelessWidget {
           child: CircleAvatar(
             radius: 25,
             backgroundColor: ColorsHelper.blueBlack,
-            child: SvgPicture.asset(AppIcons.assetsCart, color: Colors.white,)
+            child: SvgPicture.asset(AppIcons.assetsCart),
           ),
         ),
       ],

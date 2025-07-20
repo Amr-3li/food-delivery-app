@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:dio/dio.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
-import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/cart/data/repository/cart_repository.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:restaurant/features/food_details/data/food_details_repository.dart';
 import 'package:restaurant/features/food_details/presentation/cubit/food_details_cubit.dart';
 import 'package:restaurant/features/food_details/presentation/cubit/food_details_state.dart';
-import 'package:restaurant/features/food_details/presentation/widgets/quantity_selector.dart';
 import 'package:restaurant/features/food_details/presentation/widgets/size_selector.dart';
 import 'package:sizer/sizer.dart';
 

@@ -16,7 +16,7 @@ class BackIconAppBar extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: CircleAvatar(
-        radius: 20,
+        radius: 15,
         backgroundColor: Colors.white.withValues(alpha: .3),
         child: SvgPicture.asset(AppIcons.iIcon),
       ),

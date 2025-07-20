@@ -142,7 +142,7 @@ class AuthRepoImplementation extends AuthRepo {
       if (response.status) {
         return const Right(null); // Success
       } else {
-        return Left(Failure(errorMessage: response.message ?? 'Logout failed'));
+        return Left(Failure(errorMessage: response.message));
       }
     } catch (e) {
       return Left(Failure(errorMessage: e.toString()));
