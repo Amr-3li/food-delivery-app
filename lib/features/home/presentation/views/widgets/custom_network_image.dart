@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:redacted/redacted.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,10 +25,19 @@ class CustomNetworkImage extends StatelessWidget {
         height: AppResponsive.height(context, value: height),
         fit: BoxFit.cover,
         imageUrl: imageUrl,
-        placeholder: (context, url) =>
-            const Center(child: CircularProgressIndicator()),
 
-        /// ✅ Show fallback icon or asset on error
+        placeholder: (context, url) => Container(
+          width: AppResponsive.width(context, value: width),
+          height: AppResponsive.height(context, value: height),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.sp),
+            color: Colors.grey[200],
+          ),
+        ).redacted(
+          context: context,
+          redact: true,
+        ),
+
         errorWidget: (context, url, error) => Container(
           color: Colors.grey[200],
           child: const Center(

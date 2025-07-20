@@ -6,14 +6,14 @@ import 'package:sizer/sizer.dart';
 import 'custom_network_image.dart';
 
 class CustomCategory extends StatelessWidget {
-  final String name;
-  final String imageUrl;
+  final String? name;
+  final String? imageUrl;
   final void Function()? onTap;
   const CustomCategory({
     super.key,
-    required this.name,
-    required this.imageUrl,
-    required this.onTap,
+     this.name,
+     this.imageUrl,
+     this.onTap,
   });
 
   @override
@@ -39,14 +39,14 @@ class CustomCategory extends StatelessWidget {
               borderRadius: BorderRadius.circular(22.sp),
             ),
             child: CustomNetworkImage(
-              imageUrl: imageUrl,
+              imageUrl: imageUrl ?? '',
               width: 96,
               height: 81,
             ),
           ),
           SizedBox(height: AppResponsive.height(context, value: 12)),
           Text(
-            name,
+            name ?? '',
             style: Styles.textStyle14.copyWith(fontWeight: FontWeight.bold),
           ),
         ],

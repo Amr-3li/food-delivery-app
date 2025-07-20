@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:redacted/redacted.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:restaurant/core/helper/app_router.dart';
@@ -17,9 +18,14 @@ import '../cubit/category/category_state.dart';
 import '../cubit/resturant/resturant_cubit.dart';
 import '../cubit/resturant/resturant_state.dart';
 
-class HomeUserView extends StatelessWidget {
+class HomeUserView extends StatefulWidget {
   const HomeUserView({super.key});
 
+  @override
+  State<HomeUserView> createState() => _HomeUserViewState();
+}
+
+class _HomeUserViewState extends State<HomeUserView> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -41,22 +47,13 @@ class HomeUserView extends StatelessWidget {
                 ),
                 child: CustomScrollView(
                   slivers: [
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          right: AppResponsive.width(context, value: 20),
-                        ),
-                        child: CustomHomeAppBar(),
-                      ),
-                    ),
+                    SliverToBoxAdapter(child: CustomHomeAppBar()),
                     SliverToBoxAdapter(
                       child: SizedBox(
                         height: AppResponsive.height(context, value: 10),
                       ),
                     ),
-                    SliverToBoxAdapter(
-                      child: SearchButton(),
-                    ),
+                    SliverToBoxAdapter(child: SearchButton()),
                     SliverToBoxAdapter(
                       child: SizedBox(
                         height: AppResponsive.height(context, value: 25),
@@ -83,8 +80,15 @@ class HomeUserView extends StatelessWidget {
                             child: BlocBuilder<CategoryCubit, CategoryState>(
                               builder: (context, state) {
                                 if (state is CategoryLoading) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
+                                  return ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: 3,
+                                    itemBuilder: (context, index) {
+                                      return CustomCategory().redacted(
+                                        context: context,
+                                        redact: true,
+                                      );
+                                    },
                                   );
                                 } else if (state is CategoryFailure) {
                                   return Center(
@@ -138,8 +142,22 @@ class HomeUserView extends StatelessWidget {
                     BlocBuilder<RestaurantCubit, RestaurantState>(
                       builder: (context, state) {
                         if (state is RestaurantLoading) {
-                          return const SliverToBoxAdapter(
-                            child: Center(child: CircularProgressIndicator()),
+                          return SliverList(
+                            delegate: SliverChildBuilderDelegate((
+                              context,
+                              index,
+                            ) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(vertical: 12.sp),
+                                child: CustomRestorantInfo().redacted(
+                                  context: context,
+                                  redact: true,
+                                  configuration: RedactedConfiguration(
+                                    animationDuration : const Duration(milliseconds: 800), //default
+                                  ),
+                                ),
+                              );
+                            }, childCount: 4),
                           );
                         } else if (state is RestaurantLoaded) {
                           return SliverList(

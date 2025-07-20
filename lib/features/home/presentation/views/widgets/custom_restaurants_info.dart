@@ -12,15 +12,15 @@ import 'custom_icons_and_title.dart';
 import 'custom_network_image.dart';
 
 class CustomRestorantInfo extends StatelessWidget {
-  final RestaurantModel restaurant;
+  final RestaurantModel? restaurant;
 
-  const CustomRestorantInfo({super.key, required this.restaurant});
+  const CustomRestorantInfo({super.key,  this.restaurant});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(AppRouter.krestaurantView, extra: restaurant.id);
+        context.push(AppRouter.krestaurantView, extra: restaurant?.id ?? 0);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,16 +31,16 @@ class CustomRestorantInfo extends StatelessWidget {
             width: 327,
             height: 140,
           ),
-          Text(restaurant.name, style: Styles.textStyle20),
+          Text(restaurant?.name ?? '', style: Styles.textStyle20),
           Text(
-            restaurant.description,
+            restaurant?.description ?? '',
             style: Styles.textStyle14.copyWith(color: ColorsHelper.grayWords),
           ),
           SizedBox(height: AppResponsive.height(context, value: 10)),
           Row(
             children: [
               CustomIconsTitl(
-                title: ' ${restaurant.averageRating}',
+                title: ' ${restaurant?.averageRating ?? 0}',
                 iconUrl: AppIcons.iStar,
               ),
               SizedBox(width: AppResponsive.width(context, value: 12)),
