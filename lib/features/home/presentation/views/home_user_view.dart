@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:restaurant/core/helper/app_router.dart';
-import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/home/presentation/views/widgets/custom_appbar.dart';
 import 'package:restaurant/features/home/presentation/views/widgets/custom_category_card.dart';
 import 'package:restaurant/features/home/presentation/views/widgets/custom_restaurants_info.dart';
