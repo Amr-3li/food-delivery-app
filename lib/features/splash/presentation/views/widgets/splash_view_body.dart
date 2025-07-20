@@ -2,7 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import 'package:restaurant/core/assets_data.dart';
+import 'package:restaurant/core/cache/cache_data.dart';
+
 import 'package:restaurant/core/utils/assets_data.dart';
+
 import 'package:restaurant/core/cache/cache_helper.dart';
 import 'package:restaurant/core/cache/secure_cache_helper.dart';
 import 'package:restaurant/core/helper/app_router.dart';
@@ -19,6 +24,7 @@ Future<String> checkLoginStatus() async {
 
   if (token != null) {
     debugPrint(token);
+    CacheData.accessToken = token;
     return AppRouter.kHomeUserView;
   } else {
     return AppRouter.kLoginView;
