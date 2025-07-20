@@ -43,18 +43,18 @@ class _CartViewState extends State<CartView> {
             "Cart",
             style: Styles.textStyle17.copyWith(color: ColorsHelper.white),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                "Edit Items",
-                style: Styles.textStyle14.copyWith(
-                  color: ColorsHelper.orange,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),
-          ],
+          // actions: [
+          //   TextButton(
+          //     onPressed: () {},
+          //     child: Text(
+          //       "Edit Items",
+          //       style: Styles.textStyle14.copyWith(
+          //         color: ColorsHelper.orange,
+          //         decoration: TextDecoration.underline,
+          //       ),
+          //     ),
+          //   ),
+          // ],
         ),
         body: BlocBuilder<CartCubit, CartStates>(
           builder: (context, state) {

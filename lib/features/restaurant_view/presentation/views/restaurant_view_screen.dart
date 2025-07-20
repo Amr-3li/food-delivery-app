@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
+
 import 'package:restaurant/features/restaurant_view/data/restaurant_view_repository.dart';
 import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_cubit.dart';
 import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_state.dart';
-import 'package:restaurant/features/restaurant_view/widgets/food_card_list.dart';
-import 'package:restaurant/features/restaurant_view/widgets/category_chips.dart';
-import 'package:restaurant/features/restaurant_view/data/restaurant_view_model.dart';
+
+import 'package:restaurant/features/restaurant_view/widgets/restaurant_header.dart';
 
 class RestaurantViewScreen extends StatefulWidget {
   const RestaurantViewScreen({super.key, required this.id});
@@ -33,7 +33,7 @@ class _RestaurantViewScreenState extends State<RestaurantViewScreen> {
               } else if (state is RestaurantViewLoaded) {
                 final data = state.restaurantView;
                 final restaurant = data.restaurant;
-                //  final categories = data.categories;
+                // final categories = data.categories;
 
                 // selectedCategory ??= categories.first;
 
@@ -44,9 +44,9 @@ class _RestaurantViewScreenState extends State<RestaurantViewScreen> {
                       pinned: true,
                       flexibleSpace: FlexibleSpaceBar(
                         // title: Text(restaurant.name ?? "Restaurant"),
-                        background: Image.network(
-                          "https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg",
-                          fit: BoxFit.cover,
+                        background: RestaurantHeader(
+                          imageUrl:
+                              "https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg",
                         ),
                       ),
                     ),
@@ -54,6 +54,7 @@ class _RestaurantViewScreenState extends State<RestaurantViewScreen> {
                       padding: const EdgeInsets.all(16),
                       sliver: SliverList(
                         delegate: SliverChildListDelegate([
+                          // RestaurantHeader(imageUrl: restaurant.),
                           Text(restaurant.name ?? "Restaurant"),
                           Text(
                             restaurant.description ??
@@ -76,23 +77,23 @@ class _RestaurantViewScreenState extends State<RestaurantViewScreen> {
                               Text("20 min"),
                             ],
                           ),
-                          //   const SizedBox(height: 16),
-                          //   CategoryChips(
-                          //     categories: categories,
-                          //     selectedCategory: selectedCategory!,
-                          //     onCategorySelected: (category) {
-                          //       setState(() {
-                          //         selectedCategory = category;
-                          //       });
-                          //     },
-                          //   ),
-                          //   const SizedBox(height: 24),
-                          //   Text(
-                          //     "${selectedCategory!.name} (${selectedCategory!.meals.length})",
-                          //     style: const TextStyle(fontWeight: FontWeight.bold),
-                          //   ),
-                          //   const SizedBox(height: 12),
-                          //   FoodCardList(meals: selectedCategory!.meals),
+                          const SizedBox(height: 16),
+                          // CategoryChips(
+                          //   categories: categories,
+                          //   selectedCategory: selectedCategory!,
+                          //   onCategorySelected: (category) {
+                          //     setState(() {
+                          //       selectedCategory = category;
+                          //     });
+                          //   },
+                          // ),
+                          // const SizedBox(height: 24),
+                          // Text(
+                          //   "${selectedCategory!.name} (${selectedCategory!.meals.length})",
+                          //   style: const TextStyle(fontWeight: FontWeight.bold),
+                          // ),
+                          // const SizedBox(height: 12),
+                          // FoodCardList(meals: selectedCategory!.meals),
                         ]),
                       ),
                     ),

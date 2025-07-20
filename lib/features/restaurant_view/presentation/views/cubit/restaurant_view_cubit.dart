@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restaurant/features/restaurant_view/data/restaurant_view_model.dart';
 import 'package:restaurant/features/restaurant_view/data/restaurant_view_repository.dart';
-import 'restaurant_view_state.dart';
+import 'package:restaurant/features/restaurant_view/presentation/views/cubit/restaurant_view_state.dart';
 
 class RestaurantViewCubit extends Cubit<RestaurantViewState> {
   final RestaurantViewRepository repository;
@@ -12,11 +11,16 @@ class RestaurantViewCubit extends Cubit<RestaurantViewState> {
     try {
       emit(RestaurantViewLoading());
       final data = await repository.fetchRestaurantView(id);
-      //  final defaultCategory = data.categories.first;
+
+      // Get the first category if available, else fallback
+      // final CategoryModel? defaultCategory = (data.categories.isNotEmpty)
+      //     ? data.categories.first
+      //     : null;
+
       emit(
         RestaurantViewLoaded(
           restaurantView: data,
-          //selectedCategory: defaultCategory,
+          // selectedCategory: defaultCategory,
         ),
       );
     } catch (e) {
@@ -24,19 +28,18 @@ class RestaurantViewCubit extends Cubit<RestaurantViewState> {
     }
   }
 
-  // void selectCategory(CategoryModel category) {
+  // void selectCategory(CategoryModel? category) {
   //   final currentState = state;
   //   if (currentState is RestaurantViewLoaded) {
   //     emit(currentState.copyWith(selectedCategory: category));
   //   }
   // }
 
-  // Optional: Helper method to get the current restaurant view model
-  RestaurantViewModel? get currentRestaurantViewModel {
-    final currentState = state;
-    if (currentState is RestaurantViewLoaded) {
-      return currentState.restaurantView;
-    }
-    return null;
-  }
+  // RestaurantViewModel? get currentRestaurantViewModel {
+  //   final currentState = state;
+  //   if (currentState is RestaurantViewLoaded) {
+  //     return currentState.restaurantView;
+  //   }
+  //   return null;
+  // }
 }

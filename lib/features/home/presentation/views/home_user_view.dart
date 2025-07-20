@@ -5,7 +5,6 @@ import 'package:redacted/redacted.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:restaurant/core/helper/app_router.dart';
-import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/home/presentation/views/widgets/custom_appbar.dart';
 import 'package:restaurant/features/home/presentation/views/widgets/custom_category_card.dart';
 import 'package:restaurant/features/home/presentation/views/widgets/custom_restaurants_info.dart';
@@ -102,7 +101,9 @@ class _HomeUserViewState extends State<HomeUserView> {
                                       final category = state.categories[index];
                                       return CustomCategory(
                                         name: category.name,
-                                        imageUrl: category.image,
+                                        imageUrl:
+                                            category.image ??
+                                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXZylLZLdEOnpA7xCFv_tEqFvcThCY70wK7Q&s",
                                         onTap: () {
                                           context.push(
                                             AppRouter.kFoodDetailsScreenView,

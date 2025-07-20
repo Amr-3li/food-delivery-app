@@ -26,19 +26,19 @@ class RestaurantHeader extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-          top: 12,
-          left: 12,
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ),
+        // Positioned(
+        //   top: 12,
+        //   left: 12,
+        //   child: CircleAvatar(
+        //     backgroundColor: Colors.white,
+        //     child: IconButton(
+        //       icon: const Icon(Icons.arrow_back, color: Colors.black),
+        //       onPressed: () {
+        //         Navigator.pop(context);
+        //       },
+        //     ),
+        //   ),
+        // ),
         Positioned(
           top: 12,
           right: 12,

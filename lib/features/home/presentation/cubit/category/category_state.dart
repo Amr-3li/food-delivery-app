@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 
 import '../../../data/models/category_model.dart';
 
-
 abstract class CategoryState extends Equatable {
   @override
   List<Object?> get props => [];
@@ -13,7 +12,7 @@ class CategoryInitial extends CategoryState {}
 class CategoryLoading extends CategoryState {}
 
 class CategorySuccess extends CategoryState {
-  final List<CategoryModel> categories;
+  final List<CategoryHomeModel> categories;
 
   CategorySuccess(this.categories);
 
