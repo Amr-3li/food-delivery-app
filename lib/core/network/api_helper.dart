@@ -189,7 +189,7 @@ class ApiHelper {
           headers: {
             if (isProtected)
               'Authorization':
-                  'Bearer 5|5WspKEk0RJfKs4b32Fixv699pwPbjqnFq11xQ23C4b4463ec}',
+                  'Bearer 5|5WspKEk0RJfKs4b32Fixv699pwPbjqnFq11xQ23C4b4463ec',
           },
         ),
       ),

@@ -114,10 +114,10 @@ abstract class AppRouter {
           );
         },
         routes: [
-          GoRoute(
-            path: kSplashView,
-            builder: (context, state) => const SplashView(),
-          ),
+          // GoRoute(
+          //   path: kSplashView,
+          //   builder: (context, state) => const SplashView(),
+          // ),
           GoRoute(
             path: kChifHome,
             builder: (context, state) {
@@ -211,8 +211,10 @@ abstract class AppRouter {
             name: "resturantReview",
             builder: (context, state) => ReviewResturantScreen(),
           ),
-          GoRoute(path: kHomeUserView, builder: (context, state) => HomeUserView()),
-          // GoRoute(path: krestaurantView, builder: (context, state) => const RestaurantViewScreen()),
+          GoRoute(
+            path: kHomeUserView,
+            builder: (context, state) => HomeUserView(),
+          ),
           GoRoute(
             path: kChatListView,
             builder: (context, state) => ChatListScreenChief(),
@@ -225,7 +227,10 @@ abstract class AppRouter {
             path: kMenuChiefView,
             builder: (context, state) => ChiefMenuScreen(),
           ),
-          GoRoute(path: kWithdrawView, builder: (context, state) => WithdrawView()),
+          GoRoute(
+            path: kWithdrawView,
+            builder: (context, state) => WithdrawView(),
+          ),
           GoRoute(
             path: krestaurantView,
             builder: (context, state) {
@@ -233,19 +238,12 @@ abstract class AppRouter {
               return RestaurantViewScreen(id: id ?? 8);
             },
           ),
-          GoRoute(
-            path: kPersonalInfoProfileView,
-            builder: (context, state) => PersonalInfoView(),
-          ),
+
           GoRoute(
             path: kAllCategoryView,
             builder: (context, state) => AllCategoriesScreen(),
           ),
-          GoRoute(
-            path: kEditProfileView,
-            builder: (context, state) => EditProfileView(),
-          ),
-          GoRoute(path: kMenuProfileView, builder: (context, state) => MenuView()),
+
           GoRoute(
             path: kSearchScreenView,
             builder: (context, state) => BlocProvider(
@@ -253,7 +251,10 @@ abstract class AppRouter {
               child: SearchScreen(),
             ),
           ),
-          GoRoute(path: kFoodScreenView, builder: (context, state) => FoodScreen()),
+          GoRoute(
+            path: kFoodScreenView,
+            builder: (context, state) => FoodScreen(),
+          ),
           GoRoute(
             path: kFoodDetailsScreenView,
             builder: (context, state) {
@@ -281,6 +282,29 @@ abstract class AppRouter {
               final otp = state.extra as String;
               return ConfiremPassword(email: email, otp: otp);
             },
+          ),
+
+
+          // menu Feature
+          ShellRoute(
+            builder: (context, state, child) {
+              return BlocProvider(
+                create: (_) =>
+                MenuCubit(MenuRepoImplementation())..getCustomerProfile(),
+                child: child,
+              );
+            },
+            routes: [
+              GoRoute(path: kSplashView, builder: (context, state) => MenuView()),
+              GoRoute(
+                path: kPersonalInfoProfileView,
+                builder: (context, state) => PersonalInfoView(),
+              ),
+              GoRoute(
+                path: kEditProfileView,
+                builder: (context, state) => EditProfileView(),
+              ),
+            ],
           ),
         ],
       ),

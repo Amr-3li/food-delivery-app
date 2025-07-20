@@ -17,45 +17,42 @@ class MenuViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 18, left: 18, right: 18),
-      child: BlocProvider(
-        create: (context) => MenuCubit(MenuRepoImplementation()),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              BlocBuilder<MenuCubit, MenuState>(
-                builder: (context, state) {
-                  if (MenuCubit.get(context).userModel != null) {
-                    return CustomUserInfo(
-                      userModel: MenuCubit.get(context).userModel!,
-                    );
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            BlocBuilder<MenuCubit, MenuState>(
+              builder: (context, state) {
+                if (MenuCubit.get(context).userModel != null) {
+                  return CustomUserInfo(
+                    userModel: MenuCubit.get(context).userModel!,
+                  );
+                }
+                return CustomUserInfo();
+              },
+            ),
+            const SizedBox(height: 28),
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => CustomMenuList(
+                menuGroup: menuGroups[index],
+                onItemTap: (item) {
+                  if (item.isLogout) {
+                    context
+                        .read<AuthCubit>()
+                        .logout(); // 🔐 call Cubit logout
+                    context.go(AppRouter.kLoginView);
+                  } else if (item.route != null) {
+                    context.push(item.route!); // ➡️ navigate normally
                   }
-                  return CustomUserInfo();
                 },
               ),
-              const SizedBox(height: 28),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => CustomMenuList(
-                  menuGroup: menuGroups[index],
-                  onItemTap: (item) {
-                    if (item.isLogout) {
-                      context
-                          .read<AuthCubit>()
-                          .logout(); // 🔐 call Cubit logout
-                      context.go(AppRouter.kLoginView);
-                    } else if (item.route != null) {
-                      context.push(item.route!); // ➡️ navigate normally
-                    }
-                  },
-                ),
 
-                separatorBuilder: (context, index) => SizedBox(height: 16),
-                itemCount: menuGroups.length,
-              ),
-              SizedBox(height: 16),
-            ],
-          ),
+              separatorBuilder: (context, index) => SizedBox(height: 16),
+              itemCount: menuGroups.length,
+            ),
+            SizedBox(height: 16),
+          ],
         ),
       ),
     );
