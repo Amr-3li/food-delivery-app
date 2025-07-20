@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:restaurant/core/assets_data.dart';
 import 'package:restaurant/core/cache/cache_data.dart';
 
 import 'package:restaurant/core/utils/assets_data.dart';
