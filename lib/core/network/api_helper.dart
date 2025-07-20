@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:restaurant/core/cache/cache_data.dart';
 
 import 'api_response.dart';
 import 'end_points.dart';
@@ -76,9 +77,7 @@ class ApiHelper {
         data: isFormData ? FormData.fromMap(data ?? {}) : data,
         options: Options(
           headers: {
-            if (isProtected)
-              'Authorization':
-                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
+            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',
             'Content-Type': isFormData
                 ? 'multipart/form-data'
                 : 'application/json',
@@ -109,9 +108,7 @@ class ApiHelper {
         data: requestData,
         options: Options(
           headers: {
-            if (isProtected)
-              'Authorization':
-                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
+            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',
             'Content-Type': isFormData
                 ? 'multipart/form-data'
                 : 'application/json',
@@ -151,9 +148,7 @@ class ApiHelper {
         data: isFormData ? FormData.fromMap(data ?? {}) : data,
         options: Options(
           headers: {
-            if (isProtected)
-              'Authorization':
-                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
+            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',
           },
         ),
       ),
@@ -187,9 +182,7 @@ class ApiHelper {
         data: isFormData ? FormData.fromMap(data ?? {}) : data,
         options: Options(
           headers: {
-            if (isProtected)
-              'Authorization':
-                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
+            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',
           },
         ),
       ),
@@ -205,9 +198,7 @@ class ApiHelper {
         endPoint,
         options: Options(
           headers: {
-            if (isProtected)
-              'Authorization':
-                  'Bearer 48|xVNT6xju5Keo31rUanwuVI90Gr1wwSfpBv1IvQZk8081e9e5',
+            if (isProtected) 'Authorization': 'Bearer ${CacheData.accessToken}',
           },
         ),
       ),
