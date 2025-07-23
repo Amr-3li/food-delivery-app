@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:restaurant/core/cache/cache_keys.dart';
 
 import 'package:restaurant/core/cache/secure_cache_helper.dart';
 import 'package:restaurant/core/error/failure.dart';
@@ -8,6 +9,7 @@ import 'package:restaurant/core/network/end_points.dart';
 import 'package:restaurant/features/auth/data/models/user_data/user_data.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/data/repos/auth_repo.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 class AuthRepoImplementation extends AuthRepo {
   final ApiHelper apiHelper = ApiHelper();
@@ -51,10 +53,11 @@ class AuthRepoImplementation extends AuthRepo {
       if (response.status) {
         final userData = UserData.fromJson(response.data);
         final token = userData.data!.accessToken;
+        final userName = userData.data!.user!.name!;
         if (token != null) {
-          await SecureCacheHelper.saveData(key: 'token', value: token);
+          await SecureCacheHelper.saveData(key: CacheKeys.token, value: token);
+          await SecureCacheHelper.saveData(key: CacheKeys.userName, value: userName);
         }
-
         return Left(userData);
       } else {
         return Right(Failure(errorMessage: response.message));

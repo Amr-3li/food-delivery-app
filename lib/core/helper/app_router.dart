@@ -28,6 +28,8 @@ import 'package:restaurant/features/forget_password/presentation/confirem_passwo
 import 'package:restaurant/features/forget_password/presentation/views/forget_password_view.dart';
 import 'package:restaurant/features/forget_password/presentation/views/sent_otp.dart';
 import 'package:restaurant/features/address/presentaion/view/address_view.dart';
+import 'package:restaurant/features/home/presentation/views/all_categories_view.dart';
+import 'package:restaurant/features/home/presentation/views/category_details_view.dart';
 import 'package:restaurant/features/internet/views/internet_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
@@ -46,6 +48,8 @@ import 'package:restaurant/features/search/presentation/views/search_screen.dart
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
+import '../../features/home/presentation/cubit/category/category_cubit.dart';
+import '../../features/home/presentation/cubit/resturant/resturant_cubit.dart';
 import '../../features/home/presentation/views/home_user_view.dart';
 import '../../features/menu/data/repo/menu/menu_repo_implemation.dart';
 import '../../features/menu/presentation/manger/menu/menu_cubit.dart';
@@ -54,49 +58,48 @@ import '../dependency_injection/service_locator.dart';
 import '../network/network_info.dart';
 
 abstract class AppRouter {
-  static const kOnboardingView = '/OnboardingView';
-  static const kSplashView = '/';
-  static const kChatView = '/chat';
-  static const kMessageListView = '/messageList';
-  static const kReviewView = '/review';
-  static const kAddReviewView = '/addReview';
-  static const kWelcomeView = '/welcome';
-  static const kHomeView = '/home';
-  static const kProfileView = '/profile';
-  static const kCartView = '/cart';
-  static const kSucessPaymentView = '/sucessPayment';
-  static const kNotificationView = '/notification';
-  static const kNotificationChiefView = '/notificationChief';
-  static const kHomeUserView = "/homeUserView";
-  static const krestaurantView = "/restaurantView";
-  static const kChifFoodList = '/chif_food_list';
-  static const kAddNewItem = '/add_new_item';
-  static const kChifHome = '/chif_home';
-  static const kChatListView = "/chatListView";
-  static const kChatChiefView = "/chatChiefView";
-  static const kMenuChiefView = "/menuChiefView";
-  static const kWithdrawView = "/withdrawChiefView";
-  static const kPopularFoodView = "/popularFoodView";
-  static const kPersonalInfoProfileView = "/personalInfoProfile";
-  static const kEditProfileView = "/editProfile";
-  static const kMenuProfileView = "/menuProfileView";
-  static const kAllCategoryView = "/allCategoryView";
-  static const kSearchScreenView = "/searchScreenView";
-  static const kFoodScreenView = "/foodScreenView";
-  static const kFoodDetailsScreenView = "/foodDetailsScreenView";
-  static const kAllRestaurantsView = "/restaurantAllView";
+  static const String kSplashView = '/';
+  static const String kOnboardingView = '/OnboardingView';
+  static const String kHomeUserView = "/homeUserView";
+  static const String kChatView = '/chat';
+  static const String kMessageListView = '/messageList';
+  static const String kReviewView = '/review';
+  static const String kAddReviewView = '/addReview';
+  static const String kProfileView = '/profile';
+  static const String kCartView = '/cart';
+  static const String kSucessPaymentView = '/sucessPayment';
+  static const String kNotificationView = '/notification';
+  static const String kNotificationChiefView = '/notificationChief';
+  static const String krestaurantView = "/restaurantView";
+  static const String kChifFoodList = '/chif_food_list';
+  static const String kAddNewItem = '/add_new_item';
+  static const String kChifHome = '/chif_home';
+  static const String kChatListView = "/chatListView";
+  static const String kChatChiefView = "/chatChiefView";
+  static const String kMenuChiefView = "/menuChiefView";
+  static const String kWithdrawView = "/withdrawChiefView";
+  static const String kPopularFoodView = "/popularFoodView";
+  static const String kPersonalInfoProfileView = "/personalInfoProfile";
+  static const String kEditProfileView = "/editProfile";
+  static const String kMenuProfileView = "/menuProfileView";
+  static const String kAllCategoryView = "/allCategoryView";
+  static const String kSearchScreenView = "/searchScreenView";
+  static const String kFoodScreenView = "/foodScreenView";
+  static const String kFoodDetailsScreenView = "/foodDetailsScreenView";
+  static const String kAllRestaurantsView = "/restaurantAllView";
   static const String kOrder = '/order';
   static const String kAddresses = '/addresses';
-  static const kFQS = '/fqs';
-  static const kFavorite = "/favorite";
-  static const kAddAddressView = "/addAddress";
-  static const kChifFoodDetails = '/chif_food_details';
+  static const String kFQS = '/fqs';
+  static const String kFavorite = "/favorite";
+  static const String kAddAddressView = "/addAddress";
+  static const String kChifFoodDetails = '/chif_food_details';
   static const String kResturantReview = '/resturantReview';
   static const String kLoginView = "/login";
   static const String kVerifyEmail = "/vertificationView";
   static const String kSendOtp = "/sendOtp";
   static const String kResetPassword = "/resetPassword";
   static const kMenuView = "/menuView";
+  static const kCategoryDetailsView = "/CategoryDetailsView";
 
   static final router = GoRouter(
     routes: [
@@ -117,6 +120,37 @@ abstract class AppRouter {
             path: kSplashView,
             builder: (context, state) => const SplashView(),
           ),
+
+          // Home View and cubit
+          ShellRoute(
+            builder: (context, state, child) {
+              return MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (context) => sl<CategoryCubit>()..fetchCategories(),
+                    ),
+                    BlocProvider(create: (_) => RestaurantCubit(sl())..getRestaurants()),
+                  ],
+                  child: child);
+            },
+            routes: [
+              GoRoute(
+                path: kHomeUserView,
+                builder: (context, state) => HomeUserView(),
+              ),
+
+              GoRoute(
+                path: kAllCategoryView,
+                builder: (context, state) => AllCategoriesView(),
+              ),
+
+              GoRoute(
+                path: kCategoryDetailsView,
+                builder: (context, state) => CategoryDetailsView(state: state,),
+              ),
+            ]
+          ),
+
           GoRoute(
             path: kChifHome,
             builder: (context, state) {
@@ -210,10 +244,7 @@ abstract class AppRouter {
             name: "resturantReview",
             builder: (context, state) => ReviewResturantScreen(),
           ),
-          GoRoute(
-            path: kHomeUserView,
-            builder: (context, state) => HomeUserView(),
-          ),
+
           GoRoute(
             path: kChatListView,
             builder: (context, state) => ChatListScreenChief(),
@@ -236,11 +267,6 @@ abstract class AppRouter {
               final int? id = state.extra as int?;
               return RestaurantViewScreen(id: id ?? 8);
             },
-          ),
-
-          GoRoute(
-            path: kAllCategoryView,
-            builder: (context, state) => AllCategoriesScreen(),
           ),
 
           GoRoute(

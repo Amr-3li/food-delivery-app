@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/cache/cache_data.dart';
 import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/icons.dart';
@@ -33,7 +34,7 @@ class CustomHomeAppBar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Hey Hala,",
+              "Hey ${CacheData.userName},",
               style: Styles.textStyle16.copyWith(fontWeight: FontWeight.normal),
             ),
             Text("Good Afternoon,", style: Styles.textStyle16),

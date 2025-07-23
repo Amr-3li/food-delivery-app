@@ -14,7 +14,7 @@ class NetworkInfo {
 
   ConnectivityResult _currentStatus = ConnectivityResult.none;
 
-  /// هذا هو الجزء المهم اللي ناقص عندك
+
   final ValueNotifier<bool> isConnected = ValueNotifier(false);
 
   ConnectivityResult get currentStatus => _currentStatus;

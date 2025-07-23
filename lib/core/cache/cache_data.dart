@@ -7,7 +7,7 @@ abstract class CacheData {
   static bool? firstTime;
 
   static Future<void> clear() async {
-    await CacheHelper.removeData(key: CacheKeys.accessToken);
+    await CacheHelper.removeData(key: CacheKeys.token);
     await CacheHelper.removeData(key: CacheKeys.userName);
   }
 
@@ -17,6 +17,6 @@ abstract class CacheData {
 
     // Set the initial token
     accessToken = initialToken;
-    await CacheHelper.saveData(key: CacheKeys.accessToken, value: initialToken);
+    await CacheHelper.saveData(key: CacheKeys.token, value: initialToken);
   }
 }

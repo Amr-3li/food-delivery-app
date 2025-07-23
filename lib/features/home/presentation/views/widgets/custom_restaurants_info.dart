@@ -28,7 +28,7 @@ class CustomRestorantInfo extends StatelessWidget {
           CustomNetworkImage(
             imageUrl:
                 "https://popmenucloud.com/cdn-cgi/image/width%3D1200%2Cheight%3D1200%2Cfit%3Dscale-down%2Cformat%3Dauto%2Cquality%3D60/evuzicja/678850d5-0715-407f-92dd-499326242d71.jpg",
-            width: 327,
+            width: double.infinity,
             height: 140,
           ),
           Text(restaurant?.name ?? '', style: Styles.textStyle20),

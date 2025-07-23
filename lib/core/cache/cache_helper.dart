@@ -15,7 +15,7 @@ class CacheHelper {
 
       // Load existing data if any
       CacheData.accessToken = _sharedPreferences!.getString(
-        CacheKeys.accessToken,
+        CacheKeys.token,
       );
       CacheData.userName = _sharedPreferences!.getString(CacheKeys.userName);
       CacheData.firstTime = _sharedPreferences!.getBool(CacheKeys.firstTime);

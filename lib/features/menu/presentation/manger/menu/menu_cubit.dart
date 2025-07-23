@@ -1,5 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:restaurant/core/cache/cache_data.dart';
+import 'package:restaurant/core/cache/cache_keys.dart';
+import 'package:restaurant/core/cache/secure_cache_helper.dart';
 
 import '../../../data/models/customer_profile_model.dart';
 import '../../../data/repo/menu/menu_repo.dart';
@@ -51,7 +54,10 @@ class MenuCubit extends Cubit<MenuState> {
             },
             (successMessage) {
               emit(EditCustomerProfileSuccess(successMessage));
-              getCustomerProfile(); // Refresh the profile after editing
+              if (name != null) {
+                SecureCacheHelper.saveData(key: CacheKeys.userName, value: name);
+              }
+              getCustomerProfile();
             },
           );
         });

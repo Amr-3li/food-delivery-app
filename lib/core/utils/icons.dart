@@ -138,4 +138,6 @@ class AppIcons {
   static const String withdrawSuccess = "assets/images/withdrawSSuccess.svg";
 
   static const String assetsLocationAccess = "assets/images/Animation - 1751904435460.json";
+
+  static const String assetsCartBlue = "assets/images/cart_blue.svg";
 }

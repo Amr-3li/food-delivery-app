@@ -23,7 +23,7 @@ final List<MenuGroup> menuGroups = [
   MenuGroup(
     items: [
       MenuItem(
-        icon: AppIcons.assetsCart,
+        icon: AppIcons.assetsCartBlue,
         title: 'Cart',
         route: AppRouter.kCartView,
       ),

@@ -52,7 +52,7 @@ class AllCategoriesScreen extends StatelessWidget {
                       } else if (state is CategoryFailure) {
                         return Center(child: Text("Error: ${state.error}"));
                       } else if (state is CategorySuccess) {
-                        final categories = state.categories;
+                        final categories = CategoryCubit.get(context).categories;
 
                         if (categories.isEmpty) {
                           return const Center(

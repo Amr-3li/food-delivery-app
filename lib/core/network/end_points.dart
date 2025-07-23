@@ -29,4 +29,6 @@ abstract class EndPoints {
   static const String updateProfile = "update/user";
   static const String verifyEmail = "email/verify";
   static const String searchPage = "client/meals_filter?";
+  static const String categories = "categories";
+  static const String mealsType = "dishes/meal-type";
 }

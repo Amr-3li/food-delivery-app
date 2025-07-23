@@ -1,5 +1,5 @@
 abstract class CacheKeys {
-  static const String accessToken = 'accessToken';
+  static const String token = 'token';
   static const String userName = 'userName';
   static const String firstTime = 'firstTime';
 }
