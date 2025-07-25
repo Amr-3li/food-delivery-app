@@ -28,7 +28,7 @@ final List<MenuGroup> menuGroups = [
         route: AppRouter.kCartView,
       ),
       MenuItem(
-        icon: AppIcons.assetsFavourite,
+        icon: AppIcons.assetsFavoritesPurple,
         title: 'Favourites',
         route: AppRouter.kFavorite,
       ),

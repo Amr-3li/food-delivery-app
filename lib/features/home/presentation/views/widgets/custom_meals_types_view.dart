@@ -52,7 +52,7 @@ class CustomMealsTypesView extends StatelessWidget {
                   name: item.name,
                   onTap: () {
                     GoRouter.of(context).push(
-                      AppRouter.kFoodDetailsScreenView,
+                      AppRouter.kFoodDetailsView,
                       extra: item.id,
                     );
                   },

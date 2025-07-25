@@ -185,7 +185,7 @@ class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
                   buttonText: widget.total == 0 ? "Cart Empty" : 'Place Order',
                   onPressedFunction: widget.total == 0
                       ? () {
-                          context.push(AppRouter.kFoodScreenView);
+                          // context.push(AppRouter.kFoodScreenView);
                         }
                       : () {
                           context.read<PaymentCubit>().makePayment(

@@ -88,7 +88,7 @@ class _HomeUserViewState extends State<HomeUserView> {
                                           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXZylLZLdEOnpA7xCFv_tEqFvcThCY70wK7Q&s",
                                       onTap: () {
                                         context.push(
-                                          AppRouter.kFoodDetailsScreenView,
+                                          AppRouter.kCategoryDetailsView,
                                           extra: category.id,
                                         );
                                       },

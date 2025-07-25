@@ -31,4 +31,5 @@ abstract class EndPoints {
   static const String searchPage = "client/meals_filter?";
   static const String categories = "categories";
   static const String mealsType = "dishes/meal-type";
+  static const String mealDetails = "client/meals";
 }
