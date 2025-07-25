@@ -143,4 +143,10 @@ class AppIcons {
       "assets/images/Animation - 1751904435460.json";
 
   static const String assetsCartBlue = "assets/images/cart_blue.svg";
+
+  static const String assetsChatIcon = "assets/images/chat_icon.png";
+
+  static const String assetsEmailIcon = "assets/images/email_icon.png";
+
+  static const String assetsPhoneIcon = "assets/images/phone_icon.png";
 }

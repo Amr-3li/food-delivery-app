@@ -40,7 +40,7 @@ class Data {
   final List<SizeModel> sizes;
   final List<Ingredient> ingredients;
   final Category? category;
-  final Chef? chef;
+  final ChefModel? chef;
 
   factory Data.fromJson(Map<String, dynamic> json){
     return Data(
@@ -52,7 +52,7 @@ class Data {
       sizes: json["sizes"] == null ? [] : List<SizeModel>.from(json["sizes"]!.map((x) => SizeModel.fromJson(x))),
       ingredients: json["ingredients"] == null ? [] : List<Ingredient>.from(json["ingredients"]!.map((x) => Ingredient.fromJson(x))),
       category: json["category"] == null ? null : Category.fromJson(json["category"]),
-      chef: json["chef"] == null ? null : Chef.fromJson(json["chef"]),
+      chef: json["chef"] == null ? null : ChefModel.fromJson(json["chef"]),
     );
   }
 
@@ -76,8 +76,8 @@ class Category {
 
 }
 
-class Chef {
-  Chef({
+class ChefModel {
+  ChefModel({
     required this.id,
     required this.name,
     required this.bio,
@@ -93,8 +93,8 @@ class Chef {
   final String? email;
   final String? profileImage;
 
-  factory Chef.fromJson(Map<String, dynamic> json){
-    return Chef(
+  factory ChefModel.fromJson(Map<String, dynamic> json){
+    return ChefModel(
       id: json["id"],
       name: json["name"],
       bio: json["bio"],

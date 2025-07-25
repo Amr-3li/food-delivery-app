@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/assets_data.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/home/data/models/meal_details_model.dart';
@@ -85,9 +87,14 @@ class FoodDetailsViewBody extends StatelessWidget {
                                 height: 25,
                               ),
                               SizedBox(width: 12),
-                              Text(
-                                mealCubit.mealDetailsModel!.data!.chef!.name!,
-                                style: Styles.textStyle16,
+                              GestureDetector(
+                                onTap: () {
+                                  GoRouter.of(context).push(AppRouter.kChefDetailsView, extra: mealCubit.mealDetailsModel!.data!.chef);
+                                },
+                                child: Text(
+                                  mealCubit.mealDetailsModel!.data!.chef!.name!,
+                                  style: Styles.textStyle16,
+                                ),
                               ),
                               Spacer(),
                               Container(

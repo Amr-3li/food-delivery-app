@@ -25,8 +25,10 @@ import 'package:restaurant/features/forget_password/presentation/confirem_passwo
 import 'package:restaurant/features/forget_password/presentation/views/forget_password_view.dart';
 import 'package:restaurant/features/forget_password/presentation/views/sent_otp.dart';
 import 'package:restaurant/features/address/presentaion/view/address_view.dart';
+import 'package:restaurant/features/home/data/models/meal_details_model.dart';
 import 'package:restaurant/features/home/presentation/views/all_categories_view.dart';
 import 'package:restaurant/features/home/presentation/views/category_details_view.dart';
+import 'package:restaurant/features/home/presentation/views/chef_details_view.dart';
 import 'package:restaurant/features/internet/views/internet_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
@@ -61,6 +63,7 @@ abstract class AppRouter {
   static const String kOnboardingView = '/OnboardingView';
   static const String kHomeUserView = "/homeUserView";
   static const String kFoodDetailsView = "/foodDetailsView";
+  static const String kChefDetailsView = "/ChefDetailsView";
   static const String kChatView = '/chat';
   static const String kMessageListView = '/messageList';
   static const String kReviewView = '/review';
@@ -194,12 +197,21 @@ abstract class AppRouter {
           ),
 
           GoRoute(
+            path: kChefDetailsView,
+            builder: (context, state) {
+              final ChefModel chefModel = state.extra as ChefModel;
+              return ChefDetailsView(chefModel: chefModel);
+            },
+          ),
+
+          GoRoute(
             path: kChifHome,
             builder: (context, state) {
               final chefModel = state.extra as UserModel;
               return ChifHomeView(chefModel: chefModel);
             },
           ),
+
           GoRoute(
             path: kChatView,
             name: "chat",
