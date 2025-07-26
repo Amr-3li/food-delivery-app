@@ -28,8 +28,10 @@ abstract class EndPoints {
   static const String profile = "profile";
   static const String updateProfile = "update/user";
   static const String verifyEmail = "email/verify";
-  static const String searchPage = "client/meals_filter?";
+  static const String searchPage = "client/meals_search?search=";
   static const String categories = "categories";
   static const String mealsType = "dishes/meal-type";
   static const String mealDetails = "client/meals";
+  static const String suggestedResturants = "suggestedResturants";
+  static const String popularMeals = "popualarMeals";
 }

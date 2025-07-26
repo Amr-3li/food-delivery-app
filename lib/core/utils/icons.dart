@@ -149,4 +149,6 @@ class AppIcons {
   static const String assetsEmailIcon = "assets/images/email_icon.png";
 
   static const String assetsPhoneIcon = "assets/images/phone_icon.png";
+
+  static const String assetsNotFound = "assets/images/not_found_icon.png";
 }

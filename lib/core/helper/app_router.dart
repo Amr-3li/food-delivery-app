@@ -41,9 +41,6 @@ import 'package:restaurant/features/restaurant_view/presentation/views/all_restu
 import 'package:restaurant/features/restaurant_view/presentation/views/restaurant_view_screen.dart';
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/reviews/presentation/views/review_resturant.dart';
-import 'package:restaurant/features/search/data/search_cubit/search_cubit.dart';
-import 'package:restaurant/features/search/data/search_repos/search_repo_implementation.dart';
-import 'package:restaurant/features/search/presentation/views/search_screen.dart';
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 
 import '../../features/address/presentaion/view/add_new_address_view.dart';
@@ -55,6 +52,9 @@ import '../../features/home/presentation/views/widgets/food_details_view_body.da
 import '../../features/menu/data/repo/menu/menu_repo_implemation.dart';
 import '../../features/menu/presentation/manger/menu/menu_cubit.dart';
 import '../../features/menu/presentation/views/faqs_view.dart';
+import '../../features/search/data/repo/search_repo_implementation.dart';
+import '../../features/search/presentation/manger/search/search_cubit.dart';
+import '../../features/search/presentation/views/search_view.dart';
 import '../dependency_injection/service_locator.dart';
 import '../network/network_info.dart';
 
@@ -302,10 +302,7 @@ abstract class AppRouter {
 
           GoRoute(
             path: kSearchScreenView,
-            builder: (context, state) => BlocProvider(
-              create: (context) => SearchCubit(SearchRepoImplementation()),
-              child: SearchScreen(),
-            ),
+            builder: (context, state) => SearchView(),
           ),
 
           GoRoute(
