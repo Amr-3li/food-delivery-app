@@ -34,4 +34,43 @@ class MealDetailsRepository {
       return Left(errorResponse.message);
     }
   }
+
+  Future<Either<String, String>> addToFavorites({required int dishId}) async {
+    try {
+      ApiResponse apiResponse = await apiHelper.postRequest(
+        endPoint: EndPoints.addToFavorites,
+        isProtected: true,
+        data: {
+          "dish_id": dishId
+        }
+      );
+
+      if (apiResponse.data != null) {
+        return Right(apiResponse.message);
+      } else {
+        return Left("Failed to Add Dish To Favorites.");
+      }
+    } catch (e) {
+      ApiResponse errorResponse = ApiResponse.fromError(e);
+      return Left(errorResponse.message);
+    }
+  }
+
+  Future<Either<String, String>> deleteFromFavorites({required int dishId}) async {
+    try {
+      ApiResponse apiResponse = await apiHelper.deleteRequest(
+          endPoint: '${EndPoints.removeFromFavorites}/$dishId',
+          isProtected: true,
+      );
+
+      if (apiResponse.data != null) {
+        return Right(apiResponse.message);
+      } else {
+        return Left("Failed to Add Dish To Favorites.");
+      }
+    } catch (e) {
+      ApiResponse errorResponse = ApiResponse.fromError(e);
+      return Left(errorResponse.message);
+    }
+  }
 }

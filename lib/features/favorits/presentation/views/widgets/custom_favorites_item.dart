@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/features/home/presentation/views/widgets/custom_network_image.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/helper/app_responsive.dart';
 import '../../../../../core/utils/icons.dart';
 import '../../../../../core/utils/color_helper.dart';
 import '../../../../../core/utils/styles.dart';
+import '../../../data/models/favorites_model.dart';
+import '../../manger/favorites/favorites_cubit.dart';
 
 class CustomFavoritesItem extends StatelessWidget {
-  const CustomFavoritesItem({super.key});
+  const CustomFavoritesItem({super.key,required this.meal,required this.favoritesCubit});
+
+  final Datum meal;
+  final FavoritesCubit favoritesCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +27,25 @@ class CustomFavoritesItem extends StatelessWidget {
                 width: AppResponsive.width(context, value: 100),
                 height: AppResponsive.height(context, value: 100),
                 decoration: BoxDecoration(
-                  color: ColorsHelper.grey,
                   borderRadius: BorderRadius.circular(16),
                 ),
+                child: CustomNetworkImage(imageUrl: meal.dish?.image ?? '', width: 100, height: 100),
               ),
               Positioned(
                 top: 4,
                 left: 4,
-                child: CircleAvatar(
-                  radius: AppResponsive.width(context, value: 14),
-                  backgroundColor: ColorsHelper.orange,
-                  child: SvgPicture.asset(
-                    AppIcons.assetsFavoritesWhite,
-                    width: AppResponsive.width(context, value: 16),
-                    height: AppResponsive.height(context, value: 16),
+                child: GestureDetector(
+                  onTap: () {
+                    if (favoritesCubit.isFavorite) {
+                      favoritesCubit.deleteFromFavorites(dishId: meal.dish!.id!);
+                    } else {
+                      favoritesCubit.addToFavorites(dishId: meal.dish!.id!);
+                    }
+                  },
+                  child: CircleAvatar(
+                    radius: AppResponsive.width(context, value: 14),
+                    backgroundColor: ColorsHelper.lightBabyBlue,
+                    child: favoritesCubit.isFavorite ? Icon(Icons.favorite, color: Colors.orange,) : Icon(Icons.favorite, color: Colors.grey,),
                   ),
                 ),
               ),
@@ -45,24 +56,18 @@ class CustomFavoritesItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('pizza calzone european', style: Styles.textStyle18),
+                Text(meal.dish?.name ?? '', style: Styles.textStyle18),
                 const SizedBox(height: 8),
                 Text(
-                  'Prosciutto e funghi is a pizza variety that is topped with tomato sauce.',
+                  meal.dish?.description ?? '',
                   style: Styles.textStyle14.copyWith(color: ColorsHelper.grey),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      '\$12.99',
-                      style: Styles.textStyle16.copyWith(
-                        color: ColorsHelper.orange,
-                      ),
-                    ),
-                    Spacer(),
                     SvgPicture.asset(
                       AppIcons.assetsStar,
                       width: 16,
@@ -70,7 +75,7 @@ class CustomFavoritesItem extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      '4.5',
+                      meal.dish?.avgRate ?? '0',
                       style: Styles.textStyle14.copyWith(
                         color: ColorsHelper.black,
                       ),

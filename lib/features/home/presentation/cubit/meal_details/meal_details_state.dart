@@ -14,3 +14,27 @@ final class MealDetailsFailure extends MealDetailsState {
 }
 
 final class MealDetailsChangeSize extends MealDetailsState {}
+
+final class MealAddToFavoritesSuccess extends MealDetailsState {
+  final String message;
+
+  MealAddToFavoritesSuccess(this.message);
+}
+
+final class MealAddToFavoritesFailure extends MealDetailsState {
+  final String error;
+
+  MealAddToFavoritesFailure(this.error);
+}
+
+final class MealDeleteFromFavoritesSuccess extends MealDetailsState {
+  final String message;
+
+  MealDeleteFromFavoritesSuccess(this.message);
+}
+
+final class MealDeleteFromFavoritesFailure extends MealDetailsState {
+  final String error;
+
+  MealDeleteFromFavoritesFailure(this.error);
+}

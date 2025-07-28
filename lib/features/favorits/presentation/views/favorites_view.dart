@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant/features/favorits/data/repo/favorites_repo.dart';
+import 'package:restaurant/features/favorits/presentation/manger/favorites/favorites_cubit.dart';
 import 'package:restaurant/features/favorits/presentation/views/widgets/favorites_view_body.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -12,25 +15,28 @@ class FavoritesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: CircleAvatar(
-              radius: 22,
-              backgroundColor: ColorsHelper.lightBabyBlue,
-              child: SvgPicture.asset(AppIcons.iIcon),
+    return BlocProvider(
+      create: (context) => FavoritesCubit(FavoritesRepo())..getFavorites(),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: CircleAvatar(
+                radius: 22,
+                backgroundColor: ColorsHelper.lightBabyBlue,
+                child: SvgPicture.asset(AppIcons.iIcon),
+              ),
             ),
           ),
+          toolbarHeight: AppResponsive.height(context, value: 80),
+          title: Text('My Favorites', style: Styles.textStyle18),
         ),
-        toolbarHeight: AppResponsive.height(context, value: 80),
-        title: Text('My Favorites', style: Styles.textStyle18),
+        body: FavoritesViewBody(),
       ),
-      body: FavoritesViewBody(),
     );
   }
 }

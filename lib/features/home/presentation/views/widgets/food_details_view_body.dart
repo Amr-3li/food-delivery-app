@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:restaurant/core/helper/app_router.dart';
+import 'package:restaurant/core/utils/app_toast.dart';
 import 'package:restaurant/core/utils/assets_data.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/home/data/models/meal_details_model.dart';
@@ -22,7 +23,18 @@ class FoodDetailsViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MealDetailsCubit, MealDetailsState>(
+    return BlocConsumer<MealDetailsCubit, MealDetailsState>(
+      listener: (context, state) {
+        if (state is MealAddToFavoritesSuccess) {
+          AppToast.showSuccessToast(state.message);
+        } else if (state is MealAddToFavoritesFailure) {
+          AppToast.showErrorToast(state.error);
+        } else if (state is MealDeleteFromFavoritesSuccess) {
+          AppToast.showSuccessToast(state.message);
+        } else if (state is MealDeleteFromFavoritesFailure) {
+          AppToast.showErrorToast(state.error);
+        }
+      },
       builder: (context, state) {
         final mealCubit = MealDetailsCubit.get(context);
         if (mealCubit.mealDetailsModel != null) {
@@ -45,6 +57,8 @@ class FoodDetailsViewBody extends StatelessWidget {
                 expandedHeight: 300,
                 flexibleSpace: FlexibleSpaceBar(
                   background: CustomNetworkImage(
+                    topRight: 0,
+                    topLeft: 0,
                     imageUrl:
                         mealCubit.mealDetailsModel?.data?.dishImage != null
                         ? mealCubit.mealDetailsModel!.data!.dishImage!
@@ -54,12 +68,21 @@ class FoodDetailsViewBody extends StatelessWidget {
                   ),
                 ),
                 actions: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: CircleAvatar(
-                      radius: 22,
-                      backgroundColor: ColorsHelper.lightBabyBlue,
-                      child: Icon(Icons.favorite_border, color: Colors.black),
+                  GestureDetector(
+                    onTap: () {
+                      if (mealCubit.isFavorite) {
+                        mealCubit.deleteFromFavorites(dishId: mealCubit.mealDetailsModel!.data!.dishId!);
+                      } else {
+                        mealCubit.addToFavorites(dishId: mealCubit.mealDetailsModel!.data!.dishId!);
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: CircleAvatar(
+                        radius: 22,
+                        backgroundColor: ColorsHelper.lightBabyBlue,
+                        child: mealCubit.isFavorite ? Icon(Icons.favorite, color: Colors.orange) : Icon(Icons.favorite, color: Colors.grey),
+                      ),
                     ),
                   ),
                 ],

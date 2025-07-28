@@ -37,4 +37,34 @@ class MealDetailsCubit extends Cubit<MealDetailsState> {
     }
     emit(MealDetailsChangeSize());
   }
+
+  bool isFavorite = false;
+
+  void addToFavorites({required int dishId}) {
+    mealDetailsRepository.addToFavorites(dishId: dishId).then((result) {
+      result.fold(
+            (failure) {
+          emit(MealAddToFavoritesFailure(failure));
+        },
+            (message) {
+          emit(MealAddToFavoritesSuccess(message));
+          isFavorite = true;
+        },
+      );
+    });
+  }
+
+  void deleteFromFavorites({required int dishId}) {
+    mealDetailsRepository.deleteFromFavorites(dishId: dishId).then((result) {
+      result.fold(
+            (failure) {
+          emit(MealDeleteFromFavoritesFailure(failure));
+        },
+            (message) {
+          emit(MealDeleteFromFavoritesSuccess(message));
+          isFavorite = false;
+        },
+      );
+    });
+  }
 }
