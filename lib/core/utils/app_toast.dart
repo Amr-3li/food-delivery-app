@@ -5,7 +5,7 @@ abstract class AppToast {
   static void showSuccessToast(String message) {
     _showToast(
       message: message,
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.black26,
       textColor: Colors.white,
     );
   }

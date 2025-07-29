@@ -46,7 +46,7 @@ class Data {
     return Data(
       dishId: json["dish_id"],
       dishName: json["dish_name"],
-      dishImage: json["dish_image"],
+      dishImage:  "https://round41-mobile-food.digital-vision-solutions.com/storage/" + json["dish_image"],
       dishDescription: json["dish_description"],
       dishAvgRate: json["dish_avg_rate"],
       sizes: json["sizes"] == null ? [] : List<SizeModel>.from(json["sizes"]!.map((x) => SizeModel.fromJson(x))),

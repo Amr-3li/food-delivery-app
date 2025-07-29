@@ -144,11 +144,11 @@ class AppIcons {
 
   static const String assetsCartBlue = "assets/images/cart_blue.svg";
 
-  static const String assetsChatIcon = "assets/images/chat_icon.png";
+  static const String assetsChatIcon = "assets/images/Message.svg";
 
-  static const String assetsEmailIcon = "assets/images/email_icon.png";
+  static const String assetsEmailIcon = "assets/images/email.svg";
 
-  static const String assetsPhoneIcon = "assets/images/phone_icon.png";
+  static const String assetsPhoneIcon = "assets/images/phone.svg";
 
   static const String assetsNotFound = "assets/images/not_found_icon.png";
 }

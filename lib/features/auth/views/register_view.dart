@@ -12,10 +12,13 @@ import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/views/cubit/auth_cubit.dart/auth_cubit.dart';
 import 'package:restaurant/features/auth/views/cubit/auth_cubit.dart/auth_states.dart';
 import 'package:restaurant/features/auth/views/widgets/custom_password_textfiled.dart';
+import 'package:restaurant/features/auth/views/widgets/custom_text_button.dart';
 import 'package:restaurant/features/auth/views/widgets/custom_text_form_field.dart';
 import 'package:restaurant/features/auth/views/widgets/title_authentication_pages.dart';
 import 'package:sizer/sizer.dart';
 import 'package:restaurant/core/utils/assets_data.dart';
+
+import '../../../core/utils/color_helper.dart';
 
 class SinUpView extends StatefulWidget {
   const SinUpView({super.key});
@@ -72,7 +75,6 @@ class _SinUpViewState extends State<SinUpView> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(left: 6.5.w, top: 5.5.h, child: CustomArrowBack()),
                 Positioned(
                   top: 7.5.h,
                   left: 18.w,
@@ -153,6 +155,22 @@ class _SinUpViewState extends State<SinUpView> {
                                   }
                                 },
                               ),
+                              SizedBox(height: 2.h),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Already have an account? ",
+                                    style: Styles.textStyle16.copyWith(
+                                      color: ColorsHelper.grey,
+                                    ),
+                                  ),
+                                  CustomTextButton(
+                                    buttonName: 'Login',
+                                    onPressed: () => context.pop(),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),

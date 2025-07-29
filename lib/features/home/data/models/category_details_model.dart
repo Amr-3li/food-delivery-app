@@ -90,7 +90,7 @@ class Dish {
       id: json["id"],
       name: json["name"],
       description: json["description"],
-      imageUrl: json["image_url"],
+      imageUrl: "https://round41-mobile-food.digital-vision-solutions.com/" + json["image_url"],
       isAvailable: json["is_available"],
       rating: json["rating"] == null ? null : Rating.fromJson(json["rating"]),
       sizes: json["sizes"] == null ? [] : List<Size>.from(json["sizes"]!.map((x) => Size.fromJson(x))),

@@ -3,8 +3,8 @@ import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:svg_flutter/svg.dart';
 
-class CustomIconsTitl extends StatelessWidget {
-  const CustomIconsTitl({
+class CustomIconsTitle extends StatelessWidget {
+  const CustomIconsTitle({
     super.key,
     required this.title,
     required this.iconUrl,
@@ -19,6 +19,7 @@ class CustomIconsTitl extends StatelessWidget {
           iconUrl,
           colorFilter: ColorFilter.mode(ColorsHelper.orange, BlendMode.srcIn),
         ),
+        const SizedBox(width: 10),
         Text(title, style: Styles.textStyle16),
       ],
     );

@@ -13,7 +13,7 @@ final Function()? onTap;
       children: [
         Text(
           subTitle,
-          style: Styles.textStyle17.copyWith(fontWeight: FontWeight.normal),
+          style: Styles.textStyle16,
         ),
         Padding(
           padding: EdgeInsets.only(

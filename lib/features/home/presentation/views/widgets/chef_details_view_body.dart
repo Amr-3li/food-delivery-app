@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/core/helper/contact_helper.dart';
 import 'package:restaurant/core/utils/assets_data.dart';
 import 'package:restaurant/core/utils/icons.dart';
 import 'package:restaurant/core/utils/styles.dart';
@@ -42,11 +43,17 @@ class ChefDetailsViewBody extends StatelessWidget {
           CustomContactInfo(
             text: chefModel.email ?? '',
             image: AppIcons.assetsEmailIcon,
+            onTap: () {
+              ContactHelper.sendEmail(toEmail: chefModel.email ?? '');
+            },
           ),
           SizedBox(height: 20),
           CustomContactInfo(
             text: chefModel.phone ?? '',
             image: AppIcons.assetsPhoneIcon,
+            onTap: () {
+              ContactHelper.makePhoneCall(chefModel.phone ?? '');
+            },
           ),
           SizedBox(height: 20),
           CustomContactInfo(text: 'Message', image: AppIcons.assetsChatIcon),

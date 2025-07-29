@@ -36,4 +36,6 @@ abstract class EndPoints {
   static const String addToFavorites = "favorites/add";
   static const String removeFromFavorites = "favorites/remove";
   static const String getFavorites = "favorites";
+  static const String getRestaurants = "open-resturants";
+  static const String getRestaurantDetails = "resturants";
 }
