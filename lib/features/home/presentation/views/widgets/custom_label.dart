@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:restaurant/core/utils/styles.dart';
 
 import '../../../../../core/helper/app_responsive.dart';
 import '../../../../../core/utils/color_helper.dart';
-import '../../cubit/category/category_cubit.dart';
 
 class CustomLabel extends StatelessWidget {
   const CustomLabel({

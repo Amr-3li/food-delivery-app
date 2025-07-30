@@ -47,6 +47,8 @@ class SearchScreen extends StatelessWidget {
             builder: (context, state) {
               if (state is LoadingState) {
                 return GridView.count(
+                  shrinkWrap: true, // <-- add this
+                  physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
@@ -70,7 +72,9 @@ class SearchScreen extends StatelessWidget {
                   children: List.generate(
                     state.results.length,
                     (index) => CustomCategory(
-                      imageUrl: state.results[index].dishImage,
+                      imageUrl:
+                          "https://www.shutterstock.com/image-photo/hands-food-sprinkle-on-dish-600nw-2488467481.jpg",
+                      //  state.results[index].dishImage,
                       name: state.results[index].chefName,
                       onTap: () {
                         // GoRouter.of(
