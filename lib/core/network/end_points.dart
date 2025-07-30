@@ -7,7 +7,6 @@ abstract class EndPoints {
   static const String recommendedCombo = 'categories/4/products/';
   static const String cart = 'cart';
   static const String productDetails = 'products/';
-  static const String favorites = 'favourites';
   static String categoryProducts(int categoryId) =>
       'categories/$categoryId/products/';
   static String searchProducts(String query) => '/products?search=$query';
@@ -28,7 +27,15 @@ abstract class EndPoints {
   static const String profile = "profile";
   static const String updateProfile = "update/user";
   static const String verifyEmail = "email/verify";
-  static const String searchPage = "client/meals_filter?";
+  static const String searchPage = "client/meals_search?search=";
   static const String categories = "categories";
   static const String mealsType = "dishes/meal-type";
+  static const String mealDetails = "client/meals";
+  static const String suggestedResturants = "suggestedResturants";
+  static const String popularMeals = "popualarMeals";
+  static const String addToFavorites = "favorites/add";
+  static const String removeFromFavorites = "favorites/remove";
+  static const String getFavorites = "favorites";
+  static const String getRestaurants = "open-resturants";
+  static const String getRestaurantDetails = "resturants";
 }

@@ -14,8 +14,6 @@ class AppIcons {
 
   static const String iCheck1 = "assets/images/check (1).svg";
 
-  static const String iCreditCard = "assets/images/credit-card.svg";
-
   static const String iCross = "assets/images/Cross.svg";
 
   static const String iEye = "assets/images/eye.svg";
@@ -31,7 +29,9 @@ class AppIcons {
   static const String iInfo = "assets/images/info.svg";
 
   static const String iLogout = "assets/images/Logout.svg";
+
   static const String assetsImagesLogout = "assets/images/Logout.svg";
+
   static const String assetsImagesLogoutl = "assets/images/Logoutleft.svg";
 
   static const String iMenu = "assets/images/menu.svg";
@@ -95,8 +95,6 @@ class AppIcons {
 
   static const String assetsCart = "assets/images/cart.svg";
 
-  static const String assetsFavourite = "assets/images/favourite.svg";
-
   static const String assetsNotifications = "assets/images/notifications.svg";
 
   static const String assetsPaymentMethod = "assets/images/payment method.svg";
@@ -131,13 +129,26 @@ class AppIcons {
 
   static const String assetsCar = "assets/images/Vector.svg";
 
-  static const String assetsFavoritesWhite = "assets/images/favorites.svg";
+  static const String assetsFavoritesWhite = "assets/images/favorites_white.svg";
+
+  static const String assetsFavoritesPurple = "assets/images/favorites_purple.svg";
+
+  static const String assetsFavoritesOrange = "assets/images/favorites_orange.svg";
 
   static var assetsImagesMenu = "";
 
   static const String withdrawSuccess = "assets/images/withdrawSSuccess.svg";
 
-  static const String assetsLocationAccess = "assets/images/Animation - 1751904435460.json";
+  static const String assetsLocationAccess =
+      "assets/images/Animation - 1751904435460.json";
 
   static const String assetsCartBlue = "assets/images/cart_blue.svg";
+
+  static const String assetsChatIcon = "assets/images/Message.svg";
+
+  static const String assetsEmailIcon = "assets/images/email.svg";
+
+  static const String assetsPhoneIcon = "assets/images/phone.svg";
+
+  static const String assetsNotFound = "assets/images/not_found_icon.png";
 }

@@ -127,7 +127,7 @@ class DishGridView extends StatelessWidget {
               onTap: () {
                 GoRouter.of(
                   context,
-                ).push(AppRouter.kFoodDetailsScreenView, extra: item.id);
+                ).push(AppRouter.kFoodDetailsView, extra: item.id);
               },
             ),
           )

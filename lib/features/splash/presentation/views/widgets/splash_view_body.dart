@@ -11,6 +11,7 @@ import 'package:restaurant/core/utils/assets_data.dart';
 import 'package:restaurant/core/cache/cache_helper.dart';
 import 'package:restaurant/core/cache/secure_cache_helper.dart';
 import 'package:restaurant/core/helper/app_router.dart';
+import 'package:svg_flutter/svg.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -44,10 +45,32 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [Image.asset(AssetsData.logo)],
+      body: Stack(
+        children: [
+
+          Positioned(
+            top: 0,
+            left: 0,
+            child: SvgPicture.asset(
+              AssetsData.splachBackgroundGrey,
+              width: 150,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: SvgPicture.asset(
+              AssetsData.splachBackgroundOrange,
+              width: 200,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          Center(child: Image.asset(AssetsData.logo))
+        ],
       ),
     );
   }

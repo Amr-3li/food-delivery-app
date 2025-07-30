@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:restaurant/core/cache/cache_data.dart';
 import 'package:restaurant/core/cache/cache_keys.dart';
 
 import 'package:restaurant/core/cache/secure_cache_helper.dart';
@@ -57,6 +58,8 @@ class AuthRepoImplementation extends AuthRepo {
         if (token != null) {
           await SecureCacheHelper.saveData(key: CacheKeys.token, value: token);
           await SecureCacheHelper.saveData(key: CacheKeys.userName, value: userName);
+          CacheData.accessToken = token;
+          CacheData.userName = userName;
         }
         return Left(userData);
       } else {

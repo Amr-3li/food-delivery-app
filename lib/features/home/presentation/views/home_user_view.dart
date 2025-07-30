@@ -75,12 +75,18 @@ class _HomeUserViewState extends State<HomeUserView> {
                                 return Center(
                                   child: Text("Error: ${state.error}"),
                                 );
-                              } else if (BlocProvider.of<CategoryCubit>(context).categories.isNotEmpty) {
+                              } else if (BlocProvider.of<CategoryCubit>(
+                                context,
+                              ).categories.isNotEmpty) {
                                 return ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: CategoryCubit.get(context).categories.length,
+                                  itemCount: CategoryCubit.get(
+                                    context,
+                                  ).categories.length,
                                   itemBuilder: (context, index) {
-                                    final category = CategoryCubit.get(context).categories[index];
+                                    final category = CategoryCubit.get(
+                                      context,
+                                    ).categories[index];
                                     return CustomCategory(
                                       name: category.name,
                                       imageUrl:
@@ -88,7 +94,7 @@ class _HomeUserViewState extends State<HomeUserView> {
                                           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXZylLZLdEOnpA7xCFv_tEqFvcThCY70wK7Q&s",
                                       onTap: () {
                                         context.push(
-                                          AppRouter.kFoodDetailsScreenView,
+                                          AppRouter.kCategoryDetailsView,
                                           extra: category.id,
                                         );
                                       },
@@ -133,48 +139,33 @@ class _HomeUserViewState extends State<HomeUserView> {
                   ),
                   BlocBuilder<RestaurantCubit, RestaurantState>(
                     builder: (context, state) {
-                      if (state is RestaurantLoading) {
+                      final cubit = RestaurantCubit.get(context);
+                      if (cubit.restaurantsModel != null) {
                         return SliverList(
                           delegate: SliverChildBuilderDelegate((
                             context,
                             index,
                           ) {
                             return Padding(
-                              padding: EdgeInsets.symmetric(vertical: 12.sp),
-                              child: CustomRestorantInfo().redacted(
-                                context: context,
-                                redact: true,
-                                configuration: RedactedConfiguration(
-                                  animationDuration : const Duration(milliseconds: 800), //default
-                                ),
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: CustomRestaurantInfo(
+                                restaurant: cubit.restaurantsModel!.data[index],
                               ),
                             );
-                          }, childCount: 4),
-                        );
-                      } else if (state is RestaurantLoaded) {
-                        return SliverList(
-                          delegate: SliverChildBuilderDelegate((
-                            context,
-                            index,
-                          ) {
-                            final restaurant = state.restaurants[index];
-                            return Padding(
-                              padding: EdgeInsets.symmetric(vertical: 12.sp),
-                              child: CustomRestorantInfo(
-                                restaurant: restaurant,
-                              ),
-                            );
-                          }, childCount: state.restaurants.length),
-                        );
-                      } else if (state is RestaurantError) {
-                        return SliverToBoxAdapter(
-                          child: Center(child: Text(state.message)),
-                        );
-                      } else {
-                        return const SliverToBoxAdapter(
-                          child: SizedBox.shrink(),
+                          }, childCount: 5),
                         );
                       }
+                      return SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12.sp),
+                            child: CustomRestaurantInfo().redacted(
+                              context: context,
+                              redact: true,
+                            ),
+                          );
+                        }, childCount: 5),
+                      );
                     },
                   ),
                 ],
