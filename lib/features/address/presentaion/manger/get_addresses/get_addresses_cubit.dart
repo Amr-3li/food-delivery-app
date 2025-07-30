@@ -37,14 +37,12 @@ class GetAddressesCubit extends Cubit<GetAddressesState> {
         emit(GetAddressesError(failure));
       },
       (addressDetails) {
-        // 🟠 Handle null case from API
         if (addressDetails == null) {
-          addresses = []; // Clear list
-          emit(GetAddressesSuccess()); // Still emit success
+          addresses = [];
         } else {
-          addresses = [addressDetails]; // Wrap in list
-          emit(GetAddressesSuccess());
+          addresses = [addressDetails];
         }
+        emit(GetAddressesSuccess());
       },
     );
   }

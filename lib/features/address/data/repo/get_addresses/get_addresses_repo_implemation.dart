@@ -51,11 +51,13 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
 
       final data = apiResponse.data['data'];
 
-      if (data != null && data['address'] != null) {
+      if (data is Map<String, dynamic> &&
+          data.containsKey('address') &&
+          data['address'] != null) {
         final address = AddressesModel.fromJson(data['address']);
         return Right(address);
       } else {
-        return Right(null); // No default address exists
+        return Right(null); // Safe fallback for unexpected data shape
       }
     } catch (e) {
       ApiResponse errorResponse = ApiResponse.fromError(e);

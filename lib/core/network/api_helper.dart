@@ -192,6 +192,7 @@ class ApiHelper {
   Future<ApiResponse> deleteRequest({
     required String endPoint,
     bool isProtected = false,
+    bool isFormData = false,
   }) async {
     return ApiResponse.fromResponse(
       await dio.delete(
