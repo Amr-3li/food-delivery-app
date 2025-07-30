@@ -13,27 +13,29 @@ class CartCubit extends Cubit<CartStates> {
     try {
       final carts = await cartRepository.getCart();
       if (carts.isNotEmpty) {
-        emit(CartSuccessState(cartModel: carts.first));
+        if (!isClosed) emit(CartSuccessState(cartModel: carts.first));
       } else {
-        emit(
-          CartSuccessState(
-            cartModel: CartModel(
-              id: 0,
-              customerId: 0,
-              status: 'empty',
-              items: [],
-              total: 0,
+        if (!isClosed) {
+          emit(
+            CartSuccessState(
+              cartModel: CartModel(
+                id: 0,
+                customerId: 0,
+                status: 'empty',
+                items: [],
+                total: 0,
+              ),
             ),
-          ),
-        );
+          );
+        }
       }
     } catch (e) {
-      emit(CartFailureState(errorMessage: e.toString()));
+      if (!isClosed) emit(CartFailureState(errorMessage: e.toString()));
     }
   }
 
   Future<void> addToCart({required int dishId, required int price}) async {
-    emit(CartLoadingState());
+    if (!isClosed) emit(CartLoadingState());
     try {
       await cartRepository.addToCart(dishId: dishId, price: price);
 
@@ -42,7 +44,7 @@ class CartCubit extends Cubit<CartStates> {
 
       await getCart();
     } catch (e) {
-      emit(CartFailureState(errorMessage: e.toString()));
+      if (!isClosed) emit(CartFailureState(errorMessage: e.toString()));
     }
   }
 
@@ -50,13 +52,13 @@ class CartCubit extends Cubit<CartStates> {
     required int itemId,
     required int quantity,
   }) async {
-    emit(CartLoadingState());
+    if (!isClosed) emit(CartLoadingState());
     try {
       await cartRepository.updateCartItem(itemId: itemId, quantity: quantity);
       // Refresh cart after updating
       await getCart();
     } catch (e) {
-      emit(CartFailureState(errorMessage: e.toString()));
+      if (!isClosed) emit(CartFailureState(errorMessage: e.toString()));
     }
   }
 
@@ -67,7 +69,7 @@ class CartCubit extends Cubit<CartStates> {
       // Refresh cart after deletion
       await getCart();
     } catch (e) {
-      emit(CartFailureState(errorMessage: e.toString()));
+      if (!isClosed) emit(CartFailureState(errorMessage: e.toString()));
     }
   }
 

@@ -35,11 +35,11 @@ class _CartViewState extends State<CartView> {
         BlocProvider(create: (_) => sl<GetAddressesCubit>()),
       ],
       child: Scaffold(
-        backgroundColor: ColorsHelper.black,
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.black54,
+          backgroundColor: Colors.white,
           leading: Padding(
-            padding: const EdgeInsets.only(left: 16),
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
             child: GestureDetector(
               onTap: () {
                 Navigator.pop(context);
@@ -52,10 +52,7 @@ class _CartViewState extends State<CartView> {
             ),
           ),
           toolbarHeight: AppResponsive.height(context, value: 80),
-          title: Text(
-            "Cart",
-            style: Styles.textStyle17.copyWith(color: ColorsHelper.white),
-          ),
+          title: Text("Cart", style: Styles.textStyle17),
           // actions: [
           //   TextButton(
           //     onPressed: () {},
@@ -75,21 +72,13 @@ class _CartViewState extends State<CartView> {
               return const Center(child: CircularProgressIndicator());
             } else if (state is CartFailureState) {
               return Center(
-                child: Text(
-                  state.errorMessage,
-                  style: Styles.textStyle14.copyWith(color: ColorsHelper.white),
-                ),
+                child: Text(state.errorMessage, style: Styles.textStyle14),
               );
             } else if (state is CartSuccessState) {
               final cart = state.cartModel;
               if (cart.items.isEmpty) {
                 return Center(
-                  child: Text(
-                    'Your cart is empty',
-                    style: Styles.textStyle14.copyWith(
-                      color: ColorsHelper.white,
-                    ),
-                  ),
+                  child: Text('Your cart is empty', style: Styles.textStyle14),
                 );
               }
 
@@ -105,18 +94,18 @@ class _CartViewState extends State<CartView> {
                         '\$${(item.price * item.quantity).toStringAsFixed(2)}',
                     portion: item.quantity,
                     removeItemCart: () {
-                      context.read<CartCubit>().deleteCartItem(item.id);
+                      context.read<CartCubit>().deleteCartItem(item.dishId);
                     },
                     onTapAdd: () {
                       context.read<CartCubit>().updateCartItem(
-                        itemId: item.id,
+                        itemId: item.dishId,
                         quantity: item.quantity + 1,
                       );
                     },
                     onTapRemove: () {
                       if (item.quantity > 1) {
                         context.read<CartCubit>().updateCartItem(
-                          itemId: item.id,
+                          itemId: item.dishId,
                           quantity: item.quantity - 1,
                         );
                       }
@@ -126,10 +115,7 @@ class _CartViewState extends State<CartView> {
               );
             }
             return Center(
-              child: Text(
-                'No cart data available',
-                style: Styles.textStyle14.copyWith(color: ColorsHelper.white),
-              ),
+              child: Text('No cart data available', style: Styles.textStyle14),
             );
           },
         ),

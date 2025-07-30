@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant/core/dependency_injection/service_locator.dart';
+import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:restaurant/features/cart/presentation/cubit/cart_states.dart';
 
 import '../../../data/models/restaurant_details_model.dart';
 
@@ -9,7 +13,9 @@ class CustomFoodItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
+    return BlocProvider(
+      create: (context) => sl<CartCubit>(),
+      child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 16,
@@ -32,8 +38,15 @@ class CustomFoodItemCard extends StatelessWidget {
                 Container(
                   height: 80,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                      image: DecorationImage(image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ6X5NG7cCI7MH2q3V-t9hwAFRl84NuZ_6Sw&s'), fit: BoxFit.cover)
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ6X5NG7cCI7MH2q3V-t9hwAFRl84NuZ_6Sw&s',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -42,28 +55,86 @@ class CustomFoodItemCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(meals[index].name ?? '', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text(meals[index].category?.name ?? '', style: TextStyle(color: Colors.grey)),
+                        Text(
+                          meals[index].name ?? '',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          meals[index].category?.name ?? '',
+                          style: TextStyle(color: Colors.grey),
+                        ),
                         Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('\$ ${meals[index].sizes[0].price ?? ''}', style: TextStyle(fontWeight: FontWeight.bold)),
-                            CircleAvatar(
-                              radius: 14,
-                              backgroundColor: Colors.orange,
-                              child: Icon(Icons.add, color: Colors.white, size: 18),
+                            Text(
+                              '\$ ${meals[index].sizes[0].price ?? ''}',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            BlocConsumer<CartCubit, CartStates>(
+                              listener: (context, state) {
+                                if (state is CartSuccessState) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Added to cart!'),
+                                    ),
+                                  );
+                                } else if (state is CartFailureState) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(state.errorMessage)),
+                                  );
+                                }
+                              },
+
+                              builder: (context, state) {
+                                return CircleAvatar(
+                                  radius: 14,
+                                  backgroundColor: Colors.orange,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                    onPressed: () {
+                                      final cartCubit =
+                                          BlocProvider.of<CartCubit>(context);
+                                      final dishId = meals[index].category?.id;
+                                      final price =
+                                          ((meals[index].sizes[0].price
+                                                      is String)
+                                                  ? double.parse(
+                                                      meals[index]
+                                                          .sizes[0]
+                                                          .price,
+                                                    )
+                                                  : (meals[index]
+                                                                .sizes[0]
+                                                                .price ??
+                                                            0) *
+                                                        1.0)
+                                              .toInt();
+
+                                      cartCubit.addToCart(
+                                        dishId: dishId ?? 5,
+                                        price: price,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           );
-        }
+        },
+      ),
     );
   }
 }

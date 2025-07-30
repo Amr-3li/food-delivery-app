@@ -75,8 +75,9 @@ class CartApiServices {
 
   Future<void> deleteCartItem(int itemId) async {
     await apiHelper.deleteRequest(
-      endPoint: '${APIKey.baseApiUrl}/cart/$itemId',
+      endPoint: '${APIKey.baseApiUrl}/cart/items/$itemId',
       isProtected: true,
+      isFormData: false,
     );
   }
 
