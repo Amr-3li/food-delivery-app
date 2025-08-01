@@ -19,15 +19,9 @@ class AddRemoveContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        width: 45,
-        height: 45,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-
-          color: containerColor,
-          border: Border.all(color: borderColor, width: 1.5),
-        ),
+      child: CircleAvatar(
+        backgroundColor: Colors.black12,
+        radius: 15,
         child: Center(
           child: Text(
             text,

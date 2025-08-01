@@ -8,7 +8,7 @@ class CartRepository extends CartAbstractRepository {
   CartRepository(this.cartApiService);
 
   @override
-  Future<List<CartModel>> getCart() => cartApiService.getCart();
+  Future<CartModel> getCart() => cartApiService.getCart();
   @override
   Future<void> fetchCart() async {}
 

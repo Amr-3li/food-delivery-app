@@ -13,7 +13,7 @@ class GetAddressesCubit extends Cubit<GetAddressesState> {
 
   static GetAddressesCubit get(context) => BlocProvider.of(context);
 
-  List<AddressesModel>? addresses;
+  List<AddressesModel> addresses = [];
 
   void getAddresses() async {
     final result = await getAddressesRepo.getAddresses();
@@ -29,6 +29,8 @@ class GetAddressesCubit extends Cubit<GetAddressesState> {
     );
   }
 
+  AddressesModel? addressesModel;
+
   void getDefaultAddressDetails() async {
     final result = await getAddressesRepo.getDefaultAddress();
 
@@ -37,11 +39,7 @@ class GetAddressesCubit extends Cubit<GetAddressesState> {
         emit(GetAddressesError(failure));
       },
       (addressDetails) {
-        if (addressDetails == null) {
-          addresses = [];
-        } else {
-          addresses = [addressDetails];
-        }
+        addressesModel = addressDetails;
         emit(GetAddressesSuccess());
       },
     );

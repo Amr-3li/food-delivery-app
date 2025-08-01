@@ -7,30 +7,22 @@ class CartCubit extends Cubit<CartStates> {
   final CartRepository cartRepository;
 
   CartCubit({required this.cartRepository}) : super(CartInitialState());
+  
+  CartModel? cartModel;
 
   Future<void> getCart() async {
     emit(CartLoadingState());
     try {
-      final carts = await cartRepository.getCart();
-      if (carts.isNotEmpty) {
-        if (!isClosed) emit(CartSuccessState(cartModel: carts.first));
+      final CartModel cart = await cartRepository.getCart();
+      if (cart.items.isNotEmpty) {
+        cartModel = cart;
+        emit(CartSuccessState());
       } else {
-        if (!isClosed) {
-          emit(
-            CartSuccessState(
-              cartModel: CartModel(
-                id: 0,
-                customerId: 0,
-                status: 'empty',
-                items: [],
-                total: 0,
-              ),
-            ),
-          );
-        }
+        cartModel = null;
+        emit(CartSuccessState());
       }
     } catch (e) {
-      if (!isClosed) emit(CartFailureState(errorMessage: e.toString()));
+      emit(CartFailureState(errorMessage: e.toString()));
     }
   }
 

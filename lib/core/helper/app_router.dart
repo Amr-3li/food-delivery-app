@@ -304,13 +304,18 @@ abstract class AppRouter {
 
 
           GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
+
           GoRoute(path: kFQS, builder: (_, __) => const FaqsView()),
+
           GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),
+
           GoRoute(path: kOrder, builder: (_, __) => const MyOrdersView()),
+
           GoRoute(
             path: kAddAddressView,
             builder: (context, state) => AddNewAddressView(),
           ),
+
           GoRoute(
             path: kResetPassword,
             builder: (context, state) {

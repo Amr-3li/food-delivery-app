@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/core/network/api_response.dart';
 import 'package:restaurant/core/utils/constant_text.dart';
 import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/features/cart/data/models/cart_model.dart';
@@ -15,7 +16,7 @@ class CartApiServices {
   //   };
   // }
 
-  Future<List<CartModel>> getCart() async {
+  Future<CartModel> getCart() async {
     try {
       final response = await apiHelper.getRequest(
         endPoint: "${APIKey.baseApiUrl}/cart",
@@ -27,18 +28,13 @@ class CartApiServices {
         // ),
       );
 
-      if (response.statusCode == 200) {
-        if (response.data['data'] != null) {
-          return [CartModel.fromJson(response.data)];
-        }
-        return <CartModel>[];
-      } else {
-        final errorMessage = response.data['message'] ?? 'Failed to load cart';
-        throw Exception(errorMessage);
+      if (response.data['data'] != null) {
+        return CartModel.fromJson(response.data);
       }
-    } catch (e) {
-      debugPrint("Error fetching cart: $e");
-      rethrow;
+      throw Exception('Cart is empty');
+    } catch (error) {
+      final errorMessage = ApiResponse.fromError(error);
+      throw Exception(errorMessage.message);
     }
   }
 

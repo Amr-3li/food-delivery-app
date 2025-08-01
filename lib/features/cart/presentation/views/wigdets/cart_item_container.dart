@@ -31,10 +31,10 @@ class CartItemContainer extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        padding: EdgeInsets.all(3.w),
+        padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.black54.withValues(alpha: .7),
-          borderRadius: BorderRadius.circular(12),
+          color: Colors.grey.withAlpha(60),
+          borderRadius: BorderRadius.circular(18),
           // boxShadow: [
           //   BoxShadow(
           //     color: Colors.grey.shade200,
@@ -44,24 +44,15 @@ class CartItemContainer extends StatelessWidget {
           // ],
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Product Image
-            Container(
-              width: 20.w,
-              height: 24.w,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: CustomNetworkImage(
-                  imageUrl: imageName,
-                  height: 15.h,
-                  width: 40.w,
-                ),
-              ),
+            CustomNetworkImage(
+              imageUrl: imageName,
+              height: 100,
+              width: 100,
             ),
 
-            SizedBox(width: 4.w),
+            SizedBox(width: 12),
 
             // Product Details
             Expanded(
@@ -75,55 +66,28 @@ class CartItemContainer extends StatelessWidget {
                       Expanded(
                         child: Text(
                           title,
-                          style: Styles.textStyle16.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: ColorsHelper.white,
-                          ),
+                          style: Styles.textStyle16,
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          // Handle remove item
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                          ),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              size: 30,
-                              color: Colors.white,
-                            ),
-                            onPressed: removeItemCart,
-                          ),
+                        onTap: () {},
+                        child: CircleAvatar(
+                          radius: 15,
+                          backgroundColor: Colors.red,
+                          child: Icon(Icons.close, color: Colors.white,),
                         ),
                       ),
                     ],
                   ),
 
-                  SizedBox(height: 0.5.h),
-
-                  // Text(
-                  //   subTitle,
-                  //   style: Styles.textStyle13.copyWith(
-                  //     color: Colors.grey.shade600,
-                  //     fontWeight: FontWeight.w400,
-                  //   ),
-                  // ),
-                  SizedBox(height: 2.h),
+                  SizedBox(height: 18),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         price,
-                        style: Styles.textStyle18.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: ColorsHelper.white,
-                        ),
+                        style: Styles.textStyle18,
                       ),
 
                       Row(
@@ -132,24 +96,21 @@ class CartItemContainer extends StatelessWidget {
                           AddRemoveContainer(
                             onTap: onTapRemove,
                             text: "-",
-                            containerColor: Colors.white.withValues(alpha: .3),
+                            containerColor: Colors.white,
                           ),
 
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 4.w),
                             child: Text(
                               "$portion",
-                              style: Styles.textStyle16.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: ColorsHelper.white,
-                              ),
+                              style: Styles.textStyle16,
                             ),
                           ),
 
                           AddRemoveContainer(
                             onTap: onTapAdd,
                             text: "+",
-                            containerColor: Colors.white.withValues(alpha: .3),
+                            containerColor: Colors.white,
                           ),
                         ],
                       ),

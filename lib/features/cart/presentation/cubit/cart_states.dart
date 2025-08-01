@@ -6,10 +6,7 @@ class CartInitialState extends CartStates {}
 
 class CartLoadingState extends CartStates {}
 
-class CartSuccessState extends CartStates {
-  final CartModel cartModel;
-  CartSuccessState({required this.cartModel});
-}
+class CartSuccessState extends CartStates {}
 
 class CartFailureState extends CartStates {
   final String errorMessage;
