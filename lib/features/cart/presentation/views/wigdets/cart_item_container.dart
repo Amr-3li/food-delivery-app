@@ -15,7 +15,7 @@ class CartItemContainer extends StatelessWidget {
     required this.price,
     this.onTapAdd,
     this.onTapRemove,
-    required this.portion,
+    required this.portionWidget,
     required this.removeItemCart,
   });
   final String imageName;
@@ -25,7 +25,7 @@ class CartItemContainer extends StatelessWidget {
   final void Function()? onTapAdd;
   final void Function()? onTapRemove;
   final void Function()? removeItemCart;
-  final int portion;
+  final Widget portionWidget;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,11 +46,7 @@ class CartItemContainer extends StatelessWidget {
         child: Row(
           children: [
             // Product Image
-            CustomNetworkImage(
-              imageUrl: imageName,
-              height: 100,
-              width: 100,
-            ),
+            CustomNetworkImage(imageUrl: imageName, height: 100, width: 100),
 
             SizedBox(width: 12),
 
@@ -63,18 +59,13 @@ class CartItemContainer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Text(
-                          title,
-                          style: Styles.textStyle16,
-                        ),
-                      ),
+                      Expanded(child: Text(title, style: Styles.textStyle16)),
                       GestureDetector(
                         onTap: () {},
                         child: CircleAvatar(
                           radius: 15,
                           backgroundColor: Colors.red,
-                          child: Icon(Icons.close, color: Colors.white,),
+                          child: Icon(Icons.close, color: Colors.white),
                         ),
                       ),
                     ],
@@ -85,10 +76,7 @@ class CartItemContainer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        price,
-                        style: Styles.textStyle18,
-                      ),
+                      Text(price, style: Styles.textStyle18),
 
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -101,10 +89,7 @@ class CartItemContainer extends StatelessWidget {
 
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 4.w),
-                            child: Text(
-                              "$portion",
-                              style: Styles.textStyle16,
-                            ),
+                            child: portionWidget,
                           ),
 
                           AddRemoveContainer(

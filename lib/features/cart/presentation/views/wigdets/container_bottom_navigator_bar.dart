@@ -13,10 +13,8 @@ import 'package:restaurant/features/payment/presentaion/cubit/payment_state.dart
 import 'package:sizer/sizer.dart';
 
 class ContainerBottomNavigator extends StatefulWidget {
-  const ContainerBottomNavigator({
-    super.key,
-    required this.total,
-  });
+  const ContainerBottomNavigator({super.key, required this.total});
+
   final double total;
 
   @override
@@ -53,12 +51,22 @@ class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
                   SizedBox(height: 2.h),
                   TextButton(
                     onPressed: () {
-                      context.push(AppRouter.kAddresses);
+                      context.push(AppRouter.kAddAddressView);
+                      // EditAddressDialog.showEditAddressDialog(
+                      //   context,
+                      //   title: addressTitle,
+                      //   onSave: (addressTitle) {},
+                      //   // final updatedAddress = address.copyWith(
+                      //   //   title: title,
+
+                      //   // );
+                      // );
                     },
                     child: Text(
-                      GetAddressesCubit.get(context).addressesModel != null ? "Edit" : "Add",
+                      "Edit",
                       style: Styles.textStyle16.copyWith(
                         color: ColorsHelper.orangeDark,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),
@@ -66,28 +74,17 @@ class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
               ),
               BlocBuilder<GetAddressesCubit, GetAddressesState>(
                 builder: (context, state) {
-                  final defaultAddress = context
+                  final addressList = context
                       .read<GetAddressesCubit>()
-                      .addressesModel;
+                      .addresses;
 
-                  if (state is GetAddressesError) {
+                  if (state is GetAddressesError || addressList == null) {
                     return Text(
-                      "Error loading address",
+                      "No default address set",
                       style: TextStyle(color: Colors.red),
                     );
                   } else if (state is GetAddressesSuccess) {
-                    if (defaultAddress == null) {
-                      return Container(
-                        padding: EdgeInsets.all(3.h),
-                        height: 8.h,
-                        width: 90.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: ColorsHelper.grey.withAlpha(60),
-                        ),
-                        child: Center(child: Text("No default address set")),
-                      );
-                    } else {
+                    if (addressList.isEmpty) {
                       return Container(
                         padding: EdgeInsets.all(3.h),
                         height: 8.h,
@@ -96,11 +93,23 @@ class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
                           borderRadius: BorderRadius.circular(20),
                           color: ColorsHelper.lightBlue,
                         ),
-                        child: Text(defaultAddress.displayName ?? "Unnamed address"),
+                        child: Center(child: Text("No default address set")),
+                      );
+                    } else {
+                      final address = addressList.first;
+                      return Container(
+                        padding: EdgeInsets.all(3.h),
+                        height: 8.h,
+                        width: 90.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: ColorsHelper.lightBlue,
+                        ),
+                        child: Text(address.displayName ?? "Unnamed address"),
                       );
                     }
                   } else {
-                    return SizedBox();
+                    return Center(child: CircularProgressIndicator());
                   }
                 },
               ),
@@ -111,9 +120,49 @@ class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
                     'Total: \$${widget.total.toStringAsFixed(2)}',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
+                  Spacer(),
+                  Row(
+                    children: [
+                      Text(
+                        "breakdown",
+                        style: Styles.textStyle14.copyWith(
+                          color: ColorsHelper.orange,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          final confirm = await showDialog<bool>(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text("Clear Cart"),
+                              content: Text(
+                                "Are you sure you want to clear the cart?",
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, false),
+                                  child: Text("Cancel"),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: Text("Yes"),
+                                ),
+                              ],
+                            ),
+                          );
+                          if (confirm == true) {
+                            // ignore: use_build_context_synchronously
+                            context.read<CartCubit>().clearCart();
+                          }
+                        },
+                        icon: Icon(Icons.arrow_forward_ios_rounded),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-              SizedBox(height: 4.h),
+              SizedBox(height: 6.h),
               BlocConsumer<PaymentCubit, PaymentState>(
                 listener: (context, state) {
                   if (state is PaymentSucess) {
@@ -127,18 +176,22 @@ class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
                 },
                 builder: (context, state) {
                   return CustomElevatedButton(
-                    buttonText: 'Place Order',
-                    onPressedFunction: () {
-                      if (widget.total > 0) {
-                        context.read<PaymentCubit>().makePayment(
-                          orderId: "1233",
-                          amount:
-                          widget.total.toInt() *
-                              100, // Convert to cents for USD
-                          currency: "usd",
-                        );
-                      }
-                    },
+                    buttonText: widget.total == 0
+                        ? "Cart Empty"
+                        : 'Place Order',
+                    onPressedFunction: widget.total == 0
+                        ? () {
+                            // context.push(AppRouter.kFoodScreenView);
+                          }
+                        : () {
+                            context.read<PaymentCubit>().makePayment(
+                              orderId: "1233",
+                              amount:
+                                  widget.total.toInt() *
+                                  100, // Convert to cents for USD
+                              currency: "usd",
+                            );
+                          },
                     buttonColor: ColorsHelper.orangeDark,
                     widthButton: double.infinity,
                     textColor: ColorsHelper.white,

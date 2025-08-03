@@ -42,6 +42,7 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
   }
 
   @override
+  @override
   Future<Either<String, AddressesModel>> getDefaultAddress() async {
     try {
       final apiResponse = await apiHelper.getRequest(
@@ -49,7 +50,9 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
         isProtected: true,
       );
 
-      if (apiResponse.data != null) {
+      if (apiResponse.data != null &&
+          apiResponse.data['address'] != null &&
+          apiResponse.data['address'] is Map<String, dynamic>) {
         final address = AddressesModel.fromJson(apiResponse.data['address']);
         return Right(address);
       } else {

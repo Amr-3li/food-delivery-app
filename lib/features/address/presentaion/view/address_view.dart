@@ -41,7 +41,7 @@ class AddressView extends StatelessWidget {
         ),
         body: BlocBuilder<GetAddressesCubit, GetAddressesState>(
           builder: (context, state) {
-            if (GetAddressesCubit.get(context).addresses.isNotEmpty) {
+            if (GetAddressesCubit.get(context).addresses != null) {
               return AddressViewBody(
                 addressModel: GetAddressesCubit.get(context).addresses,
               );

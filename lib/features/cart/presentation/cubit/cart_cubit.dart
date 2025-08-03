@@ -7,7 +7,7 @@ class CartCubit extends Cubit<CartStates> {
   final CartRepository cartRepository;
 
   CartCubit({required this.cartRepository}) : super(CartInitialState());
-  
+
   CartModel? cartModel;
 
   Future<void> getCart() async {
@@ -45,10 +45,19 @@ class CartCubit extends Cubit<CartStates> {
     required int quantity,
   }) async {
     if (!isClosed) emit(CartLoadingState());
+
     try {
       await cartRepository.updateCartItem(itemId: itemId, quantity: quantity);
-      // Refresh cart after updating
-      await getCart();
+
+      // 🧠 Update local cartModel directly instead of re-fetching all
+      final itemIndex = cartModel?.items.indexWhere((e) => e.dishId == itemId);
+      if (itemIndex != null && itemIndex != -1) {
+        cartModel!.items[itemIndex] = cartModel!.items[itemIndex].copyWith(
+          quantity: quantity,
+        );
+      }
+
+      emit(CartSuccessState());
     } catch (e) {
       if (!isClosed) emit(CartFailureState(errorMessage: e.toString()));
     }

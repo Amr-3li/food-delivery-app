@@ -56,7 +56,9 @@ class CartView extends StatelessWidget {
                     context: context,
                     builder: (context) => AlertDialog(
                       title: Text("Clear Cart"),
-                      content: Text("Are you sure you want to clear the cart? "),
+                      content: Text(
+                        "Are you sure you want to clear the cart? ",
+                      ),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context, false),
@@ -120,7 +122,20 @@ class CartView extends StatelessWidget {
                     imageName: item.dish.image,
                     title: item.dish.name,
                     price: '\$ ${(item.price).toStringAsFixed(1)}',
-                    portion: item.quantity,
+                    portionWidget: BlocBuilder<CartCubit, CartStates>(
+                      buildWhen: (previous, current) =>
+                          current is CartSuccessState,
+                      builder: (context, state) {
+                        final quantity =
+                            context
+                                .read<CartCubit>()
+                                .cartModel
+                                ?.items[index]
+                                .quantity ??
+                            0;
+                        return Text("$quantity", style: Styles.textStyle16);
+                      },
+                    ),
                     removeItemCart: () {
                       context.read<CartCubit>().deleteCartItem(item.dishId);
                     },
@@ -149,8 +164,10 @@ class CartView extends StatelessWidget {
         ),
         bottomNavigationBar: Builder(
           builder: (context) {
-            return ContainerBottomNavigator(total: context.read<CartCubit>().cartModel?.total ?? 0.0);
-          }
+            return ContainerBottomNavigator(
+              total: context.read<CartCubit>().cartModel?.total ?? 0.0,
+            );
+          },
         ),
       ),
     );

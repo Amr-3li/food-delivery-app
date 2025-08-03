@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class CartModel {
   final int id;
   final int customerId;
@@ -60,6 +62,28 @@ class CartItemModel {
       price: double.parse(json['price'].toString()),
       dish: DishModel.fromJson(json['dish']),
       size: DishSizeModel.fromJson(json['size']),
+    );
+  }
+
+  CartItemModel copyWith({
+    int? id,
+    int? cartId,
+    int? dishId,
+    int? sizeId,
+    int? quantity,
+    double? price,
+    DishModel? dish,
+    DishSizeModel? size,
+  }) {
+    return CartItemModel(
+      id: id ?? this.id,
+      cartId: cartId ?? this.cartId,
+      dishId: dishId ?? this.dishId,
+      sizeId: sizeId ?? this.sizeId,
+      quantity: quantity ?? this.quantity,
+      price: price ?? this.price,
+      dish: dish ?? this.dish,
+      size: size ?? this.size,
     );
   }
 }
