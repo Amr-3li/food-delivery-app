@@ -44,4 +44,18 @@ class GetAddressesCubit extends Cubit<GetAddressesState> {
       },
     );
   }
+
+  void deleteAddress({required int addressId}) async {
+    final result = await getAddressesRepo.deleteAddress(addressId: addressId);
+
+    result.fold(
+      (failure) {
+        emit(DeleteAddressError(failure));
+      },
+      (message) {
+        emit(DeleteAddressSuccess(message));
+        getAddresses();
+      },
+    );
+  }
 }

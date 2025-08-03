@@ -13,7 +13,7 @@ class CartRepository extends CartAbstractRepository {
   Future<void> fetchCart() async {}
 
   @override
-  Future<void> addToCart({required int dishId, required int price}) =>
+  Future<void> addToCart({required int dishId, required double price}) =>
       cartApiService.addToCart(dishId: dishId, price: price);
   @override
   Future<void> updateCartItem({required int itemId, required int quantity}) =>

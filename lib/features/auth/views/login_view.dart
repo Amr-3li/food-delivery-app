@@ -168,7 +168,7 @@ class _LoginViewState extends State<LoginView> {
                                   ),
                                   CustomTextButton(
                                     buttonName: 'SIGN UP',
-                                    onPressed: () => context.push("/signUp"),
+                                    onPressed: () => context.push(AppRouter.kSingUp),
                                   ),
                                 ],
                               ),

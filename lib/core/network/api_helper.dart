@@ -173,7 +173,7 @@ class ApiHelper {
   Future<ApiResponse> putRequest({
     required String endPoint,
     Map<String, dynamic>? data,
-    bool isFormData = true,
+    bool isFormData = false,
     bool isProtected = false,
   }) async {
     return ApiResponse.fromResponse(

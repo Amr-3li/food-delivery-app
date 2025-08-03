@@ -31,3 +31,15 @@ final class AddNewAddressError extends AddAddressState {
 
   AddNewAddressError(this.error);
 }
+
+final class EditAddressSuccess extends AddAddressState {
+  final String message;
+
+  EditAddressSuccess(this.message);
+}
+
+final class EditAddressError extends AddAddressState {
+  final String error;
+
+  EditAddressError(this.error);
+}

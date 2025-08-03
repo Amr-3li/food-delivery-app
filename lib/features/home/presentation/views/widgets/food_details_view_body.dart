@@ -15,6 +15,7 @@ import '../../../../../core/utils/color_helper.dart';
 import '../../../../../core/utils/icons.dart';
 import '../../cubit/meal_details/meal_details_cubit.dart';
 import 'custom_check_out_widget.dart';
+import 'custom_favorite_button.dart';
 import 'custom_ingredients_widget.dart';
 import 'custom_network_image.dart';
 
@@ -60,31 +61,13 @@ class FoodDetailsViewBody extends StatelessWidget {
                     topRight: 0,
                     topLeft: 0,
                     imageUrl:
-                        mealCubit.mealDetailsModel?.data?.dishImage != null
-                        ? mealCubit.mealDetailsModel!.data!.dishImage!
-                        : 'https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg',
+                        mealCubit.mealDetailsModel?.data?.dishImage ?? '',
                     width: double.infinity,
                     height: 300,
                   ),
                 ),
                 actions: [
-                  GestureDetector(
-                    onTap: () {
-                      if (mealCubit.isFavorite) {
-                        mealCubit.deleteFromFavorites(dishId: mealCubit.mealDetailsModel!.data!.dishId!);
-                      } else {
-                        mealCubit.addToFavorites(dishId: mealCubit.mealDetailsModel!.data!.dishId!);
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: CircleAvatar(
-                        radius: 22,
-                        backgroundColor: ColorsHelper.lightBabyBlue,
-                        child: mealCubit.isFavorite ? Icon(Icons.favorite, color: Colors.orange) : Icon(Icons.favorite, color: Colors.grey),
-                      ),
-                    ),
-                  ),
+                  CustomFavoriteButton()
                 ],
               ),
 
@@ -214,3 +197,6 @@ class FoodDetailsViewBody extends StatelessWidget {
     );
   }
 }
+
+
+

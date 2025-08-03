@@ -41,7 +41,7 @@ class CartApiServices {
   Future<void> addToCart({
     required int dishId,
     String sizeName = "large",
-    required int price,
+    required double price,
     String note = "note",
   }) async {
     await apiHelper.postRequest(

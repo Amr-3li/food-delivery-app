@@ -15,4 +15,12 @@ abstract class AddAddressRepo {
     String? label,
     bool? isDefault,
   });
+  Future<Either<String, String>> updateAddress({
+    required int addressId,
+    required String latitude,
+    required String longitude,
+    String? displayName,
+    String? label,
+    bool? isDefault,
+  });
 }

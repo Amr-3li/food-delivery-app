@@ -7,6 +7,7 @@ import 'package:restaurant/core/utils/color_helper.dart';
 
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
 import 'package:restaurant/features/address/data/model/address_details_model.dart';
+import 'package:restaurant/features/address/data/model/address_model.dart';
 
 import 'package:restaurant/features/address/presentaion/manger/add_address/add_address_cubit.dart';
 import 'package:restaurant/features/menu/presentation/views/widgets/custom_label_selection.dart';
@@ -16,8 +17,13 @@ import 'custom_add_address_filed.dart';
 import 'custom_switch_widget.dart';
 
 class AddNewAddressViewBody extends StatefulWidget {
-  const AddNewAddressViewBody({super.key, this.addressDetailsModel});
+  const AddNewAddressViewBody({
+    super.key,
+    this.addressDetailsModel,
+    this.addressesModel,
+  });
 
+  final AddressesModel? addressesModel;
   final AddressDetailsModel? addressDetailsModel;
 
   @override
@@ -34,8 +40,13 @@ class _AddNewAddressViewBodyState extends State<AddNewAddressViewBody> {
       listener: (context, state) {
         if (state is AddNewAddressSuccess) {
           AppToast.showSuccessToast(state.message);
-          GoRouter.of(context).pop();
+          GoRouter.of(context).pop(true);
         } else if (state is AddNewAddressError) {
+          AppToast.showErrorToast(state.error);
+        } else if (state is EditAddressSuccess) {
+          AppToast.showSuccessToast(state.message);
+          GoRouter.of(context).pop(true);
+        } else if (state is EditAddressError) {
           AppToast.showErrorToast(state.error);
         }
       },
@@ -96,8 +107,17 @@ class _AddNewAddressViewBodyState extends State<AddNewAddressViewBody> {
               CustomElevatedButton(
                 buttonText: 'Save location',
                 onPressedFunction: () {
-                  if (widget.addressDetailsModel != null) {
+                  if (widget.addressDetailsModel != null && widget.addressesModel?.id == null) {
                     AddAddressCubit.get(context).addNewAddress(
+                      latitude: widget.addressDetailsModel!.lat!.toString(),
+                      longitude: widget.addressDetailsModel!.lon!.toString(),
+                      displayName: widget.addressDetailsModel!.displayName,
+                      label: label.toString(),
+                      isDefault: isDefault ?? false,
+                    );
+                  } else if (widget.addressesModel?.id != null && widget.addressDetailsModel != null) {
+                    AddAddressCubit.get(context).updateAddress(
+                      addressId: widget.addressesModel!.id!,
                       latitude: widget.addressDetailsModel!.lat!.toString(),
                       longitude: widget.addressDetailsModel!.lon!.toString(),
                       displayName: widget.addressDetailsModel!.displayName,

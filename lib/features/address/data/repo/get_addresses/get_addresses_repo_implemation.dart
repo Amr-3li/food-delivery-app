@@ -42,22 +42,37 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
   }
 
   @override
-  Future<Either<String, AddressesModel?>> getDefaultAddress() async {
+  Future<Either<String, AddressesModel>> getDefaultAddress() async {
     try {
-      ApiResponse apiResponse = await apiHelper.getRequest(
-        endPoint: '${APIKey.baseApiUrl}/default/address',
+      final apiResponse = await apiHelper.getRequest(
+        endPoint: EndPoints.getDefaultAddress,
         isProtected: true,
       );
 
-      final data = apiResponse.data['data'];
-
-      if (data is Map<String, dynamic> &&
-          data.containsKey('address') &&
-          data['address'] != null) {
-        final address = AddressesModel.fromJson(data['address']);
+      if (apiResponse.data != null) {
+        final address = AddressesModel.fromJson(apiResponse.data['address']);
         return Right(address);
       } else {
-        return Right(null); // Safe fallback for unexpected data shape
+        return Left("No default address found.");
+      }
+    } catch (e) {
+      ApiResponse errorResponse = ApiResponse.fromError(e);
+      return Left(errorResponse.message);
+    }
+  }
+
+  @override
+  Future<Either<String, String>> deleteAddress({required int addressId}) async {
+    try {
+      final apiResponse = await apiHelper.deleteRequest(
+        endPoint: 'address/$addressId/destroy',
+        isProtected: true,
+      );
+
+      if (apiResponse.status) {
+        return Right('Address deleted successfully.');
+      } else {
+        return Left('Failed to delete address.');
       }
     } catch (e) {
       ApiResponse errorResponse = ApiResponse.fromError(e);

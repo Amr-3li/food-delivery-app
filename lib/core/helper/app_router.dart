@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:restaurant/features/address/data/model/address_model.dart';
+import 'package:restaurant/features/address/data/repo/add_address/add_address_repo_implemation.dart';
+import 'package:restaurant/features/address/presentaion/manger/add_address/add_address_cubit.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/views/vertification_view.dart';
 import 'package:restaurant/features/chief_part/chat/presentation/views/chat_screen.dart';
@@ -36,6 +39,7 @@ import 'package:restaurant/features/menu/presentation/views/edit_profile_view.da
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
+import 'package:restaurant/features/orders/presentation/manger/my_orders_cubit.dart';
 import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
@@ -50,6 +54,7 @@ import '../../features/home/presentation/views/home_user_view.dart';
 import '../../features/menu/data/repo/menu/menu_repo_implemation.dart';
 import '../../features/menu/presentation/manger/menu/menu_cubit.dart';
 import '../../features/menu/presentation/views/faqs_view.dart';
+import '../../features/orders/data/repo/my_orders_repo_implemation.dart';
 import '../../features/search/presentation/views/search_view.dart';
 import '../dependency_injection/service_locator.dart';
 import '../network/network_info.dart';
@@ -57,6 +62,8 @@ import '../network/network_info.dart';
 abstract class AppRouter {
   static const String kSplashView = '/';
   static const String kOnboardingView = '/OnboardingView';
+  static const String kLoginView = "/login";
+  static const String kSingUp = "/signUp";
   static const String kHomeUserView = "/homeUserView";
   static const String kFoodDetailsView = "/foodDetailsView";
   static const String kChefDetailsView = "/ChefDetailsView";
@@ -87,7 +94,6 @@ abstract class AppRouter {
   static const String kAddAddressView = "/addAddress";
   static const String kChifFoodDetails = '/chif_food_details';
   static const String kResturantReview = '/resturantReview';
-  static const String kLoginView = "/login";
   static const String kVerifyEmail = "/vertificationView";
   static const String kSendOtp = "/sendOtp";
   static const String kResetPassword = "/resetPassword";
@@ -96,6 +102,16 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
+      GoRoute(
+        path: kSplashView,
+        builder: (context, state) => const SplashView(),
+      ),
+
+      GoRoute(
+        path: kOnboardingView,
+        builder: (context, state) => OnboardingPage(),
+      ),
+
       ShellRoute(
         builder: (context, state, child) {
           return ValueListenableBuilder<bool>(
@@ -109,25 +125,9 @@ abstract class AppRouter {
           );
         },
         routes: [
-          GoRoute(
-            path: kSplashView,
-            builder: (context, state) => const SplashView(),
-          ),
+          GoRoute(path: kLoginView, builder: (context, state) => LoginView()),
 
-          GoRoute(
-            path: kOnboardingView,
-            builder: (context, state) => OnboardingPage(),
-          ),
-
-          GoRoute(
-              path: kLoginView,
-              builder: (context, state) => LoginView()
-          ),
-
-          GoRoute(
-              path: "/signUp",
-              builder: (context, state) => SinUpView()
-          ),
+          GoRoute(path: kSingUp, builder: (context, state) => SinUpView()),
 
           GoRoute(
             path: '/forgetPassword',
@@ -154,13 +154,16 @@ abstract class AppRouter {
           ShellRoute(
             builder: (context, state, child) {
               return MultiBlocProvider(
-                  providers: [
-                    BlocProvider(
-                      create: (context) => sl<CategoryCubit>()..fetchCategories(),
-                    ),
-                    BlocProvider(create: (_) => RestaurantCubit(sl())..getRestaurants()),
-                  ],
-                  child: child);
+                providers: [
+                  BlocProvider(
+                    create: (context) => sl<CategoryCubit>()..fetchCategories(),
+                  ),
+                  BlocProvider(
+                    create: (_) => RestaurantCubit(sl())..getRestaurants(),
+                  ),
+                ],
+                child: child,
+              );
             },
             routes: [
               GoRoute(
@@ -175,7 +178,7 @@ abstract class AppRouter {
 
               GoRoute(
                 path: kCategoryDetailsView,
-                builder: (context, state) => CategoryDetailsView(state: state,),
+                builder: (context, state) => CategoryDetailsView(state: state),
               ),
 
               GoRoute(
@@ -189,7 +192,8 @@ abstract class AppRouter {
                   final int id = state.extra as int;
                   return RestaurantDetailsView(id: id);
                 },
-              ),            ]
+              ),
+            ],
           ),
 
           GoRoute(
@@ -302,18 +306,30 @@ abstract class AppRouter {
             builder: (context, state) => SearchView(),
           ),
 
-
           GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
 
           GoRoute(path: kFQS, builder: (_, __) => const FaqsView()),
 
           GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),
 
-          GoRoute(path: kOrder, builder: (_, __) => const MyOrdersView()),
+          GoRoute(
+            path: kOrder,
+            builder: (context, state) => BlocProvider(
+              create: (context) =>
+                  MyOrdersCubit(MyOrdersRepoImplementation())
+                    ..getMyOrders(status: 'pending'),
+              child: MyOrdersView(),
+            ),
+          ),
 
           GoRoute(
             path: kAddAddressView,
-            builder: (context, state) => AddNewAddressView(),
+            builder: (context, state) => BlocProvider(
+              create: (context) => AddAddressCubit(AddAddressRepoImplementation())..getCurrentLocation(),
+              child: AddNewAddressView(
+                addressesModel: state.extra != null ? state.extra as AddressesModel : AddressesModel(),
+              ),
+            ),
           ),
 
           GoRoute(

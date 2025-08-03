@@ -26,6 +26,7 @@ class Data {
     required this.dishImage,
     required this.dishDescription,
     required this.dishAvgRate,
+    required this.isFavorite,
     required this.sizes,
     required this.ingredients,
     required this.category,
@@ -37,6 +38,7 @@ class Data {
   final String? dishImage;
   final String? dishDescription;
   final String? dishAvgRate;
+  final bool isFavorite;
   final List<SizeModel> sizes;
   final List<Ingredient> ingredients;
   final Category? category;
@@ -49,6 +51,7 @@ class Data {
       dishImage:  "https://round41-mobile-food.digital-vision-solutions.com/storage/" + json["dish_image"],
       dishDescription: json["dish_description"],
       dishAvgRate: json["dish_avg_rate"],
+      isFavorite: json["is_favorite"],
       sizes: json["sizes"] == null ? [] : List<SizeModel>.from(json["sizes"]!.map((x) => SizeModel.fromJson(x))),
       ingredients: json["ingredients"] == null ? [] : List<Ingredient>.from(json["ingredients"]!.map((x) => Ingredient.fromJson(x))),
       category: json["category"] == null ? null : Category.fromJson(json["category"]),

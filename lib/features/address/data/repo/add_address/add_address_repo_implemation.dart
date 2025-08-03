@@ -118,4 +118,44 @@ class AddAddressRepoImplementation implements AddAddressRepo {
       return Left("An unexpected error occurred.");
     }
   }
+
+  @override
+  Future<Either<String, String>> updateAddress({
+    required int addressId,
+    required String latitude,
+    required String longitude,
+    String? displayName,
+    String? label,
+    bool? isDefault,
+  }) async {
+    try {
+      AddressesModel addNewAddressModel = AddressesModel(
+        lat: latitude,
+        lon: longitude,
+        name: label,
+        displayName: displayName,
+        isDefault: isDefault,
+      );
+
+      debugPrint(latitude.toString());
+      debugPrint(longitude.toString());
+      debugPrint(addNewAddressModel.toJson().toString());
+
+      final apiResponse = await apiHelper.putRequest(
+        endPoint: 'address/$addressId/update',
+        data: addNewAddressModel.toJson(),
+        isProtected: true,
+      );
+
+      if (apiResponse.status) {
+        return Right('Address updated successfully.');
+      } else {
+        return Left('Failed to update address.');
+      }
+    } catch (e, stackTrace) {
+      debugPrint('Error adding new address: $e');
+      debugPrint('StackTrace: $stackTrace');
+      return Left("An unexpected error occurred.");
+    }
+  }
 }

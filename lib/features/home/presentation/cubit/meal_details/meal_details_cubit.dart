@@ -38,7 +38,6 @@ class MealDetailsCubit extends Cubit<MealDetailsState> {
     emit(MealDetailsChangeSize());
   }
 
-  bool isFavorite = false;
 
   void addToFavorites({required int dishId}) {
     mealDetailsRepository.addToFavorites(dishId: dishId).then((result) {
@@ -48,7 +47,6 @@ class MealDetailsCubit extends Cubit<MealDetailsState> {
         },
             (message) {
           emit(MealAddToFavoritesSuccess(message));
-          isFavorite = true;
         },
       );
     });
@@ -62,7 +60,6 @@ class MealDetailsCubit extends Cubit<MealDetailsState> {
         },
             (message) {
           emit(MealDeleteFromFavoritesSuccess(message));
-          isFavorite = false;
         },
       );
     });

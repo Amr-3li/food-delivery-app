@@ -3,5 +3,6 @@ import 'package:restaurant/features/address/data/model/address_model.dart';
 
 abstract class GetAddressesRepo {
   Future<Either<String, List<AddressesModel>>> getAddresses();
-  Future<Either<String, AddressesModel?>> getDefaultAddress();
+  Future<Either<String, AddressesModel>> getDefaultAddress();
+  Future<Either<String, String>> deleteAddress({required int addressId});
 }

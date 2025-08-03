@@ -26,7 +26,7 @@ class CartCubit extends Cubit<CartStates> {
     }
   }
 
-  Future<void> addToCart({required int dishId, required int price}) async {
+  Future<void> addToCart({required int dishId, required double price}) async {
     if (!isClosed) emit(CartLoadingState());
     try {
       await cartRepository.addToCart(dishId: dishId, price: price);

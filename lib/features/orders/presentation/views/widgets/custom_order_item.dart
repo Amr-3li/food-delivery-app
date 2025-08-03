@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant/features/home/presentation/views/widgets/custom_network_image.dart';
 
 import '../../../../../core/helper/app_responsive.dart';
 import '../../../../../core/utils/color_helper.dart';
 import '../../../../../core/utils/styles.dart';
 import '../../../../../core/widgets/custom_elevated_button.dart';
+import '../../../data/models/my_orders_model.dart';
 
 class CustomOrderItem extends StatelessWidget {
-  const CustomOrderItem({super.key, required this.isCompleted});
+  const CustomOrderItem({super.key, required this.item});
 
-  final bool isCompleted;
+  final Item item;
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +22,16 @@ class CustomOrderItem extends StatelessWidget {
           Row(
             children: [
               Text('Food', style: Styles.textStyle16),
-              if (isCompleted)
-              SizedBox(width: 18),
-              if (isCompleted)
-              Text(
-                'Completed',
-                style: Styles.textStyle16.copyWith(
-                  color: ColorsHelper.green,
-                  fontWeight: FontWeight.bold,
+              if (item.order?.orderStatus == 'completed' || item.order?.orderStatus == 'cancelled')
+                SizedBox(width: 18),
+              if (item.order?.orderStatus == 'completed' || item.order?.orderStatus == 'cancelled')
+                Text(
+                  item.order?.orderStatus ?? '',
+                  style: Styles.textStyle16.copyWith(
+                    color: item.order?.orderStatus == 'completed' ? ColorsHelper.green : Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
             ],
           ),
           SizedBox(height: 10),
@@ -38,37 +40,35 @@ class CustomOrderItem extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: AppResponsive.width(context, value: 60),
-                height: AppResponsive.height(context, value: 60),
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-              ),
+              CustomNetworkImage(imageUrl: item.dishImage ?? '', width: 60, height: 60),
               SizedBox(width: 10),
               Expanded(
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        Text('Pizza Hut', style: Styles.textStyle16),
+                        Text(item.dishName ?? '', style: Styles.textStyle16),
                         Spacer(),
-                        Text('#162432', style: Styles.textStyle16),
+                        Text(
+                          item.order?.orderNumber ?? '',
+                          style: Styles.textStyle16,
+                        ),
                       ],
                     ),
                     SizedBox(height: 5),
                     Row(
                       children: [
-                        Text('\$20.00', style: Styles.textStyle14),
+                        Text('\$ ${item.totalPrice}', style: Styles.textStyle14),
                         SizedBox(width: 8),
                         Text('|', style: Styles.textStyle14),
                         SizedBox(width: 8),
-                        if (isCompleted)
-                        Text('29 Jan, 12:30', style: Styles.textStyle14),
-                        if (isCompleted)
-                        SizedBox(width: 8),
-                        Text('03 Items', style: Styles.textStyle14),
+                        if (item.order?.orderStatus == 'completed' ||
+                            item.order?.orderStatus == 'cancelled')
+                          Text('29 Jan, 12:30', style: Styles.textStyle14),
+                        if (item.order?.orderStatus == 'completed' ||
+                            item.order?.orderStatus == 'cancelled')
+                          SizedBox(width: 8),
+                        Text(item.quantity.toString() ?? '', style: Styles.textStyle14),
                       ],
                     ),
                   ],
@@ -84,20 +84,44 @@ class CustomOrderItem extends StatelessWidget {
                 width: AppResponsive.width(context, value: 140),
                 height: AppResponsive.height(context, value: 40),
                 child: CustomElevatedButton(
-                  buttonText: isCompleted ? 'Rate' : 'Done',
+                  buttonText:
+                  item.order?.orderStatus == 'completed' ||
+                      item.order?.orderStatus == 'cancelled'
+                      ? 'Rate'
+                      : 'Complete',
                   onPressedFunction: () {},
-                  buttonColor: isCompleted ? ColorsHelper.white : ColorsHelper.orange,
-                  textColor: isCompleted ?  ColorsHelper.orange : ColorsHelper.white,
+                  buttonColor:
+                  item.order?.orderStatus == 'completed' ||
+                      item.order?.orderStatus == 'cancelled'
+                      ? ColorsHelper.white
+                      : ColorsHelper.orange,
+                  textColor:
+                  item.order?.orderStatus == 'completed' ||
+                      item.order?.orderStatus == 'cancelled'
+                      ? ColorsHelper.orange
+                      : ColorsHelper.white,
                 ),
               ),
               SizedBox(
                 width: AppResponsive.width(context, value: 140),
                 height: AppResponsive.height(context, value: 40),
                 child: CustomElevatedButton(
-                  buttonText: isCompleted ? 'Re-Order' : 'Cancel',
+                  buttonText:
+                  item.order?.orderStatus == 'completed' ||
+                      item.order?.orderStatus == 'cancelled'
+                      ? 'Re-Order'
+                      : 'Cancel',
                   onPressedFunction: () {},
-                  buttonColor: isCompleted ? ColorsHelper.orange : ColorsHelper.white,
-                  textColor: isCompleted ?  ColorsHelper.white : ColorsHelper.orange ,
+                  buttonColor:
+                  item.order?.orderStatus == 'completed' ||
+                      item.order?.orderStatus == 'cancelled'
+                      ? ColorsHelper.orange
+                      : ColorsHelper.white,
+                  textColor:
+                  item.order?.orderStatus == 'completed' ||
+                      item.order?.orderStatus == 'cancelled'
+                      ? ColorsHelper.white
+                      : ColorsHelper.orange,
                 ),
               ),
             ],

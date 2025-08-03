@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
+import 'package:restaurant/core/utils/app_toast.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_states.dart';
 
@@ -18,8 +19,8 @@ class CustomFoodItemCard extends StatelessWidget {
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisSpacing: 16,
-          crossAxisSpacing: 16,
+          mainAxisSpacing: 18,
+          crossAxisSpacing: 18,
           childAspectRatio: 0.85,
         ),
         itemCount: meals.length,
@@ -42,9 +43,7 @@ class CustomFoodItemCard extends StatelessWidget {
                       top: Radius.circular(16),
                     ),
                     image: DecorationImage(
-                      image: NetworkImage(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ6X5NG7cCI7MH2q3V-t9hwAFRl84NuZ_6Sw&s',
-                      ),
+                      image: NetworkImage(meals[index].imageUrl ?? ''),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -74,15 +73,11 @@ class CustomFoodItemCard extends StatelessWidget {
                             BlocConsumer<CartCubit, CartStates>(
                               listener: (context, state) {
                                 if (state is CartSuccessState) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Added to cart!'),
-                                    ),
+                                  AppToast.showSuccessToast(
+                                    'Added to cart successfully',
                                   );
                                 } else if (state is CartFailureState) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(state.errorMessage)),
-                                  );
+                                  AppToast.showErrorToast(state.errorMessage);
                                 }
                               },
 
@@ -91,34 +86,23 @@ class CustomFoodItemCard extends StatelessWidget {
                                   radius: 14,
                                   backgroundColor: Colors.orange,
                                   child: IconButton(
+                                    padding: EdgeInsets.zero,
                                     icon: Icon(
                                       Icons.add,
                                       color: Colors.white,
-                                      size: 18,
+                                      size: 20,
                                     ),
                                     onPressed: () {
-                                      final cartCubit =
-                                          BlocProvider.of<CartCubit>(context);
-                                      final dishId = meals[index].category?.id;
-                                      final price =
-                                          ((meals[index].sizes[0].price
-                                                      is String)
-                                                  ? double.parse(
-                                                      meals[index]
-                                                          .sizes[0]
-                                                          .price,
-                                                    )
-                                                  : (meals[index]
-                                                                .sizes[0]
-                                                                .price ??
-                                                            0) *
-                                                        1.0)
-                                              .toInt();
+                                      if (meals[index].category?.id != null && meals[index].sizes.isNotEmpty) {
+                                        final cartCubit = BlocProvider.of<CartCubit>(context);
+                                        final dishId = meals[index].category?.id;
+                                        final price = double.tryParse(meals[index].sizes[0].price);
 
-                                      cartCubit.addToCart(
-                                        dishId: dishId ?? 5,
-                                        price: price,
-                                      );
+                                        cartCubit.addToCart(
+                                          dishId: dishId!,
+                                          price: price!,
+                                        );
+                                      }
                                     },
                                   ),
                                 );

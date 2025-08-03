@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/helper/app_responsive.dart';
 import 'package:restaurant/core/utils/styles.dart';
+import 'package:restaurant/features/orders/presentation/manger/my_orders_cubit.dart';
 import 'package:restaurant/features/orders/presentation/views/widgets/my_orders_view_body.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -45,7 +46,7 @@ class MyOrdersView extends StatelessWidget {
               borderSide: BorderSide(color: ColorsHelper.orange, width: 2.0),
               insets: EdgeInsets.symmetric(horizontal: 100),
             ),
-            labelStyle: Styles.textStyle18.copyWith(
+            labelStyle: Styles.textStyle16.copyWith(
               color: ColorsHelper.orange,
               fontWeight: FontWeight.bold,
             ),
@@ -53,6 +54,13 @@ class MyOrdersView extends StatelessWidget {
               fontWeight: FontWeight.normal,
               color: ColorsHelper.grey,
             ),
+            onTap: (index) {
+              if (index == 0) {
+                MyOrdersCubit.get(context).getMyOrders(status: 'pending');
+              } else if (index == 1) {
+                MyOrdersCubit.get(context).getMyOrders(status: 'completed,cancelled');
+              }
+            },
             tabs: [
               Tab(text: 'Ongoing'),
               Tab(text: 'History'),

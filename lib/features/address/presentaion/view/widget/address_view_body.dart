@@ -5,6 +5,7 @@ import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
 import 'package:restaurant/features/address/data/model/address_model.dart';
+import 'package:restaurant/features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
 
 import 'custom_address_item.dart';
 
@@ -23,9 +24,7 @@ class AddressViewBody extends StatelessWidget {
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, index) => CustomAddressItem(
-                  address: addressModel![index].displayName!,
-                  icon: addressModel![index].name!,
-                  title: addressModel![index].name!,
+                  addressModel: addressModel![index],
                 ),
                 separatorBuilder: (context, index) => SizedBox(height: 14),
                 itemCount: addressModel!.length,
@@ -36,8 +35,11 @@ class AddressViewBody extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: CustomElevatedButton(
               buttonText: 'Add New Address',
-              onPressedFunction: () {
-                context.push(AppRouter.kAddAddressView);
+              onPressedFunction: () async {
+                final result = await context.push(AppRouter.kAddAddressView);
+                if (result == true) {
+                  GetAddressesCubit.get(context).getAddresses();
+                }
               },
               buttonColor: ColorsHelper.orange,
             ),

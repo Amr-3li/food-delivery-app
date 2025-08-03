@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
+import 'package:restaurant/core/utils/app_toast.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
 import 'package:restaurant/features/cart/data/repository/cart_repository.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
@@ -110,13 +111,9 @@ class _CustomCheckOutWidgetState extends State<CustomCheckOutWidget> {
               BlocConsumer<CartCubit, CartStates>(
                 listener: (context, state) {
                   if (state is CartSuccessState) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Added to cart!')),
-                    );
+                    AppToast.showSuccessToast('Added to cart successfully!');
                   } else if (state is CartFailureState) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+                    AppToast.showErrorToast(state.errorMessage);
                   }
                 },
                 builder: (context, state) {
@@ -125,36 +122,21 @@ class _CustomCheckOutWidgetState extends State<CustomCheckOutWidget> {
                         ? "ADDING..."
                         : "ADD TO CART",
                     onPressedFunction: () {
-                      final cartCubit = BlocProvider.of<CartCubit>(context);
-                      final dishId = widget.sizeModel.id;
-                      final price = double.parse(
-                        widget.sizeModel.price ?? '0',
-                      ).toInt();
-                      for (int i = 0; i < quantity; i++) {
-                        cartCubit.addToCart(dishId: dishId ?? 5, price: price);
+                      if (widget.sizeModel.id != null && widget.sizeModel.price != null) {
+                        final cartCubit = BlocProvider.of<CartCubit>(context);
+                        final dishId = widget.sizeModel.id;
+                        final price = double.parse(
+                          widget.sizeModel.price!,
+                        );
+                        for (int i = 0; i < quantity; i++) {
+                          cartCubit.addToCart(dishId: dishId!, price: price);
+                        }
                       }
                     },
                     buttonColor: ColorsHelper.orange,
                   );
                 },
               ),
-              // Container(
-              //   width: double.infinity,
-              //   height: AppResponsive.height(context, value: 65),
-              //   decoration: BoxDecoration(
-              //     color: ColorsHelper.orange,
-              //     borderRadius: BorderRadius.circular(12),
-              //   ),
-              //   padding: const EdgeInsets.all(16),
-              //   child: Center(
-              //     child: Text(
-              //       'ADD TO CART',
-              //       style: Styles.textStyle16.copyWith(
-              //         color: Colors.white,
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),

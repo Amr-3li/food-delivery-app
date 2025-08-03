@@ -37,11 +37,11 @@ final List<MenuGroup> menuGroups = [
         title: 'Notifications',
         route: AppRouter.kNotificationView,
       ),
-      // MenuItem(
-      //   icon: AppIcons.assetsPaymentMethod,
-      //   title: 'Payment Method',
-      //   route: AppRouter.k,
-      // ),
+      MenuItem(
+        icon: AppIcons.assetsPaymentMethod,
+        title: 'My Orders',
+        route: AppRouter.kOrder,
+      ),
     ],
   ),
 

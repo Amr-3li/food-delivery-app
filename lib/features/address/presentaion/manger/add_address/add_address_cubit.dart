@@ -81,4 +81,31 @@ class AddAddressCubit extends Cubit<AddAddressState> {
       },
     );
   }
+
+  void updateAddress({
+    required int addressId,
+    required String latitude,
+    required String longitude,
+    String? displayName,
+    String? label,
+    bool? isDefault,
+  }) async {
+    final result = await addAddressRepo.updateAddress(
+      addressId: addressId,
+      latitude: latitude,
+      longitude: longitude,
+      displayName: displayName,
+      label: label,
+      isDefault: isDefault,
+    );
+
+    result.fold(
+      (failure) {
+        emit(EditAddressError(failure));
+      },
+      (message) {
+        emit(EditAddressSuccess(message));
+      },
+    );
+  }
 }

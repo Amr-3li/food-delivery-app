@@ -1,12 +1,14 @@
 class AddressesModel {
   AddressesModel({
-    required this.lat,
-    required this.lon,
-    required this.name,
-    required this.displayName,
-    required this.isDefault,
+    this.id,
+    this.lat,
+    this.lon,
+    this.name,
+    this.displayName,
+    this.isDefault,
   });
 
+  final int? id;
   final String? lat;
   final String? lon;
   final String? name;
@@ -15,6 +17,7 @@ class AddressesModel {
 
   factory AddressesModel.fromJson(Map<String, dynamic> json) {
     return AddressesModel(
+      id: json["id"],
       lat: json["lat"]?.toString(),
       lon: json["lon"]?.toString(),
       name: json["name"]?.toString(),
