@@ -26,7 +26,7 @@ class CustomOnboardingwidget extends StatelessWidget {
             width: 64.w,
             height: 35.96.h,
           imageUrl: imageUrl,
-          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+          placeholder: (context, url) => Center(child: CircularProgressIndicator(color: Colors.orange, strokeWidth: 2.0, strokeAlign: 3,)),
           errorWidget: (context, url, error) => Icon(Icons.error),
                ),
         ),

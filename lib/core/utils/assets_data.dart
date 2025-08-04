@@ -6,4 +6,7 @@ class AssetsData {
   static const String defaultUserImage = "assets/images/person_image.png";
   static const String assetsChefIcon = "assets/images/chefshat.png";
   static const String assetsChefProfileImage = "assets/images/chef_profile_image.png";
+  static const String assetsPaymentSuccess = "assets/images/withdrawSSuccess.svg";
+  static const String assetsCartIsEmpty = "assets/images/cart_empty.png";
+  static const String assetsFavoritesEmpty = "assets/images/nofavorites.png";
 }

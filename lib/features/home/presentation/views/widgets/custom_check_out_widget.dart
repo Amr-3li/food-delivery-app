@@ -26,119 +26,117 @@ class _CustomCheckOutWidgetState extends State<CustomCheckOutWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<CartCubit>(),
-      child: Container(
-        width: double.infinity,
-        height: AppResponsive.height(context, value: 180),
-        decoration: BoxDecoration(
-          color: Colors.grey.withAlpha(120),
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(25),
-            topLeft: Radius.circular(25),
-          ),
+    return Container(
+      width: double.infinity,
+      height: AppResponsive.height(context, value: 180),
+      decoration: BoxDecoration(
+        color: Colors.grey.withAlpha(120),
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(25),
+          topLeft: Radius.circular(25),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '\$ ${widget.sizeModel.price ?? ''}',
-                    style: Styles.textStyle22,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '\$ ${widget.sizeModel.price ?? ''}',
+                  style: Styles.textStyle22,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: ColorsHelper.blueBlack,
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: ColorsHelper.blueBlack,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            if (quantity > 1) {
-                              setState(() {
-                                quantity--;
-                              });
-                            }
-                          },
-                          child: CircleAvatar(
-                            radius: 16,
-                            backgroundColor: ColorsHelper.grey,
-                            child: Text(
-                              '-',
-                              style: Styles.textStyle16.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 16),
-                        Text(
-                          quantity.toString(),
-                          style: Styles.textStyle18.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(width: 16),
-                        GestureDetector(
-                          onTap: () {
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          if (quantity > 1) {
                             setState(() {
-                              quantity++;
+                              quantity--;
                             });
-                          },
-                          child: CircleAvatar(
-                            radius: 16,
-                            backgroundColor: ColorsHelper.grey,
-                            child: Text(
-                              '+',
-                              style: Styles.textStyle14.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          }
+                        },
+                        child: CircleAvatar(
+                          radius: 16,
+                          backgroundColor: ColorsHelper.grey,
+                          child: Text(
+                            '-',
+                            style: Styles.textStyle16.copyWith(
+                              color: Colors.white,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(width: 16),
+                      Text(
+                        quantity.toString(),
+                        style: Styles.textStyle18.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            quantity++;
+                          });
+                        },
+                        child: CircleAvatar(
+                          radius: 16,
+                          backgroundColor: ColorsHelper.grey,
+                          child: Text(
+                            '+',
+                            style: Styles.textStyle14.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              BlocConsumer<CartCubit, CartStates>(
-                listener: (context, state) {
-                  if (state is CartSuccessState) {
-                    AppToast.showSuccessToast('Added to cart successfully!');
-                  } else if (state is CartFailureState) {
-                    AppToast.showErrorToast(state.errorMessage);
-                  }
-                },
-                builder: (context, state) {
-                  return CustomElevatedButton(
-                    buttonText: state is CartLoadingState
-                        ? "ADDING..."
-                        : "ADD TO CART",
-                    onPressedFunction: () {
-                      if (widget.sizeModel.id != null && widget.sizeModel.price != null) {
-                        final cartCubit = BlocProvider.of<CartCubit>(context);
-                        final dishId = widget.sizeModel.id;
-                        final price = double.parse(
-                          widget.sizeModel.price!,
-                        );
-                        for (int i = 0; i < quantity; i++) {
-                          cartCubit.addToCart(dishId: dishId!, price: price);
-                        }
+                ),
+              ],
+            ),
+            BlocConsumer<CartCubit, CartStates>(
+              listener: (context, state) {
+                if (state is CartSuccessState) {
+                  AppToast.showSuccessToast('Added to cart successfully!');
+                } else if (state is CartFailureState) {
+                  AppToast.showErrorToast(state.errorMessage);
+                }
+              },
+
+              builder: (context, state) {
+                return CustomElevatedButton(
+                  buttonText: state is CartLoadingState
+                      ? "ADDING..."
+                      : "ADD TO CART",
+                  onPressedFunction: () {
+                    if (widget.sizeModel.id != null && widget.sizeModel.price != null) {
+                      final cartCubit = BlocProvider.of<CartCubit>(context);
+                      final dishId = widget.sizeModel.dishId;
+                      final price = double.parse(
+                        widget.sizeModel.price!,
+                      );
+                      for (int i = 0; i < quantity; i++) {
+                        cartCubit.addToCart(dishId: dishId!, price: price);
                       }
-                    },
-                    buttonColor: ColorsHelper.orange,
-                  );
-                },
-              ),
-            ],
-          ),
+                    }
+                  },
+                  buttonColor: ColorsHelper.orange,
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

@@ -14,6 +14,8 @@ import 'package:restaurant/features/auth/views/widgets/title_authentication_page
 import 'package:restaurant/features/forget_password/presentation/views/widgets/pin_text_filed.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../core/utils/color_helper.dart';
+
 class VertificationView extends StatefulWidget {
   const VertificationView({super.key, required this.email});
   final String email;
@@ -39,7 +41,7 @@ class _VertificationViewState extends State<VertificationView> {
   } else if (state is VerifyEmailSuccess) {
     setState(() => isLoading = false);
     AppToast.showSuccessToast("thanks , Go to Login Page");
-    context.go( AppRouter.kLoginView);
+    GoRouter.of(context).pushReplacement(AppRouter.kLoginView);
   } else if (state is AuthLoading) {
     setState(() => isLoading = true);
   }
@@ -48,16 +50,10 @@ class _VertificationViewState extends State<VertificationView> {
         backgroundColor: Colors.black,
         body: ModalProgressHUD(
           inAsyncCall: isLoading,
+          progressIndicator: CircularProgressIndicator(color: Colors.orange, strokeWidth: 2.0, strokeAlign: 3,),
           child: SafeArea(
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: Image.asset(
-                    AssetsData.authBackground,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(left: 6.5.w, top: 5.5.h, child: CustomArrowBack()),
                 Positioned(
                   top: 10.5.h,
                   left: 18.w,
@@ -119,6 +115,7 @@ class _VertificationViewState extends State<VertificationView> {
                               PinTextFiled(pinController: pinController),
           
                               SizedBox(height: 2.5.h),
+
                               CustomMaterialButton(
                                 buttonName: "VERTFY",
                                 onPressed: () {

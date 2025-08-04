@@ -5,7 +5,7 @@ import 'package:restaurant/features/payment/data/data_source/payment_manager.dar
 
 class PaymentRepository {
   Future<Either<String, Unit>> processPayment({
-    required int amount,
+    required double amount,
     required String currency,
   }) async {
     try {

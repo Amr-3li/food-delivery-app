@@ -30,7 +30,7 @@ class CustomMenuItem extends StatelessWidget {
             CircleAvatar(
               radius: 20,
               backgroundColor: ColorsHelper.white,
-              child: SvgPicture.asset(icon),
+              child: SvgPicture.asset(icon, height: 18, width: 18,),
             ),
             const SizedBox(width: 16),
             Expanded(

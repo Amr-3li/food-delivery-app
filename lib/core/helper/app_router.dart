@@ -41,12 +41,15 @@ import 'package:restaurant/features/menu/presentation/views/personal_info_view.d
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/orders/presentation/manger/my_orders_cubit.dart';
 import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
+import 'package:restaurant/features/payment/presentaion/cubit/payment_state.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
 import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
 import 'package:restaurant/features/reviews/presentation/views/review_resturant.dart';
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
 
+import '../../features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
 import '../../features/address/presentaion/view/add_new_address_view.dart';
+import '../../features/cart/presentation/cubit/cart_cubit.dart';
 import '../../features/home/presentation/cubit/category/category_cubit.dart';
 import '../../features/home/presentation/cubit/resturant/resturant_cubit.dart';
 import '../../features/home/presentation/views/food_details_view.dart';
@@ -55,6 +58,7 @@ import '../../features/menu/data/repo/menu/menu_repo_implemation.dart';
 import '../../features/menu/presentation/manger/menu/menu_cubit.dart';
 import '../../features/menu/presentation/views/faqs_view.dart';
 import '../../features/orders/data/repo/my_orders_repo_implemation.dart';
+import '../../features/payment/presentaion/cubit/payment_cubit.dart';
 import '../../features/search/presentation/views/search_view.dart';
 import '../dependency_injection/service_locator.dart';
 import '../network/network_info.dart';
@@ -99,17 +103,13 @@ abstract class AppRouter {
   static const String kResetPassword = "/resetPassword";
   static const String kMenuView = "/menuView";
   static const String kCategoryDetailsView = "/CategoryDetailsView";
+  static const String kForgetPassword = "/forgetPassword";
 
   static final router = GoRouter(
     routes: [
       GoRoute(
         path: kSplashView,
         builder: (context, state) => const SplashView(),
-      ),
-
-      GoRoute(
-        path: kOnboardingView,
-        builder: (context, state) => OnboardingPage(),
       ),
 
       ShellRoute(
@@ -125,12 +125,17 @@ abstract class AppRouter {
           );
         },
         routes: [
+          GoRoute(
+            path: kOnboardingView,
+            builder: (context, state) => OnboardingPage(),
+          ),
+
           GoRoute(path: kLoginView, builder: (context, state) => LoginView()),
 
           GoRoute(path: kSingUp, builder: (context, state) => SinUpView()),
 
           GoRoute(
-            path: '/forgetPassword',
+            path: kForgetPassword,
             builder: (context, state) => ForgetPasswordView(),
           ),
 
@@ -161,6 +166,11 @@ abstract class AppRouter {
                   BlocProvider(
                     create: (_) => RestaurantCubit(sl())..getRestaurants(),
                   ),
+                  BlocProvider(create: (_) => sl<CartCubit>()..getCart(),),
+
+                  BlocProvider(create: (_) => sl<PaymentCubit>()),
+
+                  BlocProvider(create: (_) => sl<GetAddressesCubit>()),
                 ],
                 child: child,
               );
@@ -193,15 +203,23 @@ abstract class AppRouter {
                   return RestaurantDetailsView(id: id);
                 },
               ),
-            ],
-          ),
 
-          GoRoute(
-            path: kFoodDetailsView,
-            builder: (context, state) {
-              final int id = state.extra as int;
-              return FoodDetailsView(id: id);
-            },
+              GoRoute(
+                path: kFoodDetailsView,
+                builder: (context, state) {
+                  final int id = state.extra as int;
+                  return FoodDetailsView(id: id);
+                },
+              ),
+
+              GoRoute(
+                path: kCartView,
+                name: "cart",
+                pageBuilder: (context, state) => MaterialPage(
+                  child: CartView(),
+                ),
+              ),
+            ],
           ),
 
           GoRoute(
@@ -261,16 +279,15 @@ abstract class AppRouter {
             name: "addReview",
             builder: (context, state) => AddReview(),
           ),
-          GoRoute(
-            path: kCartView,
-            name: "cart",
-            builder: (context, state) => CartView(),
-          ),
+
 
           GoRoute(
             path: kSucessPaymentView,
             name: "sucessPayment",
-            builder: (context, state) => SucessPayment(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: const ValueKey("successPaymentPage"),
+              child: const SucessPayment()
+            ),
           ),
 
           GoRoute(
@@ -278,6 +295,7 @@ abstract class AppRouter {
             name: "notification",
             builder: (context, state) => NotificationScreen(),
           ),
+
           GoRoute(
             path: kResturantReview,
             name: "resturantReview",
@@ -288,14 +306,17 @@ abstract class AppRouter {
             path: kChatListView,
             builder: (context, state) => ChatListScreenChief(),
           ),
+
           GoRoute(
             path: kChatChiefView,
             builder: (context, state) => ChatScreenChief(),
           ),
+
           GoRoute(
             path: kMenuChiefView,
             builder: (context, state) => ChiefMenuScreen(),
           ),
+
           GoRoute(
             path: kWithdrawView,
             builder: (context, state) => WithdrawView(),
@@ -325,9 +346,13 @@ abstract class AppRouter {
           GoRoute(
             path: kAddAddressView,
             builder: (context, state) => BlocProvider(
-              create: (context) => AddAddressCubit(AddAddressRepoImplementation())..getCurrentLocation(),
+              create: (context) =>
+                  AddAddressCubit(AddAddressRepoImplementation())
+                    ..getCurrentLocation(),
               child: AddNewAddressView(
-                addressesModel: state.extra != null ? state.extra as AddressesModel : AddressesModel(),
+                addressesModel: state.extra != null
+                    ? state.extra as AddressesModel
+                    : AddressesModel(),
               ),
             ),
           ),
@@ -335,9 +360,8 @@ abstract class AppRouter {
           GoRoute(
             path: kResetPassword,
             builder: (context, state) {
-              final email = state.extra as String;
-              final otp = state.extra as String;
-              return ConfiremPassword(email: email, otp: otp);
+              final data = state.extra as Map<String, String>;
+              return ConfiremPassword(email: data['email']!, otp: data['otp']!);
             },
           ),
 

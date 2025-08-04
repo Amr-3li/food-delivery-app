@@ -57,25 +57,20 @@ class _LoginViewState extends State<LoginView> {
         backgroundColor: Colors.black,
         body: ModalProgressHUD(
           inAsyncCall: isLoading,
+          progressIndicator: CircularProgressIndicator(color: Colors.orange, strokeWidth: 2.0, strokeAlign: 3,),
           child: SafeArea(
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: Image.asset(
-                    AssetsData.authBackground,
-                    fit: BoxFit.cover,
-                  ),
-                ),
                 Positioned(
-                  top: 7.5.h,
-                  left: 18.w,
+                  top: 8.5.h,
+                  left: 15.w,
                   child: TitleAuthenticationPages(
                     title: 'Log In',
                     subTitle: 'Please sign in to your existing account',
                   ),
                 ),
                 Positioned.fill(
-                  top: 28.7.h,
+                  top: 30.h,
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.4,
                     decoration: BoxDecoration(
@@ -110,24 +105,24 @@ class _LoginViewState extends State<LoginView> {
                               SizedBox(height: 1.h),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.end,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: false,
-                                        onChanged: (v) {},
-                                        activeColor: ColorsHelper.orange,
-                                        focusColor: ColorsHelper.buttongrey,
-                                      ),
-                                      Text(
-                                        "Remember me",
-                                        style: Styles.textStyle13.copyWith(
-                                          color: ColorsHelper.grey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  // Row(
+                                  //   children: [
+                                  //     Checkbox(
+                                  //       value: false,
+                                  //       onChanged: (v) {},
+                                  //       activeColor: ColorsHelper.orange,
+                                  //       focusColor: ColorsHelper.buttongrey,
+                                  //     ),
+                                  //     Text(
+                                  //       "Remember me",
+                                  //       style: Styles.textStyle13.copyWith(
+                                  //         color: ColorsHelper.grey,
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
                                   CustomTextButton(
                                     buttonName: 'Forgot Password?',
                                     onPressed: () =>

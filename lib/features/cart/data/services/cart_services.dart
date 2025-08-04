@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/core/network/api_response.dart';
+import 'package:restaurant/core/network/end_points.dart';
 import 'package:restaurant/core/utils/constant_text.dart';
 import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/features/cart/data/models/cart_model.dart';
@@ -19,22 +20,19 @@ class CartApiServices {
   Future<CartModel> getCart() async {
     try {
       final response = await apiHelper.getRequest(
-        endPoint: "${APIKey.baseApiUrl}/cart",
+        endPoint: EndPoints.cart,
         isFormData: false,
         isProtected: true,
-        // options: Options(
-        //   headers: _getHeaders(),
-        //   validateStatus: (status) => status! < 500,
-        // ),
       );
 
-      if (response.data['data'] != null) {
+      if (response.data != null) {
         return CartModel.fromJson(response.data);
       }
       throw Exception('Cart is empty');
-    } catch (error) {
-      final errorMessage = ApiResponse.fromError(error);
-      throw Exception(errorMessage.message);
+    } catch (e, stackTrace) {
+      debugPrint('Error adding new address: $e');
+      debugPrint('StackTrace: $stackTrace');
+      return throw("An unexpected error occurred.");
     }
   }
 
@@ -71,7 +69,7 @@ class CartApiServices {
 
   Future<void> deleteCartItem(int itemId) async {
     await apiHelper.deleteRequest(
-      endPoint: '${APIKey.baseApiUrl}/cart/items/$itemId',
+      endPoint: '/cart/items/$itemId',
       isProtected: true,
       isFormData: false,
     );

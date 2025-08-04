@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:restaurant/core/utils/constant_text.dart';
 import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/core/network/end_points.dart';
@@ -50,17 +51,16 @@ class GetAddressesRepoImplementation implements GetAddressesRepo {
         isProtected: true,
       );
 
-      if (apiResponse.data != null &&
-          apiResponse.data['address'] != null &&
-          apiResponse.data['address'] is Map<String, dynamic>) {
-        final address = AddressesModel.fromJson(apiResponse.data['address']);
+      if (apiResponse.data != null) {
+        final address = AddressesModel.fromJson(apiResponse.data['data']['address']);
         return Right(address);
       } else {
         return Left("No default address found.");
       }
-    } catch (e) {
-      ApiResponse errorResponse = ApiResponse.fromError(e);
-      return Left(errorResponse.message);
+    } catch (e, stackTrace) {
+      debugPrint('Error adding new address: $e');
+      debugPrint('StackTrace: $stackTrace');
+      return Left("An unexpected error occurred.");
     }
   }
 

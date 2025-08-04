@@ -1,105 +1,119 @@
-import 'package:flutter/material.dart';
-
 class CartModel {
-  final int id;
-  final int customerId;
-  final String status;
-  final List<CartItemModel> items;
-  final double total;
-
   CartModel({
-    required this.id,
-    required this.customerId,
     required this.status,
-    required this.items,
+    required this.message,
+    required this.data,
+  });
+
+  final bool? status;
+  final String? message;
+  final Data? data;
+
+  factory CartModel.fromJson(Map<String, dynamic> json){
+    return CartModel(
+      status: json["status"],
+      message: json["message"],
+      data: json["data"] == null ? null : Data.fromJson(json["data"]),
+    );
+  }
+
+}
+
+class Data {
+  Data({
+    required this.cart,
     required this.total,
   });
 
-  factory CartModel.fromJson(Map<String, dynamic> json) {
-    final data = json['data'];
-    final cart = data['cart'];
+  final Cart? cart;
+  final double? total;
 
-    return CartModel(
-      id: cart['id'],
-      customerId: cart['customer_id'],
-      status: cart['status'],
-      items: (cart['items'] as List<dynamic>)
-          .map((item) => CartItemModel.fromJson(item))
-          .toList(),
-      total: double.parse(data['total'].toString()),
+  factory Data.fromJson(Map<String, dynamic> json){
+    return Data(
+      cart: json["cart"] == null ? null : Cart.fromJson(json["cart"]),
+      total: json["total"].toDouble() ?? 0.0,
     );
   }
+
 }
 
-class CartItemModel {
-  final int id;
-  final int cartId;
-  final int dishId;
-  final int sizeId;
-  final int quantity;
-  final double price;
-  final DishModel dish;
-  final DishSizeModel size;
+class Cart {
+  Cart({
+    required this.id,
+    required this.customerId,
+    required this.couponId,
+    required this.status,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.items,
+  });
 
-  CartItemModel({
+  final int? id;
+  final int? customerId;
+  final dynamic couponId;
+  final String? status;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final List<Item> items;
+
+  factory Cart.fromJson(Map<String, dynamic> json){
+    return Cart(
+      id: json["id"],
+      customerId: json["customer_id"],
+      couponId: json["coupon_id"],
+      status: json["status"],
+      createdAt: DateTime.tryParse(json["created_at"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
+      items: json["items"] == null ? [] : List<Item>.from(json["items"]!.map((x) => Item.fromJson(x))),
+    );
+  }
+
+}
+
+class Item {
+  Item({
     required this.id,
     required this.cartId,
     required this.dishId,
     required this.sizeId,
     required this.quantity,
     required this.price,
+    required this.createdAt,
+    required this.updatedAt,
     required this.dish,
     required this.size,
   });
 
-  factory CartItemModel.fromJson(Map<String, dynamic> json) {
-    return CartItemModel(
-      id: json['id'],
-      cartId: json['cart_id'],
-      dishId: json['dish_id'],
-      sizeId: json['size_id'],
-      quantity: json['quantity'],
-      price: double.parse(json['price'].toString()),
-      dish: DishModel.fromJson(json['dish']),
-      size: DishSizeModel.fromJson(json['size']),
+  final int? id;
+  final int? cartId;
+  final int? dishId;
+  final int? sizeId;
+  final int? quantity;
+  final String? price;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final Dish? dish;
+  final Size? size;
+
+  factory Item.fromJson(Map<String, dynamic> json){
+    return Item(
+      id: json["id"],
+      cartId: json["cart_id"],
+      dishId: json["dish_id"],
+      sizeId: json["size_id"],
+      quantity: json["quantity"],
+      price: json["price"],
+      createdAt: DateTime.tryParse(json["created_at"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
+      dish: json["dish"] == null ? null : Dish.fromJson(json["dish"]),
+      size: json["size"] == null ? null : Size.fromJson(json["size"]),
     );
   }
 
-  CartItemModel copyWith({
-    int? id,
-    int? cartId,
-    int? dishId,
-    int? sizeId,
-    int? quantity,
-    double? price,
-    DishModel? dish,
-    DishSizeModel? size,
-  }) {
-    return CartItemModel(
-      id: id ?? this.id,
-      cartId: cartId ?? this.cartId,
-      dishId: dishId ?? this.dishId,
-      sizeId: sizeId ?? this.sizeId,
-      quantity: quantity ?? this.quantity,
-      price: price ?? this.price,
-      dish: dish ?? this.dish,
-      size: size ?? this.size,
-    );
-  }
 }
 
-class DishModel {
-  final int id;
-  final int chefId;
-  final String name;
-  final String description;
-  final String image;
-  final bool isAvailable;
-  final int totalRate;
-  final String avgRate;
-  final int categoryId;
-
-  DishModel({
+class Dish {
+  Dish({
     required this.id,
     required this.chefId,
     required this.name,
@@ -109,42 +123,59 @@ class DishModel {
     required this.totalRate,
     required this.avgRate,
     required this.categoryId,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
-  factory DishModel.fromJson(Map<String, dynamic> json) {
-    return DishModel(
-      id: json['id'],
-      chefId: json['chef_id'],
-      name: json['name'],
-      description: json['description'],
-      image: json['image'],
-      isAvailable: json['is_available'],
-      totalRate: json['total_rate'],
-      avgRate: json['avg_rate'],
-      categoryId: json['category_id'],
+  final int? id;
+  final int? chefId;
+  final String? name;
+  final String? description;
+  final String? image;
+  final bool? isAvailable;
+  final dynamic totalRate;
+  final String? avgRate;
+  final int? categoryId;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  factory Dish.fromJson(Map<String, dynamic> json){
+    return Dish(
+      id: json["id"],
+      chefId: json["chef_id"],
+      name: json["name"],
+      description: json["description"],
+      image: json["image"],
+      isAvailable: json["is_available"],
+      totalRate: json["total_rate"],
+      avgRate: json["avg_rate"],
+      categoryId: json["category_id"],
+      createdAt: DateTime.tryParse(json["created_at"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
     );
   }
+
 }
 
-class DishSizeModel {
-  final int id;
-  final int dishId;
-  final String size;
-  final double price;
-
-  DishSizeModel({
+class Size {
+  Size({
     required this.id,
     required this.dishId,
     required this.size,
     required this.price,
   });
 
-  factory DishSizeModel.fromJson(Map<String, dynamic> json) {
-    return DishSizeModel(
-      id: json['id'],
-      dishId: json['dish_id'],
-      size: json['size'],
-      price: double.parse(json['price'].toString()),
+  final int? id;
+  final int? dishId;
+  final String? size;
+  final String? price;
+
+  factory Size.fromJson(Map<String, dynamic> json){
+    return Size(
+      id: json["id"],
+      dishId: json["dish_id"],
+      size: json["size"],
+      price: json["price"],
     );
   }
 }

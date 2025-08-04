@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:restaurant/core/cache/cache_helper.dart';
 import 'package:restaurant/core/utils/constant_text.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GoRouter _router = AppRouter.router;
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MultiBlocProvider(
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
           ],
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            routerConfig: AppRouter.router,
+            routerConfig: _router,
           ),
         );
       },

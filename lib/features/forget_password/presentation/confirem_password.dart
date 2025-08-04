@@ -15,6 +15,8 @@ import 'package:restaurant/features/forget_password/forgot_password_cubit/forgot
 import 'package:restaurant/features/auth/views/widgets/title_authentication_pages.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../core/utils/color_helper.dart';
+
 class ConfiremPassword extends StatefulWidget {
   const ConfiremPassword({super.key, required this.email, required this.otp});
 final String email ;
@@ -45,6 +47,7 @@ class _ConfiremPasswordState extends State<ConfiremPassword> {
       } else if (state is ForgotPasswordSuccess ) {
         setState(() => isLoading = false);
         AppToast.showSuccessToast("Reset Password Successfuly , Go to login page");
+        GoRouter.of(context).pop();
         context.go(AppRouter.kLoginView ,);
       } else if (state is ForgotPasswordLoading) {
         setState(() => isLoading = true);
@@ -52,19 +55,13 @@ class _ConfiremPasswordState extends State<ConfiremPassword> {
         },
         child: ModalProgressHUD(
           inAsyncCall: isLoading,
+          progressIndicator: CircularProgressIndicator(color: Colors.orange, strokeWidth: 2.0, strokeAlign: 3,),
           child: SafeArea(
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: Image.asset(
-                    AssetsData.authBackground,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(left: 6.5.w, top: 5.5.h, child: CustomArrowBack()),
                 Positioned(
-                  top: 10.5.h,
-                  left: 18.w,
+                  top: 8.h,
+                  left: 8.w,
                   child: TitleAuthenticationPages(
                     title: 'Forgot Password',
                     subTitle: 'Please Enter New Password',

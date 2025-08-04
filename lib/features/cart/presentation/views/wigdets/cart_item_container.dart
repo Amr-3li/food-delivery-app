@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
+import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:restaurant/features/cart/presentation/views/wigdets/add_remove_container.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../home/presentation/views/widgets/custom_network_image.dart';
+import '../../../data/models/cart_model.dart';
+import '../../cubit/cart_states.dart';
 
 class CartItemContainer extends StatelessWidget {
   const CartItemContainer({
-    super.key,
-    required this.imageName,
-    required this.title,
-    // required this.subTitle,
-    required this.price,
-    this.onTapAdd,
-    this.onTapRemove,
-    required this.portionWidget,
-    required this.removeItemCart,
+    super.key, required this.item,
   });
-  final String imageName;
-  final String title;
-  // final String subTitle;
-  final String price;
-  final void Function()? onTapAdd;
-  final void Function()? onTapRemove;
-  final void Function()? removeItemCart;
-  final Widget portionWidget;
+  final Item item;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,18 +25,11 @@ class CartItemContainer extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.grey.withAlpha(60),
           borderRadius: BorderRadius.circular(18),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.grey.shade200,
-          //     blurRadius: 8,
-          //     offset: Offset(0, 2),
-          //   ),
-          // ],
         ),
         child: Row(
           children: [
             // Product Image
-            CustomNetworkImage(imageUrl: imageName, height: 100, width: 100),
+            CustomNetworkImage(imageUrl: item.dish?.image ?? '', height: 100, width: 100),
 
             SizedBox(width: 12),
 
@@ -59,9 +42,11 @@ class CartItemContainer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(child: Text(title, style: Styles.textStyle16)),
+                      Expanded(child: Text(item.dish?.name ?? '', style: Styles.textStyle16)),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          context.read<CartCubit>().deleteCartItem(item.dishId!);
+                        },
                         child: CircleAvatar(
                           radius: 15,
                           backgroundColor: Colors.red,
@@ -76,24 +61,36 @@ class CartItemContainer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(price, style: Styles.textStyle18),
+                      Text('\$ ${item.price ?? ''}', style: Styles.textStyle18),
 
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           AddRemoveContainer(
-                            onTap: onTapRemove,
+                            onTap: () {
+                              if (item.quantity! > 1) {
+                                context.read<CartCubit>().updateCartItem(
+                                  itemId: item.dishId!,
+                                  quantity: item.quantity! - 1,
+                                );
+                              }
+                            },
                             text: "-",
                             containerColor: Colors.white,
                           ),
 
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 4.w),
-                            child: portionWidget,
+                            child: Text(item.quantity.toString(), style: Styles.textStyle16),
                           ),
 
                           AddRemoveContainer(
-                            onTap: onTapAdd,
+                            onTap: () {
+                              context.read<CartCubit>().updateCartItem(
+                                itemId: item.dishId!,
+                                quantity: item.quantity! + 1,
+                              );
+                            },
                             text: "+",
                             containerColor: Colors.white,
                           ),

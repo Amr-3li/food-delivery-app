@@ -41,6 +41,7 @@ void setupLocator() {
     ),
     instanceName: 'stripeDio',
   );
+
   sl.registerLazySingleton<Dio>(() => createDioWithAuth());
   sl.registerLazySingleton(() => CartApiServices());
   sl.registerLazySingleton(() => CartRepository(sl<CartApiServices>()));

@@ -31,10 +31,6 @@ final _vKey = GlobalKey<FormState>();
       body: SafeArea(
         child: Stack(
           children: [
-            Positioned.fill(
-              child: Image.asset(AssetsData.authBackground, fit: BoxFit.cover),
-            ),
-            Positioned(left: 6.5.w, top: 5.5.h, child: CustomArrowBack()),
             Positioned(
               top: 10.5.h,
               left: 18.w,
@@ -52,7 +48,7 @@ final _vKey = GlobalKey<FormState>();
               ),
             ),
             Positioned.fill(
-              top: 28.7.h,
+              top: 30.h,
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.4,
                 decoration: BoxDecoration(
@@ -100,7 +96,7 @@ final _vKey = GlobalKey<FormState>();
                             buttonName: "VERTFY",
                             onPressed: () {
                               if(_vKey.currentState!.validate()){
-                                context.push(AppRouter.kResetPassword , extra: {"email":widget.email , "otp":otpController.text.trim() });
+                                context.push(AppRouter.kResetPassword , extra: {"email":widget.email , "otp":otpController.text.trim()});
 
                               }
                             },

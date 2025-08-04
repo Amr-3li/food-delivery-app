@@ -11,14 +11,10 @@ class CartCubit extends Cubit<CartStates> {
   CartModel? cartModel;
 
   Future<void> getCart() async {
-    emit(CartLoadingState());
     try {
       final CartModel cart = await cartRepository.getCart();
-      if (cart.items.isNotEmpty) {
+      if (cart.data != null) {
         cartModel = cart;
-        emit(CartSuccessState());
-      } else {
-        cartModel = null;
         emit(CartSuccessState());
       }
     } catch (e) {
@@ -27,16 +23,14 @@ class CartCubit extends Cubit<CartStates> {
   }
 
   Future<void> addToCart({required int dishId, required double price}) async {
-    if (!isClosed) emit(CartLoadingState());
+    emit(CartLoadingState());
+
     try {
       await cartRepository.addToCart(dishId: dishId, price: price);
-
-      /// ⏱ Wait 500ms to ensure backend processes cart update
-      await Future.delayed(const Duration(milliseconds: 500));
-
       await getCart();
+      emit(AddToCartSuccessState());
     } catch (e) {
-      if (!isClosed) emit(CartFailureState(errorMessage: e.toString()));
+      emit(AddToCartFailureState(errorMessage: e.toString()));
     }
   }
 
@@ -44,22 +38,14 @@ class CartCubit extends Cubit<CartStates> {
     required int itemId,
     required int quantity,
   }) async {
-    if (!isClosed) emit(CartLoadingState());
+    emit(CartLoadingState());
 
     try {
       await cartRepository.updateCartItem(itemId: itemId, quantity: quantity);
-
-      // 🧠 Update local cartModel directly instead of re-fetching all
-      final itemIndex = cartModel?.items.indexWhere((e) => e.dishId == itemId);
-      if (itemIndex != null && itemIndex != -1) {
-        cartModel!.items[itemIndex] = cartModel!.items[itemIndex].copyWith(
-          quantity: quantity,
-        );
-      }
-
-      emit(CartSuccessState());
+      getCart();
+      emit(UpdateCartSuccessState());
     } catch (e) {
-      if (!isClosed) emit(CartFailureState(errorMessage: e.toString()));
+      emit(UpdateCartFailureState(errorMessage: e.toString()));
     }
   }
 
@@ -67,10 +53,10 @@ class CartCubit extends Cubit<CartStates> {
     emit(CartLoadingState());
     try {
       await cartRepository.deleteCartItem(itemId);
-      // Refresh cart after deletion
       await getCart();
+      emit(DeleteCartSuccessState());
     } catch (e) {
-      if (!isClosed) emit(CartFailureState(errorMessage: e.toString()));
+     emit(DeleteCartFailureState(errorMessage: e.toString()));
     }
   }
 
@@ -78,9 +64,10 @@ class CartCubit extends Cubit<CartStates> {
     emit(CartLoadingState());
     try {
       await cartRepository.clearCart();
-      await getCart(); // Refresh cart state
+      await getCart();
+      emit(EmptyCartSuccessState());
     } catch (e) {
-      emit(CartFailureState(errorMessage: e.toString()));
+      emit(EmptyCartFailureState(errorMessage: e.toString()));
     }
   }
 }

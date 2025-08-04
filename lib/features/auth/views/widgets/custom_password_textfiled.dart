@@ -22,6 +22,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: ColorsHelper.orange,
       controller: widget.controller, // Make sure to set the controller
       textInputAction: TextInputAction.done,
       obscureText: _isObscure,
@@ -63,6 +64,10 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
           horizontal: 16,
         ),
         enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
         ),

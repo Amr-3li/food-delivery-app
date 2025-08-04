@@ -121,6 +121,7 @@ class AuthRepoImplementation extends AuthRepo {
     try {
       final response = await apiHelper.postRequest(
         endPoint: EndPoints.verifyEmail,
+        isFormData: true,
         data: {"email": email, "otp": otp},
       );
 

@@ -6,6 +6,9 @@ import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:go_router/go_router.dart';
+import 'package:svg_flutter/svg.dart';
+
+import '../../../../core/utils/assets_data.dart';
 
 class SucessPayment extends StatelessWidget {
   const SucessPayment({super.key});
@@ -21,10 +24,8 @@ class SucessPayment extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: 20.h),
-              Lottie.asset(
-                'assets/images/paymentSucess.json',
-                height: 25.h,
-                repeat: false,
+              SvgPicture.asset(
+                AssetsData.assetsPaymentSuccess,
               ),
               SizedBox(height: 5.h),
               Text("Congratulations!", style: Styles.textStyle24),
@@ -40,10 +41,10 @@ class SucessPayment extends StatelessWidget {
               ),
               SizedBox(height: 25.h),
               CustomElevatedButton(
-                buttonText: "Track Order",
+                buttonText: "Continue Shopping",
                 buttonColor: ColorsHelper.orange,
                 onPressedFunction: () {
-                  GoRouter.of(context).push(
+                  GoRouter.of(context).go(
                     AppRouter.kHomeUserView,
                   ); // navigate to another page later
                 },

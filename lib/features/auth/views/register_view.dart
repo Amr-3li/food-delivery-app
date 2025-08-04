@@ -66,25 +66,20 @@ class _SinUpViewState extends State<SinUpView> {
         backgroundColor: Colors.black,
         body: ModalProgressHUD(
           inAsyncCall: isLoading,
+          progressIndicator: CircularProgressIndicator(color: Colors.orange, strokeWidth: 2.0, strokeAlign: 3,),
           child: SafeArea(
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: Image.asset(
-                    AssetsData.authBackground,
-                    fit: BoxFit.cover,
-                  ),
-                ),
                 Positioned(
-                  top: 7.5.h,
-                  left: 18.w,
+                  top: 8.5.h,
+                  left: 20.w,
                   child: TitleAuthenticationPages(
                     title: 'Sign Up',
                     subTitle: 'Please sign up to get started',
                   ),
                 ),
                 Positioned.fill(
-                  top: 28.7.h,
+                  top: 30.h,
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.4,
                     decoration: BoxDecoration(
