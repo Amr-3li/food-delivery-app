@@ -37,14 +37,18 @@ class FavoritesViewBody extends StatelessWidget {
               ),
             );
           }
-          return Column(
-            children: [
-              Image.asset(AssetsData.assetsFavoritesEmpty, width: 150, height: 150,),
-              const SizedBox(height: 20,),
-              Text('No Favorites', style: Styles.textStyle16),
-              const SizedBox(height: 10,),
-              Text('You have not added any favorites.', style: Styles.textStyle14),
-            ],
+          return SizedBox(
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(AssetsData.assetsFavoritesEmpty, width: 150, height: 150,),
+                const SizedBox(height: 20,),
+                Text('No Favorites', style: Styles.textStyle16),
+                const SizedBox(height: 10,),
+                Text('You have not added any favorites.', style: Styles.textStyle14),
+              ],
+            ),
           );
         }
         return LinearProgressIndicator(color: Colors.orange,);

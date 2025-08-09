@@ -10,6 +10,7 @@ class CustomSearchBar extends StatefulWidget {
 }
 
 class _CustomSearchBarState extends State<CustomSearchBar> {
+  TextEditingController searchController = TextEditingController();
   Timer? _debounce;
 
   void _onSearchChanged(String value) {
@@ -28,13 +29,21 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      controller: searchController,
       cursorColor: Colors.grey[300],
       onChanged: _onSearchChanged,
       textInputAction: TextInputAction.search,
       decoration: InputDecoration(
         hintText: "Search ............",
         prefixIcon: const Icon(Icons.search),
+        suffixIcon: IconButton(onPressed: () {
+          _debounce?.cancel();
+          searchController.clear();
+          FocusScope.of(context).unfocus();
+          SearchCubit.get(context).getPopularFood();
+          SearchCubit.get(context).getSuggestedRestaurants();
+        }, icon: const Icon(Icons.cancel, color: Colors.grey)),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
         filled: true,
         fillColor: Colors.grey[100],

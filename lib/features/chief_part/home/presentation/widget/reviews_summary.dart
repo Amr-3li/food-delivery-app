@@ -35,7 +35,7 @@ class ReviewsSummary extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      GoRouter.of(context).push(AppRouter.kReviewView);
+                      // GoRouter.of(context).push(AppRouter.kReviewView);
                     },
                     child: const Text(
                       'See All Reviews',

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:restaurant/core/network/end_points.dart';
 import 'package:restaurant/core/utils/constant_text.dart';
 import 'package:restaurant/core/network/api_helper.dart';
 
@@ -23,7 +24,7 @@ class NotificationServicesApi {
   Future<Either<Failure, List<NotificationsModel>>> getNotifications() async {
     try {
       final response = await apiHelper.getRequest(
-        endPoint: '${APIKey.baseApiUrl}/notifications',
+        endPoint: EndPoints.notifications,
         isProtected: true,
         isFormData: false,
       );

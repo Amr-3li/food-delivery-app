@@ -17,10 +17,6 @@ import 'package:restaurant/features/chief_part/notification/data/repository/noti
 import 'package:restaurant/features/payment/data/repository/payment_repository.dart';
 import 'package:restaurant/features/payment/presentaion/cubit/payment_cubit.dart';
 import 'package:restaurant/features/chief_part/notification/presentation/cubit/notification_cubit.dart';
-import 'package:restaurant/features/reviews/data/api_services/review_api_services.dart';
-import 'package:restaurant/features/reviews/data/repository/review_repository_implementation.dart';
-import 'package:restaurant/features/reviews/presentation/cubit/review_cubit.dart';
-
 import '../../features/home/data/repository/category_repository.dart';
 import '../../features/home/data/repository/resturant_repository.dart';
 import '../../features/home/presentation/cubit/category/category_cubit.dart';
@@ -55,13 +51,6 @@ void setupLocator() {
   );
   sl.registerLazySingleton(
     () => NotificationCubit(repository: sl<NotificationRepository>()),
-  );
-  sl.registerLazySingleton(() => ReviewsApiService());
-  sl.registerLazySingleton(
-    () => ReviewsRepositoryImplementation(sl<ReviewsApiService>()),
-  );
-  sl.registerLazySingleton(
-    () => ReviewsCubit(sl<ReviewsRepositoryImplementation>()),
   );
   sl.registerLazySingleton(() => ConversationApiService());
   sl.registerLazySingleton(

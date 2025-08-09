@@ -9,10 +9,14 @@ import 'package:restaurant/core/utils/assets_data.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/features/home/data/models/meal_details_model.dart';
 import 'package:restaurant/features/home/presentation/views/widgets/size_selector.dart';
+import 'package:restaurant/features/reviews/data/repository/review_repository_implementation.dart';
+import 'package:restaurant/features/reviews/presentation/views/widgets/add_review_form.dart';
+import 'package:restaurant/features/reviews/presentation/views/widgets/review_container.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/utils/color_helper.dart';
 import '../../../../../core/utils/icons.dart';
+import '../../../../reviews/presentation/cubit/reviews_cubit.dart';
 import '../../cubit/meal_details/meal_details_cubit.dart';
 import 'custom_check_out_widget.dart';
 import 'custom_favorite_button.dart';
@@ -20,183 +24,227 @@ import 'custom_ingredients_widget.dart';
 import 'custom_network_image.dart';
 
 class FoodDetailsViewBody extends StatelessWidget {
-  const FoodDetailsViewBody({super.key});
+  const FoodDetailsViewBody({super.key, required this.mealCubit});
+
+  final MealDetailsCubit mealCubit;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MealDetailsCubit, MealDetailsState>(
-      listener: (context, state) {
-        if (state is MealAddToFavoritesSuccess) {
-          AppToast.showSuccessToast(state.message);
-        } else if (state is MealAddToFavoritesFailure) {
-          AppToast.showErrorToast(state.error);
-        } else if (state is MealDeleteFromFavoritesSuccess) {
-          AppToast.showSuccessToast(state.message);
-        } else if (state is MealDeleteFromFavoritesFailure) {
-          AppToast.showErrorToast(state.error);
-        }
-      },
-      builder: (context, state) {
-        final mealCubit = MealDetailsCubit.get(context);
-        if (mealCubit.mealDetailsModel != null) {
-          return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                leading: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: CircleAvatar(
-                      radius: 22,
-                      backgroundColor: ColorsHelper.lightBabyBlue,
-                      child: SvgPicture.asset(AppIcons.iIcon),
-                    ),
-                  ),
-                ),
-                expandedHeight: 300,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: CustomNetworkImage(
-                    topRight: 0,
-                    topLeft: 0,
-                    imageUrl:
-                        mealCubit.mealDetailsModel?.data?.dishImage ?? '',
-                    width: double.infinity,
-                    height: 300,
-                  ),
-                ),
-                actions: [
-                  CustomFavoriteButton()
-                ],
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          leading: GestureDetector(
+            onTap: () {
+              context.pop();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: CircleAvatar(
+                radius: 22,
+                backgroundColor: ColorsHelper.lightBabyBlue,
+                child: SvgPicture.asset(AppIcons.iIcon),
               ),
+            ),
+          ),
+          expandedHeight: 300,
+          flexibleSpace: FlexibleSpaceBar(
+            background: CustomNetworkImage(
+              topRight: 0,
+              topLeft: 0,
+              imageUrl: mealCubit.mealDetailsModel?.data?.dishImage ?? '',
+              width: double.infinity,
+              height: 300,
+            ),
+          ),
+          actions: [CustomFavoriteButton()],
+        ),
 
-              SliverToBoxAdapter(
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 20),
-                          Text(
-                            mealCubit.mealDetailsModel!.data!.dishName!,
-                            style: Styles.textStyle20,
+                    SizedBox(height: 20),
+                    Text(
+                      mealCubit.mealDetailsModel!.data!.dishName!,
+                      style: Styles.textStyle20,
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Image.asset(
+                          AssetsData.assetsChefIcon,
+                          width: 25,
+                          height: 25,
+                        ),
+                        SizedBox(width: 12),
+                        GestureDetector(
+                          onTap: () {
+                            GoRouter.of(context).push(
+                              AppRouter.kChefDetailsView,
+                              extra: mealCubit.mealDetailsModel!.data!.chef,
+                            );
+                          },
+                          child: Text(
+                            mealCubit.mealDetailsModel!.data!.chef!.name!,
+                            style: Styles.textStyle16,
                           ),
-                          SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Image.asset(
-                                AssetsData.assetsChefIcon,
-                                width: 25,
-                                height: 25,
-                              ),
-                              SizedBox(width: 12),
-                              GestureDetector(
-                                onTap: () {
-                                  GoRouter.of(context).push(AppRouter.kChefDetailsView, extra: mealCubit.mealDetailsModel!.data!.chef);
-                                },
-                                child: Text(
-                                  mealCubit.mealDetailsModel!.data!.chef!.name!,
-                                  style: Styles.textStyle16,
-                                ),
-                              ),
-                              Spacer(),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: ColorsHelper.orange,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                padding: EdgeInsets.all(8),
-                                child: Text(
-                                  mealCubit
-                                      .mealDetailsModel!
-                                      .data!
-                                      .category!
-                                      .name!,
-                                  style: Styles.textStyle14.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                        ),
+                        Spacer(),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: ColorsHelper.orange,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            mealCubit.mealDetailsModel!.data!.category!.name!,
+                            style: Styles.textStyle14.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          AppIcons.assetsStar,
+                          width: 25,
+                          height: 25,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          mealCubit.mealDetailsModel!.data!.dishAvgRate!,
+                          style: Styles.textStyle16,
+                        ),
+                        const SizedBox(width: 8),
+                        SvgPicture.asset(
+                          AppIcons.assetsClock,
+                          width: 25,
+                          height: 25,
+                        ),
+                        const SizedBox(width: 6),
+                        Text('30-40 min', style: Styles.textStyle16),
+                        const SizedBox(width: 8),
+                        SvgPicture.asset(
+                          AppIcons.assetsCar,
+                          width: 22,
+                          height: 22,
+                        ),
+                        const SizedBox(width: 6),
+                        Text('Free', style: Styles.textStyle16),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      mealCubit.mealDetailsModel!.data!.dishDescription!,
+                      style: Styles.textStyle14,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text(
+                          'Size :',
+                          style: Styles.textStyle16.copyWith(
+                            color: ColorsHelper.grey,
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        SizeSelector(
+                          sizes: mealCubit.mealDetailsModel!.data!.sizes,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text('Ingredients', style: Styles.textStyle16),
+                    SizedBox(height: 20),
+                    CustomIngredientsWidget(
+                      ingredient: mealCubit.mealDetailsModel!.data!.ingredients,
+                    ),
+                    SizedBox(height: 28),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Reviews', style: Styles.textStyle16),
+                        GestureDetector(
+                          onTap: () async {
+                            final shouldRefresh = await showDialog<bool>(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text("Add a Review"),
+                                content: SizedBox(
+                                  width: double.maxFinite,
+                                  child: BlocProvider(
+                                    create: (context) => ReviewsCubit(ReviewsRepositoryImplementation()),
+                                    child: AddReviewForm(
+                                      dishId: mealCubit
+                                          .mealDetailsModel!
+                                          .data!
+                                          .dishId!,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ],
+                            );
+
+                            if (shouldRefresh == true) {
+                              context.read<ReviewsCubit>().getDishReviews(dishId: mealCubit.mealDetailsModel!.data!.dishId!); // اعمل refresh
+                            }
+                          },
+                          child: Text(
+                            'Add Review',
+                            style: Styles.textStyle16.copyWith(
+                              color: ColorsHelper.orange,
+                            ),
                           ),
-                          SizedBox(height: 10),
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.assetsStar,
-                                width: 25,
-                                height: 25,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                mealCubit.mealDetailsModel!.data!.dishAvgRate!,
-                                style: Styles.textStyle16,
-                              ),
-                              const SizedBox(width: 8),
-                              SvgPicture.asset(
-                                AppIcons.assetsClock,
-                                width: 25,
-                                height: 25,
-                              ),
-                              const SizedBox(width: 6),
-                              Text('30-40 min', style: Styles.textStyle16),
-                              const SizedBox(width: 8),
-                              SvgPicture.asset(
-                                AppIcons.assetsCar,
-                                width: 22,
-                                height: 22,
-                              ),
-                              const SizedBox(width: 6),
-                              Text('Free', style: Styles.textStyle16),
-                            ],
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            mealCubit.mealDetailsModel!.data!.dishDescription!,
-                            style: Styles.textStyle14,
-                          ),
-                          SizedBox(height: 20),
-                          Row(
-                            children: [
-                              Text(
-                                'Size :',
-                                style: Styles.textStyle16.copyWith(
-                                  color: ColorsHelper.grey,
-                                ),
-                              ),
-                              SizedBox(width: 16),
-                              SizeSelector(
-                                sizes: mealCubit.mealDetailsModel!.data!.sizes
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 20),
-                          Text('Ingredients', style: Styles.textStyle16),
-                          SizedBox(height: 20),
-                          CustomIngredientsWidget(
-                            ingredient:
-                                mealCubit.mealDetailsModel!.data!.ingredients,
-                          ),
-                          SizedBox(height: 25),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    CustomCheckOutWidget(sizeModel: mealCubit.sizeModel ?? mealCubit.mealDetailsModel!.data!.sizes[0]),
+                    SizedBox(height: 20),
+                    BlocBuilder<ReviewsCubit, ReviewsState>(
+                      builder: (context, state) {
+                        final cubit = ReviewsCubit.get(context);
+                        if (cubit.reviewsModel != null) {
+                          return SizedBox(
+                            height: 120,
+                            child: ListView.separated(
+                              padding: EdgeInsets.only(left: 16),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) => ReviewContainer(
+                                review: cubit
+                                    .reviewsModel!
+                                    .data!
+                                    .reviews!
+                                    .data[index],
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  SizedBox(width: 8),
+                              itemCount: cubit
+                                  .reviewsModel!
+                                  .data!
+                                  .reviews!
+                                  .data
+                                  .length,
+                            ),
+                          );
+                        }
+                        return SizedBox();
+                      },
+                    ),
+                    SizedBox(height: 240),
                   ],
                 ),
               ),
             ],
-          );
-        }
-        return LinearProgressIndicator(color: ColorsHelper.orange);
-      },
+          ),
+        ),
+      ],
     );
   }
 }
-
-
-

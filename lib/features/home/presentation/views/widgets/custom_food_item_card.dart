@@ -70,11 +70,11 @@ class CustomFoodItemCard extends StatelessWidget {
                           ),
                           BlocListener<CartCubit, CartStates>(
                             listener: (context, state) {
-                              if (state is CartSuccessState) {
+                              if (state is AddToCartSuccessState) {
                                 AppToast.showSuccessToast(
                                   'Added to cart successfully!',
                                 );
-                              } else if (state is CartFailureState) {
+                              } else if (state is AddToCartFailureState) {
                                 AppToast.showErrorToast(state.errorMessage);
                               }
                             },

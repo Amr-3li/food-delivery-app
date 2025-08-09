@@ -19,7 +19,7 @@ final List<MenuGroup> menuGroups = [
       MenuItem(
         icon: AppIcons.iMessage,
         title: 'Messages',
-        route: AppRouter.kSucessPaymentView,
+        route: AppRouter.kMessageListView,
       ),
     ],
   ),
@@ -54,11 +54,11 @@ final List<MenuGroup> menuGroups = [
   MenuGroup(
     items: [
       MenuItem(icon: AppIcons.assetsFAQs, title: "FAQs", route: AppRouter.kFQS),
-      // MenuItem(
-      //   icon: AppIcons.assetsReviews,
-      //   title: "User Reviews",
-      //   route: AppRouter.kAddReviewView,
-      // ),
+      MenuItem(
+        icon: AppIcons.assetsReviews,
+        title: "My Reviews",
+        route: AppRouter.kMyReviews,
+      ),
       // MenuItem(
       //   icon: AppIcons.assetsSettings,
       //   title: "Settings",

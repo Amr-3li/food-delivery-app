@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 
@@ -14,9 +15,9 @@ class PaymentManager {
       await _initializePaymentSheet(clientSecret);
       await Stripe.instance.presentPaymentSheet();
       return true; // Payment successful
-    } catch (e) {
-      log("Error while making payment: $e");
-
+    } catch (e, stackTrace) {
+      debugPrint('Error adding new address: $e');
+      debugPrint('StackTrace: $stackTrace');
       throw Exception(e.toString());
     }
   }

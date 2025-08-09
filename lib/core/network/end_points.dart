@@ -41,4 +41,7 @@ abstract class EndPoints {
   static const String getMyOrders = "get/customer/orders/where?";
   static const String changeOrderStatus = "change/order/status";
   static const String getDefaultAddress = "default/address";
+  static const String notifications = "notifications";
+  static const String reviews = "reviews";
+  static const String myReviews = "user/get/reviews";
 }

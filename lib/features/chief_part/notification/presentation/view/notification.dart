@@ -49,7 +49,7 @@ class NotificationScreen extends StatelessWidget {
         body: BlocBuilder<NotificationCubit, NotificationState>(
           builder: (context, state) {
             if (state is NotificationLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator(color: Colors.orange, strokeWidth: 2.0, strokeAlign: 3,));
             } else if (state is NotificationFailure) {
               return Center(child: Text("Error: ${state.errorMessage}"));
             } else if (state is NotificationSuccess) {

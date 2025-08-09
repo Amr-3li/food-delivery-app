@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:restaurant/core/error/failure.dart';
-import 'package:restaurant/features/reviews/data/models/add_review_model.dart';
-import 'package:restaurant/features/reviews/data/models/review_model.dart';
+import '../models/get_reviews_model.dart';
 
 abstract class ReviewRepository {
-  Future<Either<Failure, List<ReviewModel>>> getReviews();
-  Future<Either<Failure, Unit>> addReview(AddReviewRequest request);
+  Future<Either<String, GetReviewsModel>> getDishReviews({required int dishId});
+  Future<Either<String, String>> addDishReviews({required int dishId, required int rating, required String comment});
+  Future<Either<String, List<Datum>>> getMyReviews();
 }

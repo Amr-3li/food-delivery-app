@@ -40,7 +40,8 @@ class MenuViewBody extends StatelessWidget {
                     context.read<AuthCubit>().logout(); // 🔐 call Cubit logout
                     context.go(AppRouter.kLoginView);
                   } else if (item.route != null) {
-                    context.push(item.route!); // ➡️ navigate normally
+                    print('Navigating to ${item.route}');
+                    GoRouter.of(context).push(item.route!); // ➡️ navigate normally
                   }
                 },
               ),

@@ -48,6 +48,7 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
       },
           (message) {
         emit(ChangeOrderStatusSuccess(message: message));
+        getMyOrders(status: 'pending');
       },
     );
   }

@@ -34,8 +34,10 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
   @override
   void initState() {
     super.initState();
-    check();
-
+    if (BlocProvider.of<CategoryCubit>(context).categoryDetails == null &&
+        BlocProvider.of<CategoryCubit>(context).mealsTypeDetialsModel == null) {
+      check();
+    }
   }
 
   @override

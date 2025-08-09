@@ -28,24 +28,32 @@ class SearchCubit extends Cubit<SearchStates> {
   PopularFastFoodModel? popularFastFoodModel;
 
   void getPopularFood() async {
-    final result = await searchRepo.getPopularFood();
-    result.fold((error) => emit(GetPopularFoodErrorState(error)), (
-      popularFastFoodModel,
-    ) {
+    if (popularFastFoodModel == null) {
+      final result = await searchRepo.getPopularFood();
+      result.fold((error) => emit(GetPopularFoodErrorState(error)), (
+          popularFastFoodModel,
+          ) {
+        emit(GetPopularFoodSuccessState());
+        this.popularFastFoodModel = popularFastFoodModel;
+      });
+    } else {
       emit(GetPopularFoodSuccessState());
-      this.popularFastFoodModel = popularFastFoodModel;
-    });
+    }
   }
 
   SuggestedRestaurantsModel? suggestedRestaurantsModel;
 
   void getSuggestedRestaurants() async {
-    final result = await searchRepo.getSuggestedRestaurants();
-    result.fold((error) => emit(GetSuggestedRestaurantsErrorState(error)), (
-      suggestedRestaurantsModel,
-    ) {
+    if (suggestedRestaurantsModel == null) {
+      final result = await searchRepo.getSuggestedRestaurants();
+      result.fold((error) => emit(GetSuggestedRestaurantsErrorState(error)), (
+          suggestedRestaurantsModel,
+          ) {
+        emit(GetSuggestedRestaurantsSuccessState());
+        this.suggestedRestaurantsModel = suggestedRestaurantsModel;
+      });
+    } else {
       emit(GetSuggestedRestaurantsSuccessState());
-      this.suggestedRestaurantsModel = suggestedRestaurantsModel;
-    });
+    }
   }
 }

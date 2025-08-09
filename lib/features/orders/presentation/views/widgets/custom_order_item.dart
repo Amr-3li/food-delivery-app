@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/features/home/presentation/views/widgets/custom_network_image.dart';
+import 'package:restaurant/features/orders/presentation/manger/my_orders_cubit.dart';
 
 import '../../../../../core/helper/app_responsive.dart';
 import '../../../../../core/utils/color_helper.dart';
@@ -89,7 +92,16 @@ class CustomOrderItem extends StatelessWidget {
                       item.order?.orderStatus == 'cancelled'
                       ? 'Rate'
                       : 'Complete',
-                  onPressedFunction: () {},
+                  onPressedFunction: () {
+                    if (item.order?.orderStatus == 'completed' ||
+                        item.order?.orderStatus == 'cancelled') {
+                      print('-----------------------------------------------------------------------------${item.id}');
+                      /// Error Server --------------------
+                      context.push(AppRouter.kFoodDetailsView, extra: 1);
+                    } else {
+                      MyOrdersCubit.get(context).changeOrderStatus(id: item.order!.orderId!, status: 'completed');
+                    }
+                  },
                   buttonColor:
                   item.order?.orderStatus == 'completed' ||
                       item.order?.orderStatus == 'cancelled'
@@ -111,7 +123,14 @@ class CustomOrderItem extends StatelessWidget {
                       item.order?.orderStatus == 'cancelled'
                       ? 'Re-Order'
                       : 'Cancel',
-                  onPressedFunction: () {},
+                  onPressedFunction: () {
+                    if (item.order?.orderStatus == 'completed' ||
+                        item.order?.orderStatus == 'cancelled') {
+                      context.go(AppRouter.kHomeUserView);
+                    } else {
+                      MyOrdersCubit.get(context).changeOrderStatus(id: item.order!.orderId!, status: 'cancelled');
+                    }
+                  },
                   buttonColor:
                   item.order?.orderStatus == 'completed' ||
                       item.order?.orderStatus == 'cancelled'

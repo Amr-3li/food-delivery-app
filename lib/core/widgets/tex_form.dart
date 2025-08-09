@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.textFieldPrefix = const SizedBox(width: 1),
     this.isObsecure = false,
     this.keyboardType = TextInputType.text,
-    this.maxLength,
+    this.maxLength, this.maxLines,
   });
   final TextEditingController textController;
   final Widget? textFieldSuffix;
@@ -29,10 +29,13 @@ class CustomTextField extends StatelessWidget {
   final Function(String)? onChangedFunction;
   final bool isObsecure;
   final int? maxLength;
+  final int? maxLines;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: ColorsHelper.orange,
       maxLength: maxLength,
+      maxLines: maxLines,
       controller: textController,
       obscureText: isObsecure,
       keyboardType: keyboardType,

@@ -56,7 +56,7 @@ class ChiefMenuScreen extends StatelessWidget {
                     text: "User Reviews",
                     imageUrl: AppIcons.assetsReviews,
                     onPressed: () {
-                      GoRouter.of(context).push(AppRouter.kReviewView);
+                      // GoRouter.of(context).push(AppRouter.kReviewView);
                     }, // Navigate to reviews page,
                   ),
                   SizedBox(height: 3.h),

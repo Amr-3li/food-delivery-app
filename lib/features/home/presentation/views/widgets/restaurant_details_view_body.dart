@@ -42,7 +42,7 @@ class RestaurantDetailsViewBody extends StatelessWidget {
                 SizedBox(height: 10),
                 Row(
                   children: [
-                    CustomIconsTitle(title: '4.7', iconUrl: AppIcons.iStar),
+                    CustomIconsTitle(title: cubit.restaurantDetailsModel?.data?.resturant?.rating?.average.toString() ?? '', iconUrl: AppIcons.iStar),
                     SizedBox(width: 18),
                     CustomIconsTitle(title: 'Free', iconUrl: AppIcons.iCar),
                     SizedBox(width: 18),

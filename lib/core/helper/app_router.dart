@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/features/address/data/model/address_model.dart';
 import 'package:restaurant/features/address/data/repo/add_address/add_address_repo_implemation.dart';
@@ -41,16 +40,17 @@ import 'package:restaurant/features/menu/presentation/views/personal_info_view.d
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/orders/presentation/manger/my_orders_cubit.dart';
 import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
-import 'package:restaurant/features/payment/presentaion/cubit/payment_state.dart';
 import 'package:restaurant/features/payment/presentaion/view/payment_sucess.dart';
-import 'package:restaurant/features/reviews/presentation/views/add_review.dart';
-import 'package:restaurant/features/reviews/presentation/views/review_resturant.dart';
+import 'package:restaurant/features/reviews/data/repository/review_repository_implementation.dart';
+import 'package:restaurant/features/reviews/presentation/cubit/reviews_cubit.dart';
+import 'package:restaurant/features/reviews/presentation/views/my_reviews_view.dart';
 import 'package:restaurant/features/splash/presentation/views/splash_view.dart';
-
 import '../../features/address/presentaion/manger/get_addresses/get_addresses_cubit.dart';
 import '../../features/address/presentaion/view/add_new_address_view.dart';
 import '../../features/cart/presentation/cubit/cart_cubit.dart';
+import '../../features/home/data/repository/meal_details_repository.dart';
 import '../../features/home/presentation/cubit/category/category_cubit.dart';
+import '../../features/home/presentation/cubit/meal_details/meal_details_cubit.dart';
 import '../../features/home/presentation/cubit/resturant/resturant_cubit.dart';
 import '../../features/home/presentation/views/food_details_view.dart';
 import '../../features/home/presentation/views/home_user_view.dart';
@@ -73,7 +73,7 @@ abstract class AppRouter {
   static const String kChefDetailsView = "/ChefDetailsView";
   static const String kChatView = '/chat';
   static const String kMessageListView = '/messageList';
-  static const String kReviewView = '/review';
+  static const String kMyReviews = '/myReviews';
   static const String kAddReviewView = '/addReview';
   static const String kCartView = '/cart';
   static const String kSucessPaymentView = '/sucessPayment';
@@ -105,14 +105,25 @@ abstract class AppRouter {
   static const String kCategoryDetailsView = "/CategoryDetailsView";
   static const String kForgetPassword = "/forgetPassword";
 
+  static final _rootNavigatorKey = GlobalKey<NavigatorState>();
+  static final _networkShellNavigatorKey = GlobalKey<NavigatorState>();
+  static final _homeShellNavigatorKey = GlobalKey<NavigatorState>();
+  static final _menuShellNavigatorKey = GlobalKey<NavigatorState>();
+
   static final router = GoRouter(
+    navigatorKey: _rootNavigatorKey,
     routes: [
       GoRoute(
         path: kSplashView,
-        builder: (context, state) => const SplashView(),
+        pageBuilder: (context, state) => MaterialPage(
+          key: ValueKey('splashView_${UniqueKey().toString()}'),
+          child: const SplashView(),
+        ),
       ),
 
+      // Network check shell route
       ShellRoute(
+        navigatorKey: _networkShellNavigatorKey,
         builder: (context, state, child) {
           return ValueListenableBuilder<bool>(
             valueListenable: sl<NetworkInfo>().isConnected,
@@ -127,36 +138,63 @@ abstract class AppRouter {
         routes: [
           GoRoute(
             path: kOnboardingView,
-            builder: (context, state) => OnboardingPage(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('onboardingView_${UniqueKey().toString()}'),
+              child: OnboardingPage(),
+            ),
           ),
 
-          GoRoute(path: kLoginView, builder: (context, state) => LoginView()),
+          GoRoute(
+            path: kLoginView,
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('loginView_${UniqueKey().toString()}'),
+              child: LoginView(),
+            ),
+          ),
 
-          GoRoute(path: kSingUp, builder: (context, state) => SinUpView()),
+          GoRoute(
+            path: kSingUp,
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('signUpView_${UniqueKey().toString()}'),
+              child: SinUpView(),
+            ),
+          ),
 
           GoRoute(
             path: kForgetPassword,
-            builder: (context, state) => ForgetPasswordView(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('forgetPasswordView_${UniqueKey().toString()}'),
+              child: ForgetPasswordView(),
+            ),
           ),
 
           GoRoute(
             path: kVerifyEmail,
-            builder: (context, state) {
+            pageBuilder: (context, state) {
               final email = state.extra as String;
-              return VertificationView(email: email);
+              return MaterialPage(
+                key: ValueKey(
+                  'verifyEmailView_${email}_${UniqueKey().toString()}',
+                ),
+                child: VertificationView(email: email),
+              );
             },
           ),
 
           GoRoute(
             path: kSendOtp,
-            builder: (context, state) {
+            pageBuilder: (context, state) {
               final email = state.extra as String;
-              return SentOtp(email: email);
+              return MaterialPage(
+                key: ValueKey('sendOtpView_${email}_${UniqueKey().toString()}'),
+                child: SentOtp(email: email),
+              );
             },
           ),
 
-          // Home View and cubit
+          // Home View and cubit shell route
           ShellRoute(
+            navigatorKey: _homeShellNavigatorKey,
             builder: (context, state, child) {
               return MultiBlocProvider(
                 providers: [
@@ -166,11 +204,13 @@ abstract class AppRouter {
                   BlocProvider(
                     create: (_) => RestaurantCubit(sl())..getRestaurants(),
                   ),
-                  BlocProvider(create: (_) => sl<CartCubit>()..getCart(),),
-
+                  BlocProvider(create: (_) => sl<CartCubit>()..getCart()),
                   BlocProvider(create: (_) => sl<PaymentCubit>()),
-
                   BlocProvider(create: (_) => sl<GetAddressesCubit>()),
+                  BlocProvider(
+                    create: (context) =>
+                        ReviewsCubit(ReviewsRepositoryImplementation()),
+                  ),
                 ],
                 child: child,
               );
@@ -178,213 +218,343 @@ abstract class AppRouter {
             routes: [
               GoRoute(
                 path: kHomeUserView,
-                builder: (context, state) => HomeUserView(),
+                pageBuilder: (context, state) => MaterialPage(
+                  key: ValueKey('homeUserView_${UniqueKey().toString()}'),
+                  child: HomeUserView(),
+                ),
               ),
 
               GoRoute(
                 path: kAllCategoryView,
-                builder: (context, state) => AllCategoriesView(),
+                pageBuilder: (context, state) => MaterialPage(
+                  key: ValueKey('allCategoryView_${UniqueKey().toString()}'),
+                  child: AllCategoriesView(),
+                ),
               ),
 
               GoRoute(
                 path: kCategoryDetailsView,
-                builder: (context, state) => CategoryDetailsView(state: state),
+                pageBuilder: (context, state) => MaterialPage(
+                  key: ValueKey(
+                    'categoryDetailsView_${state.path}_${UniqueKey().toString()}',
+                  ),
+                  child: CategoryDetailsView(state: state),
+                ),
               ),
 
               GoRoute(
                 path: kAllRestaurantsView,
-                builder: (context, state) => const AllRestaurantsView(),
+                pageBuilder: (context, state) => MaterialPage(
+                  key: ValueKey('allRestaurantsView_${UniqueKey().toString()}'),
+                  child: const AllRestaurantsView(),
+                ),
               ),
 
               GoRoute(
                 path: kRestaurantDetailsView,
-                builder: (context, state) {
+                pageBuilder: (context, state) {
                   final int id = state.extra as int;
-                  return RestaurantDetailsView(id: id);
+                  return MaterialPage(
+                    key: ValueKey(
+                      'restaurantDetailsView_${id}_${UniqueKey().toString()}',
+                    ),
+                    child: RestaurantDetailsView(id: id),
+                  );
                 },
               ),
 
               GoRoute(
                 path: kFoodDetailsView,
-                builder: (context, state) {
+                pageBuilder: (context, state) {
                   final int id = state.extra as int;
-                  return FoodDetailsView(id: id);
+                  return MaterialPage(
+                    key: ValueKey(
+                      'foodDetailsView_${id}_${UniqueKey().toString()}',
+                    ),
+                    child: BlocProvider(
+                      create: (context) =>
+                          MealDetailsCubit(MealDetailsRepository())
+                            ..getMealDetails(id: id),
+                      child: FoodDetailsView(id: id),
+                    ),
+                  );
                 },
               ),
 
               GoRoute(
                 path: kCartView,
-                name: "cart",
+                name: "cartView",
                 pageBuilder: (context, state) => MaterialPage(
+                  key: ValueKey(
+                    'cartView_${UniqueKey().toString()} ${state.extra}',
+                  ),
                   child: CartView(),
                 ),
+              ),
+
+              GoRoute(
+                path: kOrder,
+                builder: (context, state) => BlocProvider(
+                  create: (context) =>
+                  MyOrdersCubit(MyOrdersRepoImplementation())
+                    ..getMyOrders(status: 'pending'),
+                  child: MyOrdersView(),
+                ),
+              ),
+
+              GoRoute(
+                path: kSearchScreenView,
+                pageBuilder: (context, state) => MaterialPage(
+                  key: ValueKey('searchScreenView_${UniqueKey().toString()}'),
+                  child: SearchView(),
+                ),
+              ),
+
+              // Menu Feature Shell Route
+              ShellRoute(
+                navigatorKey: _menuShellNavigatorKey,
+                builder: (context, state, child) {
+                  return BlocProvider(
+                    create: (_) =>
+                        MenuCubit(MenuRepoImplementation())
+                          ..getCustomerProfile(),
+                    child: child,
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    path: kMenuView,
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: ValueKey('menuView_${UniqueKey().toString()}'),
+                      child: MenuView(),
+                    ),
+                  ),
+
+                  GoRoute(
+                    path: kPersonalInfoProfileView,
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: ValueKey(
+                        'personalInfoProfileView_${UniqueKey().toString()}',
+                      ),
+                      child: PersonalInfoView(),
+                    ),
+                  ),
+
+                  GoRoute(
+                    path: kEditProfileView,
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: ValueKey(
+                        'editProfileView_${UniqueKey().toString()}',
+                      ),
+                      child: EditProfileView(),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
 
           GoRoute(
             path: kChefDetailsView,
-            builder: (context, state) {
+            pageBuilder: (context, state) {
               final ChefModel chefModel = state.extra as ChefModel;
-              return ChefDetailsView(chefModel: chefModel);
+              return MaterialPage(
+                key: ValueKey(
+                  'chefDetailsView_${chefModel.id}_${UniqueKey().toString()}',
+                ),
+                child: ChefDetailsView(chefModel: chefModel),
+              );
             },
           ),
 
           GoRoute(
             path: kChifHome,
-            builder: (context, state) {
+            pageBuilder: (context, state) {
               final chefModel = state.extra as UserModel;
-              return ChifHomeView(chefModel: chefModel);
+              return MaterialPage(
+                key: ValueKey(
+                  'chifHomeView_${chefModel.name}_${UniqueKey().toString()}',
+                ),
+                child: ChifHomeView(chefModel: chefModel),
+              );
             },
           ),
 
           GoRoute(
             path: kChatView,
             name: "chat",
-            builder: (context, state) => const ChatScreen(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('chatView_${UniqueKey().toString()}'),
+              child: const ChatScreen(),
+            ),
           ),
 
           GoRoute(
             path: kChifFoodDetails,
             name: "chifFoodDetails",
-            builder: (context, state) {
+            pageBuilder: (context, state) {
               final meal = state.extra as Meal;
-              return FoodDetailsPage(meal: meal);
+              return MaterialPage(
+                key: ValueKey(
+                  'chifFoodDetails_${meal.id}_${UniqueKey().toString()}',
+                ),
+                child: FoodDetailsPage(meal: meal),
+              );
             },
           ),
 
           GoRoute(
             path: kAddNewItem,
             name: "addNewItem",
-            builder: (context, state) => AddNewItems(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('addNewItem_${UniqueKey().toString()}'),
+              child: AddNewItems(),
+            ),
           ),
+
           GoRoute(
             path: kChifFoodList,
             name: "chifFoodList",
-            builder: (context, state) => MyFoodList(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('chifFoodList_${UniqueKey().toString()}'),
+              child: MyFoodList(),
+            ),
           ),
 
           GoRoute(
             path: kMessageListView,
             name: "messageList",
-            builder: (context, state) => ChatListScreen(),
-          ),
-          GoRoute(
-            path: kReviewView,
-            name: "review",
-            builder: (context, state) => ReviewScreen(),
-          ),
-          GoRoute(
-            path: kAddReviewView,
-            name: "addReview",
-            builder: (context, state) => AddReview(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('messageListView_${UniqueKey().toString()}'),
+              child: ChatListScreen(),
+            ),
           ),
 
+          GoRoute(
+            path: kMyReviews,
+            name: "MyReviews",
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('reviewView_${UniqueKey().toString()}'),
+              child: BlocProvider(
+                create: (context) => ReviewsCubit(ReviewsRepositoryImplementation())..getMyReviews(),
+                child: MyReviewsView(),
+              ),
+            ),
+          ),
 
           GoRoute(
             path: kSucessPaymentView,
-            name: "sucessPayment",
+            name: "successPayment",
             pageBuilder: (context, state) => MaterialPage(
-              key: const ValueKey("successPaymentPage"),
-              child: const SucessPayment()
+              key: ValueKey('successPayment_${UniqueKey().toString()}'),
+              child: const SucessPayment(),
             ),
           ),
 
           GoRoute(
             path: kNotificationView,
             name: "notification",
-            builder: (context, state) => NotificationScreen(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('notificationView_${UniqueKey().toString()}'),
+              child: NotificationScreen(),
+            ),
           ),
 
-          GoRoute(
-            path: kResturantReview,
-            name: "resturantReview",
-            builder: (context, state) => ReviewResturantScreen(),
-          ),
-
+          // GoRoute(
+          //   path: kResturantReview,
+          //   name: "resturantReview",
+          //   pageBuilder: (context, state) => MaterialPage(
+          //     key: ValueKey('resturantReview_${UniqueKey().toString()}'),
+          //     child: ReviewResturantScreen(),
+          //   ),
+          // ),
           GoRoute(
             path: kChatListView,
-            builder: (context, state) => ChatListScreenChief(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('chatListView_${UniqueKey().toString()}'),
+              child: ChatListScreenChief(),
+            ),
           ),
 
           GoRoute(
             path: kChatChiefView,
-            builder: (context, state) => ChatScreenChief(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('chatChiefView_${UniqueKey().toString()}'),
+              child: ChatScreenChief(),
+            ),
           ),
 
           GoRoute(
             path: kMenuChiefView,
-            builder: (context, state) => ChiefMenuScreen(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('menuChiefView_${UniqueKey().toString()}'),
+              child: ChiefMenuScreen(),
+            ),
           ),
 
           GoRoute(
             path: kWithdrawView,
-            builder: (context, state) => WithdrawView(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('withdrawView_${UniqueKey().toString()}'),
+              child: WithdrawView(),
+            ),
           ),
 
           GoRoute(
-            path: kSearchScreenView,
-            builder: (context, state) => SearchView(),
+            path: kAddresses,
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('addressesView_${UniqueKey().toString()}'),
+              child: const AddressView(),
+            ),
           ),
 
-          GoRoute(path: kAddresses, builder: (_, __) => const AddressView()),
-
-          GoRoute(path: kFQS, builder: (_, __) => const FaqsView()),
-
-          GoRoute(path: kFavorite, builder: (_, __) => const FavoritesView()),
+          GoRoute(
+            path: kFQS,
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('fqsView_${UniqueKey().toString()}'),
+              child: const FaqsView(),
+            ),
+          ),
 
           GoRoute(
-            path: kOrder,
-            builder: (context, state) => BlocProvider(
-              create: (context) =>
-                  MyOrdersCubit(MyOrdersRepoImplementation())
-                    ..getMyOrders(status: 'pending'),
-              child: MyOrdersView(),
+            path: kFavorite,
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('favoriteView_${UniqueKey().toString()}'),
+              child: const FavoritesView(),
             ),
           ),
 
           GoRoute(
             path: kAddAddressView,
-            builder: (context, state) => BlocProvider(
-              create: (context) =>
-                  AddAddressCubit(AddAddressRepoImplementation())
-                    ..getCurrentLocation(),
-              child: AddNewAddressView(
-                addressesModel: state.extra != null
-                    ? state.extra as AddressesModel
-                    : AddressesModel(),
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('addAddressView_${UniqueKey().toString()}'),
+              child: BlocProvider(
+                create: (context) =>
+                    AddAddressCubit(AddAddressRepoImplementation())
+                      ..getCurrentLocation(),
+                child: AddNewAddressView(
+                  addressesModel: state.extra != null
+                      ? state.extra as AddressesModel
+                      : AddressesModel(),
+                ),
               ),
             ),
           ),
 
           GoRoute(
             path: kResetPassword,
-            builder: (context, state) {
+            pageBuilder: (context, state) {
               final data = state.extra as Map<String, String>;
-              return ConfiremPassword(email: data['email']!, otp: data['otp']!);
-            },
-          ),
-
-          // menu Feature
-          ShellRoute(
-            builder: (context, state, child) {
-              return BlocProvider(
-                create: (_) =>
-                    MenuCubit(MenuRepoImplementation())..getCustomerProfile(),
-                child: child,
+              return MaterialPage(
+                key: ValueKey(
+                  'resetPasswordView_${data['email']}_${UniqueKey().toString()}',
+                ),
+                child: ConfiremPassword(
+                  email: data['email']!,
+                  otp: data['otp']!,
+                ),
               );
             },
-            routes: [
-              GoRoute(path: kMenuView, builder: (context, state) => MenuView()),
-              GoRoute(
-                path: kPersonalInfoProfileView,
-                builder: (context, state) => PersonalInfoView(),
-              ),
-              GoRoute(
-                path: kEditProfileView,
-                builder: (context, state) => EditProfileView(),
-              ),
-            ],
           ),
         ],
       ),

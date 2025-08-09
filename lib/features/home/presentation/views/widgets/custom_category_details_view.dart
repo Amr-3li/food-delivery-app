@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restaurant/features/home/data/models/category_details_model.dart';
+import 'package:restaurant/features/home/presentation/cubit/category/category_cubit.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/helper/app_responsive.dart';
@@ -54,6 +55,8 @@ class CustomCategoryDetailsView extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
+                    CategoryCubit.get(context).mealsTypeDetialsModel = null;
+                    CategoryCubit.get(context).categoryDetails = null;
                   },
                   child: CircleAvatar(
                     radius: 22,
