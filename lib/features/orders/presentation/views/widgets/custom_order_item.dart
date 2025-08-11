@@ -97,7 +97,7 @@ class CustomOrderItem extends StatelessWidget {
                         item.order?.orderStatus == 'cancelled') {
                       print('-----------------------------------------------------------------------------${item.id}');
                       /// Error Server --------------------
-                      context.push(AppRouter.kFoodDetailsView, extra: 1);
+                      context.push(AppRouter.kFoodDetailsView, extra: item.id);
                     } else {
                       MyOrdersCubit.get(context).changeOrderStatus(id: item.order!.orderId!, status: 'completed');
                     }

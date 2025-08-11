@@ -11,3 +11,9 @@ class PaymentFailure extends PaymentState {
 
   PaymentFailure(this.error);
 }
+
+class CreateOrder extends PaymentState {
+  final String message;
+
+  CreateOrder(this.message);
+}

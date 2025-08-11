@@ -4,11 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:restaurant/core/utils/icons.dart';
 import 'package:restaurant/core/utils/styles.dart';
-import 'package:restaurant/features/chat/data/models/conversation_preview_model.dart';
-
-import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
-import 'package:restaurant/features/chat/presentation/cubit/conversation_states.dart';
-
 import 'package:restaurant/features/chief_part/chat/presentation/views/chat_screen.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -24,7 +19,7 @@ class _ChatListScreenChiefState extends State<ChatListScreenChief> {
   void initState() {
     super.initState();
     // Load conversations if not already loaded
-    context.read<ChatCubit>().getAllConversations();
+    // context.read<ChatCubit>().getAllConversations();
   }
 
   @override
@@ -43,82 +38,82 @@ class _ChatListScreenChiefState extends State<ChatListScreenChief> {
           style: Styles.textStyle18.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
-      body: BlocConsumer<ChatCubit, ChatState>(
-        listener: (context, state) {
-          if (state is ChatError) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
-          }
-        },
-        builder: (context, state) {
-          if (state is ChatLoading &&
-              context.read<ChatCubit>().allConversations.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          final conversations = context.read<ChatCubit>().allConversations;
-          if (conversations.isEmpty) {
-            return const Center(child: Text('No conversations found'));
-          }
-
-          return RefreshIndicator(
-            onRefresh: () async =>
-                context.read<ChatCubit>().getAllConversations(),
-            child: ListView.builder(
-              itemCount: conversations.length,
-              itemBuilder: (context, index) {
-                final conversation = conversations[index];
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      "https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg?semt=ais_hybrid&w=740",
-                    ),
-                  ),
-                  title: Text(conversation.otherParty.name),
-                  subtitle: Text(
-                    conversation.lastMessage.content,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  trailing: conversation.unreadCount > 0
-                      ? CircleAvatar(
-                          radius: 12,
-                          backgroundColor: Colors.orange,
-                          child: Text(
-                            conversation.unreadCount.toString(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
-                        )
-                      : null,
-                  onTap: () => _navigateToChat(context, conversation),
-                );
-              },
-            ),
-          );
-        },
-      ),
+      // body: BlocConsumer<ChatCubit, ChatState>(
+      //   listener: (context, state) {
+      //     if (state is ChatError) {
+      //       ScaffoldMessenger.of(
+      //         context,
+      //       ).showSnackBar(SnackBar(content: Text(state.message)));
+      //     }
+      //   },
+      //   builder: (context, state) {
+      //     if (state is ChatLoading &&
+      //         context.read<ChatCubit>().allConversations.isEmpty) {
+      //       return const Center(child: CircularProgressIndicator());
+      //     }
+      //
+      //     final conversations = context.read<ChatCubit>().allConversations;
+      //     if (conversations.isEmpty) {
+      //       return const Center(child: Text('No conversations found'));
+      //     }
+      //
+      //     return RefreshIndicator(
+      //       onRefresh: () async =>
+      //           context.read<ChatCubit>().getAllConversations(),
+      //       child: ListView.builder(
+      //         itemCount: conversations.length,
+      //         itemBuilder: (context, index) {
+      //           final conversation = conversations[index];
+      //           return ListTile(
+      //             leading: CircleAvatar(
+      //               backgroundImage: NetworkImage(
+      //                 "https://img.freepik.com/free-psd/contact-icon-illustration-isolated_23-2151903337.jpg?semt=ais_hybrid&w=740",
+      //               ),
+      //             ),
+      //             title: Text(conversation.otherParty.name),
+      //             subtitle: Text(
+      //               conversation.lastMessage.content,
+      //               overflow: TextOverflow.ellipsis,
+      //             ),
+      //             trailing: conversation.unreadCount > 0
+      //                 ? CircleAvatar(
+      //                     radius: 12,
+      //                     backgroundColor: Colors.orange,
+      //                     child: Text(
+      //                       conversation.unreadCount.toString(),
+      //                       style: const TextStyle(
+      //                         color: Colors.white,
+      //                         fontSize: 12,
+      //                       ),
+      //                     ),
+      //                   )
+      //                 : null,
+      //             onTap: () => _navigateToChat(context, conversation),
+      //           );
+      //         },
+      //       ),
+      //     );
+      //   },
+      // ),
     );
   }
 
-  void _navigateToChat(
-    BuildContext context,
-    ConversationPreviewModel conversation,
-  ) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => BlocProvider.value(
-          value: context.read<ChatCubit>(),
-          child: ChatScreenChief(
-            conversationId: conversation.id,
-            // userName: conversation.otherParty.name,
-            // imageUrl: conversation.otherParty.profileImage ?? '',
-          ),
-        ),
-      ),
-    );
-  }
+  // void _navigateToChat(
+  //   BuildContext context,
+  //   ConversationPreviewModel conversation,
+  // ) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (_) => BlocProvider.value(
+  //         value: context.read<ChatCubit>(),
+  //         child: ChatScreenChief(
+  //           conversationId: conversation.id,
+  //           // userName: conversation.otherParty.name,
+  //           // imageUrl: conversation.otherParty.profileImage ?? '',
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

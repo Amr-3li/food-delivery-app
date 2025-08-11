@@ -23,7 +23,7 @@ class MyOrdersViewBody extends StatelessWidget {
       },
       builder: (context, state) {
         final cubit = MyOrdersCubit.get(context);
-        if (cubit.currentOrders.isNotEmpty || cubit.pastOrders.isNotEmpty || state is GetMyOrdersSuccess) {
+        if (state is GetMyOrdersSuccess || state is ChangeOrderStatusSuccess) {
           return TabBarView(
             children: [
               ListView.builder(

@@ -9,9 +9,6 @@ import 'package:restaurant/features/address/presentaion/manger/get_addresses/get
 import 'package:restaurant/features/cart/data/repository/cart_repository.dart';
 import 'package:restaurant/features/cart/data/services/cart_services.dart';
 import 'package:restaurant/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:restaurant/features/chat/data/repository/conversation_implementation_repo.dart';
-import 'package:restaurant/features/chat/data/service_api/conversation_api.dart';
-import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
 import 'package:restaurant/features/chief_part/notification/data/api_services/notification_api_services.dart';
 import 'package:restaurant/features/chief_part/notification/data/repository/notification_repository.dart';
 import 'package:restaurant/features/payment/data/repository/payment_repository.dart';
@@ -44,7 +41,6 @@ void setupLocator() {
   sl.registerLazySingleton(
     () => CartCubit(cartRepository: sl<CartRepository>()),
   );
-
   sl.registerLazySingleton(() => NotificationServicesApi());
   sl.registerLazySingleton(
     () => NotificationRepository(apiService: sl<NotificationServicesApi>()),
@@ -52,17 +48,12 @@ void setupLocator() {
   sl.registerLazySingleton(
     () => NotificationCubit(repository: sl<NotificationRepository>()),
   );
-  sl.registerLazySingleton(() => ConversationApiService());
-  sl.registerLazySingleton(
-    () => ConversationRepository(sl<ConversationApiService>()),
-  );
   sl.registerLazySingleton(() => GetAddressesRepoImplementation());
   sl.registerLazySingleton(
     () => GetAddressesCubit(sl<GetAddressesRepoImplementation>()),
   );
   sl.registerLazySingleton(() => CategoryRepository());
   sl.registerFactory(() => CategoryCubit(sl<CategoryRepository>()));
-  sl.registerLazySingleton(() => ChatCubit(sl<ConversationRepository>()));
   sl.registerLazySingleton(() => PaymentRepository());
   sl.registerFactory(() => PaymentCubit(sl<PaymentRepository>()));
   sl.registerLazySingleton(() => RestaurantRepository());

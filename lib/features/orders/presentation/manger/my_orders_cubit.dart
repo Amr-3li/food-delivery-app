@@ -17,7 +17,7 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
   List<Item> pastOrders = [];
 
 
-  void getMyOrders({required String status}) async {
+  Future<void> getMyOrders({required String status}) async {
     final result = await myOrdersRepo.getMyOrders(status: status);
 
     pastOrders.clear();
@@ -46,9 +46,9 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
           (failure) {
         emit(ChangeOrderStatusFailure(errorMessage: failure));
       },
-          (message) {
+          (message) async {
         emit(ChangeOrderStatusSuccess(message: message));
-        getMyOrders(status: 'pending');
+        currentOrders.clear();
       },
     );
   }

@@ -6,10 +6,10 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:restaurant/core/dependency_injection/service_locator.dart';
 
 class PaymentManager {
-  static Future<bool> makePayment(double amount, String currency) async {
+  static Future<bool> makePayment(int amount, String currency) async {
     try {
       String clientSecret = await _getClientSecret(
-        (amount * 100).toString(),
+        amount,
         currency,
       );
       await _initializePaymentSheet(clientSecret);
@@ -33,7 +33,7 @@ class PaymentManager {
   }
 }
 
-Future<String> _getClientSecret(String amount, String currency) async {
+Future<String> _getClientSecret(int amount, String currency) async {
   final dio = sl.get<Dio>(instanceName: 'stripeDio');
   try {
     final response = await dio.post(

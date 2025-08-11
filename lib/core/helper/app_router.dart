@@ -13,8 +13,6 @@ import 'package:restaurant/features/chief_part/chief_menu/presentation/view/with
 import 'package:restaurant/features/chief_part/food_details/presentation/views/chief_food_details_views.dart';
 import 'package:restaurant/features/chief_part/home/presentation/view/chif_home_view.dart';
 import 'package:restaurant/features/cart/presentation/views/cart.dart';
-import 'package:restaurant/features/chat/presentation/views/chat_screen.dart';
-import 'package:restaurant/features/chat/presentation/views/list_chat_screen.dart';
 import 'package:restaurant/features/chief_part/add_new_item/presentation/views/add_new_items.dart';
 import 'package:restaurant/features/chief_part/my_food_list/data/models/food_list_model.dart';
 import 'package:restaurant/features/chief_part/my_food_list/presentation/views/my_food_list_view.dart';
@@ -37,6 +35,10 @@ import 'package:restaurant/features/internet/views/internet_view.dart';
 import 'package:restaurant/features/menu/presentation/views/edit_profile_view.dart';
 import 'package:restaurant/features/menu/presentation/views/menu_view.dart';
 import 'package:restaurant/features/menu/presentation/views/personal_info_view.dart';
+import 'package:restaurant/features/messages/data/repo/messages_repo.dart';
+import 'package:restaurant/features/messages/data/repo/messages_repo_implemation.dart';
+import 'package:restaurant/features/messages/presentation/manger/messages_cubit.dart';
+import 'package:restaurant/features/messages/presentation/views/chat_view.dart';
 import 'package:restaurant/features/onboarding/views/onboarding_page.dart';
 import 'package:restaurant/features/orders/presentation/manger/my_orders_cubit.dart';
 import 'package:restaurant/features/orders/presentation/views/my_orders_view.dart';
@@ -57,6 +59,7 @@ import '../../features/home/presentation/views/home_user_view.dart';
 import '../../features/menu/data/repo/menu/menu_repo_implemation.dart';
 import '../../features/menu/presentation/manger/menu/menu_cubit.dart';
 import '../../features/menu/presentation/views/faqs_view.dart';
+import '../../features/messages/presentation/views/messages_view.dart';
 import '../../features/orders/data/repo/my_orders_repo_implemation.dart';
 import '../../features/payment/presentaion/cubit/payment_cubit.dart';
 import '../../features/search/presentation/views/search_view.dart';
@@ -71,8 +74,8 @@ abstract class AppRouter {
   static const String kHomeUserView = "/homeUserView";
   static const String kFoodDetailsView = "/foodDetailsView";
   static const String kChefDetailsView = "/ChefDetailsView";
-  static const String kChatView = '/chat';
-  static const String kMessageListView = '/messageList';
+  static const String kMessagesView = '/messagesView';
+  static const String kChatView = '/chatView';
   static const String kMyReviews = '/myReviews';
   static const String kAddReviewView = '/addReview';
   static const String kCartView = '/cart';
@@ -109,6 +112,7 @@ abstract class AppRouter {
   static final _networkShellNavigatorKey = GlobalKey<NavigatorState>();
   static final _homeShellNavigatorKey = GlobalKey<NavigatorState>();
   static final _menuShellNavigatorKey = GlobalKey<NavigatorState>();
+  static final _messagesShellNavigatorKey = GlobalKey<NavigatorState>();
 
   static final router = GoRouter(
     navigatorKey: _rootNavigatorKey,
@@ -296,8 +300,8 @@ abstract class AppRouter {
                 path: kOrder,
                 builder: (context, state) => BlocProvider(
                   create: (context) =>
-                  MyOrdersCubit(MyOrdersRepoImplementation())
-                    ..getMyOrders(status: 'pending'),
+                      MyOrdersCubit(MyOrdersRepoImplementation())
+                        ..getMyOrders(status: 'pending'),
                   child: MyOrdersView(),
                 ),
               ),
@@ -381,15 +385,6 @@ abstract class AppRouter {
           ),
 
           GoRoute(
-            path: kChatView,
-            name: "chat",
-            pageBuilder: (context, state) => MaterialPage(
-              key: ValueKey('chatView_${UniqueKey().toString()}'),
-              child: const ChatScreen(),
-            ),
-          ),
-
-          GoRoute(
             path: kChifFoodDetails,
             name: "chifFoodDetails",
             pageBuilder: (context, state) {
@@ -422,21 +417,14 @@ abstract class AppRouter {
           ),
 
           GoRoute(
-            path: kMessageListView,
-            name: "messageList",
-            pageBuilder: (context, state) => MaterialPage(
-              key: ValueKey('messageListView_${UniqueKey().toString()}'),
-              child: ChatListScreen(),
-            ),
-          ),
-
-          GoRoute(
             path: kMyReviews,
             name: "MyReviews",
             pageBuilder: (context, state) => MaterialPage(
               key: ValueKey('reviewView_${UniqueKey().toString()}'),
               child: BlocProvider(
-                create: (context) => ReviewsCubit(ReviewsRepositoryImplementation())..getMyReviews(),
+                create: (context) =>
+                    ReviewsCubit(ReviewsRepositoryImplementation())
+                      ..getMyReviews(),
                 child: MyReviewsView(),
               ),
             ),
@@ -555,6 +543,22 @@ abstract class AppRouter {
                 ),
               );
             },
+          ),
+
+          ShellRoute(
+            navigatorKey: _messagesShellNavigatorKey,
+            builder: (context, state, child) => BlocProvider(create: (context) => MessagesCubit(MessagesRepoImplementation())..getMessages(), child: child,),
+            routes: [
+              GoRoute(
+                path: kMessagesView,
+                builder: (context, state) => MessagesView(),
+              ),
+
+              GoRoute(
+                path: kChatView,
+                builder: (context, state) => ChatView(id: state.extra as int,),
+              ),
+            ]
           ),
         ],
       ),

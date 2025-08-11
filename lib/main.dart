@@ -10,7 +10,6 @@ import 'package:restaurant/core/helper/app_router.dart';
 import 'package:restaurant/core/network/network_info.dart';
 import 'package:restaurant/features/auth/data/repos/auth_repo_implementation.dart';
 import 'package:restaurant/features/auth/views/cubit/auth_cubit.dart/auth_cubit.dart';
-import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
 import 'package:restaurant/features/forget_password/forgot_password_cubit/forgot_password_cubit.dart';
 // <-- Add this import
 import 'package:sizer/sizer.dart';
@@ -35,12 +34,8 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider<ChatCubit>(create: (_) => sl<ChatCubit>()),
-
             BlocProvider(create: (_) => AuthCubit(AuthRepoImplementation())),
-            BlocProvider(
-              create: (_) => ForgotPasswordCubit(AuthRepoImplementation()),
-            ),
+            BlocProvider(create: (_) => ForgotPasswordCubit(AuthRepoImplementation())),
           ],
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,

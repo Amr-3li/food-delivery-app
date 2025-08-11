@@ -19,7 +19,7 @@ final List<MenuGroup> menuGroups = [
       MenuItem(
         icon: AppIcons.iMessage,
         title: 'Messages',
-        route: AppRouter.kMessageListView,
+        route: AppRouter.kMessagesView,
       ),
     ],
   ),

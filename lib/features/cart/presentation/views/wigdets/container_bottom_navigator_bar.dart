@@ -51,7 +51,7 @@ class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
                   context.push(AppRouter.kAddresses);
                 },
                 child: Text(
-                  GetAddressesCubit.get(context).addressesModel?.displayName?.isNotEmpty ?? false ? "Edit" : "Add",
+                  GetAddressesCubit.get(context).addressesModel?.displayName?.isNotEmpty ?? true ? "Edit" : "Add",
                   style: Styles.textStyle16.copyWith(
                     color: ColorsHelper.orangeDark,
                   ),
@@ -83,28 +83,32 @@ class _ContainerBottomNavigatorState extends State<ContainerBottomNavigator> {
             style: Styles.textStyle18,
           ),
           SizedBox(height: 20),
-          BlocConsumer<PaymentCubit, PaymentState>(
+          BlocListener<PaymentCubit, PaymentState>(
             listener: (context, state) {
-              if (state is PaymentSucess) {
+              if (state is CreateOrder) {
+                context.read<CartCubit>().getCart();
                 GoRouter.of(context).pushReplacement(AppRouter.kSucessPaymentView);
-                debugPrint('✅ Payment succeeded');
               } else if (state is PaymentFailure) {
-                AppToast.showErrorToast(state.error);
+                context.pop();
               }
             },
-            builder: (context, state) {
-              return CustomElevatedButton(
-                buttonText: 'Place Order',
-                onPressedFunction: () {
-                  context.read<PaymentCubit>().makePayment(
-                    amount: widget.total * 100, currency: "usd",
-                  );
-                },
-                buttonColor: ColorsHelper.orangeDark,
-                widthButton: double.infinity,
-                textColor: ColorsHelper.white,
-              );
-            },
+            child: CustomElevatedButton(
+              buttonText: 'Place Order',
+              onPressedFunction: () {
+                double price = widget.total;
+
+                int dollars = price.floor();
+                int cents = ((price - dollars) * 100).round();
+                int totalCents = (dollars * 100) + cents;
+
+                context.read<PaymentCubit>().makePayment(
+                  amount: totalCents, currency: "usd",
+                );
+              },
+              buttonColor: ColorsHelper.orangeDark,
+              widthButton: double.infinity,
+              textColor: ColorsHelper.white,
+            ),
           ),
         ],
       ),

@@ -5,11 +5,6 @@ import 'package:restaurant/core/utils/icons.dart';
 
 import 'package:restaurant/core/utils/styles.dart';
 
-import 'package:restaurant/features/chat/presentation/cubit/conversation_cubit.dart';
-
-import 'package:restaurant/features/chat/presentation/views/widgets/area_input.dart';
-import 'package:restaurant/features/chat/presentation/views/widgets/message_list.dart';
-
 import 'package:svg_flutter/svg.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -31,13 +26,13 @@ class _ChatScreenChiefState extends State<ChatScreenChief> {
   bool showEmojiPicker = false;
 
   @override
-  void initState() {
-    super.initState();
-    focusNode = FocusNode();
-    textController = TextEditingController();
-    // Load messages when screen initializes
-    context.read<ChatCubit>().getConversationMessages(widget.conversationId);
-  }
+  // void initState() {
+  //   super.initState();
+  //   focusNode = FocusNode();
+  //   textController = TextEditingController();
+  //   // Load messages when screen initializes
+  //   context.read<ChatCubit>().getConversationMessages(widget.conversationId);
+  // }
 
   @override
   void dispose() {
@@ -74,21 +69,21 @@ class _ChatScreenChiefState extends State<ChatScreenChief> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(child: MessageList(currentUserId: widget.currentUserId)),
-          AreaInput(
-            focusNode: focusNode,
-            textController: textController,
-            showEmojiPicker: showEmojiPicker,
-            currentUserId: widget.currentUserId,
-            conversationId: widget.conversationId,
-            onEmojiToggle: (show) {
-              setState(() => showEmojiPicker = show);
-            },
-          ),
-        ],
-      ),
+      // body: Column(
+      //   children: [
+      //     Expanded(child: MessageList(currentUserId: widget.currentUserId)),
+      //     AreaInput(
+      //       focusNode: focusNode,
+      //       textController: textController,
+      //       showEmojiPicker: showEmojiPicker,
+      //       currentUserId: widget.currentUserId,
+      //       conversationId: widget.conversationId,
+      //       onEmojiToggle: (show) {
+      //         setState(() => showEmojiPicker = show);
+      //       },
+      //     ),
+      //   ],
+      // ),
     );
   }
 

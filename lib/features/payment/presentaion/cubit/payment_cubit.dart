@@ -7,7 +7,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   PaymentCubit(this.paymentRepository) : super(PaymentInitial());
 
   Future<void> makePayment({
-    required double amount,
+    required int amount,
     required String currency,
   }) async {
     emit(PaymentLoading());
@@ -17,8 +17,16 @@ class PaymentCubit extends Cubit<PaymentState> {
       currency: currency,
     );
 
-    result.fold((failure) => emit(PaymentFailure(failure)), (_) async {
+    result.fold((failure) =>
+        emit(PaymentFailure(failure)),
+            (_) async {
       emit(PaymentSucess());
+      await createPayment();
     });
+  }
+
+  Future<void> createPayment() async {
+    final result = await paymentRepository.createOrder();
+    emit(CreateOrder(result));
   }
 }

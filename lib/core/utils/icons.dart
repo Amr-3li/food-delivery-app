@@ -151,4 +151,6 @@ class AppIcons {
   static const String assetsPhoneIcon = "assets/images/phone.svg";
 
   static const String assetsNotFound = "assets/images/not_found_icon.png";
+
+  static const String assetsNoMessage = "assets/images/nomessage.png";
 }
