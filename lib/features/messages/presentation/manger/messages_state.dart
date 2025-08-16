@@ -20,3 +20,27 @@ final class GetChatError extends MessagesState {
 
   GetChatError(this.error);
 }
+
+final class SendMessageSuccess extends MessagesState {
+  final String messages;
+
+  SendMessageSuccess({required this.messages});
+}
+
+final class SendMessageFailure extends MessagesState {
+  final String error;
+
+  SendMessageFailure({required this.error});
+}
+
+final class DeleteMessageSuccess extends MessagesState {
+  final String messages;
+
+  DeleteMessageSuccess({required this.messages});
+}
+
+final class DeleteMessageFailure extends MessagesState {
+  final String error;
+
+  DeleteMessageFailure({required this.error});
+}

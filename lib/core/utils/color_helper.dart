@@ -11,6 +11,7 @@ class ColorsHelper {
   static Color orangeDark = HexColor("F58D1D");
   static Color lightGrey = HexColor("6B6E82");
   static Color lightBabyBlue = HexColor("ECF0F4");
+  static Color darkerBabyBlue = HexColor("B3BEC9");
   static Color purple = HexColor("413DFB");
   static Color pink = HexColor("A03BB1");
   static Color white = HexColor("FFFFFF");
@@ -22,4 +23,5 @@ class ColorsHelper {
   static Color grayWords = HexColor("A0A5BA");
   static Color whiteGray = HexColor("F6F6F6");
   static Color blueBlack = HexColor("181C2E");
+
 }

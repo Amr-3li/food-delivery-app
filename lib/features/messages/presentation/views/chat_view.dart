@@ -24,8 +24,7 @@ class _ChatViewState extends State<ChatView> {
   @override
   void initState() {
     super.initState();
-    final cubit = MessagesCubit.get(context);
-    cubit.getChatPolling(id: widget.id);
+    MessagesCubit.get(context).startChat(id: widget.id);
   }
 
   @override
@@ -36,7 +35,9 @@ class _ChatViewState extends State<ChatView> {
           padding: const EdgeInsets.only(left: 16),
           child: GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              MessagesCubit.get(context).getMessages().then((value) {
+                Navigator.pop(context);
+              },);
             },
             child: CircleAvatar(
               radius: 22,
@@ -63,7 +64,7 @@ class _ChatViewState extends State<ChatView> {
           },
         ),
       ),
-      body: ChatViewBody(),
+      body: ChatViewBody(id: widget.id,),
     );
   }
 }

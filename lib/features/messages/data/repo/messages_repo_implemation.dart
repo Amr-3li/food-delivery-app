@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:restaurant/core/network/api_helper.dart';
 import 'package:restaurant/core/network/end_points.dart';
 import 'package:restaurant/features/messages/data/models/chat_model.dart';
@@ -8,12 +10,12 @@ import 'package:restaurant/features/messages/data/repo/messages_repo.dart';
 import '../../../../core/network/api_response.dart';
 
 class MessagesRepoImplementation implements MessagesRepository {
-  static final MessagesRepoImplementation _instance = MessagesRepoImplementation._internal();
+  static final MessagesRepoImplementation _instance =
+      MessagesRepoImplementation._internal();
   factory MessagesRepoImplementation() {
     return _instance;
   }
   MessagesRepoImplementation._internal();
-
 
   ApiHelper apiHelper = ApiHelper();
 
@@ -26,12 +28,14 @@ class MessagesRepoImplementation implements MessagesRepository {
       );
 
       if (response.data != null) {
-        final MessagesModel messagesModel = MessagesModel.fromJson(response.data);
+        final MessagesModel messagesModel = MessagesModel.fromJson(
+          response.data,
+        );
         return right(messagesModel);
       } else {
         return left("No messages found.");
       }
-    }catch (e) {
+    } catch (e) {
       ApiResponse errorResponse = ApiResponse.fromError(e);
       return left(errorResponse.message);
     }
@@ -51,10 +55,63 @@ class MessagesRepoImplementation implements MessagesRepository {
       } else {
         return left("No messages found.");
       }
-    }catch (e) {
+    } catch (e) {
       ApiResponse errorResponse = ApiResponse.fromError(e);
       return left(errorResponse.message);
     }
   }
 
+  @override
+  Future<String> sendMessage({
+    required int id,
+    String? message,
+    XFile? image,
+    required String type,
+  }) async {
+    try {
+      final response = await apiHelper.postRequest(
+        endPoint: EndPoints.sendMessage,
+        isProtected: true,
+        data: {
+          "receiver_id": id,
+          "content":
+              message ??
+              await MultipartFile.fromFile(
+                image!.path,
+                filename: image.path.split('/').last,
+              ),
+          "type": type,
+        },
+        isFormData: true,
+      );
+
+      if (response.status) {
+        return response.message;
+      } else {
+        return 'Failed to send message: ${response.message}';
+      }
+    } catch (e) {
+      ApiResponse errorResponse = ApiResponse.fromError(e);
+      return errorResponse.message;
+    }
+  }
+
+  @override
+  Future<Either<String, String>> deleteMessage({required int id}) async {
+    try {
+      final response = await apiHelper.deleteRequest(
+        endPoint: 'messages/$id/destroy',
+        isProtected: true,
+      );
+
+      if (response.status) {
+        return right(response.message);
+      } else {
+        return left('Failed to delete message: ${response.message}');
+      }
+    } catch (e) {
+      ApiResponse errorResponse = ApiResponse.fromError(e);
+      return left(errorResponse.message);
+    }
+  }
 }

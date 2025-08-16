@@ -46,4 +46,5 @@ abstract class EndPoints {
   static const String myReviews = "user/get/reviews";
   static const String messages = "conversations";
   static const String orders = "orders";
+  static const String sendMessage = "messages/send";
 }
