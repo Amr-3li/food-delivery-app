@@ -1,7 +1,7 @@
 ---
 
 <p align="center">
-  <img src="docs/images/delivery.png" alt="Delivery App" width="400"/>
+  <img src="assets/images/app_cover.png" alt="Delivery App" width="400"/>
 </p>
 
 <h1 align="center">🍔 Food Delivery App</h1>
