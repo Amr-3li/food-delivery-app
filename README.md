@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center">🍔 Food Delivery App</h1>
----
+
 A complete **Food Delivery Application** built using **Flutter** with a **Laravel backend**.  
 This project provides a smooth food ordering experience with features like authentication, cart, payments, real-time messaging, and more.  
 The app design is based on this [Figma design](https://www.figma.com/design/putgCPh35VOohRyAHFmdkE/Food-Delivery-App--Community-?node-id=190-628).  
