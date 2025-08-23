@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:restaurant/core/utils/assets_data.dart';
+import 'package:restaurant/features/home/data/models/meal_details_model.dart';
 import 'package:restaurant/features/messages/presentation/manger/messages_cubit.dart';
 import 'package:restaurant/features/messages/presentation/views/widgets/chat_view_body.dart';
 import 'package:svg_flutter/svg.dart';
@@ -11,20 +13,30 @@ import '../../../../core/utils/icons.dart';
 import '../../../../core/utils/styles.dart';
 
 class ChatView extends StatefulWidget {
-  const ChatView({super.key, required this.id});
+  const ChatView({super.key, required this.state});
 
-  final int id;
+  final GoRouterState state;
 
   @override
   State<ChatView> createState() => _ChatViewState();
 }
 
 class _ChatViewState extends State<ChatView> {
+  int? id;
+  ChefModel? chefModel;
 
   @override
   void initState() {
     super.initState();
-    MessagesCubit.get(context).startChat(id: widget.id);
+    if (widget.state.extra != null) {
+      if (widget.state.extra is int) {
+        id = widget.state.extra as int;
+        MessagesCubit.get(context).startChat(id: widget.state.extra as int);
+      } else if  (widget.state.extra is ChefModel) {
+        chefModel = widget.state.extra as ChefModel;
+        MessagesCubit.get(context).startChat(id: chefModel!.conversationId!);
+      }
+    }
   }
 
   @override
@@ -36,6 +48,8 @@ class _ChatViewState extends State<ChatView> {
           child: GestureDetector(
             onTap: () {
               MessagesCubit.get(context).getMessages().then((value) {
+                id = null;
+                chefModel = null;
                 Navigator.pop(context);
               },);
             },
@@ -50,13 +64,13 @@ class _ChatViewState extends State<ChatView> {
         title: BlocBuilder<MessagesCubit, MessagesState>(
           builder: (context, state) {
             final cubit = MessagesCubit.get(context);
-            if (cubit.chatModel != null) {
+            if (cubit.chatModel != null || chefModel != null) {
               return Row(
                 children: [
                   Image.asset(
                     AssetsData.assetsChefProfileImage, width: 35, height: 35,),
                   SizedBox(width: 10),
-                  Text(cubit.chatModel?.data?.conversation?.chef?.name ?? '', style: Styles.textStyle18)
+                  Text(cubit.chatModel?.data?.conversation?.chef?.name ?? chefModel?.name ?? '', style: Styles.textStyle18)
                 ],
               );
             }
@@ -64,7 +78,7 @@ class _ChatViewState extends State<ChatView> {
           },
         ),
       ),
-      body: ChatViewBody(id: widget.id,),
+      body: ChatViewBody(id: id ?? chefModel!.id!),
     );
   }
 }

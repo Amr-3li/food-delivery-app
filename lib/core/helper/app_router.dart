@@ -5,6 +5,7 @@ import 'package:restaurant/features/address/data/model/address_model.dart';
 import 'package:restaurant/features/address/data/repo/add_address/add_address_repo_implemation.dart';
 import 'package:restaurant/features/address/presentaion/manger/add_address/add_address_cubit.dart';
 import 'package:restaurant/features/auth/data/models/user_model.dart';
+import 'package:restaurant/features/auth/views/location_access_view.dart';
 import 'package:restaurant/features/auth/views/vertification_view.dart';
 import 'package:restaurant/features/chief_part/chat/presentation/views/chat_screen.dart';
 import 'package:restaurant/features/chief_part/chat/presentation/views/list_chat_screen.dart';
@@ -71,6 +72,7 @@ abstract class AppRouter {
   static const String kOnboardingView = '/OnboardingView';
   static const String kLoginView = "/login";
   static const String kSingUp = "/signUp";
+  static const String kLocationAccessView = "/locationAccessView";
   static const String kHomeUserView = "/homeUserView";
   static const String kFoodDetailsView = "/foodDetailsView";
   static const String kChefDetailsView = "/ChefDetailsView";
@@ -165,6 +167,14 @@ abstract class AppRouter {
           ),
 
           GoRoute(
+            path: kLocationAccessView,
+            pageBuilder: (context, state) => MaterialPage(
+              key: ValueKey('locationAccessView${UniqueKey().toString()}'),
+              child: LocationAccessView(),
+            ),
+          ),
+
+          GoRoute(
             path: kForgetPassword,
             pageBuilder: (context, state) => MaterialPage(
               key: ValueKey('forgetPasswordView_${UniqueKey().toString()}'),
@@ -215,6 +225,9 @@ abstract class AppRouter {
                     create: (context) =>
                         ReviewsCubit(ReviewsRepositoryImplementation()),
                   ),
+                  BlocProvider(
+                  create: (context) => MealDetailsCubit(MealDetailsRepository()),
+                  ),
                 ],
                 child: child,
               );
@@ -247,6 +260,59 @@ abstract class AppRouter {
               ),
 
               GoRoute(
+                path: kFoodDetailsView,
+                pageBuilder: (context, state) {
+                  final int id = state.extra as int;
+                  return MaterialPage(
+                    key: ValueKey(
+                      'foodDetailsView_${id}_${UniqueKey().toString()}',
+                    ),
+                    child: FoodDetailsView(id: id),
+                  );
+                },
+              ),
+
+              GoRoute(
+                path: kChefDetailsView,
+                pageBuilder: (context, state) {
+                  return MaterialPage(
+                    key: ValueKey(
+                      'chefDetailsView_${state.path}_${UniqueKey().toString()}',
+                    ),
+                    child: ChefDetailsView(),
+                  );
+                },
+              ),
+
+              // Messages And Chat Shell Route
+              ShellRoute(
+                navigatorKey: _messagesShellNavigatorKey,
+                builder: (context, state, child) => BlocProvider(
+                  create: (context) =>
+                  MessagesCubit(MessagesRepoImplementation())
+                    ..getMessages(),
+                  child: child,
+                ),
+                routes: [
+                  GoRoute(
+                    path: kMessagesView,
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: ValueKey('messagesView_${state.path}_${UniqueKey().toString()}'),
+                      child: MessagesView()
+                    ),
+                  ),
+
+                  GoRoute(
+                    path: kChatView,
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: ValueKey('chatView_${state.path}_${UniqueKey().toString()}'),
+                      child: ChatView(state: state),
+                    ),
+                  ),
+                ],
+              ),
+
+              GoRoute(
                 path: kAllRestaurantsView,
                 pageBuilder: (context, state) => MaterialPage(
                   key: ValueKey('allRestaurantsView_${UniqueKey().toString()}'),
@@ -263,24 +329,6 @@ abstract class AppRouter {
                       'restaurantDetailsView_${id}_${UniqueKey().toString()}',
                     ),
                     child: RestaurantDetailsView(id: id),
-                  );
-                },
-              ),
-
-              GoRoute(
-                path: kFoodDetailsView,
-                pageBuilder: (context, state) {
-                  final int id = state.extra as int;
-                  return MaterialPage(
-                    key: ValueKey(
-                      'foodDetailsView_${id}_${UniqueKey().toString()}',
-                    ),
-                    child: BlocProvider(
-                      create: (context) =>
-                          MealDetailsCubit(MealDetailsRepository())
-                            ..getMealDetails(id: id),
-                      child: FoodDetailsView(id: id),
-                    ),
                   );
                 },
               ),
@@ -356,19 +404,6 @@ abstract class AppRouter {
                 ],
               ),
             ],
-          ),
-
-          GoRoute(
-            path: kChefDetailsView,
-            pageBuilder: (context, state) {
-              final ChefModel chefModel = state.extra as ChefModel;
-              return MaterialPage(
-                key: ValueKey(
-                  'chefDetailsView_${chefModel.id}_${UniqueKey().toString()}',
-                ),
-                child: ChefDetailsView(chefModel: chefModel),
-              );
-            },
           ),
 
           GoRoute(
@@ -543,22 +578,6 @@ abstract class AppRouter {
                 ),
               );
             },
-          ),
-
-          ShellRoute(
-            navigatorKey: _messagesShellNavigatorKey,
-            builder: (context, state, child) => BlocProvider(create: (context) => MessagesCubit(MessagesRepoImplementation())..getMessages(), child: child,),
-            routes: [
-              GoRoute(
-                path: kMessagesView,
-                builder: (context, state) => MessagesView(),
-              ),
-
-              GoRoute(
-                path: kChatView,
-                builder: (context, state) => ChatView(id: state.extra as int,),
-              ),
-            ]
           ),
         ],
       ),

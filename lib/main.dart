@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GoRouter _router = AppRouter.router;
+    final GoRouter router = AppRouter.router;
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MultiBlocProvider(
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           ],
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            routerConfig: _router,
+            routerConfig: router,
           ),
         );
       },

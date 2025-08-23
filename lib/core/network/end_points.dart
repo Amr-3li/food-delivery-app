@@ -47,4 +47,5 @@ abstract class EndPoints {
   static const String messages = "conversations";
   static const String orders = "orders";
   static const String sendMessage = "messages/send";
+  static const String makeConversation = "/conversation/make";
 }

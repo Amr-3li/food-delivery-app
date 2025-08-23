@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:restaurant/core/utils/assets_data.dart';
@@ -38,7 +39,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is AuthError) {
           setState(() => isLoading = false);
           AppToast.showErrorToast(state.message);
@@ -48,7 +49,13 @@ class _LoginViewState extends State<LoginView> {
           if (state.userData.data!.user!.type == "chef") {
             context.go(AppRouter.kChifHome, extra: state.userData);
           }
-          context.go(AppRouter.kHomeUserView);
+          LocationPermission permission = await Geolocator.checkPermission();
+          if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+            context.go(AppRouter.kLocationAccessView);
+          } else {
+            context.go(AppRouter.kHomeUserView);
+          }
+
         } else if (state is AuthLoading) {
           setState(() => isLoading = true);
         }

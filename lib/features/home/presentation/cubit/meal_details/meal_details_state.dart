@@ -38,3 +38,5 @@ final class MealDeleteFromFavoritesFailure extends MealDetailsState {
 
   MealDeleteFromFavoritesFailure(this.error);
 }
+
+final class MealMakeConversation extends MealDetailsState {}

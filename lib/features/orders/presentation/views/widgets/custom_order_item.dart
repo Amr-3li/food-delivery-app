@@ -49,12 +49,15 @@ class CustomOrderItem extends StatelessWidget {
                 child: Column(
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(item.dishName ?? '', style: Styles.textStyle16),
                         Spacer(),
-                        Text(
-                          item.order?.orderNumber ?? '',
-                          style: Styles.textStyle16,
+                        Expanded(
+                          child: Text(
+                            item.order?.orderNumber ?? '',
+                            style: Styles.textStyle16,
+                          ),
                         ),
                       ],
                     ),

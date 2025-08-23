@@ -3,6 +3,9 @@ import 'package:restaurant/features/auth/data/models/user_model.dart';
 import 'package:restaurant/features/auth/data/repos/auth_repo.dart';
 import 'package:restaurant/features/auth/views/cubit/auth_cubit.dart/auth_states.dart';
 
+import '../../../../../core/cache/cache_keys.dart';
+import '../../../../../core/cache/secure_cache_helper.dart';
+
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.authRepo) : super(AuthInitial());
   final AuthRepo authRepo;
@@ -37,27 +40,19 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
 
     try {
-      // 1️⃣ First, call the API logout endpoint
       final result = await authRepo
-          .logout(); // Assume authRepo has a logout method
+          .logout();
 
       result.fold(
         (success) async {
-          // 2️⃣ Clear local storage only after API succeeds
-          // await SecureCacheHelper.clearData();
+          await SecureCacheHelper.removeData(key: CacheKeys.token);
+          await SecureCacheHelper.getData(key: CacheKeys.userName);
           emit(LogoutSuccess());
         },
-        (error) => emit(AuthError("Error")), // Handle API failure
+        (error) => emit(LogoutError("Error")), // Handle API failure
       );
     } catch (e) {
-      emit(AuthError('Failed to logout: ${e.toString()}'));
+      emit(LogoutError('Failed to logout: ${e.toString()}'));
     }
   }
 }
-
-// class SecureCacheHelper {
-//   static Future<void> clearData() async {
-//     final storage = FlutterSecureStorage();
-//     await storage.deleteAll(); // ✅ Clears all keys
-//   }
-// }

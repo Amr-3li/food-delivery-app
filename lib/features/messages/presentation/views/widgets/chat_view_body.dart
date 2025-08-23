@@ -10,7 +10,6 @@ import 'package:restaurant/core/utils/app_toast.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/icons.dart';
 import 'package:restaurant/core/utils/styles.dart';
-import 'package:restaurant/core/widgets/image_picker/image_picker_view.dart';
 import 'package:restaurant/features/messages/presentation/manger/messages_cubit.dart';
 import 'package:svg_flutter/svg.dart';
 import 'custom_message_item.dart';
@@ -101,7 +100,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                 ),
               );
             }
-            return SizedBox();
+            return Spacer();
           },
         ),
         Padding(
@@ -216,6 +215,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                     message: _messageController.text,
                     type: 'text',
                   );
+                  print('------------------------------------------------------------------id ---------------------------- ${widget.id}');
                   _messageController.clear();
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     _scrollController.animateTo(

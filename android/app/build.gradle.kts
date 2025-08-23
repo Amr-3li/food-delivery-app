@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.restaurant"
     compileSdk = 35
-    
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -25,7 +25,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 23
-        targetSdk = 34 
+        targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -41,4 +41,9 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // حل مشكلة SLF4J
+    implementation("org.slf4j:slf4j-nop:1.7.36")
 }

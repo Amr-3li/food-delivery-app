@@ -23,3 +23,9 @@ class AuthError extends AuthState {
 }
 
 class LogoutSuccess extends AuthState {}
+
+class LogoutError extends AuthState {
+  final String message;
+
+  LogoutError(this.message);
+}

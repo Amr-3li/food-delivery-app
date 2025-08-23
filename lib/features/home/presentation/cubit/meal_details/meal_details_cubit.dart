@@ -64,4 +64,12 @@ class MealDetailsCubit extends Cubit<MealDetailsState> {
       );
     });
   }
+
+  Future<void> makeConversation({required int id}) async {
+    mealDetailsRepository.makeConversation(id: id).then((result) {
+      emit(MealMakeConversation());
+    }).catchError((e) {
+      print(e);
+    });
+  }
 }

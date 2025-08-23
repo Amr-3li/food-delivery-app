@@ -87,6 +87,7 @@ class ChefModel {
     required this.phone,
     required this.email,
     required this.profileImage,
+    required this.conversationId,
   });
 
   final int? id;
@@ -95,6 +96,7 @@ class ChefModel {
   final String? phone;
   final String? email;
   final String? profileImage;
+  final dynamic conversationId;
 
   factory ChefModel.fromJson(Map<String, dynamic> json){
     return ChefModel(
@@ -104,6 +106,7 @@ class ChefModel {
       phone: json["phone"],
       email: json["email"],
       profileImage: json["profile_image"],
+      conversationId: json["conversation_id"],
     );
   }
 

@@ -43,6 +43,7 @@ dependencies:
   connectivity_plus: ^6.1.4
   redacted: ^1.0.13
   pusher_channels_flutter: ^2.4.0
+  dio_smart_retry: ^5.0.0
 
 dev_dependencies:
   flutter_test:

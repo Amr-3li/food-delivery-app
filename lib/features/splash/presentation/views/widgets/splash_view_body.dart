@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:restaurant/core/cache/cache_data.dart';
@@ -28,7 +29,12 @@ Future<String> checkLoginStatus() async {
     debugPrint(token);
     CacheData.accessToken = token;
     CacheData.userName = userName;
-    return AppRouter.kHomeUserView;
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+      return AppRouter.kLocationAccessView;
+    } else {
+      return AppRouter.kHomeUserView;
+    }
   } else {
     return AppRouter.kLoginView;
   }
@@ -38,7 +44,6 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   @override
   void initState() {
     super.initState();
-
     delayedMethod();
   }
 

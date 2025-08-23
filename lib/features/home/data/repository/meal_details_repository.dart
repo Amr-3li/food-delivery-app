@@ -73,4 +73,26 @@ class MealDetailsRepository {
       return Left(errorResponse.message);
     }
   }
+
+
+  Future<void> makeConversation({required int id}) async {
+    try {
+      ApiResponse apiResponse = await apiHelper.postRequest(
+        endPoint: EndPoints.makeConversation,
+        isProtected: true,
+        data: {
+          'receiver_id' : id
+        },
+        isFormData: true
+      );
+
+      if (!apiResponse.status) {
+        throw Exception(apiResponse.message);
+      }
+    } catch (e) {
+      ApiResponse errorResponse = ApiResponse.fromError(e);
+      print(errorResponse.message);
+      throw Exception(errorResponse.message);
+    }
+  }
 }

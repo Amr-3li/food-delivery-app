@@ -8,9 +8,7 @@ import '../../../../core/utils/icons.dart';
 import '../../../../core/utils/styles.dart';
 
 class ChefDetailsView extends StatelessWidget {
-  const ChefDetailsView({super.key, required this.chefModel});
-
-  final ChefModel chefModel;
+  const ChefDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,7 @@ class ChefDetailsView extends StatelessWidget {
         ),
         title: Text('Chef Profile', style: Styles.textStyle18),
       ),
-      body: ChefDetailsViewBody(chefModel: chefModel,),
+      body: ChefDetailsViewBody(),
     );
   }
 }

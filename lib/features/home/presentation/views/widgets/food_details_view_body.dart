@@ -85,7 +85,6 @@ class FoodDetailsViewBody extends StatelessWidget {
                           onTap: () {
                             GoRouter.of(context).push(
                               AppRouter.kChefDetailsView,
-                              extra: mealCubit.mealDetailsModel!.data!.chef,
                             );
                           },
                           child: Text(

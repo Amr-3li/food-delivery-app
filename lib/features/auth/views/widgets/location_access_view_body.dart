@@ -7,9 +7,9 @@ import 'package:restaurant/core/utils/app_toast.dart';
 import 'package:restaurant/core/utils/color_helper.dart';
 import 'package:restaurant/core/utils/styles.dart';
 import 'package:restaurant/core/widgets/custom_elevated_button.dart';
-import 'package:restaurant/features/auth/manger/location_access/location_access_cubit.dart';
 
 import '../../../../core/helper/app_router.dart';
+import '../cubit/location_access/location_access_cubit.dart';
 
 class LocationAccessViewBody extends StatelessWidget {
   const LocationAccessViewBody({super.key});
@@ -23,7 +23,7 @@ class LocationAccessViewBody extends StatelessWidget {
         } else if (state is LocationAccessSuccess) {
           GoRouter.of(
             context,
-          ).push(AppRouter.kHomeUserView);
+          ).go(AppRouter.kHomeUserView);
         }
       },
       child: Padding(

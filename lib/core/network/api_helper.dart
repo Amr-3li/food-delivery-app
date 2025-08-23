@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:restaurant/core/cache/cache_data.dart';
 
 import 'api_response.dart';
@@ -19,7 +20,7 @@ class ApiHelper {
     BaseOptions(
       baseUrl: EndPoints.baseUrl,
       connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 60),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json', // Add default content-type
@@ -59,6 +60,24 @@ class ApiHelper {
           }
 
           return handler.next(error);
+        },
+      ),
+    );
+
+    dio.interceptors.add(
+      RetryInterceptor(
+        dio: dio,
+        logPrint: print,
+        retries: 3,
+        retryDelays: const [
+          Duration(seconds: 2),
+          Duration(seconds: 4),
+          Duration(seconds: 6),
+        ],
+        retryEvaluator: (error, attempt) {
+          return error.type == DioExceptionType.connectionTimeout ||
+              error.type == DioExceptionType.receiveTimeout ||
+              error.type == DioExceptionType.sendTimeout;
         },
       ),
     );

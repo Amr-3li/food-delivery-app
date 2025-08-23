@@ -23,6 +23,7 @@ class _FoodDetailsViewState extends State<FoodDetailsView> {
   @override
   void initState() {
     super.initState();
+    MealDetailsCubit.get(context).getMealDetails(id: widget.id);
     ReviewsCubit.get(context).getDishReviews(dishId: widget.id);
   }
 
