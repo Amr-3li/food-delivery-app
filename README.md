@@ -1,18 +1,10 @@
 ---
 
 <p align="center">
-  <img src="docs/images/delivery.png" alt="Delivery App" width="400"/>
+  <img src="assets/images/app_cover.png" alt="Delivery App" width="400"/>
 </p>
 
 <h1 align="center">🍔 Food Delivery App</h1>
-
-<p align="center">
-  A complete food delivery mobile application built with <b>Flutter</b> using Clean Architecture & BLoC.
-</p>
-
----
-
-# 🍔 Food Delivery App  
 
 A complete **Food Delivery Application** built using **Flutter** with a **Laravel backend**.  
 This project provides a smooth food ordering experience with features like authentication, cart, payments, real-time messaging, and more.  
